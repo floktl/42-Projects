@@ -3,41 +3,38 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 19:00:23 by fkeitel           #+#    #+#             */
-/*   Updated: 2023/10/11 21:59:55 by flo              ###   ########.fr       */
+/*   Updated: 2023/10/13 12:57:35 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include <stdlib.h>
+#include "libft.h"
 
 int	ft_atoi(const char *str)
 {
-	int	store;
 	int	sign;
-	int	counter;
+	int	count;
 	int	bigger_ten;
 
-	store = 0;
-	sign = 1;
-	counter = 0;
+	count = 0;
 	bigger_ten = 0;
-	if (str[0] == '-')
+	while (str[count] == '\t' || str[count] == '\n' || str[count] == '\v'
+		|| str[count] == '\f' || str[count] == '\r' || str[count] == ' ')
+		count++;
+	sign = (str[count] == '-') ? -1 : 1;
+	if (str[count] == '+')
+		count++;
+	while (str[count])
 	{
-		sign = -1;
-		counter++;
-	}
-	if (str[0] == '+')
-		counter++;
-	while (str[counter])
-	{
-		bigger_ten = ((int)str[counter] - '0');
+		bigger_ten = ((int)str[count] - '0');
 		if (bigger_ten < 0 || bigger_ten > 9)
-			return (store);
-		store = store * 10 + bigger_ten;
-		counter++;
+			return (sign);
+		sign = sign * 10 + bigger_ten;
+		count++;
 	}
-	return (store * sign);
+	return (sign * sign);
 }

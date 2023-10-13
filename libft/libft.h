@@ -3,12 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 16:29:58 by fkeitel           #+#    #+#             */
-/*   Updated: 2023/10/11 21:10:54 by flo              ###   ########.fr       */
+/*   Updated: 2023/10/13 10:35:37 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#ifndef LIBFT_H
+# define LIBFT_H
 
 #include <stdlib.h>
 #include <unistd.h>
@@ -51,7 +54,7 @@ void			ft_putnbr_fd(int n, int fd);
 
 void			ft_putstr_fd(char *s, int fd);
 
-char			**ft_split(char const *s, char c);
+/*char			**ft_split(char const *s, char c);*/
 
 char			*ft_strchr(const char *s, int c);
 
@@ -81,3 +84,5 @@ char			*ft_substr(char const *s, unsigned int start, size_t len);
 int				ft_tolower(int c);
 
 int				ft_toupper(int c);
+
+#endif

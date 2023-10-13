@@ -3,29 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 10:58:37 by fkeitel           #+#    #+#             */
-/*   Updated: 2023/10/11 22:15:15 by flo              ###   ########.fr       */
+/*   Updated: 2023/10/13 10:59:46 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include <stdlib.h>
-
-void	*ft_bzero(void *s, size_t n)
-{
-	size_t	counter;
-	char	*char_s;
-
-	counter = 0;
-	char_s = (char *)s;
-	while (counter <= (n -1))
-	{
-		char_s[counter++] = 0;
-	}
-	return (s);
-}
+#include "libft.h"
 
 void	*ft_calloc(size_t count, size_t size)
 {

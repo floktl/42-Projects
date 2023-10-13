@@ -3,27 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   ft_bzero.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 19:18:51 by fkeitel           #+#    #+#             */
-/*   Updated: 2023/10/11 22:13:50 by flo              ###   ########.fr       */
+/*   Updated: 2023/10/13 15:07:27 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
+#include "libft.h"
 
-void	*ft_bzero(void *s, size_t n)
+void	ft_bzero(void *s, size_t n)
 {
 	size_t	counter;
 	char	*char_s;
 
 	counter = 0;
 	char_s = (char *)s;
-	while (counter <= (n -1))
+	while (counter < n)
 	{
-		char_s[counter++] = 0;
+		char_s[counter] = 0;
+		counter++;
 	}
-	return (s);
+	s = char_s;
 }
 
 /* int main(void)
@@ -32,4 +34,4 @@ void	*ft_bzero(void *s, size_t n)
     ft_bzero(c, 3); // Use bzero to set the first 3 bytes to null (0)
     printf("%s\n", c);
     return (0);
-} */
+}*/

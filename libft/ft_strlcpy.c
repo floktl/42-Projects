@@ -3,27 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlcpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 14:55:20 by fkeitel           #+#    #+#             */
-/*   Updated: 2023/10/11 22:52:59 by flo              ###   ########.fr       */
+/*   Updated: 2023/10/13 13:58:50 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <string.h>
 #include <stdio.h>
+#include "libft.h"
 
 size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 {
 	size_t	counter;
 
 	counter = 0;
-	while (*src != '\0' && counter < dstsize)
+	if (dstsize > 0)
 	{
-		dst[counter] = *src;
-		src++;
-		counter++;
+		while (src[counter] != '\0' && counter < dstsize - 1)
+		{
+			dst[counter] = src[counter];
+			counter++;
+		}
+		dst[counter] = '\0';
 	}
+	while (src[counter] != '\0')
+		counter++;
 	return (counter);
 }
 
@@ -34,4 +40,4 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 	printf("Copied %zu characters\n", copied);
 	printf("Destination: %s\n", destination);
 	return 0;
-} */
+}*/

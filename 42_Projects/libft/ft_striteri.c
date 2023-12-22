@@ -6,12 +6,13 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 21:51:14 by fkeitel           #+#    #+#             */
-/*   Updated: 2023/10/18 16:50:40 by fkeitel          ###   ########.fr       */
+/*   Updated: 2023/12/20 16:35:53 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
+//This function applies the function f to each character of the string s
 void	ft_striteri(char *s, void (*f)(unsigned int, char*))
 {
 	int	i;

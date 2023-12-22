@@ -6,12 +6,13 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 10:58:01 by fkeitel           #+#    #+#             */
-/*   Updated: 2023/10/18 16:48:56 by fkeitel          ###   ########.fr       */
+/*   Updated: 2023/12/20 16:25:57 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
+// This function copies n bytes from src to  dst and returns a pointer to dst
 void	*ft_memcpy(void *dst, const void *src, size_t n)
 {
 	unsigned int	counter;

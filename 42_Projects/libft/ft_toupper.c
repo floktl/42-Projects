@@ -6,12 +6,13 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 15:12:23 by fkeitel           #+#    #+#             */
-/*   Updated: 2023/10/18 16:51:19 by fkeitel          ###   ########.fr       */
+/*   Updated: 2023/12/20 17:03:57 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
+//Convert an lowercase character to uppercase if applicable.
 int	ft_toupper(int c)
 {
 	if (c >= 'a' && c <= 'z')
@@ -25,11 +26,10 @@ int	ft_toupper(int c)
 	char sh;
 
 	sh = 'a';
-    ch = 'b';
+	ch = 'b';
 	char y = ft_toupper(sh);
 	printf("%c in uppercase is represented as%c", sh, y);
 	char x = toupper(ch);
-
-    printf("%c in uppercase is represented as%c", ch, x);
+	printf("%c in uppercase is represented as%c", ch, x);
 	return 0;
 } */

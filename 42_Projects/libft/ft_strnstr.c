@@ -6,12 +6,13 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 18:11:47 by fkeitel           #+#    #+#             */
-/*   Updated: 2023/10/30 19:49:50 by fkeitel          ###   ########.fr       */
+/*   Updated: 2023/12/20 16:42:44 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
+// This funct locate first occ of needle in string haystack, not more than len
 char	*ft_strnstr(const char *haystack, const char *needle, size_t len)
 {
 	size_t	i;

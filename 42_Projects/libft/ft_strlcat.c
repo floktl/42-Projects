@@ -6,12 +6,13 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 09:00:03 by fkeitel           #+#    #+#             */
-/*   Updated: 2023/10/16 10:23:07 by fkeitel          ###   ########.fr       */
+/*   Updated: 2023/12/20 16:36:53 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
+// This function appends the string src to the end of dst
 size_t	ft_strlcat(char *dst, const char *src, size_t dstsize)
 {
 	size_t	counter;

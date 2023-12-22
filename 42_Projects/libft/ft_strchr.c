@@ -6,12 +6,13 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 18:03:40 by fkeitel           #+#    #+#             */
-/*   Updated: 2023/10/18 16:50:31 by fkeitel          ###   ########.fr       */
+/*   Updated: 2023/12/20 16:34:44 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
+//This function search for 1. occurrence of char c in str, returns pointer to it
 char	*ft_strchr(const char *s, int c)
 {
 	int	str_len;

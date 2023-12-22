@@ -6,12 +6,14 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 20:57:35 by fkeitel           #+#    #+#             */
-/*   Updated: 2023/10/18 12:23:56 by fkeitel          ###   ########.fr       */
+/*   Updated: 2023/12/20 16:17:44 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
+// This function clears a linked list, freeing each element's content with del-
+//and then freeing the element itself,
 void	ft_lstclear(t_list **lst, void (*del)(void *))
 {
 	t_list	*current;

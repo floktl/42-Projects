@@ -6,12 +6,13 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 17:15:31 by fkeitel           #+#    #+#             */
-/*   Updated: 2023/10/18 16:51:13 by fkeitel          ###   ########.fr       */
+/*   Updated: 2023/12/20 16:46:21 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
+// This funct creates a new substring from string s starting start up to len
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
 	char	*sub_str;

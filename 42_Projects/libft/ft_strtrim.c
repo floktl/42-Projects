@@ -6,12 +6,13 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 13:32:18 by fkeitel           #+#    #+#             */
-/*   Updated: 2023/10/17 11:03:29 by fkeitel          ###   ########.fr       */
+/*   Updated: 2023/12/20 16:45:23 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
+// This funct trims char's from the beginning and end of str s1 that match set
 char	*ft_strtrim(char const *s1, char const *set)
 {
 	char	*str_trim;

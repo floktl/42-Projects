@@ -6,12 +6,13 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 14:55:20 by fkeitel           #+#    #+#             */
-/*   Updated: 2023/10/18 16:50:50 by fkeitel          ###   ########.fr       */
+/*   Updated: 2023/12/20 16:39:08 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
+// This funct copies str to dst, truncating to fit dstsize, ret total len of src
 size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 {
 	size_t	counter;

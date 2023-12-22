@@ -6,11 +6,15 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 09:33:22 by fkeitel           #+#    #+#             */
-/*   Updated: 2023/10/30 19:46:35 by fkeitel          ###   ########.fr       */
+/*   Updated: 2023/12/20 16:15:22 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+
+//
+//This functions convert an integer n to a string representation and returns it
+//
 
 static int	num_places(unsigned int n)
 {

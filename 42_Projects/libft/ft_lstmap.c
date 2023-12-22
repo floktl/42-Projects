@@ -6,12 +6,14 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 20:57:53 by fkeitel           #+#    #+#             */
-/*   Updated: 2023/10/31 10:07:55 by fkeitel          ###   ########.fr       */
+/*   Updated: 2023/12/20 16:21:31 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
+// This function creates a new linked list by applying function f to each-
+// element of list, uses del to free elements if memory allocation fails.
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 {
 	t_list	*current;

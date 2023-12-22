@@ -6,7 +6,7 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 15:14:38 by fkeitel           #+#    #+#             */
-/*   Updated: 2023/11/27 18:56:50 by fkeitel          ###   ########.fr       */
+/*   Updated: 2023/12/19 10:58:05 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,9 @@
 //
 
 //this function finds the  error type
-int	check_error(int n, char *argv[], t_stack **stack_a, t_stack **stack_b)
+int	check_error(int n, char *argv[])
 {
-	if (check_argument_error(n, argv) || \
-		check_stack_errors(stack_a, stack_b))
-		return (1);
+	if (check_argument_error(n, argv))
+		return (-1);
 	return (0);
 }

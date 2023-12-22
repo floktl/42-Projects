@@ -6,12 +6,13 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 11:51:19 by fkeitel           #+#    #+#             */
-/*   Updated: 2023/10/18 16:48:59 by fkeitel          ###   ########.fr       */
+/*   Updated: 2023/12/20 16:28:08 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
+// This function safely copies len bytes from src to dst,
 void	*ft_memmove(void *dst, const void *src, size_t len)
 {
 	int	i;

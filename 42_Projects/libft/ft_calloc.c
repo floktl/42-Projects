@@ -6,12 +6,14 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 10:58:37 by fkeitel           #+#    #+#             */
-/*   Updated: 2023/10/18 16:48:16 by fkeitel          ###   ########.fr       */
+/*   Updated: 2023/12/20 16:11:33 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
+//This function allocates memory for an array of count elements of size bytes-
+//each and initializes all bytes in the allocated memory to zero
 void	*ft_calloc(size_t count, size_t size)
 {
 	void	*str;

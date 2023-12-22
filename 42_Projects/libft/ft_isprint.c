@@ -6,13 +6,14 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 15:34:48 by fkeitel           #+#    #+#             */
-/*   Updated: 2023/10/13 10:45:07 by fkeitel          ###   ########.fr       */
+/*   Updated: 2023/12/20 16:14:31 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 /* #include <stdio.h> */
 #include "libft.h"
 
+// This function checks if the char c is printable, incl space, excl DEL char
 int	ft_isprint(int c)
 {
 	if (c >= 32 && c <= 126)

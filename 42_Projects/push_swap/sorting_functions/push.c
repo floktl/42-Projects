@@ -6,7 +6,7 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 10:52:51 by fkeitel           #+#    #+#             */
-/*   Updated: 2023/12/05 16:49:21 by fkeitel          ###   ########.fr       */
+/*   Updated: 2023/12/19 11:49:57 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,6 @@
 //
 //	move or remove nodes from stack to stack:
 //
-
-//adding new node to a stack at the top
-void	push_new_node(t_stack **t_head, int content)
-{
-	t_stack	*new_node;
-
-	new_node = (t_stack *) malloc(sizeof(t_stack));
-	if (new_node == NULL)
-		return ;
-	new_node->content = content;
-	new_node->next = *t_head;
-	*t_head = new_node;
-}
 
 //move the top node of one stack to the top node of the other stack
 int	push(t_stack **stack_1, t_stack **stack_2)
@@ -46,13 +33,15 @@ int	push(t_stack **stack_1, t_stack **stack_2)
 }
 
 //move top from stack_b to top of stack_a
-int	push_a(t_stack **stack_a, t_stack **stack_b)
+void	push_a(t_stack **stack_a, t_stack **stack_b)
 {
-	return (push(stack_a, stack_b));
+	if (push(stack_a, stack_b) == 1)
+		printf("pa\n");
 }
 
 //move top from stack_a to top of stack_b
-int	push_b(t_stack **stack_a, t_stack **stack_b)
+void	push_b(t_stack **stack_a, t_stack **stack_b)
 {
-	return (push(stack_b, stack_a));
+	if (push(stack_b, stack_a) == 1)
+		printf("pb\n");
 }

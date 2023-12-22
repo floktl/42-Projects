@@ -1,33 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printstr.c                                      :+:      :+:    :+:   */
+/*   first_word.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/23 10:48:48 by fkeitel           #+#    #+#             */
-/*   Updated: 2023/10/24 11:06:21 by fkeitel          ###   ########.fr       */
+/*   Created: 2023/12/19 16:14:51 by fkeitel           #+#    #+#             */
+/*   Updated: 2023/12/19 16:41:48 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "unistd.h"
 
-int	ft_printstr(char *str, int counter)
+int	main(int argc, char **argv)
 {
-	int	check;
+	int	i;
 
-	if (!str)
+	i = 0;
+	if (!argv[1] && argv[1])
+		return (-1);
+	if (argc == 2)
 	{
-		check = ft_printstr("(null)", 0);
-		if (check == -1)
-			return (-1);
-		return (6);
+		while (argv[1][i] == ' ' && argv[1][i] != '\n' && argv[1][i] == '\t')
+			i++;
+		while (argv[1][i] != ' ' && argv[1][i] && argv[1][i] != '\t')
+		{
+			write(1, &argv[1][i], 1);
+			i++;
+		}
 	}
-	while (str[counter])
-	{
-		if (ft_putchar(str[counter], 1, 1) == -1)
-			return (-1);
-		counter++;
-	}
-	return (counter);
+	write(1, "\n", 1);
+	return (0);
 }

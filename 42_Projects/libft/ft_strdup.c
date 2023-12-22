@@ -6,12 +6,13 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 15:18:52 by fkeitel           #+#    #+#             */
-/*   Updated: 2023/10/18 16:50:36 by fkeitel          ###   ########.fr       */
+/*   Updated: 2023/12/20 16:35:29 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
+// This function duplicates the string s1, returning pointer to the new string.
 char	*ft_strdup(const char *s1)
 {
 	char	*s2;

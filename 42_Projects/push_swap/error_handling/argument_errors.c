@@ -6,7 +6,7 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 23:46:27 by fkeitel           #+#    #+#             */
-/*   Updated: 2023/11/27 18:56:45 by fkeitel          ###   ########.fr       */
+/*   Updated: 2023/12/19 12:10:03 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,8 +85,7 @@ int	check_if_num_is_digit(char *argv[], int *numbers, int cur_index)
 			j++;
 		if (ft_isdigit((int)argv[cur_index][j]) == 0)
 		{
-			printf("%d, %d, %u\n", cur_index, j, argv[cur_index][j]);
-			printf("pipi\n");
+			printf("Error\n");
 			free (numbers);
 			return (1);
 		}

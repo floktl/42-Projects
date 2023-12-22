@@ -6,11 +6,15 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 11:08:31 by fkeitel           #+#    #+#             */
-/*   Updated: 2023/10/31 10:36:50 by fkeitel          ###   ########.fr       */
+/*   Updated: 2023/12/20 16:33:38 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+
+//
+// This functions splits string by delimiter c into array of str's, return array
+//
 
 static int	count_words(const char *s, char c)
 {

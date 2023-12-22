@@ -6,12 +6,14 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 19:00:23 by fkeitel           #+#    #+#             */
-/*   Updated: 2023/10/18 16:46:48 by fkeitel          ###   ########.fr       */
+/*   Updated: 2023/12/20 16:09:57 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
+// This function converts a string to an integer, handling optional leading -
+//whitespaces, a sign character (+/-), numeric digits, returns the integer value
 int	ft_atoi(const char *str)
 {
 	int	sign;

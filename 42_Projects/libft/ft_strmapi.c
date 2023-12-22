@@ -6,15 +6,16 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 13:51:01 by fkeitel           #+#    #+#             */
-/*   Updated: 2023/10/30 19:45:15 by fkeitel          ###   ########.fr       */
+/*   Updated: 2023/12/20 17:07:52 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
+//This function creat new string by applying function f to each character of str
 char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 {
-	char	*str;
+    char	*str;
 	int		i;
 
 	i = 0;
@@ -30,11 +31,11 @@ char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 	return (str);
 }
 
-/*int main()
-{
-	char *s = "Hellofghsjdf";
-	char *str = ft_strmapi(s, &ft_tosupper);
-	printf("%s\n", str);
-	free(str);
-	return (0);
-}*/
+//int main()
+//{
+//	char *s = "Hellofghsjdf";
+//	char *str = ft_strmapi(s, &ft_tosupper);
+//	printf("%s\n", str);
+//	free(str);
+//	return (0);
+//}

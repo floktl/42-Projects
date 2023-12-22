@@ -6,12 +6,13 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 20:57:43 by fkeitel           #+#    #+#             */
-/*   Updated: 2023/10/18 12:52:56 by fkeitel          ###   ########.fr       */
+/*   Updated: 2023/12/20 16:19:49 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
+//This funct iterates over link. list, applies function f to cont of each elemen
 void	ft_lstiter(t_list *lst, void (*f)(void *))
 {
 	t_list	*current;

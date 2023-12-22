@@ -6,12 +6,13 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 19:18:51 by fkeitel           #+#    #+#             */
-/*   Updated: 2023/10/18 16:48:13 by fkeitel          ###   ########.fr       */
+/*   Updated: 2023/12/20 16:10:35 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
+// This function sets first n bytes of the memory area pointed to by s to zero
 void	ft_bzero(void *s, size_t n)
 {
 	size_t	counter;

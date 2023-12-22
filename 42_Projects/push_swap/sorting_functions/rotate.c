@@ -6,7 +6,7 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 15:30:09 by fkeitel           #+#    #+#             */
-/*   Updated: 2023/12/05 16:55:24 by fkeitel          ###   ########.fr       */
+/*   Updated: 2023/12/19 11:11:46 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,23 +35,23 @@ int	rotate(t_stack **stack)
 }
 
 //shift up all elements of stack_a and the first node becomes the last node
-int	rotate_a(t_stack **stack_a)
+void	rotate_a(t_stack **stack_a)
 {
-	return (rotate(stack_a));
+	if (rotate(stack_a) == 1)
+		printf("ra\n");
 }
 
 //shift up all elements of stack_b and the first node becomes the last node
-int	rotate_b(t_stack **stack_b)
+void	rotate_b(t_stack **stack_b)
 {
-	return (rotate(stack_b));
+	if (rotate(stack_b) == 1)
+		printf("rb\n");
 }
 
 //shift up all elements of stack_a and stack_b at the same time
 //the first node becomes the last node
-int	rotate_rr(t_stack **stack_a, t_stack **stack_b)
+void	rotate_rr(t_stack **stack_a, t_stack **stack_b)
 {
-	int	i;
-
-	i = (rotate(stack_a) + rotate(stack_b));
-	return (i);
+	if (rotate(stack_a) + rotate(stack_b) == 2)
+		printf("rr\n");
 }

@@ -6,11 +6,15 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 22:39:23 by fkeitel           #+#    #+#             */
-/*   Updated: 2023/10/30 19:48:54 by fkeitel          ###   ########.fr       */
+/*   Updated: 2023/12/20 16:31:24 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+
+//
+// This functions writes integer n to specified file descriptor fd as a string
+//
 
 static void	put_char(char c, int fd)
 {

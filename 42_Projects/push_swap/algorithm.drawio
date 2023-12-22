@@ -1,31 +1,31 @@
 <mxfile host="65bd71144e">
     <diagram id="9h2JYtKhRVMtq_xXQFUE" name="Page-1">
-        <mxGraphModel dx="2639" dy="979" grid="0" gridSize="10" guides="0" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+        <mxGraphModel dx="2678" dy="832" grid="0" gridSize="10" guides="0" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
-                <mxCell id="703" value="" style="shape=partialRectangle;whiteSpace=wrap;html=1;;top=0;fillColor=green;routingCenterX=-0.5;fontSize=14;" vertex="1" parent="1">
+                <mxCell id="703" value="" style="shape=partialRectangle;whiteSpace=wrap;html=1;;top=0;fillColor=green;routingCenterX=-0.5;fontSize=14;" parent="1" vertex="1">
                     <mxGeometry x="-1672.6352941176472" y="286.5744680851064" width="786.635294117647" height="743.2223037417461" as="geometry"/>
                 </mxCell>
-                <mxCell id="693" value="" style="shape=partialRectangle;whiteSpace=wrap;html=1;bottom=1;right=1;left=1;top=0;fillColor=blue;routingCenterX=-0.5;fontSize=14;" vertex="1" parent="1">
+                <mxCell id="693" value="" style="shape=partialRectangle;whiteSpace=wrap;html=1;bottom=1;right=1;left=1;top=0;fillColor=blue;routingCenterX=-0.5;fontSize=14;" parent="1" vertex="1">
                     <mxGeometry x="-1616.4470588235295" y="677.2802641232576" width="655.529411764706" height="293.7637564196625" as="geometry"/>
                 </mxCell>
-                <mxCell id="691" value="" style="shape=partialRectangle;whiteSpace=wrap;html=1;bottom=1;right=1;left=1;top=0;fillColor=#663300;routingCenterX=-0.5;fontSize=14;" vertex="1" parent="1">
+                <mxCell id="691" value="" style="shape=partialRectangle;whiteSpace=wrap;html=1;bottom=1;right=1;left=1;top=0;fillColor=#663300;routingCenterX=-0.5;fontSize=14;" parent="1" vertex="1">
                     <mxGeometry x="-1541.5294117647059" y="736.03301540719" width="505.6941176470589" height="176.2582538517975" as="geometry"/>
                 </mxCell>
-                <mxCell id="706" value="" style="shape=partialRectangle;whiteSpace=wrap;html=1;bottom=1;right=1;left=1;top=0;fillColor=#0D0600;routingCenterX=-0.5;fontSize=14;" vertex="1" parent="1">
+                <mxCell id="706" value="" style="shape=partialRectangle;whiteSpace=wrap;html=1;bottom=1;right=1;left=1;top=0;fillColor=#0D0600;routingCenterX=-0.5;fontSize=14;" parent="1" vertex="1">
                     <mxGeometry x="-1513" y="802" width="430.69" height="51.26" as="geometry"/>
                 </mxCell>
-                <mxCell id="697" value="" style="shape=partialRectangle;whiteSpace=wrap;html=1;bottom=1;right=1;left=1;top=0;fillColor=#CC00CC;routingCenterX=-0.5;fontSize=14;" vertex="1" parent="1">
+                <mxCell id="697" value="" style="shape=partialRectangle;whiteSpace=wrap;html=1;bottom=1;right=1;left=1;top=0;fillColor=#CC00CC;routingCenterX=-0.5;fontSize=14;" parent="1" vertex="1">
                     <mxGeometry x="-1616.4470588235295" y="581.8070432868672" width="655.529411764706" height="36.720469552457814" as="geometry"/>
                 </mxCell>
-                <mxCell id="701" value="" style="shape=partialRectangle;whiteSpace=wrap;html=1;bottom=1;right=1;left=1;top=0;fillColor=red;routingCenterX=-0.5;fontSize=14;" vertex="1" parent="1">
+                <mxCell id="701" value="" style="shape=partialRectangle;whiteSpace=wrap;html=1;bottom=1;right=1;left=1;top=0;fillColor=red;routingCenterX=-0.5;fontSize=14;" parent="1" vertex="1">
                     <mxGeometry x="-1616.4470588235295" y="349.7336757153338" width="655.529411764706" height="180.66471019809245" as="geometry"/>
                 </mxCell>
-                <mxCell id="700" value="" style="shape=partialRectangle;whiteSpace=wrap;html=1;bottom=1;right=1;left=1;top=0;fillColor=#009999;routingCenterX=-0.5;fontSize=14;" vertex="1" parent="1">
+                <mxCell id="700" value="" style="shape=partialRectangle;whiteSpace=wrap;html=1;bottom=1;right=1;left=1;top=0;fillColor=#009999;routingCenterX=-0.5;fontSize=14;" parent="1" vertex="1">
                     <mxGeometry x="-1541.5294117647059" y="494.4123257520176" width="505.6941176470589" height="31.579603815113718" as="geometry"/>
                 </mxCell>
-                <mxCell id="698" value="" style="shape=partialRectangle;whiteSpace=wrap;html=1;bottom=1;right=1;left=1;top=0;fillColor=#663300;routingCenterX=-0.5;fontSize=14;" vertex="1" parent="1">
+                <mxCell id="698" value="" style="shape=partialRectangle;whiteSpace=wrap;html=1;bottom=1;right=1;left=1;top=0;fillColor=#663300;routingCenterX=-0.5;fontSize=14;" parent="1" vertex="1">
                     <mxGeometry x="-1541.5294117647059" y="379.11005135730005" width="505.6941176470589" height="88.12912692589875" as="geometry"/>
                 </mxCell>
                 <mxCell id="2" value="&lt;font style=&quot;font-size: 18px;&quot;&gt;Stack_b&lt;/font&gt;" style="shape=ext;double=1;rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
@@ -62,7 +62,7 @@
                     <mxGeometry x="320" y="600" width="120" height="40" as="geometry"/>
                 </mxCell>
                 <mxCell id="51" value="5" style="shape=ext;double=1;rounded=0;whiteSpace=wrap;html=1;fontSize=18;" parent="1" vertex="1">
-                    <mxGeometry x="120" y="640" width="120" height="40" as="geometry"/>
+                    <mxGeometry x="-202" y="533" width="120" height="40" as="geometry"/>
                 </mxCell>
                 <mxCell id="52" value="5_last" style="shape=ext;double=1;rounded=0;whiteSpace=wrap;html=1;fontSize=18;" parent="1" vertex="1">
                     <mxGeometry x="520" y="480" width="120" height="40" as="geometry"/>
@@ -1204,83 +1204,95 @@
                 <mxCell id="658" value="best num (stack_a, stack_b,&amp;nbsp; num, cur_op)&lt;br&gt;cur_op_negativ, cur_op_a_negativ&lt;br&gt;best_num_a&lt;br&gt;best_num_b" style="shape=ext;double=1;rounded=0;whiteSpace=wrap;html=1;fontSize=18;" parent="1" vertex="1">
                     <mxGeometry x="-840" y="90" width="1119" height="390" as="geometry"/>
                 </mxCell>
-                <mxCell id="659" value="&lt;font style=&quot;font-size: 72px;&quot;&gt;push_swap logic&lt;/font&gt;" style="shape=ext;double=1;rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                <mxCell id="659" value="&lt;font style=&quot;font-size: 72px;&quot;&gt;push_swap logic&lt;/font&gt;" style="shape=ext;double=1;rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="-1678" y="44" width="796" height="139.53778429933968" as="geometry"/>
                 </mxCell>
-                <mxCell id="660" value="&lt;font style=&quot;font-size: 24px;&quot;&gt;check_error&lt;/font&gt;" style="shape=ext;double=1;rounded=0;whiteSpace=wrap;html=1;fillColor=red;" vertex="1" parent="1">
+                <mxCell id="660" value="&lt;font style=&quot;font-size: 24px;&quot;&gt;check_error&lt;/font&gt;" style="shape=ext;double=1;rounded=0;whiteSpace=wrap;html=1;fillColor=red;" parent="1" vertex="1">
                     <mxGeometry x="-1616.4470588235295" y="290.9809244314013" width="655.529411764706" height="58.7527512839325" as="geometry"/>
                 </mxCell>
-                <mxCell id="661" value="&lt;font style=&quot;font-size: 24px;&quot;&gt;fill stack a with args&lt;/font&gt;" style="shape=ext;double=1;rounded=0;whiteSpace=wrap;html=1;fillColor=#CC00CC;" vertex="1" parent="1">
+                <mxCell id="661" value="&lt;font style=&quot;font-size: 24px;&quot;&gt;fill stack a with args&lt;/font&gt;" style="shape=ext;double=1;rounded=0;whiteSpace=wrap;html=1;fillColor=#CC00CC;" parent="1" vertex="1">
                     <mxGeometry x="-1616.4470588235295" y="525.9919295671314" width="655.529411764706" height="60.95597945707997" as="geometry"/>
                 </mxCell>
-                <mxCell id="663" value="&lt;font style=&quot;font-size: 24px;&quot;&gt;sorting algorithm&lt;/font&gt;" style="shape=ext;double=1;rounded=0;whiteSpace=wrap;html=1;fillColor=blue;" vertex="1" parent="1">
+                <mxCell id="663" value="&lt;font style=&quot;font-size: 24px;&quot;&gt;sorting algorithm&lt;/font&gt;" style="shape=ext;double=1;rounded=0;whiteSpace=wrap;html=1;fillColor=blue;" parent="1" vertex="1">
                     <mxGeometry x="-1616.4470588235295" y="616.3242846661775" width="655.529411764706" height="58.7527512839325" as="geometry"/>
                 </mxCell>
-                <mxCell id="664" value="&lt;font style=&quot;font-size: 24px;&quot;&gt;print stacks&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#CC00CC;" vertex="1" parent="1">
+                <mxCell id="664" value="&lt;font style=&quot;font-size: 24px;&quot;&gt;print stacks&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#CC00CC;" parent="1" vertex="1">
                     <mxGeometry x="-1616.4470588235295" y="971.04402054292" width="655.529411764706" height="60.95597945707997" as="geometry"/>
                 </mxCell>
-                <mxCell id="667" value="&lt;font style=&quot;font-size: 18px;&quot;&gt;check argument error&lt;/font&gt;" style="shape=ext;double=1;rounded=0;whiteSpace=wrap;html=1;fillColor=#663300;" vertex="1" parent="1">
+                <mxCell id="667" value="&lt;font style=&quot;font-size: 18px;&quot;&gt;check argument error&lt;/font&gt;" style="shape=ext;double=1;rounded=0;whiteSpace=wrap;html=1;fillColor=#663300;" parent="1" vertex="1">
                     <mxGeometry x="-1541.5294117647059" y="349.7336757153338" width="505.6941176470589" height="29.37637564196625" as="geometry"/>
                 </mxCell>
-                <mxCell id="668" value="&lt;font style=&quot;font-size: 18px;&quot;&gt;check stack error&lt;/font&gt;" style="shape=ext;double=1;rounded=0;whiteSpace=wrap;html=1;fillColor=#009999;" vertex="1" parent="1">
+                <mxCell id="668" value="&lt;font style=&quot;font-size: 18px;&quot;&gt;check stack error&lt;/font&gt;" style="shape=ext;double=1;rounded=0;whiteSpace=wrap;html=1;fillColor=#009999;" parent="1" vertex="1">
                     <mxGeometry x="-1541.5294117647059" y="467.23917828319884" width="505.6941176470589" height="29.37637564196625" as="geometry"/>
                 </mxCell>
-                <mxCell id="669" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;check for duplicates&lt;/font&gt;" style="shape=ext;double=1;rounded=0;whiteSpace=wrap;html=1;fillColor=#190D00;" vertex="1" parent="1">
+                <mxCell id="669" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;check for duplicates&lt;/font&gt;" style="shape=ext;double=1;rounded=0;whiteSpace=wrap;html=1;fillColor=#190D00;" parent="1" vertex="1">
                     <mxGeometry x="-1372.964705882353" y="379.11005135730005" width="168.56470588235294" height="29.37637564196625" as="geometry"/>
                 </mxCell>
-                <mxCell id="670" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;check if arg is in int range&lt;/font&gt;" style="shape=ext;double=1;rounded=0;whiteSpace=wrap;html=1;fillColor=#190D00;" vertex="1" parent="1">
+                <mxCell id="670" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;check if arg is in int range&lt;/font&gt;" style="shape=ext;double=1;rounded=0;whiteSpace=wrap;html=1;fillColor=#190D00;" parent="1" vertex="1">
                     <mxGeometry x="-1372.964705882353" y="408.4864269992663" width="168.56470588235294" height="29.37637564196625" as="geometry"/>
                 </mxCell>
-                <mxCell id="671" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;check if num is digit&lt;/font&gt;" style="shape=ext;double=1;rounded=0;whiteSpace=wrap;html=1;fillColor=#190D00;" vertex="1" parent="1">
+                <mxCell id="671" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;check if num is digit&lt;/font&gt;" style="shape=ext;double=1;rounded=0;whiteSpace=wrap;html=1;fillColor=#190D00;" parent="1" vertex="1">
                     <mxGeometry x="-1372.964705882353" y="437.8628026412326" width="168.56470588235294" height="29.37637564196625" as="geometry"/>
                 </mxCell>
-                <mxCell id="672" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;check if stacks are empty&lt;/font&gt;" style="shape=ext;double=1;rounded=0;whiteSpace=wrap;html=1;fillColor=#190D00;" vertex="1" parent="1">
+                <mxCell id="672" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;check if stacks are empty&lt;/font&gt;" style="shape=ext;double=1;rounded=0;whiteSpace=wrap;html=1;fillColor=#190D00;" parent="1" vertex="1">
                     <mxGeometry x="-1372.964705882353" y="496.61555392516505" width="168.56470588235294" height="29.37637564196625" as="geometry"/>
                 </mxCell>
-                <mxCell id="673" value="&lt;span style=&quot;font-size: 18px;&quot;&gt;push new node to stack a&lt;/span&gt;" style="shape=ext;double=1;rounded=0;whiteSpace=wrap;html=1;fillColor=#00994D;" vertex="1" parent="1">
+                <mxCell id="673" value="&lt;span style=&quot;font-size: 18px;&quot;&gt;push new node to stack a&lt;/span&gt;" style="shape=ext;double=1;rounded=0;whiteSpace=wrap;html=1;fillColor=#00994D;" parent="1" vertex="1">
                     <mxGeometry x="-1541.5294117647059" y="586.9479090242113" width="505.6941176470589" height="29.37637564196625" as="geometry"/>
                 </mxCell>
-                <mxCell id="675" value="&lt;font style=&quot;font-size: 18px;&quot;&gt;push 2 nodes to b&lt;/font&gt;" style="shape=ext;double=1;rounded=0;whiteSpace=wrap;html=1;fillColor=#663300;" vertex="1" parent="1">
+                <mxCell id="675" value="&lt;font style=&quot;font-size: 18px;&quot;&gt;push 2 nodes to b&lt;/font&gt;" style="shape=ext;double=1;rounded=0;whiteSpace=wrap;html=1;fillColor=#663300;" parent="1" vertex="1">
                     <mxGeometry x="-1541.5294117647059" y="677.2802641232576" width="505.6941176470589" height="29.37637564196625" as="geometry"/>
                 </mxCell>
-                <mxCell id="676" value="&lt;font style=&quot;font-size: 18px;&quot;&gt;iterate stack a until stack a empty&lt;/font&gt;" style="shape=ext;double=1;rounded=0;whiteSpace=wrap;html=1;fillColor=#663300;" vertex="1" parent="1">
+                <mxCell id="676" value="&lt;font style=&quot;font-size: 18px;&quot;&gt;iterate stack a until stack a empty&lt;/font&gt;" style="shape=ext;double=1;rounded=0;whiteSpace=wrap;html=1;fillColor=#663300;" parent="1" vertex="1">
                     <mxGeometry x="-1541.5294117647059" y="706.6566397652238" width="505.6941176470589" height="29.37637564196625" as="geometry"/>
                 </mxCell>
-                <mxCell id="677" value="&lt;span style=&quot;font-size: 14px;&quot;&gt;find best num&lt;/span&gt;" style="shape=ext;double=1;rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                <mxCell id="677" value="&lt;span style=&quot;font-size: 14px;&quot;&gt;find best num&lt;/span&gt;" style="shape=ext;double=1;rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="-1382.3294117647058" y="734.5641966250917" width="168.56470588235294" height="29.37637564196625" as="geometry"/>
                 </mxCell>
-                <mxCell id="679" value="&lt;span style=&quot;font-size: 14px;&quot;&gt;calculate operations&lt;/span&gt;" style="shape=ext;double=1;rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                <mxCell id="679" value="&lt;span style=&quot;font-size: 14px;&quot;&gt;calculate operations&lt;/span&gt;" style="shape=ext;double=1;rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="-1384" y="765.41" width="170.24" height="29.38" as="geometry"/>
                 </mxCell>
-                <mxCell id="680" value="&lt;span style=&quot;font-size: 14px;&quot;&gt;prepare stacks to push to b&lt;/span&gt;" style="shape=ext;double=1;rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                <mxCell id="680" value="&lt;span style=&quot;font-size: 14px;&quot;&gt;prepare stacks to push to b&lt;/span&gt;" style="shape=ext;double=1;rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="-1382.3294117647058" y="853.538517975055" width="168.56470588235294" height="29.37637564196625" as="geometry"/>
                 </mxCell>
-                <mxCell id="681" value="&lt;span style=&quot;font-size: 14px;&quot;&gt;calculate min operations for a&lt;/span&gt;" style="shape=ext;double=1;rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                <mxCell id="681" value="&lt;span style=&quot;font-size: 14px;&quot;&gt;calculate min operations for a&lt;/span&gt;" style="shape=ext;double=1;rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="-1513.4352941176471" y="794.7857666911225" width="191.97647058823532" height="29.37637564196625" as="geometry"/>
                 </mxCell>
-                <mxCell id="682" value="&lt;span style=&quot;font-size: 14px;&quot;&gt;calculate min operations for a&lt;/span&gt;" style="shape=ext;double=1;rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                <mxCell id="682" value="&lt;span style=&quot;font-size: 14px;&quot;&gt;calculate min operations for a&lt;/span&gt;" style="shape=ext;double=1;rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="-1274.635294117647" y="794.7857666911225" width="191.97647058823532" height="29.37637564196625" as="geometry"/>
                 </mxCell>
-                <mxCell id="683" value="+" style="shape=ext;double=1;rounded=0;whiteSpace=wrap;html=1;fontSize=14;" vertex="1" parent="1">
+                <mxCell id="683" value="+" style="shape=ext;double=1;rounded=0;whiteSpace=wrap;html=1;fontSize=14;" parent="1" vertex="1">
                     <mxGeometry x="-1321.4588235294118" y="794.7857666911225" width="46.82352941176471" height="29.37637564196625" as="geometry"/>
                 </mxCell>
-                <mxCell id="684" value="&lt;span style=&quot;font-size: 14px;&quot;&gt;find best insert position&lt;/span&gt;" style="shape=ext;double=1;rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                <mxCell id="684" value="&lt;span style=&quot;font-size: 14px;&quot;&gt;find best insert position&lt;/span&gt;" style="shape=ext;double=1;rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="-1274.635294117647" y="824.1621423330888" width="191.97647058823532" height="29.37637564196625" as="geometry"/>
                 </mxCell>
-                <mxCell id="685" value="&lt;span style=&quot;font-size: 14px;&quot;&gt;calculate steps to pull num to top&lt;/span&gt;" style="shape=ext;double=1;rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                <mxCell id="685" value="&lt;span style=&quot;font-size: 14px;&quot;&gt;calculate steps to pull num to top&lt;/span&gt;" style="shape=ext;double=1;rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="-1513.4352941176471" y="821.9589141599413" width="191.97647058823532" height="29.37637564196625" as="geometry"/>
                 </mxCell>
-                <mxCell id="687" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;push b&lt;/font&gt;" style="shape=ext;double=1;rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                <mxCell id="687" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;push b&lt;/font&gt;" style="shape=ext;double=1;rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
                     <mxGeometry x="-1382.3294117647058" y="882.9148936170212" width="168.56470588235294" height="29.37637564196625" as="geometry"/>
                 </mxCell>
-                <mxCell id="692" value="&lt;font style=&quot;font-size: 18px;&quot;&gt;rotate b, highest number to top, lowest bottom&lt;/font&gt;" style="shape=ext;double=1;rounded=0;whiteSpace=wrap;html=1;fillColor=#663300;" vertex="1" parent="1">
+                <mxCell id="692" value="&lt;font style=&quot;font-size: 18px;&quot;&gt;rotate b, highest number to top, lowest bottom&lt;/font&gt;" style="shape=ext;double=1;rounded=0;whiteSpace=wrap;html=1;fillColor=#663300;" parent="1" vertex="1">
                     <mxGeometry x="-1541.5294117647059" y="912.2912692589875" width="505.6941176470589" height="29.37637564196625" as="geometry"/>
                 </mxCell>
-                <mxCell id="695" value="&lt;font style=&quot;font-size: 18px;&quot;&gt;push to stack a until stack b empty&lt;/font&gt;" style="shape=ext;double=1;rounded=0;whiteSpace=wrap;html=1;fillColor=#663300;" vertex="1" parent="1">
+                <mxCell id="695" value="&lt;font style=&quot;font-size: 18px;&quot;&gt;push to stack a until stack b empty&lt;/font&gt;" style="shape=ext;double=1;rounded=0;whiteSpace=wrap;html=1;fillColor=#663300;" parent="1" vertex="1">
                     <mxGeometry x="-1541.5294117647059" y="941.6676449009537" width="505.6941176470589" height="29.37637564196625" as="geometry"/>
                 </mxCell>
-                <mxCell id="702" value="&lt;font style=&quot;font-size: 48px;&quot;&gt;Main&lt;/font&gt;" style="shape=ext;double=0;rounded=0;html=1;fillColor=green;strokeColor=#1C291D;" vertex="1" parent="1">
+                <mxCell id="702" value="&lt;font style=&quot;font-size: 48px;&quot;&gt;Main&lt;/font&gt;" style="shape=ext;double=0;rounded=0;html=1;fillColor=green;strokeColor=#1C291D;" parent="1" vertex="1">
                     <mxGeometry x="-1672.6352941176472" y="185.2259721203228" width="786.635294117647" height="105.7549523110785" as="geometry"/>
+                </mxCell>
+                <mxCell id="707" value="1" style="shape=ext;double=1;rounded=0;whiteSpace=wrap;html=1;fontSize=18;" vertex="1" parent="1">
+                    <mxGeometry x="-202" y="492" width="120" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="708" value="3" style="shape=ext;double=1;rounded=0;whiteSpace=wrap;html=1;fontSize=18;" vertex="1" parent="1">
+                    <mxGeometry x="-202" y="611" width="120" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="709" value="2" style="shape=ext;double=1;rounded=0;whiteSpace=wrap;html=1;fontSize=18;" vertex="1" parent="1">
+                    <mxGeometry x="-202" y="572" width="120" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="711" value="4" style="shape=ext;double=1;rounded=0;whiteSpace=wrap;html=1;fontSize=18;" vertex="1" parent="1">
+                    <mxGeometry x="-202" y="649" width="120" height="40" as="geometry"/>
                 </mxCell>
             </root>
         </mxGraphModel>

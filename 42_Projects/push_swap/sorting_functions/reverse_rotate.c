@@ -6,7 +6,7 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 22:09:37 by fkeitel           #+#    #+#             */
-/*   Updated: 2023/12/05 16:52:56 by fkeitel          ###   ########.fr       */
+/*   Updated: 2023/12/18 18:31:11 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,23 +35,23 @@ int	reverse_rotate(t_stack **stack)
 }
 
 //shift down all elements of stack_a and the last node becomes the first node
-int	reverse_rotate_a(t_stack **stack_a)
+void	reverse_rotate_a(t_stack **stack_a)
 {
-	return (reverse_rotate(stack_a));
+	if (reverse_rotate(stack_a) == 1)
+		printf("rra\n");
 }
 
 //shift down all elements of stack_b and the last node becomes the first node
-int	reverse_rotate_b(t_stack **stack_b)
+void	reverse_rotate_b(t_stack **stack_b)
 {
-	return (reverse_rotate(stack_b));
+	if (reverse_rotate(stack_b) == 1)
+		printf("rrb\n");
 }
 
 //shift down all elements of stack_a and stack_b at the same time
 //the last node becomes the first node
-int	reverse_rotate_rr(t_stack **stack_a, t_stack **stack_b)
+void	reverse_rotate_rr(t_stack **stack_a, t_stack **stack_b)
 {
-	int	i;
-
-	i = reverse_rotate(stack_a) + reverse_rotate(stack_b);
-	return (i);
+	if (reverse_rotate(stack_a) + reverse_rotate(stack_b) == 2)
+		printf("rrr\n");
 }

@@ -6,7 +6,7 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 21:41:05 by fkeitel           #+#    #+#             */
-/*   Updated: 2023/12/06 22:30:26 by fkeitel          ###   ########.fr       */
+/*   Updated: 2023/12/18 13:27:10 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,41 @@
 //
 //	helper functions, or modifies existing functions:
 //
+
+//find the 3 highest number in a stack
+int	*find_three_highest(t_stack *stack)
+{
+	t_stack	*temp;
+	int		*highest;
+	int		value;
+
+	temp = stack;
+	highest = (int *)malloc(3 * sizeof(int));
+	if (highest == NULL)
+		return (0);
+	highest[0] = INT_MIN;
+	highest[1] = INT_MIN;
+	highest[2] = INT_MIN;
+	while (temp != NULL)
+	{
+		value = temp->content;
+		if (value > highest[0])
+		{
+			highest[2] = highest[1];
+			highest[1] = highest[0];
+			highest[0] = value;
+		}
+		else if (value > highest[1])
+		{
+			highest[2] = highest[1];
+			highest[1] = value;
+		}
+		else if (value > highest[2])
+			highest[2] = value;
+		temp = temp->next;
+	}
+	return (highest);
+}
 
 //function to count length of the longest string in the stack
 int	stack_biggest_str_length(t_stack *stack)

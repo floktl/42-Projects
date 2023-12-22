@@ -6,12 +6,13 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 18:44:28 by fkeitel           #+#    #+#             */
-/*   Updated: 2023/10/18 16:51:07 by fkeitel          ###   ########.fr       */
+/*   Updated: 2023/12/20 16:43:41 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
+//This functsearches for last occurrence of char c in str s, ret pointer to it
 char	*ft_strrchr(const char *s, int c)
 {
 	int	counter;

@@ -6,12 +6,15 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 11:39:10 by fkeitel           #+#    #+#             */
-/*   Updated: 2023/10/18 16:51:02 by fkeitel          ###   ########.fr       */
+/*   Updated: 2023/12/20 16:41:33 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
+// This function compares up to n characters of strings s1 and s2, returning,
+//integer < , =, or > zero if s1 is found, respectively,
+// to be less than, to match, or be greater than s2.
 int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {
 	size_t	counter;

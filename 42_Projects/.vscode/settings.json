@@ -1,9 +1,0 @@
-{
-	"files.associations": {
-		"__node_handle": "c",
-		"iterator": "c",
-		"__bit_reference": "c",
-		"algorithm": "c",
-		"ratio": "c"
-	}
-}

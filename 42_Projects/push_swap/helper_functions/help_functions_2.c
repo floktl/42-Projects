@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   help_functions.c                                   :+:      :+:    :+:   */
+/*   help_functions_2.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 19:54:49 by fkeitel           #+#    #+#             */
-/*   Updated: 2023/12/05 18:00:29 by fkeitel          ###   ########.fr       */
+/*   Updated: 2023/12/22 11:56:51 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ int	find_highest(t_stack *stack)
 
 	if (stack == NULL)
 		return (0);
-	highest = stack->content;
-	current = stack->next;
+	highest = INT_MIN;
+	current = stack;
 	while (current != NULL)
 	{
 		if (current->content > highest)

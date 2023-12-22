@@ -6,7 +6,7 @@
 #    By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/31 10:58:51 by fkeitel           #+#    #+#              #
-#    Updated: 2023/12/07 09:53:47 by fkeitel          ###   ########.fr        #
+#    Updated: 2023/12/22 18:20:44 by fkeitel          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,7 @@ ERROR = argument_errors.c find_error_type.c stack_errors.c \
 
 SORTING = algorithm.c algorithm_help_functions.c under_five_nodes_alg.c \
 
-HELPER = help_functions_1.c help_functions_2.c \
+HELPER = help_functions_1.c help_functions_2.c help_functions_3.c \
 
 # Object files, derived from source files
 OBJ = $(SORT:%.c=$(SORTDIR)/%.o) $(CREATE:%.c=$(CREATEDIR)/%.o) \

@@ -6,7 +6,7 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 16:31:06 by fkeitel           #+#    #+#             */
-/*   Updated: 2023/12/18 17:54:07 by fkeitel          ###   ########.fr       */
+/*   Updated: 2023/12/22 18:46:13 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	calculate_op(t_stack *stack_a, t_stack *stack_b, int pos)
 }
 
 //function for making the necessary rotations in the stack
-int	make_rotation(int *a, int *b, t_stack **stack_a, t_stack **stack_b)
+int	rotate_both(int *a, int *b, t_stack **stack_a, t_stack **stack_b)
 {
 	while (*a > 0 && *b > 0)
 	{

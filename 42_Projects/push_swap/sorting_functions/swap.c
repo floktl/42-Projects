@@ -6,7 +6,7 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 17:31:17 by fkeitel           #+#    #+#             */
-/*   Updated: 2023/12/18 18:31:32 by fkeitel          ###   ########.fr       */
+/*   Updated: 2023/12/22 16:44:28 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,18 @@
 //swap the first 2 elements at the top of the stack
 int	swap(t_stack **stack)
 {
-	t_stack	*temp;
+	int	temp;
+	int	temp2;
 
-	if (*stack == NULL || (*stack)->next == NULL)
-		return (0);
-	temp = (*stack)->next;
-	(*stack)->next = temp->next;
-	temp->next = *stack;
-	*stack = temp;
-	return (1);
+	if (*stack != NULL && (*stack)->next != NULL)
+	{
+		temp = (*stack)->content;
+		temp2 = (*stack)->next->content;
+		(*stack)->next->content = temp;
+		(*stack)->content = temp2;
+		return (1);
+	}
+	return (0);
 }
 
 //swap the first 2 elements at the top of stack_a

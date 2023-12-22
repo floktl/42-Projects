@@ -6,7 +6,7 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 16:57:56 by fkeitel           #+#    #+#             */
-/*   Updated: 2023/12/19 11:50:16 by fkeitel          ###   ########.fr       */
+/*   Updated: 2023/12/22 18:47:47 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,15 +54,15 @@ int		check_stack_errors(t_stack **stack_a, t_stack **stack_b);
 
 //sorting algorithm:
 void	sorting_algorithm(t_stack **stack_a, t_stack **stack_b);
-int		opration_calculations(t_stack *a, t_stack *b, int *cur_a, int *cur_b);
-int		find_best_num(t_stack **stack_a, t_stack **stack_b, int num);
+int		op_calc(t_stack *a, t_stack *b, int *cur_a, int *cur_b);
+int		prepare_to_push(t_stack **stack_a, t_stack **stack_b, int num);
 //short algorithm for nodes <= 5
 int		short_algorithm(t_stack **stack_a, t_stack **stack_b, int count);
 void	algorithm_three_nodes(t_stack **stack_a, int highest, int lowest);
 //algorithm_helper_functions
 int		ins_pos(t_stack *stack, int num);
 int		calculate_op(t_stack *stack_a, t_stack *stack_b, int pos);
-int		make_rotation(int *a, int *b, t_stack **stack_a, t_stack **stack_b);
+int		rotate_both(int *a, int *b, t_stack **stack_a, t_stack **stack_b);
 
 //sorting functions:
 //push:
@@ -90,11 +90,17 @@ int		stack_biggest_str_length(t_stack *stack);
 int		stack_length(t_stack *stack);
 long	ft_atou(const char *str);
 int		*find_three_highest(t_stack *stack);
+void	check_which_highest(int **highest, int value);
 //helper functions 2:
 int		find_highest(t_stack *stack);
 int		find_lowest(t_stack *stack);
 int		find_position(int num, t_stack *stack);
 int		count_nodes(t_stack *stack);
 int		lstlast(t_stack *stack);
+//helper_functions 3:
+void	ft_free(char **str);
+void	free_stack(t_stack **stack);
+t_stack	*ft_lst_new(int content);
+void	ft_lst_add_back(t_stack **lst, t_stack *new);
 
 #endif

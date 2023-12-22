@@ -6,7 +6,7 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 22:09:37 by fkeitel           #+#    #+#             */
-/*   Updated: 2023/12/18 18:31:11 by fkeitel          ###   ########.fr       */
+/*   Updated: 2023/12/22 11:51:40 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,16 +22,18 @@ int	reverse_rotate(t_stack **stack)
 	t_stack	*temp;
 	t_stack	*temp2;
 
-	if (*stack == NULL || (*stack)->next == NULL)
-		return (0);
-	temp = *stack;
-	while (temp->next->next != NULL)
-		temp = temp->next;
-	temp2 = temp->next;
-	temp->next = NULL;
-	temp2->next = *stack;
-	*stack = temp2;
-	return (1);
+	if (*stack != NULL && (*stack)->next != NULL)
+	{
+		temp = *stack;
+		while (temp->next->next != NULL)
+			temp = temp->next;
+		temp2 = temp->next;
+		temp->next = NULL;
+		temp2->next = *stack;
+		*stack = temp2;
+		return (1);
+	}
+	return (0);
 }
 
 //shift down all elements of stack_a and the last node becomes the first node

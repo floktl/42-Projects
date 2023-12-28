@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 16:57:56 by fkeitel           #+#    #+#             */
-/*   Updated: 2023/12/22 18:47:47 by fkeitel          ###   ########.fr       */
+/*   Updated: 2023/12/26 18:05:12 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,13 +55,14 @@ int		check_stack_errors(t_stack **stack_a, t_stack **stack_b);
 //sorting algorithm:
 void	sorting_algorithm(t_stack **stack_a, t_stack **stack_b);
 int		op_calc(t_stack *a, t_stack *b, int *cur_a, int *cur_b);
-int		prepare_to_push(t_stack **stack_a, t_stack **stack_b, int num);
-//short algorithm for nodes <= 5
-int		short_algorithm(t_stack **stack_a, t_stack **stack_b, int count);
+// int		prepare_to_push(t_stack **stack_a, t_stack **stack_b, int num);
+int	prepare_to_push(t_stack **a, t_stack **b, int rot_a, int rot_b);
+//short algorithm for nodes <= 3
+int		short_algorithm(t_stack **stack_a, int count);
 void	algorithm_three_nodes(t_stack **stack_a, int highest, int lowest);
 //algorithm_helper_functions
 int		ins_pos(t_stack *stack, int num);
-int		calculate_op(t_stack *stack_a, t_stack *stack_b, int pos);
+int		calculate_op(t_stack *stack, int pos);
 int		rotate_both(int *a, int *b, t_stack **stack_a, t_stack **stack_b);
 
 //sorting functions:

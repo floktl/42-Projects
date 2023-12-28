@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print_stack.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 14:02:40 by fkeitel           #+#    #+#             */
-/*   Updated: 2023/12/17 10:14:11 by fkeitel          ###   ########.fr       */
+/*   Updated: 2023/12/27 12:01:33 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ void	print_stacks(t_stack *stack_a, t_stack *stack_b)
 	max_length_b = stack_biggest_str_length(stack_b);
 	temp_a = stack_a;
 	temp_b = stack_b;
+	printf("\n");
 	printing_nodes(temp_a, temp_b, max_length_a, max_length_b);
 	print_spaces(temp_a, 2, max_length_a + max_length_b);
 	print_spaces(temp_a, 1, max_length_a);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   help_functions_1.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 21:41:05 by fkeitel           #+#    #+#             */
-/*   Updated: 2023/12/22 18:33:50 by fkeitel          ###   ########.fr       */
+/*   Updated: 2023/12/23 13:00:55 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,18 +59,15 @@ void	check_which_highest(int **highest, int value)
 //function to count length of the longest string in the stack
 int	stack_biggest_str_length(t_stack *stack)
 {
-	int		length;
 	int		str_length;
 	int		cur_str;
 	t_stack	*temp;
 
-	length = 0;
 	str_length = 0;
 	cur_str = 0;
 	temp = stack;
 	while (temp)
 	{
-		length++;
 		cur_str = ft_strlen(ft_itoa(temp->content));
 		if (cur_str > str_length)
 			str_length = cur_str;

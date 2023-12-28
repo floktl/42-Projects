@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   stack_errors.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 23:49:46 by fkeitel           #+#    #+#             */
-/*   Updated: 2023/11/27 18:56:59 by fkeitel          ###   ########.fr       */
+/*   Updated: 2023/12/23 12:57:43 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 //	errors with the two stacks:
 //
 
-//check for errors in the stacks
+/* //check for errors in the stacks
 int	check_stack_errors(t_stack **stack_a, t_stack **stack_b)
 {
 	int	i;
@@ -25,4 +25,4 @@ int	check_stack_errors(t_stack **stack_a, t_stack **stack_b)
 	if (!(*stack_a) || !(*stack_b))
 		i = 1;
 	return (0);
-}
+} */

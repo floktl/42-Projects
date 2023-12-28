@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   algorithm_help_functions.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 16:31:06 by fkeitel           #+#    #+#             */
-/*   Updated: 2023/12/22 18:46:13 by fkeitel          ###   ########.fr       */
+/*   Updated: 2023/12/27 12:40:28 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,42 +20,46 @@
 int	ins_pos(t_stack *stack, int num)
 {
 	t_stack	*current;
-	int		save2;
+	int		save;
 	int		position;
 
 	position = 0;
 	if (stack == NULL)
 		return (0);
 	current = stack;
-	save2 = INT_MIN;
+	save = INT_MIN;
 	while (current != NULL)
 	{
-		if (num > current->content && current->content > save2)
+		if (num > current->content && current->content > save)
 		{
-			save2 = current->content;
-			position = find_position(save2, stack);
+			save = current->content;
+			position = find_position(save, stack);
 		}
 		current = current->next;
 	}
-	if (save2 == INT_MIN)
+	if (save == INT_MIN)
 		position = find_position(find_highest(stack), stack);
+	if (position == 0)
+		return (1);
 	return (position);
 }
 
 //calculate how many rotations are necessary, to push the top of-
 //stack_a into stack_b in the correct order (descending)
-int	calculate_op(t_stack *stack_a, t_stack *stack_b, int pos)
+int	calculate_op(t_stack *stack, int pos)
 {
 	t_stack	*temp;
 	int		sz;
 
-	temp = stack_a;
-	temp = stack_b;
+	temp = stack;
 	sz = count_nodes(temp);
-	if ((sz % 2 == 0 && pos <= (sz / 2)) || (sz % 2 != 0 && pos < (sz + 1) / 2))
-		return (pos);
+	printf("pos: %d\n", pos);
+	if (sz <= 2 || pos <= 1)
+		return (0);
+	if ((sz % 2 == 0 && pos <= (sz / 2)) || (sz % 2 != 0 && pos < (sz) / 2))
+		return (pos - 1);
 	else
-		return ((sz - pos) * -1);
+		return ((sz - pos) * (-1) - 1);
 	return (0);
 }
 

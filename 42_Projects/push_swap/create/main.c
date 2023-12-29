@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 13:58:32 by fkeitel           #+#    #+#             */
-/*   Updated: 2023/12/26 19:05:59 by flo              ###   ########.fr       */
+/*   Updated: 2023/12/29 14:32:43 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,10 +62,9 @@ int	main(int argc, char **argv)
 	*stack_b = NULL;
 	if (initstack(stack_a, argc, argv) == -1)
 		return (-1);
-	print_stacks(*stack_a, *stack_b);
 	sorting_algorithm(stack_a, stack_b);
-	print_stacks(*stack_a, *stack_b);
 	free_stack(stack_a);
 	free_stack(stack_b);
+	//system("leaks push_swap");
 	return (0);
 }

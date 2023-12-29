@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   algorithm_help_functions.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 16:31:06 by fkeitel           #+#    #+#             */
-/*   Updated: 2023/12/27 12:40:28 by flo              ###   ########.fr       */
+/*   Updated: 2023/12/29 17:25:49 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,32 +16,43 @@
 // functions for the sorting algorithmus
 //
 
-// function to find the correct insertion position
-int	ins_pos(t_stack *stack, int num)
+int	find_last_element(t_stack *stack)
 {
 	t_stack	*current;
-	int		save;
-	int		position;
 
-	position = 0;
 	if (stack == NULL)
-		return (0);
-	current = stack;
-	save = INT_MIN;
-	while (current != NULL)
 	{
-		if (num > current->content && current->content > save)
-		{
-			save = current->content;
-			position = find_position(save, stack);
-		}
-		current = current->next;
+		printf("Stack is empty.\n");
+		return (-1);
 	}
-	if (save == INT_MIN)
-		position = find_position(find_highest(stack), stack);
-	if (position == 0)
-		return (1);
-	return (position);
+	current = stack;
+	while (current->next != NULL)
+		current = current->next;
+	return (current->content);
+}
+
+// function to find the correct insertion position
+int	ins_pos(t_stack *stack_b, int num)
+{
+	t_stack	*counter_b;
+	int		target;
+	int		tmp;
+
+	tmp = INT32_MIN;
+	counter_b = stack_b;
+	while (counter_b != NULL)
+	{
+		if ((counter_b->content < num)
+			&& (counter_b->content > tmp))
+		{
+			tmp = counter_b->content;
+			target = find_position(counter_b->content, stack_b);
+		}
+		counter_b = counter_b->next;
+	}
+	if (tmp == INT32_MIN)
+		target = find_position(find_highest(stack_b), stack_b);
+	return (target);
 }
 
 //calculate how many rotations are necessary, to push the top of-
@@ -53,10 +64,10 @@ int	calculate_op(t_stack *stack, int pos)
 
 	temp = stack;
 	sz = count_nodes(temp);
-	printf("pos: %d\n", pos);
-	if (sz <= 2 || pos <= 1)
+	if (sz <= 1 || pos <= 1)
 		return (0);
-	if ((sz % 2 == 0 && pos <= (sz / 2)) || (sz % 2 != 0 && pos < (sz) / 2))
+	if ((sz % 2 == 0 && (pos <= ((sz / 2) + 2))) \
+		|| (sz % 2 != 0 && pos <= ((sz) / 2 + 1)))
 		return (pos - 1);
 	else
 		return ((sz - pos) * (-1) - 1);

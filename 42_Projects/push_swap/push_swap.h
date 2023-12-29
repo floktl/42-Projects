@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 16:57:56 by fkeitel           #+#    #+#             */
-/*   Updated: 2023/12/26 18:05:12 by flo              ###   ########.fr       */
+/*   Updated: 2023/12/29 18:40:01 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int		check_stack_errors(t_stack **stack_a, t_stack **stack_b);
 void	sorting_algorithm(t_stack **stack_a, t_stack **stack_b);
 int		op_calc(t_stack *a, t_stack *b, int *cur_a, int *cur_b);
 // int		prepare_to_push(t_stack **stack_a, t_stack **stack_b, int num);
-int	prepare_to_push(t_stack **a, t_stack **b, int rot_a, int rot_b);
+int		prepare_and_push(t_stack **a, t_stack **b, int rot_a, int rot_b);
 //short algorithm for nodes <= 3
 int		short_algorithm(t_stack **stack_a, int count);
 void	algorithm_three_nodes(t_stack **stack_a, int highest, int lowest);
@@ -103,5 +103,6 @@ void	ft_free(char **str);
 void	free_stack(t_stack **stack);
 t_stack	*ft_lst_new(int content);
 void	ft_lst_add_back(t_stack **lst, t_stack *new);
+int		check_if_sorted(t_stack *stack);
 
 #endif

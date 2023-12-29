@@ -6,7 +6,7 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/22 18:17:30 by fkeitel           #+#    #+#             */
-/*   Updated: 2023/12/22 18:21:21 by fkeitel          ###   ########.fr       */
+/*   Updated: 2023/12/29 11:12:08 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,4 +68,21 @@ void	ft_lst_add_back(t_stack **lst, t_stack *new)
 	while (current->next != NULL)
 		current = current->next;
 	current->next = new;
+}
+
+//function to check if the stack is sorted in descending order
+int	check_if_sorted(t_stack *stack)
+{
+	t_stack	*current;
+
+	if (stack == NULL || stack->next == NULL)
+		return (1);
+	current = stack;
+	while (current->next != NULL)
+	{
+		if (current->content > current->next->content)
+			return (0);
+		current = current->next;
+	}
+	return (1);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   under_five_nodes_alg.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/07 09:53:26 by fkeitel           #+#    #+#             */
-/*   Updated: 2023/12/27 12:27:37 by flo              ###   ########.fr       */
+/*   Updated: 2023/12/28 09:23:42 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 //algorithm if stack a has 3 nodes
 void	algorithm_three_nodes(t_stack **stack_a, int highest, int lowest)
 {
-	printf("%d %d", highest, lowest);
 	if (highest == 3)
 	{
 		if (lowest == 1)

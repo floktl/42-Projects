@@ -6,7 +6,7 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 10:52:51 by fkeitel           #+#    #+#             */
-/*   Updated: 2023/12/22 10:30:00 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/01/03 15:07:41 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@
 //
 
 //move the top node of one stack to the top node of the other stack
-int	push(t_stack **stack_1, t_stack **stack_2)
+int	push(t_list **stack_1, t_list **stack_2)
 {
-	t_stack	*temp;
+	t_list	*temp;
 
 	temp = NULL;
 	if (*stack_2 != NULL)
@@ -33,15 +33,15 @@ int	push(t_stack **stack_1, t_stack **stack_2)
 }
 
 //move top from stack_b to top of stack_a
-void	push_a(t_stack **stack_a, t_stack **stack_b)
+void	push_a(t_list **stack_a, t_list **stack_b)
 {
 	if (push(stack_a, stack_b) == 1)
-		printf("pa\n");
+		ft_printf("pa\n");
 }
 
 //move top from stack_a to top of stack_b
-void	push_b(t_stack **stack_a, t_stack **stack_b)
+void	push_b(t_list **stack_a, t_list **stack_b)
 {
 	if (push(stack_b, stack_a) == 1)
-		printf("pb\n");
+		ft_printf("pb\n");
 }

@@ -6,19 +6,20 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 16:31:06 by fkeitel           #+#    #+#             */
-/*   Updated: 2023/12/29 17:25:49 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/01/03 12:25:12 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../push_swap.h"
 
 //
-// functions for the sorting algorithmus
+//	functions for the sorting algorithmus
 //
 
-int	find_last_element(t_stack *stack)
+//function for returning the content of the last element of a stack
+int	find_last_element(t_list *stack)
 {
-	t_stack	*current;
+	t_list	*current;
 
 	if (stack == NULL)
 	{
@@ -32,9 +33,9 @@ int	find_last_element(t_stack *stack)
 }
 
 // function to find the correct insertion position
-int	ins_pos(t_stack *stack_b, int num)
+int	ins_pos(t_list *stack_b, int num)
 {
-	t_stack	*counter_b;
+	t_list	*counter_b;
 	int		target;
 	int		tmp;
 
@@ -57,16 +58,16 @@ int	ins_pos(t_stack *stack_b, int num)
 
 //calculate how many rotations are necessary, to push the top of-
 //stack_a into stack_b in the correct order (descending)
-int	calculate_op(t_stack *stack, int pos)
+int	calculate_op(t_list *stack, int pos)
 {
-	t_stack	*temp;
+	t_list	*temp;
 	int		sz;
 
 	temp = stack;
 	sz = count_nodes(temp);
 	if (sz <= 1 || pos <= 1)
 		return (0);
-	if ((sz % 2 == 0 && (pos <= ((sz / 2) + 2))) \
+	if ((sz % 2 == 0 && (pos <= ((sz / 2) + 2)))
 		|| (sz % 2 != 0 && pos <= ((sz) / 2 + 1)))
 		return (pos - 1);
 	else
@@ -75,7 +76,7 @@ int	calculate_op(t_stack *stack, int pos)
 }
 
 //function for making the necessary rotations in the stack
-int	rotate_both(int *a, int *b, t_stack **stack_a, t_stack **stack_b)
+int	rotate_both(int *a, int *b, t_list **stack_a, t_list **stack_b)
 {
 	while (*a > 0 && *b > 0)
 	{
@@ -90,4 +91,17 @@ int	rotate_both(int *a, int *b, t_stack **stack_a, t_stack **stack_b)
 		(*b)++;
 	}
 	return (0);
+}
+
+//function for rotating a sorted stack, until the highest number is on top
+void	rot_highest_to_top(t_list **stack_b)
+{
+	while ((find_position((find_highest(*stack_b)), (*stack_b)))
+		!= 1 && (find_position((find_highest(*stack_b)), (*stack_b))
+			<= (count_nodes(*stack_b) / 2)))
+		rotate_b(stack_b);
+	while ((find_position((find_highest(*stack_b)), (*stack_b)))
+		!= 1 && (find_position((find_highest(*stack_b)), (*stack_b))
+			> (count_nodes(*stack_b) / 2)))
+		reverse_rotate_b(stack_b);
 }

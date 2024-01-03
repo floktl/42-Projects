@@ -6,11 +6,16 @@
 #    By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/13 09:46:50 by fkeitel           #+#    #+#              #
-#    Updated: 2023/10/31 10:02:40 by fkeitel          ###   ########.fr        #
+#    Updated: 2024/01/03 15:20:28 by fkeitel          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = libft.a
+SRCDIR = src
+
+# Define source files in the directory
+SRC = 	$(SRCDIR)/ft_printf.c $(SRCDIR)/check_datatypes.c \
+			$(SRCDIR)/printing_functions.c $(SRCDIR)/handle_datatypes.c \
 
 FUNCTIONS	=	ft_isalnum.c ft_isprint.c ft_memcmp.c  ft_putchar_fd.c\
 				ft_strlcat.c ft_strncmp.c ft_substr.c ft_atoi.c ft_isalpha.c\
@@ -19,13 +24,10 @@ FUNCTIONS	=	ft_isalnum.c ft_isprint.c ft_memcmp.c  ft_putchar_fd.c\
 				ft_memmove.c ft_putnbr_fd.c  ft_strdup.c  ft_strlen.c  ft_strrchr.c\
 				ft_toupper.c ft_calloc.c  ft_isdigit.c ft_memchr.c  ft_memset.c\
 				ft_putstr_fd.c  ft_strjoin.c ft_strmapi.c ft_strtrim.c ft_split.c\
-
-OBJECTS	=	$(FUNCTIONS:.c=.o)
-
-BONUS		=	ft_lstnew.c ft_lstsize.c ft_lstadd_front.c ft_lstadd_back.c\
+				ft_lstnew.c ft_lstsize.c ft_lstadd_front.c ft_lstadd_back.c\
 				ft_lstlast.c ft_lstdelone.c ft_lstclear.c ft_lstiter.c ft_lstmap.c\
 
-BONUS_OBJECTS = $(BONUS:.c=.o)
+OBJECTS	=	$(FUNCTIONS:.c=.o) $(SRC:$(SRCDIR)/%.c=$(SRCDIR)/%.o)
 
 CC				= cc
 RM				= rm -f
@@ -37,14 +39,12 @@ $(NAME): $(OBJECTS)
 		ar -rcs $(NAME) $(OBJECTS)
 
 clean:
-		$(RM) $(OBJECTS) $(BONUS_OBJECTS)
+	rm -f $(OBJECTS) all
 
 fclean:	clean
 		$(RM) $(NAME)
+		rm -f libft
 
-re:		fclean $(NAME)
+re:		fclean all
 
-bonus: $(BONUS_OBJECTS)
-		ar -rcs $(NAME) $(OBJECTS) $(BONUS_OBJECTS)
-
-.PHONY:			all clean fclean re bonus
+.PHONY:			all clean fclean

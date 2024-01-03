@@ -1,19 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   under_five_nodes_alg.c                             :+:      :+:    :+:   */
+/*   short_algorithm.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/07 09:53:26 by fkeitel           #+#    #+#             */
-/*   Updated: 2023/12/28 09:23:42 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/01/03 12:59:10 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../push_swap.h"
 
 //algorithm if stack a has 3 nodes
-void	algorithm_three_nodes(t_stack **stack_a, int highest, int lowest)
+void	algorithm_three_nodes(t_list **stack_a, int highest, int lowest)
 {
 	if (highest == 3)
 	{
@@ -40,20 +40,20 @@ void	algorithm_three_nodes(t_stack **stack_a, int highest, int lowest)
 }
 
 //algorithm if stack b has less or equal than five nodes
-int	short_algorithm(t_stack **stack_a, int nodes_count)
+int	short_algorithm(t_list **stack_a, int nodes_count)
 {
 	int		highest;
 	int		lowest;
-	t_stack	*temp_a;
+	t_list	*temp_a;
 
 	temp_a = *stack_a;
-	highest = (find_position(find_highest(temp_a), temp_a));
-	lowest = (find_position(find_lowest(temp_a), temp_a));
+	highest = find_position(find_highest(temp_a), temp_a);
+	lowest = find_position(find_lowest(temp_a), temp_a);
 	if (nodes_count == 0)
 		return (-1);
 	if (nodes_count == 1)
 		return (0);
-	else if (nodes_count == 2 && (highest != (*stack_a)->content))
+	else if (nodes_count == 2 && highest != 2)
 		swap_a(stack_a);
 	else if (nodes_count == 3)
 		algorithm_three_nodes(stack_a, highest, lowest);

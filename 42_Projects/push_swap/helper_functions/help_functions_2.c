@@ -6,17 +6,17 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 19:54:49 by fkeitel           #+#    #+#             */
-/*   Updated: 2023/12/22 11:56:51 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/01/03 12:40:40 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../push_swap.h"
 
 // function for finding the highest number in a stack
-int	find_highest(t_stack *stack)
+int	find_highest(t_list *stack)
 {
 	int		highest;
-	t_stack	*current;
+	t_list	*current;
 
 	if (stack == NULL)
 		return (0);
@@ -32,10 +32,10 @@ int	find_highest(t_stack *stack)
 }
 
 // function for finding the lowest number in a stack
-int	find_lowest(t_stack *stack)
+int	find_lowest(t_list *stack)
 {
 	int		lowest;
-	t_stack	*current;
+	t_list	*current;
 
 	if (stack == NULL)
 		return (0);
@@ -51,10 +51,10 @@ int	find_lowest(t_stack *stack)
 }
 
 // function for finding the position of a node in a stack
-int	find_position(int num, t_stack *stack)
+int	find_position(int num, t_list *stack)
 {
 	int		position;
-	t_stack	*current;
+	t_list	*current;
 
 	if (stack == NULL)
 		return (0);
@@ -71,10 +71,10 @@ int	find_position(int num, t_stack *stack)
 }
 
 //function for counting the nodes in a stack
-int	count_nodes(t_stack *stack)
+int	count_nodes(t_list *stack)
 {
 	int		count;
-	t_stack	*current;
+	t_list	*current;
 
 	count = 0;
 	current = stack;
@@ -86,15 +86,19 @@ int	count_nodes(t_stack *stack)
 	return (count);
 }
 
-//returning the last number of the stack
-int	lstlast(t_stack *stack)
+//function to check if the stack is sorted in descending order
+int	check_if_sorted(t_list *stack)
 {
-	t_stack	*lst;
+	t_list	*current;
 
-	lst = stack;
-	if (lst == NULL)
-		return (lst->content);
-	while (lst != NULL)
-		lst = lst->next;
-	return (lst->content);
+	if (stack == NULL || stack->next == NULL)
+		return (1);
+	current = stack;
+	while (current->next != NULL)
+	{
+		if (current->content > current->next->content)
+			return (0);
+		current = current->next;
+	}
+	return (1);
 }

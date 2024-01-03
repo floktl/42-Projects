@@ -6,7 +6,7 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 16:57:56 by fkeitel           #+#    #+#             */
-/*   Updated: 2023/12/29 18:40:01 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/01/03 14:41:47 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,83 +26,81 @@
 # include <string.h>
 # include <limits.h>
 
-//single linked list for the two stacks:
-typedef struct s_node_a
-{
-	int				content;
-	struct s_node_a	*next;
-}	t_stack;
-
-//main functions:
+//	create:
+int		initstack(t_list **stack, int argc, char **argv);
 int		main(int argc, char *argv[]);
-//print stacks
-void	print_stacks(t_stack *stack_a, t_stack *stack_b);
-int		printing_nodes(t_stack *temp_a, t_stack *temp_b, int len_a, int len_b);
-int		print_one_node(t_stack **stack, int max_length, int diff);
-void	print_spaces(t_stack *stack, int type, int max_stack);
 
-//error handling:
-//checking for error:
+//	print_stacks
+void	print_spaces(t_list *stack, int type, int max_stack);
+int		print_one_node(t_list **stack, int max_length, int diff);
+void	print_spaces_in_between(t_list **b, int *diff, int len_a, int len_b);
+int		printing_nodes(t_list *temp_a, t_list *temp_b, int len_a, int len_b);
+void	print_stacks(t_list *stack_a, t_list *stack_b);
+
+//	error_handling:
+//finding error type:
 int		check_error(int n, char *argv[]);
-//checking for argument errors:
+//argument_errors:
 int		check_argument_error(int n, char *argv[]);
-int		check_for_duplicates(int *numbers, long cur_number, int cur_index);
-int		check_if_num_is_in_int_range(long current_number, int *numbers);
-int		check_if_num_is_digit(char *argv[], int *numbers, int cur_index);
-//checking for errors in the stacks
-int		check_stack_errors(t_stack **stack_a, t_stack **stack_b);
+int		check_for_duplicates(char *argv[], long cur_number);
+int		check_if_num_is_in_int_range(long current_number);
+int		check_if_num_is_digit(char *argv[], int cur_index);
+//stack_errors
+int		check_stack_errors(t_list **stack_a, t_list **stack_b);
 
-//sorting algorithm:
-void	sorting_algorithm(t_stack **stack_a, t_stack **stack_b);
-int		op_calc(t_stack *a, t_stack *b, int *cur_a, int *cur_b);
-// int		prepare_to_push(t_stack **stack_a, t_stack **stack_b, int num);
-int		prepare_and_push(t_stack **a, t_stack **b, int rot_a, int rot_b);
-//short algorithm for nodes <= 3
-int		short_algorithm(t_stack **stack_a, int count);
-void	algorithm_three_nodes(t_stack **stack_a, int highest, int lowest);
-//algorithm_helper_functions
-int		ins_pos(t_stack *stack, int num);
-int		calculate_op(t_stack *stack, int pos);
-int		rotate_both(int *a, int *b, t_stack **stack_a, t_stack **stack_b);
+//	sorting_algorithm
+//algorithm:
+int		ret_best(int a, int b, int cur_num, int *lowest_operations);
+int		find_low_op(int rot_a, int rot_b, int cur_num, int *best);
+int		op_calc(t_list *a, t_list *b, int *cur_a, int *cur_b);
+int		prepare_and_push(t_list **a, t_list **b, int rot_a, int rot_b);
+void	sorting_algorithm(t_list **stack_a, t_list **stack_b);
+//short_algorithm
+void	algorithm_three_nodes(t_list **stack_a, int highest, int lowest);
+int		short_algorithm(t_list **stack_a, int count);
+//algorithm_help_functions
+int		find_last_element(t_list *stack);
+int		ins_pos(t_list *stack, int num);
+int		calculate_op(t_list *stack, int pos);
+int		rotate_both(int *a, int *b, t_list **stack_a, t_list **stack_b);
+void	rot_highest_to_top(t_list **stack_b);
 
-//sorting functions:
+//	sorting functions:
 //push:
-int		push(t_stack **stack_1, t_stack **stack_2);
-void	push_a(t_stack **stack_a, t_stack **stack_b);
-void	push_b(t_stack **stack_a, t_stack **stack_b);
+int		push(t_list **stack_1, t_list **stack_2);
+void	push_a(t_list **stack_a, t_list **stack_b);
+void	push_b(t_list **stack_a, t_list **stack_b);
 //swap:
-int		swap(t_stack **stack);
-void	swap_a(t_stack **stack_a);
-void	swap_b(t_stack **stack_b);
-void	swap_ss(t_stack **stack_a, t_stack **stack_b);
+int		swap(t_list **stack);
+void	swap_a(t_list **stack_a);
+void	swap_b(t_list **stack_b);
+void	swap_ss(t_list **stack_a, t_list **stack_b);
 //rotate:
-int		rotate(t_stack **stack);
-void	rotate_a(t_stack **stack_a);
-void	rotate_b(t_stack **stack_b);
-void	rotate_rr(t_stack **stack_a, t_stack **stack_b);
-int		reverse_rotate(t_stack **stack);
-void	reverse_rotate_a(t_stack **stack_a);
-void	reverse_rotate_b(t_stack **stack_b);
-void	reverse_rotate_rr(t_stack **stack_a, t_stack **stack_b);
+int		rotate(t_list **stack);
+void	rotate_a(t_list **stack_a);
+void	rotate_b(t_list **stack_b);
+void	rotate_rr(t_list **stack_a, t_list **stack_b);
+//reverse_rotate
+int		reverse_rotate(t_list **stack);
+void	reverse_rotate_a(t_list **stack_a);
+void	reverse_rotate_b(t_list **stack_b);
+void	reverse_rotate_rr(t_list **stack_a, t_list **stack_b);
 
-//additional helper functions:
+//	additional helper functions:
 //helper functions 1:
-int		stack_biggest_str_length(t_stack *stack);
-int		stack_length(t_stack *stack);
-long	ft_atou(const char *str);
-int		*find_three_highest(t_stack *stack);
+int		*find_three_highest(t_list *stack);
 void	check_which_highest(int **highest, int value);
+int		stack_biggest_str_length(t_list *stack);
+int		stack_length(t_list *stack);
+long	ft_atou(const char *str);
 //helper functions 2:
-int		find_highest(t_stack *stack);
-int		find_lowest(t_stack *stack);
-int		find_position(int num, t_stack *stack);
-int		count_nodes(t_stack *stack);
-int		lstlast(t_stack *stack);
+int		find_highest(t_list *stack);
+int		find_lowest(t_list *stack);
+int		find_position(int num, t_list *stack);
+int		count_nodes(t_list *stack);
+int		check_if_sorted(t_list *stack);
 //helper_functions 3:
 void	ft_free(char **str);
-void	free_stack(t_stack **stack);
-t_stack	*ft_lst_new(int content);
-void	ft_lst_add_back(t_stack **lst, t_stack *new);
-int		check_if_sorted(t_stack *stack);
+void	free_stack(t_list **stack);
 
 #endif

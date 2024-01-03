@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   help_functions_1.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 21:41:05 by fkeitel           #+#    #+#             */
-/*   Updated: 2023/12/23 13:00:55 by flo              ###   ########.fr       */
+/*   Updated: 2024/01/03 07:54:43 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@
 //
 
 //find the 3 highest number in a stack
-int	*find_three_highest(t_stack *stack)
+int	*find_three_highest(t_list *stack)
 {
-	t_stack	*temp;
+	t_list	*temp;
 	int		*highest;
 	int		value;
 
@@ -39,6 +39,7 @@ int	*find_three_highest(t_stack *stack)
 	return (highest);
 }
 
+//function to save highest numbers in an array
 void	check_which_highest(int **highest, int value)
 {
 	if (value > (*highest)[0])
@@ -57,11 +58,11 @@ void	check_which_highest(int **highest, int value)
 }
 
 //function to count length of the longest string in the stack
-int	stack_biggest_str_length(t_stack *stack)
+int	stack_biggest_str_length(t_list *stack)
 {
 	int		str_length;
 	int		cur_str;
-	t_stack	*temp;
+	t_list	*temp;
 
 	str_length = 0;
 	cur_str = 0;
@@ -77,10 +78,10 @@ int	stack_biggest_str_length(t_stack *stack)
 }
 
 // Helper function to count the number of elements in a stack
-int	stack_length(t_stack *stack)
+int	stack_length(t_list *stack)
 {
 	int		length;
-	t_stack	*temp;
+	t_list	*temp;
 
 	length = 0;
 	temp = stack;

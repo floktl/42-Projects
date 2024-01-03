@@ -6,13 +6,13 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 20:57:53 by fkeitel           #+#    #+#             */
-/*   Updated: 2023/10/18 16:36:49 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/01/02 10:32:58 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-t_list	*ft_lstnew(void *content)
+t_list	*ft_lstnew(int content)
 {
 	t_list	*new_node;
 

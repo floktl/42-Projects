@@ -6,7 +6,7 @@
 #    By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/31 10:58:51 by fkeitel           #+#    #+#              #
-#    Updated: 2023/12/22 18:20:44 by fkeitel          ###   ########.fr        #
+#    Updated: 2024/01/03 14:56:19 by fkeitel          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ CREATE = main.c print_stack.c \
 
 ERROR = argument_errors.c find_error_type.c stack_errors.c \
 
-SORTING = algorithm.c algorithm_help_functions.c under_five_nodes_alg.c \
+SORTING = algorithm.c algorithm_help_functions.c short_algorithm.c \
 
 HELPER = help_functions_1.c help_functions_2.c help_functions_3.c \
 
@@ -36,7 +36,7 @@ OBJ = $(SORT:%.c=$(SORTDIR)/%.o) $(CREATE:%.c=$(CREATEDIR)/%.o) \
 
 # Compiler and flags
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -I $(SORTDIR) -I $(CREATEDIR) -I $(LIBFTDIR)\
+CFLAGS = -g -Wall -Wextra -Werror -I $(SORTDIR) -I $(CREATEDIR) -I $(LIBFTDIR)\
 		-I $(ERRORDIR) -I $(SORTINGDIR) -I $(HELPERDIR)
 LDFLAGS = -L $(LIBFTDIR) -lft
 

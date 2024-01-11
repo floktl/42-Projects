@@ -1,0 +1,11 @@
+PID (Process identifier)
+-identifies each runnign process in an operating system with a unique PID
+
+signal():
+
+Signals allow the manipulation of a
+process from outside its domain, as well
+as allowing the process to manipulate
+itself or copies of itself (children).
+
+signal(int sig, sig_t func);

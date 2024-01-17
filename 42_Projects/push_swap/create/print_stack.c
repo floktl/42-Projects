@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print_stack.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 14:02:40 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/01/03 07:53:28 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/01/16 03:38:04 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,19 +28,19 @@ void	print_spaces(t_list *stack, int type, int max_stack)
 	if (type == 2)
 	{
 		while (count++ < max_stack + 8)
-			printf("_");
-		printf("\n");
+			ft_printf("_");
+		ft_printf("\n");
 	}
 	if (type == 1)
 	{
 		while (count++ < max_stack)
-			printf(" ");
+			ft_printf(" ");
 	}
 	if (type == 0 && temp != NULL)
 	{
 		while (count <= (int)(max_stack - ft_strlen(ft_itoa(temp->content))))
 		{
-			printf(" ");
+			ft_printf(" ");
 			count++;
 		}
 	}
@@ -52,7 +52,7 @@ int	print_one_node(t_list **stack, int max_length, int diff)
 	if (*stack != NULL)
 	{
 		print_spaces(*stack, 0, max_length);
-		printf("%d", (*stack)->content);
+		ft_printf("%d", (*stack)->content);
 		*stack = (*stack)->next;
 	}
 	return (diff);
@@ -67,14 +67,14 @@ void	print_spaces_in_between(t_list **b, int *diff, int len_a, int len_b)
 		{
 			while (len_a >= 0)
 			{
-				printf(" ");
+				ft_printf(" ");
 				len_a--;
 			}
 		}
-		printf("   ");
+		ft_printf("   ");
 		*diff = print_one_node(b, len_b, *diff);
 	}
-	printf("\n");
+	ft_printf("\n");
 	if (*diff > 0)
 		(*diff)--;
 	if (*diff < 0)
@@ -99,9 +99,9 @@ int	printing_nodes(t_list *temp_a, t_list *temp_b, int len_a, int len_b)
 	while (temp_a || temp_b)
 	{
 		while (i++ < (counter - (int)ft_strlen(ft_itoa(count))))
-			printf(" ");
+			ft_printf(" ");
 		i = 0;
-		printf("%d: ", count++);
+		ft_printf("%d: ", count++);
 		if (diff >= 0)
 			diff = print_one_node(&temp_a, len_a, diff);
 		print_spaces_in_between(&temp_b, &diff, len_a, len_b);
@@ -121,11 +121,11 @@ void	print_stacks(t_list *stack_a, t_list *stack_b)
 	max_length_b = stack_biggest_str_length(stack_b);
 	temp_a = stack_a;
 	temp_b = stack_b;
-	printf("\n");
+	ft_printf("\n");
 	printing_nodes(temp_a, temp_b, max_length_a, max_length_b);
 	print_spaces(temp_a, 2, max_length_a + max_length_b);
 	print_spaces(temp_a, 1, max_length_a);
-	printf("   a |");
+	ft_printf("   a |");
 	print_spaces(temp_b, 1, max_length_b);
-	printf("b |\n");
+	ft_printf("b |\n");
 }

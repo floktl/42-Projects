@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   help_functions_3.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/22 18:17:30 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/01/03 08:00:16 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/01/18 02:02:21 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,11 @@ void	ft_free(char **str)
 	while (str[i])
 		i++;
 	while (i >= 0)
-		free(str[i--]);
+	{
+		free(str[i]);
+		i--;
+	}
+	free(str);
 }
 
 //function for freeing a whole stack

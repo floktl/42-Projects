@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   algorithm_help_functions.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 16:31:06 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/01/03 12:25:12 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/01/18 01:12:07 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	find_last_element(t_list *stack)
 
 	if (stack == NULL)
 	{
-		printf("Stack is empty.\n");
+		ft_printf("Stack is empty.\n");
 		return (-1);
 	}
 	current = stack;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 13:58:32 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/01/03 12:27:16 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/01/18 02:03:48 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,8 @@ static int	process_args(t_list **stack, char **args, int i)
 int	initstack(t_list **stack, int argc, char **argv)
 {
 	char	**args;
-	int		count_arguments;
 	int		i;
 
-	count_arguments = argc;
 	if (argc == 2)
 	{
 		args = ft_split(argv[1], ' ');
@@ -54,7 +52,6 @@ int	initstack(t_list **stack, int argc, char **argv)
 	else
 	{
 		args = argv;
-		count_arguments--;
 		i = 1;
 	}
 	if (check_error(i, args) == -1 || process_args(stack, args, i) == -1)

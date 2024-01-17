@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   help_functions_1.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 21:41:05 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/01/03 07:54:43 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/01/18 01:14:10 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	*find_three_highest(t_list *stack)
 
 	temp = stack;
 	highest = (int *)malloc(3 * sizeof(int));
-	if (highest == NULL)
+	if (!highest)
 		return (0);
 	highest[0] = INT_MIN;
 	highest[1] = INT_MIN;

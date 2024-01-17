@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   algorithm.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 15:48:05 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/01/03 12:49:38 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/01/18 01:12:33 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,6 +143,6 @@ void	sorting_algorithm(t_list **stack_a, t_list **stack_b)
 	while (*stack_b != NULL)
 		push_a(stack_a, stack_b);
 	if (check_if_sorted(*stack_a) == 0)
-		printf("the stack is not properly sorted");
+		ft_printf("the stack is not properly sorted");
 	return ;
 }

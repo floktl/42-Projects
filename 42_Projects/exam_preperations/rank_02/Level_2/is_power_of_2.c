@@ -1,29 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isalnum.c                                       :+:      :+:    :+:   */
+/*   is_power_of_2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/06 12:10:56 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/02/14 17:04:24 by flo              ###   ########.fr       */
+/*   Created: 2024/01/25 08:14:48 by flo               #+#    #+#             */
+/*   Updated: 2024/01/25 08:42:55 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include <unistd.h>
 
-int	ft_isalnum(int c)
+int	is_power_of_2(unsigned int n)
 {
-	if ((c >= 65 && c <= 90) || (c >= 97 && c <= 122)
-		|| (c >= 48 && c <= 57))
-		return (1);
+	if (n > 0)
+	{
+		return ((n & (n - 1)) == 0);
+	}
 	return (0);
 }
 
-/* int main (void)
+int	main(void)
 {
-    int i;
-    i = 0;
-    i = ft_isalnum(' ');
-    printf("%d", i);
-} */
+	unsigned int	i;
+	char			f;
+
+	i = 1;
+	f = is_power_of_2(i) + '0';
+	write(1, &f, 1);
+	return (0);
+}
+

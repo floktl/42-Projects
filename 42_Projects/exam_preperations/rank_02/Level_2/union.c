@@ -1,29 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isalnum.c                                       :+:      :+:    :+:   */
+/*   union.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/06 12:10:56 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/02/14 17:04:24 by flo              ###   ########.fr       */
+/*   Created: 2024/01/24 14:45:41 by flo               #+#    #+#             */
+/*   Updated: 2024/01/24 15:29:54 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include <unistd.h>
 
-int	ft_isalnum(int c)
+int	main(int argc, char *argv[])
 {
-	if ((c >= 65 && c <= 90) || (c >= 97 && c <= 122)
-		|| (c >= 48 && c <= 57))
-		return (1);
-	return (0);
+	int	i;
+	int	j;
+
+	j = 0;
+	if (argc == 3)
+	{
+		while (argv[1][j] || argv[2][j])
+		{
+			i = 0;
+			while (argv[2][i])
+			{
+				if (argv[1][j] == argv[2][i] || argv[1][i] == '\0')
+				{
+					write(1, &argv[1][j], 1);
+				}
+				i++;
+			}
+			j++;
+		}
+	}
+	write(1, "\n", 1);
 }
-
-/* int main (void)
-{
-    int i;
-    i = 0;
-    i = ft_isalnum(' ');
-    printf("%d", i);
-} */

@@ -1,29 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isalnum.c                                       :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/06 12:10:56 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/02/14 17:04:24 by flo              ###   ########.fr       */
+/*   Created: 2024/01/23 15:41:06 by flo               #+#    #+#             */
+/*   Updated: 2024/01/23 15:52:29 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include <unistd.h>
+#include <stdlib.h>
+#include <stdio.h>
 
-int	ft_isalnum(int c)
+char	*ft_strdup(char *src)
 {
-	if ((c >= 65 && c <= 90) || (c >= 97 && c <= 122)
-		|| (c >= 48 && c <= 57))
-		return (1);
-	return (0);
+	char	*dst;
+	int		i;
+
+	i = 0;
+	while (src[i])
+		i++;
+	dst = malloc(sizeof(char) * i);
+	if (!dst)
+		return (NULL);
+	i = 0;
+	while (src[i])
+	{
+		dst[i] = src[i];
+		i++;
+	}
+	return (dst);
 }
 
-/* int main (void)
+int main(void)
 {
-    int i;
-    i = 0;
-    i = ft_isalnum(' ');
-    printf("%d", i);
-} */
+	printf("%s", ft_strdup("aosdfnwuis"));
+	return (0);
+}

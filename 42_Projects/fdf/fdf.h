@@ -6,7 +6,7 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 10:26:16 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/02/29 10:29:37 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/03/05 12:48:20 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # define WIDTH 1024
 # define HEIGHT 1024
 # define MAX_LINES 1024
+# define MARGIN 5
 
 // libraries
 # include <string.h>
@@ -45,16 +46,13 @@ typedef struct s_coordinates {
 	int						xw;
 	int						yw;
 	int						zw;
-	int						xcentm;
-	int						ycentm;
-	int						zcentm;
-	int						xm_xmcent;
-	int						ym_ymcent;
-	int						zm_zmcent;
+	int						xm;
+	int						ym;
+	int						zm;
 	int						len_cent;
-	float					deg_cmx_xm;
-	float					deg_cmy_ym;
-	float					deg_cmz_zm;
+	float					deg_xm;
+	float					deg_ym;
+	float					deg_zm;
 	uint32_t				color;
 	struct s_coordinates	*next;
 	struct s_coordinates	*before;
@@ -69,9 +67,13 @@ typedef struct s_coordinates {
 typedef struct s_arr_size {
 	int	xm_size;
 	int	ym_size;
-	int	xcentm;
-	int	ycentm;
-	int	zcentm;
+	int	maxsz_x_p;
+	int	maxsz_x_m;
+	int	maxsz_y_p;
+	int	maxsz_y_m;
+	int	xposmw;
+	int	yposmw;
+	int	zcentmw;
 	int	zmcent_plus;
 	int	zmcent_minus;
 	int	xm_offset;
@@ -84,9 +86,13 @@ typedef struct s_arr_size {
 
 // settings for the window, map is an array woth the map values, in coord
 // are the coordinates for each points, map size with map size values
+
 typedef struct s_window {
 	mlx_t		*mlx;
 	mlx_image_t	*image;
+	int			width;
+	int			height;
+	void		*win;
 	char		***map;
 	t_sz		map_sz;
 	t_coord		*coord;
@@ -107,30 +113,49 @@ typedef struct s_window {
 // setup and initialisations:
 void		get_array_size(t_window *map);
 char		***read_and_split_lines(int fd);
-t_window	*set_coord(t_window *map);
+int32_t		set_coord(t_window *window);
+// setup help_functions
+void		ft_set_before_y(t_coord **head, int iterations, t_window *window);
+void		ft_set_after_y(t_coord *head, t_window *window);
+int			get_index(t_window *window, int pos_xm, int pos_ym);
+
+//	mathematical functions, as i dont use the math.h library
+
+// mathematics1
+void		find_new_point(double x1, double y1, double len_x_to_y, double deg);
+float		round_float(float num, int range);
+float		calc_angle(int a, int b, char which_side);
+double		ft_sqrt(double a);
+//	mathematics2
+int			atan_approximation(int x);
+double		radians(double degrees);
+
+// 	main calculations for the map
 // algorithm for the calculations:
 void		connect_points(t_window *map, t_coord *cur, t_coord *next);
-int			ft_hook(t_window *map);
+int			ft_hook_key(t_window *window, int *x_set, int *y_set, int *z_set);
 void		ft_render(void *param);
 int32_t		update_coord(t_window *map, int x_set, int y_set, int z_set);
+void		ft_resize(int width, int height, void *param);
 // calculations:
-int			range_check(t_window *window, int *x, int *y, int *z);
+int			range_check(t_window *window, int x, int y, int z);
 double		ft_sqrt(double a);
 float		calc_z(t_coord *cur, t_coord *next, float x_p, float y_p);
 float		calc_angle(int a, int b, char which_side);
 int			round_to_int(float num);
-int			zoom_calc(t_window *window, t_coord *cur_point);
+int			zoom_calc(t_window *window, t_coord *cur_point, double zoom);
 
 //clear functions for avoiding memory leaks and trash:
 void		free_stack(t_coord **stack);
-void		clear_image(mlx_image_t *image, uint32_t color);
+void		clear_image(t_window *window, uint32_t color);
+
 // additional helper functions
 int32_t		ft_pixel(int32_t r, int32_t g, int32_t b, int32_t a);
 void		find_highest_and_lowest(t_window *map);
 void		ft_add_back(t_coord **lst, t_coord *new);
 int			ft_shutdown_error(mlx_t *mlx);
+
 // debugging dunctions:
-int			print_names_from_stack(int width);
 void		print_stacks(t_window *head);
 
 #endif

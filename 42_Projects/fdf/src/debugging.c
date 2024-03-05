@@ -6,7 +6,7 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 13:25:40 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/02/29 11:57:00 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/03/05 11:05:41 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,60 +25,22 @@
 #define COLOR_CYAN    "\x1b[36m"
 #define COLOR_RESET   "\x1b[0m"
 
-int	print_names_from_stack(int width)
-{
-	printf("%s", COLOR_CYAN);
-	if (printf("\n  %-*s%-*s%-*s%-*s%-*s%-*s%-*s%-*s%-*s%-*s%-*s%-*s%-*s%-*s%-*s%-*s%-*s%-*s%-*s%-*s%-*s%-*s%-*s%-*s%-*s%s\n",
-			width, "Row",
-			width, "xm",
-			width, "ym",
-			width, "xn",
-			width, "xb",
-			width, "yn",
-			width, "yb",
-			width, "zw",
-			width, "yw",
-			width, "zw",
-			width, "xcentm",
-			width, "ycentm",
-			width, "zcentm",
-			width, "xm_xmcent",
-			width, "ym_ymcent",
-			width, "zm_zmcent",
-			width, "len_cent",
-			width, "°x",
-			width, "°y",
-			width, "°z",
-			width, "zoom",
-			width, "color",
-			width, "xm_offet",
-			width, "ym_offet",
-			width, "zm_offet",
-			COLOR_RESET)
-		== 0)
-		return (0);
-	else
-		return (-1);
-}
-
-void	print_stacks(t_window *head)
+//	prints the values of all coordinates (distances, color, degree, position...)
+void	print_stacks(t_window *window)
 {
 	t_coord		*current;
-	int			width;
 	int			row;
 	int			new_row;
 	const char	*color;
 
-	if (head == NULL)
+	if (window == NULL)
 	{
 		ft_printf("The list is empty.\n");
 		return ;
 	}
-	width = 10;
 	row = 1;
-	current = head->coord;
+	current = window->coord;
 	new_row = current->pos_ym;
-	print_names_from_stack(width);
 	while (current != NULL)
 	{
 		if (row % 2 == 0)
@@ -87,52 +49,52 @@ void	print_stacks(t_window *head)
 			color = COLOR_RESET;
 		if ((current->pos_ym - 1) >= new_row)
 		{
-			print_names_from_stack(width);
 			new_row = current->pos_ym;
+			ft_printf("\n");
 		}
-		printf("  ");
-		printf("%s", color);
-		printf("%-*d", width, row);
-		printf("%-*d", width, current->pos_xm);
-		printf("%-*d", width, current->pos_ym);
-		if (current->next != NULL)
-			printf("%-*d", width, current->next->pos_xm);
-		else
-			printf("%-*d", width, 0);
-		if (current->before != NULL)
-			printf("%-*d", width, current->before->pos_xm);
-		else
-			printf("%-*d", width, 0);
-		if (current->next != NULL)
-			printf("%-*d", width, current->next->pos_ym);
-		else
-			printf("%-*d", width, 0);
-		if (current->before_y != NULL)
-			printf("%-*d", width, current->before_y->pos_ym);
-		else
-			printf("%-*d", width, 0);
-		printf("%-*d", width, current->xw);
-		printf("%-*d", width, current->yw);
-		printf("%-*d", width, current->zw);
-		printf("%-*d", width, head->map_sz.xcentm);
-		printf("%-*d", width, head->map_sz.ycentm);
-		printf("%-*d", width, head->map_sz.zcentm);
-		printf("%-*d", width, current->xm_xmcent);
-		printf("%-*d", width, current->ym_ymcent);
-		printf("%-*d", width, current->zm_zmcent);
-		printf("%-*d", width, current->len_cent);
-       	printf("%-*.*f", width, 3, current->deg_cmx_xm);
-        printf("%-*.*f", width, 3, current->deg_cmy_ym);
-        printf("%-*.*f", width, 3, current->deg_cmz_zm);
-		printf("%-*d", width, head->zoom_factor);
-		printf("%-*X", width, current->color);
-		printf("%-*d", width, head->map_sz.xm_offset);
-		printf("%-*d", width, head->map_sz.ym_offset);
-		printf("%-*d", width, head->map_sz.zm_offset);
-		printf("\n");
+		ft_printf("\t");
+		ft_printf("%s", color);
+		ft_printf("%d|%d\t", current->pos_xm, current->pos_ym);
+		//if (current->next != NULL)
+		//	ft_printf("nx: %d|%d\t", current->next->pos_xm,
+		//		current->next->pos_ym);
+		//else
+		//	ft_printf("nx:  |  \t");
+		//if (current->before != NULL)
+		//	ft_printf("bx: %d|%d\t", current->before->pos_xm,
+		//		current->before->pos_ym);
+		//else
+		//	ft_printf("bx:  |  \t");
+		//if (current->next_y != NULL)
+		//	ft_printf("ny; %d|%d\t", current->next_y->pos_xm,
+		//		current->next_y->pos_ym);
+		//else
+		//	ft_printf("ny:  | \t");
+		//if (current->before_y != NULL)
+		//	ft_printf("by: %d|%d\t", current->before_y->pos_xm,
+		//		current->before_y->pos_ym);
+		//else
+		//	ft_printf("by;  | \t");
+		ft_printf("Pos map: %d|%d|%d\t", current->xm, current->ym, current->zm);
+		ft_printf("len cen: %d\t", current->len_cent);
+		//printf("deg to cen map: %f|%f|%f\t", current->deg_xm,
+		//	current->deg_ym, current->deg_zm);
+		ft_printf("zoom: %d\t", window->zoom_factor);
+		//ft_printf("color: %d\t", current->color);
+		ft_printf("Pos window: %d|%d|%d\t", current->xw, current->yw,
+			current->zw);
+		ft_printf("offset map: %d|%d|%d\t", window->map_sz.xm_offset,
+			window->map_sz.ym_offset, window->map_sz.zm_offset);
+		ft_printf("map pos win: %d|%d|%d\t", window->map_sz.xposmw,
+			window->map_sz.yposmw, window->map_sz.zcentmw);
+		ft_printf("max sz map: x: %d|%d y: %d|%d\t",
+			window->map_sz.maxsz_x_p, window->map_sz.maxsz_x_m,
+			window->map_sz.maxsz_y_p, window->map_sz.maxsz_y_m);
+		//ft_printf("wsz: %d|%d", window->width, window->height);
+		ft_printf("\n");
 		row++;
 		current = current->next;
 	}
-	printf("%s", COLOR_RESET);
-	printf("\n\n");
+	ft_printf("%s", COLOR_RESET);
+	ft_printf("\n\n");
 }

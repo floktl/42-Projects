@@ -6,45 +6,38 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/24 15:50:39 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/02/29 09:56:14 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/03/05 12:47:40 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../fdf.h"
 
 // this function limits the move of the map outside the visible window
-int	range_check(t_window *window, int *x, int *y, int *z)
+int	range_check(t_window *window, int x, int y, int z)
 {
-	//if (window.map_sz.xm_offset < -(((window.map_sz.xm_size - 2) * window.zoom_factor) / 2) - *x
-	//	|| window.map_sz.ym_offset < -(((window.map_sz.ym_size - 2) * window.zoom_factor) / 2) - *y
-	//	|| window.map_sz.xm_offset > (((window.map_sz.xm_size - 1) * window.zoom_factor) / 2) + WIDTH - *x
-	//	|| window.map_sz.ym_offset > (((window.map_sz.ym_size - 1) * window.zoom_factor) / 2) + HEIGHT - *y)
-	*window = *window;
-	*x += 0;
-	*y += 0;
-	*z += 0;
-	return (0);
-}
-
-// replace function for square root, why not, Math is fun!
-// who needs the math.h library, definetly not me!
-// Newton-Raphson Method
-double	ft_sqrt(double a)
-{
-	double	x;
-	double	epsilon;
-	double	next;
-
-	x = a;
-	epsilon = 0.00000001;
-	while (1)
+	if (x != 0)
 	{
-		next = 0.5 * (x + a / x);
-		if ((next - x) * (next - x) < epsilon * epsilon)
-			break ;
-		x = next;
+		if ((window->map_sz.xposmw + x - MARGIN) < -(window->map_sz.maxsz_x_p)
+			|| (window->map_sz.xposmw - window->width + x + MARGIN)
+			> -(window->map_sz.maxsz_x_m))
+			return (0);
+		else
+			return (x);
 	}
-	return (x);
+	if (y != 0)
+	{
+		if ((window->map_sz.yposmw - y - MARGIN) < -(window->map_sz.maxsz_y_p)
+			|| (window->map_sz.yposmw - window->height - y + MARGIN)
+			> -(window->map_sz.maxsz_y_m))
+			return (0);
+		else
+			return (y);
+	}
+	else if (z != 0)
+	{
+		return (z);
+	}
+	return (0);
 }
 
 //this function calculates a missing z variable for a point p(x; y; z)
@@ -68,74 +61,31 @@ float	calc_z(t_coord *cur, t_coord *next, float x_p, float y_p)
 	return (z_p);
 }
 
-// Approximation of arctangent function
-int	atan_approximation(int x)
+//	this function calculates the zoom in x and y direction of each coordinate,
+//	depending on the mouse and/or map position
+int	zoom_calc(t_window *window, t_coord *cur_point, double zoom)
 {
-	return (x - x * x * x / 3 + x * x * x * x * x / 5);
-}
 
-float	calc_angle(int a, int b, char which_side)
-{
-	double	tan_theta;
-	double	theta_rad;
-	float	theta_deg;
-
-	if (a < 0)
-		a *= -1;
-	if (b < 0)
-		b *= -1;
-	if (b == 0)
-		return (0.0f);
-	tan_theta = (double)a / b;
-	theta_rad = atan(tan_theta);
-	theta_deg = theta_rad * (180.0 / 3.14159265358979323846f);
-	if (which_side == 'Z')
+	if (zoom != 0 && (window->zoom_factor > 0) && window->zoom_factor < 100)
 	{
-		theta_deg = 90 - theta_deg;
-		if (theta_deg == 90)
-			return (0.0f);
-	}
-	return (theta_deg);
-}
 
-float	round_float(float num, int range)
-{
-	float	factor;
-	int		i;
-
-	factor = 1.0;
-	i = 0;
-	while (i <= range)
-	{
-		factor *= 10.0;
-		i++;
-	}
-	return ((float)((int)(num * factor + 0.5) / factor));
-}
-
-int	round_to_int(float num)
-{
-	return ((num < 0) ? (int)(num - 0.5) : (int)(num + 0.5));
-}
-
-int	zoom_calc(t_window *window, t_coord *cur_point)
-{
-	if (window->zoom_factor != window->last_zoom_faktor && (window->zoom_factor > 0)
-		&& window->zoom_factor < 100)
-	{
-		*cur_point = *cur_point;
-		int dx = cur_point->xw - window->mouse_posx;
-		int dy = cur_point->yw - window->mouse_posy;
-
-		dx = abs(dx);
-		dy = abs(dy);
-		cur_point->len_cent *= (window->zoom_factor - window->last_zoom_faktor) + 1;
-		cur_point->xw += dx * cur_point->len_cent * (window->zoom_factor - window->last_zoom_faktor + 1);
-		cur_point->yw += dy * cur_point->len_cent * (window->zoom_factor - window->last_zoom_faktor + 1);
-		cur_point->zw += cur_point->len_cent * (window->zoom_factor - window->last_zoom_faktor + 1);
-
-		window->last_zoom_faktor = window->zoom_factor;
+		if (cur_point->xw == window->mouse_posx && cur_point->yw == window->mouse_posy)
+			zoom = 1.0;
+		cur_point->len_cent *= zoom;
+		cur_point->xm *= zoom;
+		cur_point->ym *= zoom;
+		cur_point->xw = cur_point->xm + window->map_sz.xm_offset + window->cent_xw;
+		cur_point->yw = cur_point->ym + window->map_sz.ym_offset + window->cent_yw;
 		return (1);
 	}
 	return (0);
 }
+
+//if (window.map_sz.xm_offset < -(((window.map_sz.xm_size - 2)
+		//* window.zoom_factor) / 2) - *x
+//	|| window.map_sz.ym_offset < -(((window.map_sz.ym_size - 2)
+		//* window.zoom_factor) / 2) - *y
+//	|| window.map_sz.xm_offset > (((window.map_sz.xm_size - 1)
+		//* window.zoom_factor) / 2) + WIDTH - *x
+//	|| window.map_sz.ym_offset > (((window.map_sz.ym_size - 1)
+		//* window.zoom_factor) / 2) + HEIGHT - *y)

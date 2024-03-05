@@ -6,7 +6,7 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 10:28:26 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/02/29 11:33:12 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/03/02 15:18:58 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ int32_t	ft_pixel(int32_t r, int32_t g, int32_t b, int32_t a)
 	return (r << 24 | g << 16 | b << 8 | a);
 }
 
+//	assigns  the highest and lowest value of the map (z_direction) as well
+//	as the the distance to the map middlepoint in z direction
 void	find_highest_and_lowest(t_window *map)
 {
 	t_window	*temp;
@@ -37,18 +39,18 @@ void	find_highest_and_lowest(t_window *map)
 			value = atoi(map->map[y][x]);
 			if (value > map->map_sz.zmcent_plus)
 				map->map_sz.zmcent_plus = value;
-			if (value < map->map_sz.zcentm)
-				map->map_sz.zcentm = value;
+			if (value < map->map_sz.zcentmw)
+				map->map_sz.zcentmw = value;
 			x++;
 		}
 		y++;
 	}
 }
 
+//	adds a new coordinate to the existing one
 void	ft_add_back(t_coord **lst, t_coord *new)
 {
 	t_coord	*current;
-	t_coord	*current_y;
 
 	if (*lst == NULL)
 	{
@@ -59,17 +61,9 @@ void	ft_add_back(t_coord **lst, t_coord *new)
 	while (current->next != NULL)
 		current = current->next;
 	current->next = new;
-	new->before = current;
-	if (new->next_y != NULL)
-	{
-		current_y = *lst;
-		while (current_y->next_y != NULL)
-			current_y = current_y->next_y;
-		current_y->next_y = new;
-		new->before_y = current_y;
-	}
 }
 
+//	save shutdown error for an error case
 int	ft_shutdown_error(mlx_t *mlx)
 {
 	mlx_close_window(mlx);

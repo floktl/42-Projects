@@ -6,24 +6,34 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 10:28:34 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/02/29 12:05:44 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/03/05 10:09:22 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../fdf.h"
 
+//
+//	functions for the standard view of the map on the image
+//
+
+//	this function assigns all variable values of the map, which will change, but
+// only for all coordinates at once, not every unique coordinate
 void	get_array_size(t_window *window)
 {
 	t_sz		size;
 	t_window	*temp;
 
 	size.ym_size = 0;
-	window->map_sz.xcentm = 0;
-	window->map_sz.ycentm = 0;
-	window->map_sz.zcentm = 0;
+	window->map_sz.xposmw = WIDTH / 2;
+	window->map_sz.yposmw = HEIGHT / 2;
+	window->map_sz.zcentmw = 0;
 	window->map_sz.xm_rot_deg = 0;
 	window->map_sz.ym_rot_deg = 0;
 	window->map_sz.zm_rot_deg = 0;
+	window->map_sz.maxsz_x_p = 0;
+	window->map_sz.maxsz_x_m = 0;
+	window->map_sz.maxsz_x_p = 0;
+	window->map_sz.maxsz_x_m = 0;
 	temp = window;
 	while (temp->map[size.ym_size] != NULL)
 		size.ym_size++;
@@ -69,122 +79,104 @@ char	***read_and_split_lines(int fd)
 	return (lines_tokens);
 }
 
-t_coord *ft_get_at_index(t_coord *head, int index, t_coord **before)
+//	this function returns a new coordinate to the map and links the 4 neighbour
+//	coordinates (in x and y direction)
+t_coord	*link_add_pt(t_coord **coord, t_window *window, int x, int y)
 {
-    if (head == NULL || index < 0)
-        return NULL;  // Invalid input
+	static t_coord	*last = NULL;
+	t_coord			*new_coord;
 
-    int count = 0;
-    t_coord *current = head;
-    *before = NULL;  // Initialize the 'before' pointer
-
-    while (current != NULL)
-    {
-        if (count == index)
-            return current;  // Found the desired index
-
-        *before = current;
-        current = current->next;
-        count++;
-    }
-
-    *before = NULL;  // Index out of bounds
-    return NULL;
+	new_coord = malloc(sizeof(t_coord));
+	if (!new_coord)
+		return (NULL);
+	new_coord->next = NULL;
+	new_coord->next_y = NULL;
+	new_coord->pos_xm = x + 1;
+	new_coord->pos_ym = y + 1;
+	if (new_coord->pos_xm == 1)
+		new_coord->before = NULL;
+	else
+		new_coord->before = last;
+	ft_add_back(coord, new_coord);
+	if (new_coord->pos_ym < 1)
+		new_coord->before_y = NULL;
+	else
+		ft_set_before_y(coord, get_index(window, new_coord->pos_xm,
+				new_coord->pos_ym - 1), window);
+	last = new_coord;
+	return (new_coord);
 }
 
+// this function assign all start values to the coordinates, such as position on
+//	the map, color, degrees, everything is viewed from middlepoint of the map
+void	initialize_coord(t_coord *new, int x_axis, int y_axis, t_window *window)
+{
+	double	round_x;
+	double	round_y;
 
+	round_x = 0.0;
+	if (window->map_sz.xm_size % 2 == 1)
+		round_x = 0.5;
+	round_y = 0.0;
+	if (window->map_sz.ym_size % 2 == 1)
+		round_y = 0.5;
+	new->xm = -((window->map_sz.xm_size * window->zoom_factor) / 2)
+		+ ((x_axis + round_x) * window->zoom_factor);
+	new->ym = ((window->map_sz.ym_size * window->zoom_factor) / 2)
+		- ((y_axis + round_y) * window->zoom_factor);
+	new->zm = ft_atoi(window->map[y_axis][x_axis])
+		+ window->map_sz.zm_offset;
+	new->xw = new->xm + window->cent_xw;
+	new->yw = -new->ym + window->cent_yw;
+	new->zw = new->zm + 0;
+	if (window->map_sz.maxsz_x_p < new->xm)
+		window->map_sz.maxsz_x_p = new->xm;
+	if (window->map_sz.maxsz_x_m > new->xm)
+		window->map_sz.maxsz_x_m = new->xm;
+	if (window->map_sz.maxsz_y_p < new->ym)
+		window->map_sz.maxsz_y_p = new->ym;
+	if (window->map_sz.maxsz_y_m > new->ym)
+		window->map_sz.maxsz_y_m = new->ym;
+	new->deg_xm = calc_angle(new->xm, new->ym, 'X');
+	new->deg_ym = calc_angle(-new->ym, new->xm, 'Y');
+	new->deg_zm = calc_angle(new->ym, new->zm, 'Z');
+	new->len_cent = ft_sqrt((new->xm * new->xm)
+			+ (new->ym * new->ym)
+			+ (new->zm * new->zm));
+	new->color = ft_pixel(0xFF, 0xFF
+			- (new->zm * (255 / (window->map_sz.zmcent_plus + 1))),
+			0xFF - (new->zm * (255 / (window->map_sz.zmcent_minus - 1))), 0xFF);
+}
+
+//polarAngle corresponds to the inclination or zenith angle.
+//azimuthalAngle corresponds to the angle measured in the x-y plane.
+//additionalAngle corresponds to the third angle representing rotation or tilt.
 
 // this function set all important variables into struct to each point in a loop
-t_window	*set_coord(t_window *window)
+int32_t	set_coord(t_window *window)
 {
-	t_coord	*coordinates;
-	t_coord	*new;
+	t_coord	*coord;
 	int		x_axis;
 	int		y_axis;
+	t_coord	*next_coordinate;
 
 	y_axis = 0;
-	coordinates = NULL;
+	coord = NULL;
 	while (y_axis < window->map_sz.ym_size)
 	{
 		x_axis = 0;
 		while (x_axis < window->map_sz.xm_size)
 		{
-			new = malloc(sizeof(t_coord));
-			if (!new)
-				return (perror("Memory allocation error"), NULL);
-			new->pos_xm = x_axis + 1;
-			new->pos_ym = y_axis + 1;
-			new->xm_xmcent = (x_axis * window->start_size)
-				- (window->map_sz.xm_size * window->start_size) / 2;
-			new->ym_ymcent = (y_axis * window->start_size)
-				- (window->map_sz.ym_size * window->start_size) / 2;
-			new->zm_zmcent = ft_atoi(window->map[y_axis][x_axis])
-				+ window->map_sz.zm_offset;
-			new->xw = new->xm_xmcent + window->map_sz.xm_offset;
-			new->yw = new->ym_ymcent + window->map_sz.ym_offset;
-			new->zw = new->zm_zmcent + window->map_sz.zm_offset;
-			new->deg_cmx_xm = calc_angle(new->xm_xmcent, new->ym_ymcent, 'X');
-			new->deg_cmy_ym = calc_angle(new->ym_ymcent, new->xm_xmcent, 'Y');
-			new->deg_cmz_zm = calc_angle(new->ym_ymcent, new->zm_zmcent, 'Z');
-			new->len_cent = ft_sqrt((new->xm_xmcent * new->xm_xmcent)
-					+ (new->ym_ymcent * new->ym_ymcent)
-					+ (new->zm_zmcent * new->zm_zmcent));
-			new->color = ft_pixel(0xFF, 0xFF
-					- (new->zw * (255 / (window->map_sz.zmcent_plus + 1))), 0xFF
-					- (new->zw * (255 / (window->map_sz.zmcent_minus - 1))), 0xFF);
-			new->next = NULL;
-			new->next_y = NULL;
-			new->before_y = NULL;
-			if (y_axis < (window->map_sz.ym_size - 1))
-			{
-				int index_next_y = (y_axis + 1) * window->map_sz.xm_size + x_axis;
-
-				t_coord *next_y = ft_get_at_index(coordinates, index_next_y, &new->before);
-
-				if (next_y != NULL)
-				{
-					new->next_y = next_y;
-					next_y->before_y = new;
-					if (new->before != NULL)
-					{
-						new->before->next = new;
-					}
-					if (x_axis == 0)
-						new->before = NULL;
-				}
-			}
-			ft_add_back(&coordinates, new);
+			next_coordinate = link_add_pt(&coord, window, x_axis, y_axis);
+			if (!next_coordinate)
+				return (free(next_coordinate), EXIT_FAILURE);
+			initialize_coord(next_coordinate, x_axis, y_axis, window);
 			x_axis++;
 		}
 		y_axis++;
 	}
-	window->coord = coordinates;
-	//if (window->debug_mode == 1)
+	ft_set_after_y(coord, window);
+	window->coord = coord;
 	print_stacks(window);
-	return (EXIT_SUCCESS);
-}
-
-//this function updates all important variables to each point in map
-int32_t	update_coord(t_window *window, int x_set, int y_set, int z_set)
-{
-	t_coord		*temp;
-
-	temp = window->coord;
-	if (window->zoom_factor == window->last_zoom_faktor)
-	{
-		window->map_sz.xm_offset += x_set;
-		window->map_sz.ym_offset += y_set;
-		window->map_sz.zm_offset += z_set;
-	}
-	while (temp != NULL)
-	{
-		zoom_calc(window, temp);
-		temp->xw += x_set;
-		temp->yw += y_set;
-		temp->zw += z_set;
-		temp = temp->next;
-	}
-	if (window->debug_mode == 1)
-		print_stacks(window);
 	return (EXIT_SUCCESS);
 }

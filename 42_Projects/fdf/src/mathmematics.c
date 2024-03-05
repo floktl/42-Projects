@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mathmematics.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 16:59:00 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/05 08:28:36 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/03/05 16:44:57 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,25 +46,25 @@ float	round_float(float num, int range)
 }
 
 //	calculates an angle of an right triangle, when two sides are given
-float	calc_angle(int a, int b, char which_side)
+double	calc_angle(double a, double b, char which_side)
 {
 	double	tan_theta;
 	double	theta_rad;
-	float	theta_deg;
+	double	theta_deg;
 
-	if (a < 0)
-		a *= -1;
-	if (b < 0)
-		b *= -1;
 	if (b == 0 || a == 0)
 		return (0.0f);
-	tan_theta = (double)(a / b);
+	if (a < 0)
+		a *= -1.0f;
+	if (b < 0)
+		b *= -1.0f;
+	tan_theta = (a / b);
 	theta_rad = atan(tan_theta);
 	theta_deg = theta_rad * (180.0 / 3.14159265358979323846f);
 	if (which_side == 'Z')
 	{
 		theta_deg = 90 - theta_deg;
-		if (theta_deg == 90)
+		if (fabs(theta_deg - 90) < 1e-6)
 			return (0.0f);
 	}
 	return (theta_deg);

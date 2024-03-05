@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   algorithm.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/24 18:39:28 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/05 12:49:36 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/03/05 15:05:41 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,12 +55,12 @@ void	connect_points(t_window *window, t_coord *cur, t_coord *next)
 	}
 }
 
-int	check_zoom_direction(int num)
+double	check_zoom_direction(int num)
 {
 	if (num < 0)
-		return (-1);
+		return (0.9);
 	else
-		return (1);
+		return (1.1);
 }
 
 //this function updates all important variables to each point in map
@@ -81,7 +81,7 @@ int32_t	update_coord(t_window *window, int x_set, int y_set, int z_set)
 		window->map_sz.zm_offset += z_set;
 		window->map_sz.xposmw += x_set;
 		window->map_sz.yposmw -= y_set;
-		zoom_factor = 0;
+		zoom = 0;
 	}
 	else
 	{
@@ -93,52 +93,54 @@ int32_t	update_coord(t_window *window, int x_set, int y_set, int z_set)
 		dy = check_zoom_direction(window->map_sz.yposmw - window->mouse_posy);
 		if (zoom == 1.1)
 		{
-			if (dy == 1 && dx == 1)
+			if (dy == 1.1 && dx == 1.1)
 			{
-				dy = 1;
-				dx = 1;
+				dy = 1.1;
+				dx = 1.1;
 			}
-			else if (dy == 1 && dx == -1)
+			else if (dy == 1.1 && dx == 0.9)
 			{
-				dx = -1;
-				dy = 1;
+				dx = 0.9;
+				dy = 1.1;
 			}
-			else if (dy == -1 && dx == -1)
+			else if (dy == 0.9 && dx == 0.9)
 			{
-				dx = -1;
-				dy = -1;
+				dx = 0.9;
+				dy = 0.9;
 			}
-			else if (dy == -1 && dx == 1)
+			else if (dy == 0.9 && dx == 1.1)
 			{
-				dx = 1;
-				dy = -1;
+				dx = 1.1;
+				dy = 0.9;
 			}
 		}
 		else if (zoom == 0.9)
 		{
-			if (dy == 1 && dx == 1)
+			if (dy == 0.9 && dx == 0.9)
 			{
-				dy = 1.1;
-				dx = 1.1;
-			}
-			else if (dy == 1 && dx == -1)
-			{
-				dx = 0.9;
-				dy = 1.1;
-			}
-			else if (dy == -1 && dx == -1)
-			{
-				dx = 0.9;
 				dy = 0.9;
+				dx = 0.9;
 			}
-			else if (dy == -1 && dx == 1)
+			else if (dy == 0.9 && dx == 1.1)
 			{
 				dx = 1.1;
 				dy = 0.9;
+			}
+			else if (dy == 1.1 && dx == 1.1)
+			{
+				dx = 1.1;
+				dy = 1.1;
+			}
+			else if (dy == 1.1 && dx == 0.9)
+			{
+				dx = 0.9;
+				dy = 1.1;
 			}
 		}
-		window->map_sz.xm_offset *= (zoom * dx);
-		window->map_sz.ym_offset *= (zoom * dy);
+		// window->map_sz.xm_offset *= dx;
+		// window->map_sz.ym_offset *= dy;
+		// window->map_sz.xposmw += window->map_sz.xm_offset;
+		// window->map_sz.yposmw += window->map_sz.ym_offset;
 	}
 		zoom_factor = window->zoom_factor - window->last_zoom_faktor;
 	while (temp != NULL)

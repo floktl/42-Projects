@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 13:51:31 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/05 08:04:15 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/03/05 21:01:22 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ int32_t	update_coord_size(t_window *window, int x_set, int y_set)
 
 void	ft_resize(int width, int height, void *param)
 {
-	t_coord		*current;
 	t_window	*window;
 
 	window = (t_window *)param;
@@ -76,7 +75,6 @@ void	ft_resize(int width, int height, void *param)
 	window->mouse_posx = window->cent_xw;
 	window->mouse_posy = window->cent_yw;
 	print_stacks(window);
-	current = window->coord;
 }
 
 // main function, user input: ./fdf <map_name>
@@ -104,7 +102,8 @@ int	main(int argc, char *argv[])
 	mlx_loop(window.mlx);
 	free(window.coord);
 	//system("leaks fdf");
-	return (mlx_terminate(window.mlx), EXIT_SUCCESS);
+	//mlx_terminate(window.mlx)
+	return (EXIT_SUCCESS);
 }
 
 //window->cent_yw + window->zoom_factor / 2

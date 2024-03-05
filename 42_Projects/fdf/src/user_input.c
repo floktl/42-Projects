@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   user_input.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 17:11:17 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/05 09:37:46 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/03/05 21:02:36 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	ft_hook_key(t_window *window, int *x_set, int *y_set, int *z_set)
 	int	speed;
 
 	key_pressed = 0;
-	*z_set = *z_set;
+	*z_set = 0;
 	speed = 15 * (window->height + window->width) / (HEIGHT + WIDTH);
 	if (mlx_is_key_down(window->mlx, MLX_KEY_ESCAPE))
 		mlx_close_window(window->mlx);
@@ -80,7 +80,7 @@ int	ft_hook_key(t_window *window, int *x_set, int *y_set, int *z_set)
 		clear_image(window, 0x00000000);
 		set_coord(window);
 	}
-	if (*x_set == 0 && *y_set == 0 && window->zoom_factor == window->last_zoom_faktor)
+	if (!key_pressed && *x_set == 0 && *y_set == 0 && window->zoom_factor == window->last_zoom_faktor)
 		return (0);
 	return (1);
 }
@@ -98,8 +98,8 @@ void	ft_render(void *param)
 	y_offset = 0;
 	z_offset = 0;
 	window = (t_window *)param;
-	if (ft_hook_key(window, &x_offset, &y_offset, &z_offset) == 1)
-	{
+	 if (ft_hook_key(window, &x_offset, &y_offset, &z_offset) == 1)
+	 {
 		clear_image(window, 0x00000000);
 		update_coord(window, x_offset, y_offset, z_offset);
 	}

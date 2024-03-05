@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   setup.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 10:28:34 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/05 10:09:22 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/03/05 21:00:55 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,15 +120,16 @@ void	initialize_coord(t_coord *new, int x_axis, int y_axis, t_window *window)
 	round_y = 0.0;
 	if (window->map_sz.ym_size % 2 == 1)
 		round_y = 0.5;
+	new->xm = x_axis + y_axis + round_y + round_x;
 	new->xm = -((window->map_sz.xm_size * window->zoom_factor) / 2)
 		+ ((x_axis + round_x) * window->zoom_factor);
 	new->ym = ((window->map_sz.ym_size * window->zoom_factor) / 2)
 		- ((y_axis + round_y) * window->zoom_factor);
 	new->zm = ft_atoi(window->map[y_axis][x_axis])
 		+ window->map_sz.zm_offset;
-	new->xw = new->xm + window->cent_xw;
-	new->yw = -new->ym + window->cent_yw;
-	new->zw = new->zm + 0;
+	new->xw = round(new->xm) + window->cent_xw;
+	new->yw = -round(new->ym) + window->cent_yw;
+	new->zw = round(new->zm) + 0;
 	if (window->map_sz.maxsz_x_p < new->xm)
 		window->map_sz.maxsz_x_p = new->xm;
 	if (window->map_sz.maxsz_x_m > new->xm)
@@ -141,11 +142,10 @@ void	initialize_coord(t_coord *new, int x_axis, int y_axis, t_window *window)
 	new->deg_ym = calc_angle(-new->ym, new->xm, 'Y');
 	new->deg_zm = calc_angle(new->ym, new->zm, 'Z');
 	new->len_cent = ft_sqrt((new->xm * new->xm)
-			+ (new->ym * new->ym)
-			+ (new->zm * new->zm));
+			+ (new->ym * new->ym) + (new->zm * new->zm));
 	new->color = ft_pixel(0xFF, 0xFF
-			- (new->zm * (255 / (window->map_sz.zmcent_plus + 1))),
-			0xFF - (new->zm * (255 / (window->map_sz.zmcent_minus - 1))), 0xFF);
+			- (new->zm * (255 / (window->map_sz.zmcent_plus + 1))), 0xFF
+			- (new->zm * (255 / (window->map_sz.zmcent_minus - 1))), 0xFF);
 }
 
 //polarAngle corresponds to the inclination or zenith angle.
@@ -177,6 +177,6 @@ int32_t	set_coord(t_window *window)
 	}
 	ft_set_after_y(coord, window);
 	window->coord = coord;
-	print_stacks(window);
+	//print_stacks(window);
 	return (EXIT_SUCCESS);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   calculations.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/24 15:50:39 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/05 12:47:40 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/03/05 16:12:16 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,13 +69,13 @@ int	zoom_calc(t_window *window, t_coord *cur_point, double zoom)
 	if (zoom != 0 && (window->zoom_factor > 0) && window->zoom_factor < 100)
 	{
 
-		if (cur_point->xw == window->mouse_posx && cur_point->yw == window->mouse_posy)
-			zoom = 1.0;
+		double new_xm = cur_point->xm * zoom;
+		double new_ym = cur_point->ym * zoom;
 		cur_point->len_cent *= zoom;
-		cur_point->xm *= zoom;
-		cur_point->ym *= zoom;
-		cur_point->xw = cur_point->xm + window->map_sz.xm_offset + window->cent_xw;
-		cur_point->yw = cur_point->ym + window->map_sz.ym_offset + window->cent_yw;
+		cur_point->xm = new_xm;
+		cur_point->ym = new_ym;
+		cur_point->xw = round(cur_point->xm) + window->map_sz.xm_offset + window->cent_xw;
+		cur_point->yw = -(round(cur_point->ym) + window->map_sz.ym_offset - window->cent_yw);
 		return (1);
 	}
 	return (0);

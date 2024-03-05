@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fdf.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 10:26:16 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/05 12:48:20 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/03/05 16:45:16 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,13 +46,13 @@ typedef struct s_coordinates {
 	int						xw;
 	int						yw;
 	int						zw;
-	int						xm;
-	int						ym;
-	int						zm;
-	int						len_cent;
-	float					deg_xm;
-	float					deg_ym;
-	float					deg_zm;
+	double					xm;
+	double					ym;
+	double					zm;
+	double					len_cent;
+	double					deg_xm;
+	double					deg_ym;
+	double					deg_zm;
 	uint32_t				color;
 	struct s_coordinates	*next;
 	struct s_coordinates	*before;
@@ -124,7 +124,6 @@ int			get_index(t_window *window, int pos_xm, int pos_ym);
 // mathematics1
 void		find_new_point(double x1, double y1, double len_x_to_y, double deg);
 float		round_float(float num, int range);
-float		calc_angle(int a, int b, char which_side);
 double		ft_sqrt(double a);
 //	mathematics2
 int			atan_approximation(int x);
@@ -141,7 +140,7 @@ void		ft_resize(int width, int height, void *param);
 int			range_check(t_window *window, int x, int y, int z);
 double		ft_sqrt(double a);
 float		calc_z(t_coord *cur, t_coord *next, float x_p, float y_p);
-float		calc_angle(int a, int b, char which_side);
+double		calc_angle(double a, double b, char which_side);
 int			round_to_int(float num);
 int			zoom_calc(t_window *window, t_coord *cur_point, double zoom);
 

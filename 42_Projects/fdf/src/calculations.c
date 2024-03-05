@@ -6,7 +6,7 @@
 /*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/24 15:50:39 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/05 16:12:16 by flo              ###   ########.fr       */
+/*   Updated: 2024/03/05 22:29:45 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ float	calc_z(t_coord *cur, t_coord *next, float x_p, float y_p)
 int	zoom_calc(t_window *window, t_coord *cur_point, double zoom)
 {
 
-	if (zoom != 0 && (window->zoom_factor > 0) && window->zoom_factor < 100)
+	if (zoom != 0 && (window->zoom_factor > 3) && window->zoom_factor < 97)
 	{
 
 		double new_xm = cur_point->xm * zoom;
@@ -74,8 +74,8 @@ int	zoom_calc(t_window *window, t_coord *cur_point, double zoom)
 		cur_point->len_cent *= zoom;
 		cur_point->xm = new_xm;
 		cur_point->ym = new_ym;
-		cur_point->xw = round(cur_point->xm) + window->map_sz.xm_offset + window->cent_xw;
-		cur_point->yw = -(round(cur_point->ym) + window->map_sz.ym_offset - window->cent_yw);
+		cur_point->xw = round(cur_point->xm) + round(window->map_sz.xm_offset) + window->cent_xw;
+		cur_point->yw = -(round(cur_point->ym) + round(window->map_sz.ym_offset) - window->cent_yw);
 		return (1);
 	}
 	return (0);

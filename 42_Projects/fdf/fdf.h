@@ -6,7 +6,7 @@
 /*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 10:26:16 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/05 16:45:16 by flo              ###   ########.fr       */
+/*   Updated: 2024/03/05 22:36:37 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,8 @@
 // deg_mid_x/y is the degree to the middle point in each axis
 // zoom is the zoom multiplactor to zoom the picture
 // color is the setted color of the point
-typedef struct s_coordinates {
+typedef struct s_coordinates
+{
 	int						pos_xm;
 	int						pos_ym;
 	int						xw;
@@ -64,30 +65,31 @@ typedef struct s_coordinates {
 // x = x-axis coordinate , y = y-axis z = z = z-axis
 //	m = map object, w = window, cent = center/middlepoint
 //
-typedef struct s_arr_size {
-	int	xm_size;
-	int	ym_size;
-	int	maxsz_x_p;
-	int	maxsz_x_m;
-	int	maxsz_y_p;
-	int	maxsz_y_m;
-	int	xposmw;
-	int	yposmw;
-	int	zcentmw;
-	int	zmcent_plus;
-	int	zmcent_minus;
-	int	xm_offset;
-	int	ym_offset;
-	int	zm_offset;
-	int	xm_rot_deg;
-	int	ym_rot_deg;
-	int	zm_rot_deg;
+typedef struct s_arr_size
+{
+	int		xm_size;
+	int		ym_size;
+	int		maxsz_x_p;
+	int		maxsz_x_m;
+	int		maxsz_y_p;
+	int		maxsz_y_m;
+	int		xposmw;
+	int		yposmw;
+	int		zcentmw;
+	int		zmcent_plus;
+	int		zmcent_minus;
+	double	xm_offset;
+	double	ym_offset;
+	double	zm_offset;
+	int		xm_rot_deg;
+	int		ym_rot_deg;
+	int		zm_rot_deg;
 }	t_sz;
 
 // settings for the window, map is an array woth the map values, in coord
 // are the coordinates for each points, map size with map size values
-
-typedef struct s_window {
+typedef struct s_window
+{
 	mlx_t		*mlx;
 	mlx_image_t	*image;
 	int			width;

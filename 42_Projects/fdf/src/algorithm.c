@@ -6,7 +6,7 @@
 /*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/24 18:39:28 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/05 15:05:41 by flo              ###   ########.fr       */
+/*   Updated: 2024/03/05 22:25:13 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,10 @@ double	check_zoom_direction(int num)
 {
 	if (num < 0)
 		return (0.9);
-	else
+	else if (num > 0)
 		return (1.1);
+	else
+		return (0.0);
 }
 
 //this function updates all important variables to each point in map
@@ -83,7 +85,7 @@ int32_t	update_coord(t_window *window, int x_set, int y_set, int z_set)
 		window->map_sz.yposmw -= y_set;
 		zoom = 0;
 	}
-	else
+	else if (window->zoom_factor > 3 && window->zoom_factor < 97)
 	{
 		if (zoom_factor > 0)
 			zoom = 1.1;
@@ -118,45 +120,50 @@ int32_t	update_coord(t_window *window, int x_set, int y_set, int z_set)
 		{
 			if (dy == 0.9 && dx == 0.9)
 			{
-				dy = 0.9;
-				dx = 0.9;
+				dy = 1.1;
+				dx = 1.1;
 			}
 			else if (dy == 0.9 && dx == 1.1)
 			{
-				dx = 1.1;
-				dy = 0.9;
+				dy = 1.1;
+				dx = 0.9;
 			}
 			else if (dy == 1.1 && dx == 1.1)
 			{
-				dx = 1.1;
-				dy = 1.1;
+				dy = 0.9;
+				dx = 0.9;
 			}
 			else if (dy == 1.1 && dx == 0.9)
 			{
-				dx = 0.9;
-				dy = 1.1;
+				dy = 0.9;
+				dx = 1.1;
 			}
 		}
-		// window->map_sz.xm_offset *= dx;
-		// window->map_sz.ym_offset *= dy;
-		// window->map_sz.xposmw += window->map_sz.xm_offset;
-		// window->map_sz.yposmw += window->map_sz.ym_offset;
+		window->map_sz.xm_offset *= dx;
+		window->map_sz.ym_offset *= dy;
+		window->map_sz.xposmw = window->cent_xw + round(window->map_sz.xm_offset);
+		window->map_sz.yposmw = window->cent_yw + round(window->map_sz.ym_offset);
 	}
 		zoom_factor = window->zoom_factor - window->last_zoom_faktor;
+	window->map_sz.maxsz_x_p = 0;
+	window->map_sz.maxsz_y_p = 0;
+	window->map_sz.maxsz_x_m = 0;
+	window->map_sz.maxsz_y_m = 0;
 	while (temp != NULL)
 	{
-		zoom_calc(window, temp, zoom);
+		if (zoom != 0)
+			zoom_calc(window, temp, zoom);
 		temp->xw += x_set;
 		temp->yw -= y_set;
 		temp->zw += z_set;
 		if (window->map_sz.maxsz_x_p < temp->xm)
-			window->map_sz.maxsz_x_p = temp->xm;
+			window->map_sz.maxsz_x_p = round(temp->xm);
 		if (window->map_sz.maxsz_x_m > temp->xm)
-			window->map_sz.maxsz_x_m = temp->xm;
+			window->map_sz.maxsz_x_m = round(temp->xm);
 		if (window->map_sz.maxsz_y_p < temp->ym)
-			window->map_sz.maxsz_y_p = temp->ym;
+			window->map_sz.maxsz_y_p = round(temp->ym);
 		if (window->map_sz.maxsz_y_m > temp->ym)
-			window->map_sz.maxsz_y_m = temp->ym;
+			window->map_sz.maxsz_y_m = round(temp->ym);
 		temp = temp->next;
 	}
 	window->last_zoom_faktor = window->zoom_factor;

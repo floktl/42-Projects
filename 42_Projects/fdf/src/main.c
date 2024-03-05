@@ -6,7 +6,7 @@
 /*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 13:51:31 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/05 21:01:22 by flo              ###   ########.fr       */
+/*   Updated: 2024/03/05 22:32:24 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,9 @@ int	initialize_window_from_args(t_window *window, char *argv[])
 	window->cent_yw = HEIGHT / 2;
 	window->mouse_posx = window->cent_xw;
 	window->mouse_posy = window->cent_yw;
-	window->map_sz.xm_offset = 0;
-	window->map_sz.ym_offset = 0;
-	window->map_sz.zm_offset = 0;
+	window->map_sz.xm_offset = 0.0;
+	window->map_sz.ym_offset = 0.0;
+	window->map_sz.zm_offset = 0.0;
 	window->debug_mode = -1;
 	window->width = WIDTH;
 	window->height = HEIGHT;
@@ -102,7 +102,7 @@ int	main(int argc, char *argv[])
 	mlx_loop(window.mlx);
 	free(window.coord);
 	//system("leaks fdf");
-	//mlx_terminate(window.mlx)
+	mlx_terminate(window.mlx);
 	return (EXIT_SUCCESS);
 }
 

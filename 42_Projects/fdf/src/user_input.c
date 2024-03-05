@@ -6,7 +6,7 @@
 /*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 17:11:17 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/05 21:02:36 by flo              ###   ########.fr       */
+/*   Updated: 2024/03/05 21:24:39 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,8 +98,8 @@ void	ft_render(void *param)
 	y_offset = 0;
 	z_offset = 0;
 	window = (t_window *)param;
-	 if (ft_hook_key(window, &x_offset, &y_offset, &z_offset) == 1)
-	 {
+	if (ft_hook_key(window, &x_offset, &y_offset, &z_offset) == 1)
+	{
 		clear_image(window, 0x00000000);
 		update_coord(window, x_offset, y_offset, z_offset);
 	}

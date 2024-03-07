@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   calculations.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/24 15:50:39 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/05 22:29:45 by flo              ###   ########.fr       */
+/*   Updated: 2024/03/06 17:52:00 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../fdf.h"
+#include "../../fdf.h"
 
 // this function limits the move of the map outside the visible window
 int	range_check(t_window *window, int x, int y, int z)
@@ -59,26 +59,6 @@ float	calc_z(t_coord *cur, t_coord *next, float x_p, float y_p)
 	t = d_ap / d_ab;
 	z_p = cur->zw + t * ((float)next->zw - (float)cur->zw);
 	return (z_p);
-}
-
-//	this function calculates the zoom in x and y direction of each coordinate,
-//	depending on the mouse and/or map position
-int	zoom_calc(t_window *window, t_coord *cur_point, double zoom)
-{
-
-	if (zoom != 0 && (window->zoom_factor > 3) && window->zoom_factor < 97)
-	{
-
-		double new_xm = cur_point->xm * zoom;
-		double new_ym = cur_point->ym * zoom;
-		cur_point->len_cent *= zoom;
-		cur_point->xm = new_xm;
-		cur_point->ym = new_ym;
-		cur_point->xw = round(cur_point->xm) + round(window->map_sz.xm_offset) + window->cent_xw;
-		cur_point->yw = -(round(cur_point->ym) + round(window->map_sz.ym_offset) - window->cent_yw);
-		return (1);
-	}
-	return (0);
 }
 
 //if (window.map_sz.xm_offset < -(((window.map_sz.xm_size - 2)

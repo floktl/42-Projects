@@ -6,11 +6,11 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/24 12:14:49 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/02 12:20:14 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/03/06 17:03:44 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../fdf.h"
+#include "../../fdf.h"
 
 //	function for freeing all values within a stack
 void	free_stack(t_coord **stack)

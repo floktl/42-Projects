@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   mathmematics.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 16:59:00 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/05 16:44:57 by flo              ###   ########.fr       */
+/*   Updated: 2024/03/06 16:59:07 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../fdf.h"
+#include "../../fdf.h"
 
 //
 //	mathematical functions, as i dont use the math.h library

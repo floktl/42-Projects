@@ -6,11 +6,11 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 10:28:26 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/02 15:18:58 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/03/07 07:15:27 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../fdf.h"
+#include "../../fdf.h"
 
 // combines rgb and alpha(transparency) values into single color
 int32_t	ft_pixel(int32_t r, int32_t g, int32_t b, int32_t a)
@@ -68,4 +68,14 @@ int	ft_shutdown_error(mlx_t *mlx)
 {
 	mlx_close_window(mlx);
 	return (puts(mlx_strerror(mlx_errno)), -1);
+}
+
+double	check_zoom_direction(int num)
+{
+	if (num < 0)
+		return (0.9);
+	else if (num > 0)
+		return (1.1);
+	else
+		return (1.0);
 }

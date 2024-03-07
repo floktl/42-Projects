@@ -6,7 +6,7 @@
 #    By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/12 14:13:59 by fkeitel           #+#    #+#              #
-#    Updated: 2024/03/02 10:46:17 by fkeitel          ###   ########.fr        #
+#    Updated: 2024/03/06 16:56:38 by fkeitel          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,6 +25,7 @@ SRCS	:= $(shell find src -name '*.c')
 LIBFT	:= libft/
 LIBFTTARGET := $(LIBFT)/libft.a
 OBJS	:= $(SRCS:.c=.o)
+
 
 # Rule to build the project
 all: $(NAME)

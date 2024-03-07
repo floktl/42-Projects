@@ -6,25 +6,23 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 16:36:30 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/02 09:40:36 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/03/07 07:18:32 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../fdf.h"
+#include "../../fdf.h"
 
 //	find and sets a pointer to the last coordinate in y direction (before_y)
 void	ft_set_before_y(t_coord **head, int iterations, t_window *window)
 {
 	t_coord	*current;
-	int		counter;
 	int		count_temp;
 	t_coord	*temp;
 
 	current = *head;
-	counter = 0;
 	count_temp = iterations - window->map_sz.xm_size;
 	temp = NULL;
-	while (current != NULL && iterations > 0)
+	while (current != NULL && iterations >= 0)
 	{
 		if (count_temp == 0)
 		{
@@ -33,14 +31,14 @@ void	ft_set_before_y(t_coord **head, int iterations, t_window *window)
 		}
 		else if (count_temp > 0)
 			count_temp--;
-		if (counter == iterations)
+		if (iterations == 0)
 		{
 			if (temp != NULL)
 				current->before_y = temp;
 			break ;
 		}
 		current = current->next;
-		counter++;
+		iterations--;
 	}
 }
 
@@ -78,17 +76,30 @@ int	get_index(t_window *window, int pos_xm, int pos_ym)
 	return (window->map_sz.xm_size * (pos_ym) + (pos_xm - 1));
 }
 
-//printf("cy; %d | %d\t", current->pos_xm, current->pos_ym);
-//if (current->before != NULL)
-//	printf("bx; %d | %d\t", current->before->pos_xm, current->before->pos_ym);
-//else
-//	printf("bx; 0 | 0\t");
-//if (current->before_y != NULL)
-//	printf("by; %d | %d\t", current->before_y->pos_xm,
-	//current->before_y->pos_ym);
-//else
-//	printf("by; 0 | 0\t");
-//if (current->next_y != NULL)
-//	printf("bn; %d | %d\t\n", current->next_y->pos_xm, current->next_y->pos_ym);
-//else
-//	printf("bn; 0 | 0\t\n");
+//	this function returns a new coordinate to the map and links the 4 neighbour
+//	coordinates (in x and y direction)
+t_coord	*link_add_pt(t_coord **coord, t_window *window, int x, int y)
+{
+	static t_coord	*last = NULL;
+	t_coord			*new_coord;
+
+	new_coord = malloc(sizeof(t_coord));
+	if (!new_coord)
+		return (NULL);
+	new_coord->next = NULL;
+	new_coord->next_y = NULL;
+	new_coord->pos_xm = x + 1;
+	new_coord->pos_ym = y + 1;
+	if (new_coord->pos_xm == 1)
+		new_coord->before = NULL;
+	else
+		new_coord->before = last;
+	ft_add_back(coord, new_coord);
+	if (new_coord->pos_ym < 1)
+		new_coord->before_y = NULL;
+	else
+		ft_set_before_y(coord, get_index(window, new_coord->pos_xm,
+				new_coord->pos_ym - 1), window);
+	last = new_coord;
+	return (new_coord);
+}

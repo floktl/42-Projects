@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fdf.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 10:26:16 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/05 22:36:37 by flo              ###   ########.fr       */
+/*   Updated: 2024/03/07 15:15:01 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@
 // deg_mid_x/y is the degree to the middle point in each axis
 // zoom is the zoom multiplactor to zoom the picture
 // color is the setted color of the point
+
 typedef struct s_coordinates
 {
 	int						pos_xm;
@@ -106,16 +107,25 @@ typedef struct s_window
 	int			debug_mode;
 	int			mouse_posx;
 	int			mouse_posy;
+	int			debug_point1_x;
+	int			debug_point1_y;
+	int			debug_point1_z;
+	int			debug_point2_x;
+	int			debug_point2_y;
+	int			debug_point2_z;
 }	t_window;
 
 //
 //---------------------functions------------------------------------------------
 //
+extern t_coord *mapmiddle;
+extern t_coord *mousepos;
 
 // setup and initialisations:
-void		get_array_size(t_window *map);
+void		get_map_size(t_window *map);
 char		***read_and_split_lines(int fd);
 int32_t		set_coord(t_window *window);
+int			initialize_window_from_args(t_window *window, char *argv[]);
 // setup help_functions
 void		ft_set_before_y(t_coord **head, int iterations, t_window *window);
 void		ft_set_after_y(t_coord *head, t_window *window);
@@ -134,9 +144,9 @@ double		radians(double degrees);
 // 	main calculations for the map
 // algorithm for the calculations:
 void		connect_points(t_window *map, t_coord *cur, t_coord *next);
-int			ft_hook_key(t_window *window, int *x_set, int *y_set, int *z_set);
+int			ft_hook_key(t_window *window, int *x_set, int *y_set, double *zoom);
 void		ft_render(void *param);
-int32_t		update_coord(t_window *map, int x_set, int y_set, int z_set);
+int32_t		update_coord(t_window *map, int x_set, int y_set, double zoom);
 void		ft_resize(int width, int height, void *param);
 // calculations:
 int			range_check(t_window *window, int x, int y, int z);
@@ -155,8 +165,19 @@ int32_t		ft_pixel(int32_t r, int32_t g, int32_t b, int32_t a);
 void		find_highest_and_lowest(t_window *map);
 void		ft_add_back(t_coord **lst, t_coord *new);
 int			ft_shutdown_error(mlx_t *mlx);
+double		check_zoom_direction(int num);
 
 // debugging dunctions:
 void		print_stacks(t_window *head);
+void		print_debug_point(t_window *window);
 
+void		calculate_zoom_pos(t_window *window, double zoom);
+double		check_if_zoomed(t_window *window, int x_set, int y_set, double zoom);
+t_coord		*link_add_pt(t_coord **coord, t_window *window, int x, int y);
+
+int			map_size_default_setting(t_sz *map_sz, t_sz size);
+void		update_mapsize(t_sz *map_sz, t_coord *temp);
+void		set_default_window_data(t_window *window);
+int			assign_degree_len_color(t_window *window, t_coord *new);
+int			assign_coord_position(t_window *window, t_coord *new, int x, int y);
 #endif

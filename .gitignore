@@ -52,7 +52,6 @@ Mkfile.old
 dkms.conf
 
 # Misc
-main.c
 temp/
 .vscode/
 lib/glfw/

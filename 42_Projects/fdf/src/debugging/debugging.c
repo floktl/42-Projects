@@ -6,7 +6,7 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 13:25:40 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/07 10:59:46 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/03/08 10:24:11 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,8 @@ int	print_coordinate_data(t_window *window, t_coord *current, const char *color)
 	printf("map pos win: %d|%d|%d\t", window->map_sz.xposmw,
 		window->map_sz.yposmw, window->map_sz.zcentmw);
 	printf("max sz map: x: %d|%d y: %d|%d\t",
-		window->map_sz.maxsz_x_p, window->map_sz.maxsz_x_m,
-		window->map_sz.maxsz_y_p, window->map_sz.maxsz_y_m);
+		(window->map_sz.maxsz_x_p), (window->map_sz.maxsz_x_m),
+		(window->map_sz.maxsz_y_p), (window->map_sz.maxsz_y_m));
 	if (current->before_y != NULL)
 		printf("by: %d|%d\t", current->before_y->pos_xm,
 			current->before_y->pos_ym);
@@ -81,10 +81,10 @@ void	print_debug_point(t_window *window)
 {
 	if (window->debug_mode == -1)
 		return ;
-	mapmiddle->xw = window->map_sz.maxsz_x_m + window->map_sz.xposmw;
-	mapmiddle->yw = window->map_sz.maxsz_y_m + window->map_sz.yposmw;
-	mousepos->xw = window->map_sz.maxsz_x_p + window->map_sz.xposmw;
-	mousepos->yw = window->map_sz.maxsz_y_p + window->map_sz.yposmw;
+	mapmiddle->xw = window->map_sz.xposmw;
+	mapmiddle->yw = window->map_sz.yposmw;
+	mousepos->xw = window->mouse_posx;
+	mousepos->yw = window->mouse_posy;
 	connect_points(window, mapmiddle, mousepos);
 }
 

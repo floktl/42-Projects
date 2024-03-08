@@ -6,7 +6,7 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 10:26:16 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/07 15:15:01 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/03/08 15:23:01 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,10 @@
 # define WIDTH 1024
 # define HEIGHT 1024
 # define MAX_LINES 1024
-# define MARGIN 5
+# define MARGIN 15
+# define ZOOM_P 1.05
+# define ZOOM_M 0.95
+# define ZOOM_DEFAULT 1.0
 
 // libraries
 # include <string.h>
@@ -165,14 +168,14 @@ int32_t		ft_pixel(int32_t r, int32_t g, int32_t b, int32_t a);
 void		find_highest_and_lowest(t_window *map);
 void		ft_add_back(t_coord **lst, t_coord *new);
 int			ft_shutdown_error(mlx_t *mlx);
-double		check_zoom_direction(int num);
+double		check_zoom_direction(int map_middle, int zoom_position, double zoom);
 
 // debugging dunctions:
 void		print_stacks(t_window *head);
 void		print_debug_point(t_window *window);
 
-void		calculate_zoom_pos(t_window *window, double zoom);
-double		check_if_zoomed(t_window *window, int x_set, int y_set, double zoom);
+void		calculate_zoom_pos(t_window *window, double *zoom);
+double		check_if_zoomed(t_window *window, int x_set, int y_set, double *zoom);
 t_coord		*link_add_pt(t_coord **coord, t_window *window, int x, int y);
 
 int			map_size_default_setting(t_sz *map_sz, t_sz size);

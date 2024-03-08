@@ -6,7 +6,7 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 17:11:17 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/07 16:42:16 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/03/08 15:25:47 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,12 @@ int	shift_map(t_window *window, int *x_set, int *y_set, int *key_pressed)
 	speed = 15 * (window->height + window->width) / (HEIGHT + WIDTH);
 	if (mlx_is_key_down(window->mlx, MLX_KEY_UP))
 	{
-		*y_set = range_check(window, 0, speed, 0);
+		*y_set = range_check(window, 0, -speed, 0);
 		*key_pressed = 1;
 	}
 	if (mlx_is_key_down(window->mlx, MLX_KEY_DOWN))
 	{
-		*y_set = range_check(window, 0, -speed, 0);
+		*y_set = range_check(window, 0, speed, 0);
 		*key_pressed = 1;
 	}
 	if (mlx_is_key_down(window->mlx, MLX_KEY_LEFT))
@@ -48,30 +48,31 @@ int	shift_map(t_window *window, int *x_set, int *y_set, int *key_pressed)
 
 double	zoom_map(t_window *window, int *key_pressed, double *zoom)
 {
-	double	map_size;
-	double	max_size;
-	double	min_size;
+	float	map_size;
+	float	max_size;
+	float	min_size;
 
-	map_size = (-window->map_sz.maxsz_x_m + window->map_sz.maxsz_x_p)
-		* (-window->map_sz.maxsz_y_m + window->map_sz.maxsz_y_p);
+	map_size = (window->map_sz.maxsz_x_p - window->map_sz.maxsz_x_m)
+		* (window->map_sz.maxsz_y_m - window->map_sz.maxsz_y_p);
 	max_size = (window->mlx->width * window->mlx->height) * 6;
 	min_size = (window->mlx->width * window->mlx->height) / 20;
+	//printf("map: %f, max: %f, min: %f", map_size, max_size, min_size);
 	if (mlx_is_key_down(window->mlx, MLX_KEY_P)
 			&& !mlx_is_key_down(window->mlx, MLX_KEY_M))
 	{
 		*key_pressed = 1;
-		if (map_size <= max_size)
-			*zoom = 1.1;
+		if (map_size * ZOOM_P < max_size)
+			*zoom = ZOOM_P;
 	}
 	else if (mlx_is_key_down(window->mlx, MLX_KEY_M)
 			&& !mlx_is_key_down(window->mlx, MLX_KEY_P))
 	{
 		*key_pressed = 1;
-		if (map_size * 0.9 >= min_size)
-			*zoom = 0.9;
+		if (map_size * ZOOM_M > min_size)
+			*zoom = ZOOM_M;
 	}
 	else
-		*zoom = 0;
+		*zoom = ZOOM_DEFAULT;
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 10:28:26 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/07 07:15:27 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/03/08 15:24:17 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,12 +70,23 @@ int	ft_shutdown_error(mlx_t *mlx)
 	return (puts(mlx_strerror(mlx_errno)), -1);
 }
 
-double	check_zoom_direction(int num)
+//this function returns the zoom direction dpending on the mouse position
+double	check_zoom_direction(int map_middle, int zoom_position, double zoom)
 {
-	if (num < 0)
-		return (0.9);
-	else if (num > 0)
-		return (1.1);
+	double	zoom_direction;
+
+	if (map_middle < zoom_position)
+		zoom_direction = ZOOM_M;
+	else if (map_middle > zoom_position)
+		zoom_direction = ZOOM_P;
 	else
-		return (1.0);
+		zoom_direction = ZOOM_DEFAULT;
+	if (zoom == ZOOM_M)
+	{
+		if (zoom_direction == ZOOM_P)
+			zoom_direction = ZOOM_M;
+		else if (zoom_direction == ZOOM_M)
+			zoom_direction = ZOOM_P;
+	}
+	return (zoom_direction);
 }

@@ -6,7 +6,7 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/24 15:50:39 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/06 17:52:00 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/03/08 12:35:56 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,28 +15,25 @@
 // this function limits the move of the map outside the visible window
 int	range_check(t_window *window, int x, int y, int z)
 {
+	*window = *window;
 	if (x != 0)
 	{
-		if ((window->map_sz.xposmw + x - MARGIN) < -(window->map_sz.maxsz_x_p)
-			|| (window->map_sz.xposmw - window->width + x + MARGIN)
-			> -(window->map_sz.maxsz_x_m))
+		if (((window->map_sz.maxsz_x_p + x) < MARGIN)
+			|| ((window->map_sz.maxsz_x_m + x) > (window->width - MARGIN)))
 			return (0);
 		else
 			return (x);
 	}
 	if (y != 0)
 	{
-		if ((window->map_sz.yposmw - y - MARGIN) < -(window->map_sz.maxsz_y_p)
-			|| (window->map_sz.yposmw - window->height - y + MARGIN)
-			> -(window->map_sz.maxsz_y_m))
+		if (((window->map_sz.maxsz_y_m + y) < MARGIN)
+			|| ((window->map_sz.maxsz_y_p + y) > (window->height - MARGIN)))
 			return (0);
 		else
 			return (y);
 	}
 	else if (z != 0)
-	{
 		return (z);
-	}
 	return (0);
 }
 

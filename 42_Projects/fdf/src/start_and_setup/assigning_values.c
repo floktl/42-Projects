@@ -6,7 +6,7 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 07:33:01 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/07 16:38:52 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/03/08 11:51:39 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,41 +20,35 @@ int	map_size_default_setting(t_sz *map_sz, t_sz size)
 	map_sz->xm_rot_deg = 0;
 	map_sz->ym_rot_deg = 0;
 	map_sz->zm_rot_deg = 0;
-	map_sz->maxsz_x_p = 0;
-	map_sz->maxsz_x_m = 0;
-	map_sz->maxsz_x_p = 0;
-	map_sz->maxsz_x_m = 0;
 	map_sz->xm_size = size.xm_size;
 	map_sz->ym_size = size.ym_size;
+	map_sz->maxsz_x_p = map_sz->xposmw;
+	map_sz->maxsz_x_m = map_sz->xposmw;
+	map_sz->maxsz_y_p = map_sz->yposmw;
+	map_sz->maxsz_y_m = map_sz->yposmw;
 	return (0);
 }
 
 void	update_mapsize(t_sz *map_sz, t_coord *temp)
 {
-	if (map_sz->maxsz_x_p < temp->xm)
-		map_sz->maxsz_x_p = round(temp->xm);
-	if (map_sz->maxsz_x_m > temp->xm)
-		map_sz->maxsz_x_m = round(temp->xm);
-	if (map_sz->maxsz_y_p < temp->ym)
-		map_sz->maxsz_y_p = round(temp->ym);
-	if (map_sz->maxsz_y_m > temp->ym)
-		map_sz->maxsz_y_m = round(temp->ym);
+	if ((map_sz->maxsz_x_p) < temp->xw)
+		map_sz->maxsz_x_p = temp->xw;
+	if (map_sz->maxsz_x_m > temp->xw)
+		map_sz->maxsz_x_m = temp->xw;
+	if (map_sz->maxsz_y_p > temp->yw)
+		map_sz->maxsz_y_p = temp->yw;
+	if (map_sz->maxsz_y_m < temp->yw)
+		map_sz->maxsz_y_m = temp->yw;
 }
 
 void	set_default_window_data(t_window *window)
 {
 	window->start_size = (WIDTH / (window->map_sz.xm_size + 2));
-	window->zoom_factor = window->start_size;
-	window->last_zoom_faktor = window->zoom_factor;
 	window->cent_xw = WIDTH / 2;
 	window->cent_yw = HEIGHT / 2;
-	window->mouse_posx = window->cent_xw;
-	window->mouse_posy = window->cent_yw;
 	window->map_sz.xm_offset = 0.0;
 	window->map_sz.ym_offset = 0.0;
 	window->map_sz.zm_offset = 0.0;
-	window->map_sz.xposmw = WIDTH / 2;
-	window->map_sz.yposmw = HEIGHT / 2;
 	window->debug_mode = -1;
 	window->width = WIDTH;
 	window->height = HEIGHT;
@@ -88,10 +82,10 @@ int	assign_coord_position(t_window *window, t_coord *new, int x, int y)
 	round_y = 0.0;
 	if (window->map_sz.ym_size % 2 == 1)
 		round_y = 0.5;
-	new->xm = -((window->map_sz.xm_size * window->zoom_factor) / 2)
-		+ ((x + round_x) * window->zoom_factor);
-	new->ym = ((window->map_sz.ym_size * window->zoom_factor) / 2)
-		- ((y + round_y) * window->zoom_factor);
+	new->xm = -((window->map_sz.xm_size * window->start_size) / 2)
+		+ ((x + round_x) * window->start_size);
+	new->ym = ((window->map_sz.ym_size * window->start_size) / 2)
+		- ((y + round_y) * window->start_size);
 	new->zm = ft_atoi(window->map[y][x])
 		+ window->map_sz.zm_offset;
 	new->xw = round(new->xm) + window->cent_xw;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   assigning_values.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 07:33:01 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/08 11:51:39 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/03/08 22:32:47 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,8 +86,7 @@ int	assign_coord_position(t_window *window, t_coord *new, int x, int y)
 		+ ((x + round_x) * window->start_size);
 	new->ym = ((window->map_sz.ym_size * window->start_size) / 2)
 		- ((y + round_y) * window->start_size);
-	new->zm = ft_atoi(window->map[y][x])
-		+ window->map_sz.zm_offset;
+	new->zm = ft_atoi(window->map[y][x]) + window->map_sz.zm_offset;
 	new->xw = round(new->xm) + window->cent_xw;
 	new->yw = -round(new->ym) + window->cent_yw;
 	new->zw = round(new->zm) + 0;

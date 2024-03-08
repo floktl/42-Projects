@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   update_values.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 08:24:45 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/08 16:43:06 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/03/08 22:55:50 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,17 +45,12 @@ int32_t	update_coord(t_window *window, int x_set, int y_set, double zoom)
 //	depending on the mouse and/or map position
 int	zoom_calc(t_window *window, t_coord *cur_point, double zoom)
 {
-	double	new_xm;
-	double	new_ym;
-
 	if (zoom == ZOOM_DEFAULT)
 		return (0);
-	new_xm = cur_point->xm * zoom;
-	new_ym = cur_point->ym * zoom;
 	cur_point->len_cent *= zoom;
-	cur_point->xm = new_xm;
-	cur_point->ym = new_ym;
-	cur_point->xw = round(cur_point->xm + window->map_sz.xposmw);
-	cur_point->yw = round(cur_point->ym + window->map_sz.yposmw);
+	cur_point->xm *= zoom;
+	cur_point->ym *= zoom;
+	cur_point->xw = round(cur_point->xm) + window->map_sz.xposmw;
+	cur_point->yw = -round(cur_point->ym) + window->map_sz.yposmw;
 	return (0);
 }

@@ -3,23 +3,50 @@
 /*                                                        :::      ::::::::   */
 /*   assigning_values.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 07:33:01 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/09 14:23:46 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/03/09 20:55:25 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../fdf.h"
 
+//
+//---------------- functions to assign the data for the structs ---------------
+//
+
+
+//----------------------------- window struct ----------------------------------
+
+//	sets the default settings for the window
+void	set_default_window_data(t_window *window)
+{
+	window->start_size = (WIDTH / (window->map_sz.xm_size + 2));
+	window->cent_xw = WIDTH / 2;
+	window->cent_yw = HEIGHT / 2;
+	window->map_sz.xm_offset = OFFSET_DEFAULT;
+	window->map_sz.ym_offset = OFFSET_DEFAULT;
+	window->map_sz.zm_offset = OFFSET_DEFAULT;
+	window->debug_mode = -1;
+	window->width = WIDTH;
+	window->height = HEIGHT;
+	window->zoom = ZOOM_DEFAULT;
+	window->max_zoom_size = WIDTH * HEIGHT * MAX_MAP_SIZE;
+	window->min_zoom_size = (WIDTH * HEIGHT) / MIN_MAP_SIZE;
+}
+
+//-------------------------------- map structs ---------------------------------
+
+//	sets the default settings for the map after start-up
 int	map_size_default_setting(t_sz *map_sz, t_sz size)
 {
 	map_sz->xposmw = WIDTH / 2;
 	map_sz->yposmw = HEIGHT / 2;
 	map_sz->zcentmw = 0;
-	map_sz->xm_rot_deg = 0;
-	map_sz->ym_rot_deg = 0;
-	map_sz->zm_rot_deg = 0;
+	map_sz->xm_rot_deg = DEGREE_DEFAULT;
+	map_sz->ym_rot_deg = DEGREE_DEFAULT;
+	map_sz->zm_rot_deg = DEGREE_DEFAULT;
 	map_sz->xm_size = size.xm_size;
 	map_sz->ym_size = size.ym_size;
 	map_sz->maxsz_x_p = map_sz->xposmw;
@@ -29,52 +56,58 @@ int	map_size_default_setting(t_sz *map_sz, t_sz size)
 	return (0);
 }
 
-void	update_mapsize(t_sz *map_sz, t_coord *temp)
-{
-	if ((map_sz->maxsz_x_p) < temp->xw)
-		map_sz->maxsz_x_p = temp->xw;
-	if (map_sz->maxsz_x_m > temp->xw)
-		map_sz->maxsz_x_m = temp->xw;
-	if (map_sz->maxsz_y_p > temp->yw)
-		map_sz->maxsz_y_p = temp->yw;
-	if (map_sz->maxsz_y_m < temp->yw)
-		map_sz->maxsz_y_m = temp->yw;
-}
+//------------------------------ coord structs --------------------------------
 
-void	set_default_window_data(t_window *window)
+//	polarAngle corresponds to the inclination or zenith angle.
+//	azimuthalAngle corresponds to the angle measured in the x-y plane.
+//	additionalAngle correspond to the third angle representing rotation or tilt.
+int	assign_degree_len_color(t_window *window, t_coord *coord)
 {
-	window->start_size = (WIDTH / (window->map_sz.xm_size + 2));
-	window->cent_xw = WIDTH / 2;
-	window->cent_yw = HEIGHT / 2;
-	window->map_sz.xm_offset = 0.0;
-	window->map_sz.ym_offset = 0.0;
-	window->map_sz.zm_offset = 0.0;
-	window->debug_mode = -1;
-	window->width = WIDTH;
-	window->height = HEIGHT;
-	window->zoom = ZOOM_DEFAULT;
-	window->max_zoom_size = WIDTH * HEIGHT * MAX_MAP_SIZE;
-	window->min_zoom_size = (WIDTH * HEIGHT) / MIN_MAP_SIZE;
-}
+	double	dist_to_map_center;
 
-//polarAngle corresponds to the inclination or zenith angle.
-//azimuthalAngle corresponds to the angle measured in the x-y plane.
-//additionalAngle corresponds to the third angle representing rotation or tilt.
-
-int	assign_degree_len_color(t_window *window, t_coord *new)
-{
-	new->deg_xm = calc_angle(new->xm, new->ym, 'X');
-	new->deg_ym = calc_angle(-new->ym, new->xm, 'Y');
-	new->deg_zm = calc_angle(new->ym, new->zm, 'Z');
-	new->len_cent = ft_sqrt((new->xm * new->xm)
-			+ (new->ym * new->ym) + (new->zm * new->zm));
-	new->color = ft_pixel(0xFF, 0xFF
-			- (new->zm * (255 / (window->map_sz.zmcent_plus + 1))), 0xFF
-			- (new->zm * (255 / (window->map_sz.zmcent_minus - 1))), 0xFF);
+	dist_to_map_center = ft_sqrt((coord->xm * coord->xm)
+			+ (coord->ym * coord->ym) + (coord->zm * coord->zm));
+	coord->deg_xm = calc_angle(coord->xm, coord->ym, 'X');
+	coord->deg_ym = calc_angle(-coord->ym, coord->xm, 'Y');
+	coord->deg_zm = calc_angle(coord->ym, coord->zm, 'Z');
+	coord->len_cent = dist_to_map_center;
+	coord->color = ft_pixel(0xFF, 0xFF
+			- (coord->zm * (255 / (window->map_sz.zmcent_plus + 1))), 0xFF
+			- (coord->zm * (255 / (window->map_sz.zmcent_minus - 1))), 0xFF);
 	return (0);
 }
 
-int	assign_coord_position(t_window *window, t_coord *new, int x, int y)
+// this function set all important variables into struct to each point in a loop
+int32_t	set_coord(t_window *window)
+{
+	t_coord	*coord;
+	int		x_axis;
+	int		y_axis;
+	t_coord	*next_coordinate;
+
+	y_axis = 0;
+	coord = NULL;
+	while (y_axis < window->map_sz.ym_size)
+	{
+		x_axis = 0;
+		while (x_axis < window->map_sz.xm_size)
+		{
+			next_coordinate = link_add_pt(&coord, window, x_axis, y_axis);
+			if (!next_coordinate)
+				return (free(next_coordinate), EXIT_FAILURE);
+			assign_coord_position(window, next_coordinate, x_axis, y_axis);
+			update_mapsize(&window->map_sz, next_coordinate);
+			assign_degree_len_color(window, next_coordinate);
+			x_axis++;
+		}
+		y_axis++;
+	}
+	ft_set_after_y(coord, window);
+	return (window->coord = coord, EXIT_SUCCESS);
+}
+
+//	assign the position of the coordinates on the map and the window
+int	assign_coord_position(t_window *window, t_coord *coord, int x, int y)
 {
 	double	round_x;
 	double	round_y;
@@ -91,11 +124,11 @@ int	assign_coord_position(t_window *window, t_coord *new, int x, int y)
 		+ ((x + round_x) * window->start_size);
 	default_offset_y = ((window->map_sz.ym_size * window->start_size) / 2)
 		- ((y + round_y) * window->start_size);
-	new->xm = default_offset_x;
-	new->ym = default_offset_y;
-	new->zm = ft_atoi(window->map[y][x]) + window->map_sz.zm_offset;
-	new->xw = round(new->xm) + window->cent_xw;
-	new->yw = -round(new->ym) + window->cent_yw;
-	new->zw = round(new->zm) + 0;
+	coord->xm = default_offset_x;
+	coord->ym = default_offset_y;
+	coord->zm = ft_atoi(window->map[y][x]) + window->map_sz.zm_offset;
+	coord->xw = ft_round(coord->xm) + window->cent_xw;
+	coord->yw = -ft_round(coord->ym) + window->cent_yw;
+	coord->zw = ft_round(coord->zm) + 0;
 	return (0);
 }

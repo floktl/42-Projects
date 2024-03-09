@@ -3,14 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   clear_functions.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/24 12:14:49 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/06 17:03:44 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/03/09 19:44:43 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../fdf.h"
+
+//
+//-------------- functions to prevent leaks and for cleaning up ----------------
+//
 
 //	function for freeing all values within a stack
 void	free_stack(t_coord **stack)

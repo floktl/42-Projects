@@ -3,31 +3,34 @@
 /*                                                        :::      ::::::::   */
 /*   mouse_functions.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 14:58:34 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/09 15:02:28 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/03/09 21:12:16 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../fdf.h"
 
+//
+//------ these fucntions handles the calclualtion for mouse user input --------
+//
+
+//	checks if the mouse button clicked and the pointer in the image
 int	check_mouse_clicked(t_window *window, int x, int y)
 {
-	int	mouse_clicked;
 
 	if (mlx_is_mouse_down(window->mlx, MLX_MOUSE_BUTTON_LEFT))
 	{
 		if (x > 0 && x < window->width && y > 0 && y < window->height)
 		{
-			mouse_clicked = 1;
 			return (1);
 		}
 	}
-	mouse_clicked = 0;
 	return (0);
 }
 
+//	calculates the shift of the map, with the left button clicked
 int	mouse_shift(t_window *window, int *x_set, int *y_set)
 {
 	static int	previous_x = 0;

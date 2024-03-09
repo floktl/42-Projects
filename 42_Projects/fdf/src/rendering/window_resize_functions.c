@@ -3,15 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   window_resize_functions.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 17:45:17 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/09 14:12:55 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/03/09 19:55:17 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../fdf.h"
 
+//
+//---------------------- functions for window rezising ------------------------
+//
+
+//	this functions updates the window struct, when the window size is changed
 void	ft_resize(int width, int height, void *param)
 {
 	t_window	*window;

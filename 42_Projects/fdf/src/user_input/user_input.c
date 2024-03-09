@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   user_input.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 17:11:17 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/09 15:05:58 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/03/09 20:51:57 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 //	functions, that will handle all keypads and mouse inputs from the user
 //
 
-// hook functions for keyboard user input:
+//	hook functions for keyboard user input:
 //	arrow keys: moving map in x amd y direction
 //	P: Zoom in M: Zoom out
 //	R + arrow keys: rotate map in x and y direction

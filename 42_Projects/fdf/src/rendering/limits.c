@@ -1,18 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   calculations.c                                     :+:      :+:    :+:   */
+/*   limits.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/24 15:50:39 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/08 12:35:56 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/03/09 19:53:54 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../fdf.h"
 
-// this function limits the move of the map outside the visible window
+//
+//------------------ this functions limits the movemoent of the map------------
+//
+
+//	this function limits the move of the map outside the visible window
+//	Margin is the borderlimit, maxsz are the furthest 4 points seen from
+//	the center of the map
 int	range_check(t_window *window, int x, int y, int z)
 {
 	*window = *window;
@@ -37,25 +43,17 @@ int	range_check(t_window *window, int x, int y, int z)
 	return (0);
 }
 
-//this function calculates a missing z variable for a point p(x; y; z)
-//input must be: A/cur(x; y; z) and B/next(x; y; z)
-float	calc_z(t_coord *cur, t_coord *next, float x_p, float y_p)
+//	this function checks if the mouse is outside the MARGIN (window boarder)
+int	check_margin_border(t_window *window)
 {
-	float	d_ap;
-	float	d_ab;
-	float	t;
-	float	z_p;
-
-	d_ap = ft_sqrt((x_p - cur->xw) * (x_p - cur->xw)
-			+ (y_p - cur->yw) * (y_p - cur->yw));
-	d_ab = ft_sqrt((next->xw - cur->xw) * (next->xw
-				- cur->xw) + (next->yw - cur->yw)
-			* (next->yw - cur->yw));
-	if (d_ab == 0)
-		return ((float)cur->zw);
-	t = d_ap / d_ab;
-	z_p = cur->zw + t * ((float)next->zw - (float)cur->zw);
-	return (z_p);
+	if (window->mouse_posx < 0 || window->mouse_posx > window->width
+		|| window->mouse_posy < 0 || window->mouse_posy > window->height)
+	{
+		window->mouse_posx = window->cent_xw;
+		window->mouse_posy = window->cent_xw;
+		return (1);
+	}
+	return (0);
 }
 
 //if (window.map_sz.xm_offset < -(((window.map_sz.xm_size - 2)

@@ -3,19 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   draw_pixel.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/24 18:39:28 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/09 17:08:50 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/03/09 19:51:19 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../fdf.h"
 
 //
-//	this functions calculate the changes in the coordinates after the user input
+//------this function are for th eactually rendering the pixels the window-----
 //
 
+//	function to check if there is an error with the pixel position
 int	check_error_pixel(t_coord *pt_a, t_coord *pt_b, int *x0, int *y0)
 {
 	static int	err = INT_MAX;

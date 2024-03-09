@@ -3,28 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   main_loop.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 09:45:33 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/09 15:03:25 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/03/09 21:15:24 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../fdf.h"
 
-int	check_margin_border(t_window *window)
-{
-	if (window->mouse_posx < 0 || window->mouse_posx > window->width
-		|| window->mouse_posy < 0 || window->mouse_posy > window->height)
-	{
-		window->mouse_posx = window->cent_xw;
-		window->mouse_posy = window->cent_xw;
-		return (1);
-	}
-	return (0);
-}
+//
+//-------------- main loop for the programm, it runs constantly----------------
+//
 
-//fills the window with the map rendered in 3d
+//fills the window with the map rendered in 3d functionality
 void	ft_render(void *param)
 {
 	t_window	*window;
@@ -41,8 +33,8 @@ void	ft_render(void *param)
 	{
 		clear_image(window, 0x00000000);
 		update_coord(window, x_offset, y_offset);
-		print_debug_point(window);
 	}
+	print_debug_point_1(window);
 	current = window->coord;
 	while (current != NULL && current->next != NULL)
 	{

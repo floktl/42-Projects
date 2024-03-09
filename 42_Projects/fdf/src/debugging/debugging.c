@@ -3,28 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   debugging.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 13:25:40 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/09 08:50:46 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/03/09 20:40:36 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../fdf.h"
 
 //
-//	this function are usefool tools for debugging, they are not necessary for
-//	the functionality, but they still pass norminette
+//------------------------------- debug functions ------------------------------
 //
 
-#define COLOR_RED     "\x1b[31m"
-#define COLOR_GREEN   "\x1b[32m"
-#define COLOR_YELLOW  "\x1b[33m"
-#define COLOR_BLUE    "\x1b[34m"
+//	this functions are usefool tools for debugging, they are not necessary for
+//	the functionality, but they still pass norminette
+
+//	terminal output colors
 #define COLOR_MAGENTA "\x1b[35m"
-#define COLOR_CYAN    "\x1b[36m"
 #define COLOR_RESET   "\x1b[0m"
 
+//	printing the coordinates and other useful data of each point
 int	print_coordinate_data(t_window *window, t_coord *current, const char *color)
 {
 	printf("%s", color);
@@ -77,15 +76,32 @@ void	print_stacks(t_window *window)
 	printf("%s\n\n", COLOR_RESET);
 }
 
-void	print_debug_point(t_window *window)
+//	printing a line between two points, which can used for debugging
+void	print_debug_point_1(t_window *window)
 {
 	if (window->debug_mode == -1)
 		return ;
-	mapmiddle->xw = window->map_sz.xposmw;
-	mapmiddle->yw = window->map_sz.yposmw;
-	mousepos->xw = window->mouse_posx;
-	mousepos->yw = window->mouse_posy;
-	connect_points(window, mapmiddle, mousepos);
+	window->debug_point_1.xw = window->map_sz.xposmw;
+	window->debug_point_1.yw = window->map_sz.yposmw;
+	window->debug_point_1.zw = 10;
+	window->debug_point_2.xw = window->mouse_posx;
+	window->debug_point_2.yw = window->mouse_posy;
+	window->debug_point_1.zw = 5;
+	connect_points(window, &window->debug_point_1, &window->debug_point_2);
+}
+
+//	printing a line between two points, which can used for debugging
+void	print_debug_point_2(t_window *window)
+{
+	if (window->debug_mode == -1)
+		return ;
+	window->debug_point_3.xw = window->map_sz.xposmw;
+	window->debug_point_3.yw = window->map_sz.yposmw;
+	window->debug_point_3.zw = 0;
+	window->debug_point_4.xw = window->mouse_posx;
+	window->debug_point_4.yw = window->mouse_posy;
+	window->debug_point_4.zw = 5;
+	connect_points(window, &window->debug_point_3, &window->debug_point_4);
 }
 
 		//if (current->next != NULL)

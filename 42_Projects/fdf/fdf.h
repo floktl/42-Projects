@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fdf.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 10:26:16 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/09 15:59:00 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/03/09 20:51:50 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,25 +28,28 @@
 # define WIDTH 1024
 # define HEIGHT 1024
 // zoom factor between 0,50-0.99(ZOOM_M) and 1.01-1.50(ZOOM_P)
-# define ZOOM_P 1.2
-# define ZOOM_M 0.8
+# define ZOOM_P 1.1
+# define ZOOM_M 0.9
 // Map movement in x and y direction between 1 and 30
 # define SHIFT_DEFAULT 15
+//	offset of the map center from the middle point of the window
+# define OFFSET_DEFAULT 0.0
 // Max zooming faktor end from 1-10(MAX) 11-30(MIN)
 # define MAX_MAP_SIZE 7
 # define MIN_MAP_SIZE 20
 
+# define DEGREE_DEFAULT 0.0
+
 // libraries
+# include "MLX42/include/MLX42/MLX42.h"
+# include "libft/libft.h"
+# include <fcntl.h>
+# include <stdint.h>
+# include <limits.h>
 # include <string.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <stdbool.h>
-# include "MLX42/include/MLX42/MLX42.h"
-# include "libft/libft.h"
-# include <fcntl.h>
-# include <math.h>
-# include <stdint.h>
-# include <limits.h>
 
 //
 //---------------------structs--------------------------------------------------
@@ -122,12 +125,10 @@ typedef struct s_window
 	int			debug_mode;
 	int			mouse_posx;
 	int			mouse_posy;
-	int			debug_point1_x;
-	int			debug_point1_y;
-	int			debug_point1_z;
-	int			debug_point2_x;
-	int			debug_point2_y;
-	int			debug_point2_z;
+	t_coord		debug_point_1;
+	t_coord		debug_point_2;
+	t_coord		debug_point_3;
+	t_coord		debug_point_4;
 	float		max_zoom_size;
 	float		min_zoom_size;
 }	t_window;
@@ -143,6 +144,7 @@ void		get_map_size(t_window *map);
 char		***read_and_split_lines(int fd);
 int32_t		set_coord(t_window *window);
 int			initialize_window_from_args(t_window *window, char *argv[]);
+int			initialize_mlx_image(t_window *window);
 // setup help_functions
 void		ft_set_before_y(t_coord **head, int iterations, t_window *window);
 void		ft_set_after_y(t_coord *head, t_window *window);
@@ -155,8 +157,10 @@ void		find_new_point(double x1, double y1, double len_x_to_y, double deg);
 float		round_float(float num, int range);
 double		ft_sqrt(double a);
 //	mathematics2
-int			atan_approximation(int x);
+int			ft_atan(int x);
 double		radians(double degrees);
+int			ft_round(double num);
+int			ft_abs(int num);
 
 // 	main calculations for the map
 // algorithm for the calculations:
@@ -186,7 +190,8 @@ double		check_zoom_direction(int map_middle, int zoom_position, double zom);
 
 // debugging dunctions:
 void		print_stacks(t_window *head);
-void		print_debug_point(t_window *window);
+void		print_debug_point_1(t_window *window);
+void		print_debug_point_2(t_window *window);
 
 void		calculate_zoom_pos(t_window *window);
 double		check_if_zoomed(t_window *window, int x_set, int y_set);
@@ -205,5 +210,6 @@ int			shift_map(t_window *window, int *x_set, int *y_set);
 double		zoom_map(t_window *window);
 int			debug_mode_map(t_window *window);
 int			check_defines(void);
+int			check_margin_border(t_window *window);
 
 #endif

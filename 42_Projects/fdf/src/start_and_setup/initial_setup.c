@@ -3,18 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   initial_setup.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 10:28:34 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/08 09:54:49 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/03/09 20:58:27 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../fdf.h"
 
 //
-//	functions for the standard view of the map on the image
+//----------- functions for the standard view of the map on the image ----------
 //
+
+//	function to set up the window and image inside the window
+int	initialize_mlx_image(t_window *window)
+{
+	window->mlx = mlx_init(WIDTH, HEIGHT, "fdf", true);
+	if (!(window->mlx))
+		return (-1);
+	window->image = mlx_new_image(window->mlx, WIDTH, HEIGHT);
+	if (!(window->image)
+		|| mlx_image_to_window(window->mlx, window->image, 0, 0) == -1)
+		return (-1);
+	return (0);
+}
 
 //	This function sets the initial window sizes and map sizes
 int	initialize_window_from_args(t_window *window, char *argv[])
@@ -33,8 +46,8 @@ int	initialize_window_from_args(t_window *window, char *argv[])
 	return (0);
 }
 
-// the name explain itself, this function reads the map data from the fdf file,
-// and handles errors, returns the map
+//	the name explain itself, this function reads the map data from the fdf file,
+//	and handles errors, returns the map
 char	***read_and_split_lines(int fd)
 {
 	char	***lines_tokens;
@@ -65,7 +78,7 @@ char	***read_and_split_lines(int fd)
 }
 
 //	this function assigns all variable values of the map, which will change, but
-// only for all coordinates at once, not every unique coordinate
+//	only for all coordinates at once, not every unique coordinate
 void	get_map_size(t_window *window)
 {
 	t_sz		size;
@@ -83,33 +96,4 @@ void	get_map_size(t_window *window)
 	}
 	map_size_default_setting(&window->map_sz, size);
 	find_highest_and_lowest(window);
-}
-
-// this function set all important variables into struct to each point in a loop
-int32_t	set_coord(t_window *window)
-{
-	t_coord	*coord;
-	int		x_axis;
-	int		y_axis;
-	t_coord	*next_coordinate;
-
-	y_axis = 0;
-	coord = NULL;
-	while (y_axis < window->map_sz.ym_size)
-	{
-		x_axis = 0;
-		while (x_axis < window->map_sz.xm_size)
-		{
-			next_coordinate = link_add_pt(&coord, window, x_axis, y_axis);
-			if (!next_coordinate)
-				return (free(next_coordinate), EXIT_FAILURE);
-			assign_coord_position(window, next_coordinate, x_axis, y_axis);
-			update_mapsize(&window->map_sz, next_coordinate);
-			assign_degree_len_color(window, next_coordinate);
-			x_axis++;
-		}
-		y_axis++;
-	}
-	ft_set_after_y(coord, window);
-	return (window->coord = coord, EXIT_SUCCESS);
 }

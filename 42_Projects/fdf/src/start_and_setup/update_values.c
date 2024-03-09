@@ -3,14 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   update_values.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 08:24:45 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/09 08:55:15 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/03/09 21:01:47 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../fdf.h"
+
+//
+//------- this functions update the map values after changing parameters -------
+//
 
 //this function updates all important variables to each point in map
 int32_t	update_coord(t_window *window, int x_set, int y_set)
@@ -51,7 +55,22 @@ int	zoom_calc(t_window *window, t_coord *cur_point)
 	cur_point->len_cent *= window->zoom;
 	cur_point->xm *= window->zoom;
 	cur_point->ym *= window->zoom;
-	cur_point->xw = round(cur_point->xm) + window->map_sz.xposmw;
-	cur_point->yw = -round(cur_point->ym) + window->map_sz.yposmw;
+	cur_point->xw = ft_round(cur_point->xm) + window->map_sz.xposmw;
+	cur_point->yw = -ft_round(cur_point->ym) + window->map_sz.yposmw;
 	return (0);
+}
+
+//	update the furthest points of the map from the map center
+void	update_mapsize(t_sz *map_sz, t_coord *temp)
+{
+	if ((map_sz->maxsz_x_p) < temp->xw)
+		map_sz->maxsz_x_p = temp->xw;
+	if (map_sz->maxsz_x_m > temp->xw)
+		map_sz->maxsz_x_m = temp->xw;
+	if (map_sz->maxsz_y_p > temp->yw)
+		map_sz->maxsz_y_p = temp->yw;
+	if (map_sz->maxsz_y_m < temp->yw)
+		map_sz->maxsz_y_m = temp->yw;
+	map_sz->map_area = (map_sz->maxsz_x_p - map_sz->maxsz_x_m)
+		* (map_sz->maxsz_y_m - map_sz->maxsz_y_p);
 }

@@ -3,16 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   key_functions.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 15:06:21 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/09 15:06:46 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/03/09 21:06:27 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../fdf.h"
 
-//	range check, to avoid moving object out of visible window area
+//
+//-------- these fucntions handles the calclualtion for key user input ---------
+//
+
+//	this function calculates the shift of the map with the arrow keys
 int	shift_map(t_window *window, int *x_set, int *y_set)
 {
 	int			speed;
@@ -29,6 +33,7 @@ int	shift_map(t_window *window, int *x_set, int *y_set)
 	return (1);
 }
 
+//	this function nandles the zoom when the user presses P or M
 double	zoom_map(t_window *window)
 {
 	if (window->zoom != ZOOM_DEFAULT)
@@ -48,6 +53,7 @@ double	zoom_map(t_window *window)
 	return (0);
 }
 
+//	this function enables the debug mode and resets the map with the key T
 int	debug_mode_map(t_window *window)
 {
 	static int	key_pressed = 0;

@@ -3,15 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   error_functions.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 15:54:00 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/09 16:20:43 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/03/09 19:48:06 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../fdf.h"
 
+//
+//---------------------- functions to hadle error cases ------------------------
+//
+
+//--------------------------- program error-cases ------------------------------
+
+//	function to check if the defines are out of the allowed border
 int	check_defines(void)
 {
 	if (ZOOM_DEFAULT != 1.0 || MAX_LINES != 1024 || MARGIN != 15)
@@ -28,7 +35,9 @@ int	check_defines(void)
 	return (0);
 }
 
-//	save shutdown error for an error case
+//----------------------------- mlx error-cases --------------------------------
+
+//	save shutdown function for the mlx window incase of an error case
 int	ft_shutdown_error(mlx_t *mlx)
 {
 	mlx_close_window(mlx);

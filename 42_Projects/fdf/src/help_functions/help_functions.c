@@ -3,16 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   help_functions.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 10:28:26 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/09 17:09:05 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/03/09 19:47:57 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../fdf.h"
 
-// combines rgb and alpha(transparency) values into single color
+//
+//--------------------- additional small helper functions ----------------------
+//
+
+//	combines rgb and alpha(transparency) values into single color
 int32_t	ft_pixel(int32_t r, int32_t g, int32_t b, int32_t a)
 {
 	return (r << 24 | g << 16 | b << 8 | a);
@@ -63,7 +67,7 @@ void	ft_add_back(t_coord **lst, t_coord *new)
 	current->next = new;
 }
 
-//this function returns the zoom direction dpending on the mouse position
+//	this function returns the zoom direction depending on the mouse position
 double	check_zoom_direction(int map_middle, int zoom_position, double zoom)
 {
 	double	zoom_direction;

@@ -3,14 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   setup_help_functions.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 16:36:30 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/07 07:18:32 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/03/09 20:57:02 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../fdf.h"
+
+//
+//---------------- additional functions while initialize the map ---------------
+//
 
 //	find and sets a pointer to the last coordinate in y direction (before_y)
 void	ft_set_before_y(t_coord **head, int iterations, t_window *window)

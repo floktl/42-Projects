@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   assigning_values.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 07:33:01 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/08 22:32:47 by flo              ###   ########.fr       */
+/*   Updated: 2024/03/09 14:23:46 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,9 @@ void	set_default_window_data(t_window *window)
 	window->debug_mode = -1;
 	window->width = WIDTH;
 	window->height = HEIGHT;
+	window->zoom = ZOOM_DEFAULT;
+	window->max_zoom_size = WIDTH * HEIGHT * MAX_MAP_SIZE;
+	window->min_zoom_size = (WIDTH * HEIGHT) / MIN_MAP_SIZE;
 }
 
 //polarAngle corresponds to the inclination or zenith angle.
@@ -75,6 +78,8 @@ int	assign_coord_position(t_window *window, t_coord *new, int x, int y)
 {
 	double	round_x;
 	double	round_y;
+	double	default_offset_x;
+	double	default_offset_y;
 
 	round_x = 0.0;
 	if (window->map_sz.xm_size % 2 == 1)
@@ -82,10 +87,12 @@ int	assign_coord_position(t_window *window, t_coord *new, int x, int y)
 	round_y = 0.0;
 	if (window->map_sz.ym_size % 2 == 1)
 		round_y = 0.5;
-	new->xm = -((window->map_sz.xm_size * window->start_size) / 2)
+	default_offset_x = -((window->map_sz.xm_size * window->start_size) / 2)
 		+ ((x + round_x) * window->start_size);
-	new->ym = ((window->map_sz.ym_size * window->start_size) / 2)
+	default_offset_y = ((window->map_sz.ym_size * window->start_size) / 2)
 		- ((y + round_y) * window->start_size);
+	new->xm = default_offset_x;
+	new->ym = default_offset_y;
 	new->zm = ft_atoi(window->map[y][x]) + window->map_sz.zm_offset;
 	new->xw = round(new->xm) + window->cent_xw;
 	new->yw = -round(new->ym) + window->cent_yw;

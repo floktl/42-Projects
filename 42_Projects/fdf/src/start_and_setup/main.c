@@ -6,16 +6,15 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 13:51:31 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/08 09:48:17 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/03/09 16:19:15 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../fdf.h"
-#include <dirent.h>
 
 // -----------------------------------------------------------------------------
-t_coord *mapmiddle = NULL;
-t_coord *mousepos = NULL;
+t_coord	*mapmiddle = NULL;
+t_coord	*mousepos = NULL;
 
 // main function, user input: ./fdf <map_name>
 int	main(int argc, char *argv[])
@@ -29,7 +28,7 @@ int	main(int argc, char *argv[])
 	if (argc == 2)
 	{
 		if (initialize_window_from_args(&window, argv) == -1
-			|| set_coord(&window) == EXIT_FAILURE)
+			|| set_coord(&window) == EXIT_FAILURE || check_defines() == -1)
 			return (EXIT_FAILURE);
 	}
 	else
@@ -42,6 +41,7 @@ int	main(int argc, char *argv[])
 		|| mlx_image_to_window(window.mlx, window.image, 0, 0) == -1)
 		return (ft_shutdown_error(window.mlx));
 	mlx_resize_hook(window.mlx, ft_resize, &window);
+	mlx_scroll_hook(window.mlx, ft_scroll, &window);
 	mlx_loop_hook(window.mlx, ft_render, &window);
 	mlx_loop(window.mlx);
 	free(mapmiddle);

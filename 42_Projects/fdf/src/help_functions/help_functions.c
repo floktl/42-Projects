@@ -6,7 +6,7 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 10:28:26 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/08 15:24:17 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/03/09 17:09:05 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,13 +61,6 @@ void	ft_add_back(t_coord **lst, t_coord *new)
 	while (current->next != NULL)
 		current = current->next;
 	current->next = new;
-}
-
-//	save shutdown error for an error case
-int	ft_shutdown_error(mlx_t *mlx)
-{
-	mlx_close_window(mlx);
-	return (puts(mlx_strerror(mlx_errno)), -1);
 }
 
 //this function returns the zoom direction dpending on the mouse position

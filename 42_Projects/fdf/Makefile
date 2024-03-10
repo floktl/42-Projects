@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+         #
+#    By: flo <flo@student.42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/12 14:13:59 by fkeitel           #+#    #+#              #
-#    Updated: 2024/03/06 16:56:38 by fkeitel          ###   ########.fr        #
+#    Updated: 2024/03/09 23:19:32 by flo              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,6 @@ SRCS	:= $(shell find src -name '*.c')
 LIBFT	:= libft/
 LIBFTTARGET := $(LIBFT)/libft.a
 OBJS	:= $(SRCS:.c=.o)
-
 
 # Rule to build the project
 all: $(NAME)

@@ -6,7 +6,7 @@
 /*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 15:06:21 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/09 21:06:27 by flo              ###   ########.fr       */
+/*   Updated: 2024/03/09 23:03:28 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,17 @@ int	shift_map(t_window *window, int *x_set, int *y_set)
 	int			speed;
 
 	speed = SHIFT_DEFAULT * (window->height + window->width) / (HEIGHT + WIDTH);
-	if (mlx_is_key_down(window->mlx, MLX_KEY_UP))
+	if (mlx_is_key_down(window->mlx, MLX_KEY_UP)
+		&& !mlx_is_key_down(window->mlx, MLX_KEY_DOWN))
 		*y_set = range_check(window, 0, -speed, 0);
-	if (mlx_is_key_down(window->mlx, MLX_KEY_DOWN))
+	if (mlx_is_key_down(window->mlx, MLX_KEY_DOWN)
+		&& !mlx_is_key_down(window->mlx, MLX_KEY_UP))
 		*y_set = range_check(window, 0, speed, 0);
-	if (mlx_is_key_down(window->mlx, MLX_KEY_LEFT))
+	if (mlx_is_key_down(window->mlx, MLX_KEY_LEFT)
+		&& !mlx_is_key_down(window->mlx, MLX_KEY_RIGHT))
 		*x_set = range_check(window, -speed, 0, 0);
-	if (mlx_is_key_down(window->mlx, MLX_KEY_RIGHT))
+	if (mlx_is_key_down(window->mlx, MLX_KEY_RIGHT)
+		&& !mlx_is_key_down(window->mlx, MLX_KEY_LEFT))
 		*x_set = range_check(window, speed, 0, 0);
 	return (1);
 }

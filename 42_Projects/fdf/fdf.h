@@ -3,23 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   fdf.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 10:26:16 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/09 20:51:50 by flo              ###   ########.fr       */
+/*   Updated: 2024/03/10 16:43:04 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
-//---------------------initial setup--------------------------------------------
+//
+//--------------------------------- initial setup -----------------------------
+//
 
 #ifndef FDF_H
 # define FDF_H
 
 //	These are default settings that are not adjustable:
 # define ZOOM_DEFAULT 1.0
-# define MAX_LINES 1024
+# define MAX_LINES 2024
 # define MARGIN 15
+# define MAX_COLUMNS 1000
 
 //
 //-You can change these to adjust different settings, zoom-speed, shift, etc.:--
@@ -37,7 +39,11 @@
 // Max zooming faktor end from 1-10(MAX) 11-30(MIN)
 # define MAX_MAP_SIZE 7
 # define MIN_MAP_SIZE 20
-
+//	color for the z_axis of the map, if not given in the map
+# define COLOR_DEFAULT_CEN 0xFFFFCFFF
+# define COLOR_DEFAULT_PLUS 0xDD0000FF
+# define COLOR_DEFAULT_MIN 0x00DD00FF
+//	rotation degree in x, y, z direction
 # define DEGREE_DEFAULT 0.0
 
 // libraries
@@ -54,6 +60,25 @@
 //
 //---------------------structs--------------------------------------------------
 //
+
+typedef struct s_rgba_color
+{
+	int32_t		color_a;
+	int32_t		color_b;
+	int32_t		r_a;
+	int32_t		g_a;
+	int32_t		b_a;
+	int32_t		a_a;
+	int32_t		r_b;
+	int32_t		g_b;
+	int32_t		b_b;
+	int32_t		a_b;
+	int32_t		r;
+	int32_t		g;
+	int32_t		b;
+	int32_t		a;
+	int32_t		new_color;
+}			t_color;
 
 // This struct represents a point in a space (x, y, z)axis
 // mid_x/y is the pixel distance to the middle point
@@ -73,7 +98,7 @@ typedef struct s_coordinates
 	double					deg_xm;
 	double					deg_ym;
 	double					deg_zm;
-	uint32_t				color;
+	int32_t					color;
 	struct s_coordinates	*next;
 	struct s_coordinates	*before;
 	struct s_coordinates	*next_y;
@@ -115,7 +140,7 @@ typedef struct s_window
 	int			width;
 	int			height;
 	void		*win;
-	char		***map;
+	int			***map;
 	t_sz		map_sz;
 	t_coord		*coord;
 	int			cent_xw;
@@ -136,12 +161,10 @@ typedef struct s_window
 //
 //---------------------functions------------------------------------------------
 //
-extern t_coord *mapmiddle;
-extern t_coord *mousepos;
 
 // setup and initialisations:
 void		get_map_size(t_window *map);
-char		***read_and_split_lines(int fd);
+int			***read_and_split_lines(int fd);
 int32_t		set_coord(t_window *window);
 int			initialize_window_from_args(t_window *window, char *argv[]);
 int			initialize_mlx_image(t_window *window);
@@ -165,6 +188,7 @@ int			ft_abs(int num);
 // 	main calculations for the map
 // algorithm for the calculations:
 void		connect_points(t_window *map, t_coord *cur, t_coord *next);
+int32_t		find_color(int32_t color_a, int32_t color_b, float t);
 int			ft_hook_key(t_window *window, int *x_set, int *y_set);
 void		ft_render(void *param);
 int32_t		update_coord(t_window *map, int x_set, int y_set);
@@ -200,7 +224,7 @@ t_coord		*link_add_pt(t_coord **coord, t_window *window, int x, int y);
 int			map_size_default_setting(t_sz *map_sz, t_sz size);
 void		update_mapsize(t_sz *map_sz, t_coord *temp);
 void		set_default_window_data(t_window *window);
-int			assign_degree_len_color(t_window *window, t_coord *new);
+int			assign_degree_len_color(t_window *window, t_coord *coord, int x, int y);
 int			assign_coord_position(t_window *window, t_coord *new, int x, int y);
 void		ft_scroll(double xoffset, double yoffset, void *param);
 int			mouse_shift(t_window *window, int *x_set, int *y_set);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   initial_setup.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 10:28:34 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/09 20:58:27 by flo              ###   ########.fr       */
+/*   Updated: 2024/03/10 16:38:18 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,33 +48,74 @@ int	initialize_window_from_args(t_window *window, char *argv[])
 
 //	the name explain itself, this function reads the map data from the fdf file,
 //	and handles errors, returns the map
-char	***read_and_split_lines(int fd)
+int	***read_and_split_lines(int fd)
 {
-	char	***lines_tokens;
+	int		***map;
 	char	*line;
 	int		count;
+	char	**tokens;
+	char	*comma_pos;
+	int		j;
 
 	count = 0;
-	lines_tokens = malloc((MAX_LINES + 1) * sizeof(char **));
-	if (!lines_tokens)
+	map = malloc((MAX_LINES + 1) * sizeof(int **));
+	if (!map)
 		return (perror("Failed to allocate memory for line tokens"), NULL);
 	line = get_next_line(fd);
-	while ((line))
+	while (line)
 	{
-		lines_tokens[count] = ft_split(line, ' ');
+		map[count] = malloc((MAX_COLUMNS + 1) * sizeof(int *));
+		if (!map[count])
+			return (perror("Failed to allocate memory for columns"), NULL);
+		tokens = ft_split(line, ' ');
 		free(line);
-		if (!lines_tokens[count])
+		if (!tokens)
 		{
 			while (--count >= 0)
-				free(lines_tokens[count]);
-			return (free(lines_tokens), NULL);
+				free(map[count]);
+			return (free(map), NULL);
 		}
+		j = 0;
+		while (tokens[j])
+		{
+			map[count][j] = malloc(2 * sizeof(int));
+			if (!map[count][j])
+			{
+				perror("Failed to allocate memory for values");
+				free(tokens);
+				while (--j >= 0)
+					free(map[count][j]);
+				free(map[count]);
+				while (--count >= 0)
+				{
+					while (--j >= 0)
+						free(map[count][j]);
+					free(map[count]);
+				}
+				return (free(map), NULL);
+			}
+			comma_pos = strchr(tokens[j], ',');
+			if (comma_pos)
+			{
+				*comma_pos = '\0';
+				map[count][j][0] = atoi(tokens[j]);
+				sscanf(comma_pos + 1, "%x", &map[count][j][1] + 0xFF);
+			}
+			else
+			{
+				map[count][j][0] = atoi(tokens[j]);
+				map[count][j][1] = 0;
+			}
+			j++;
+		}
+		free(tokens);
 		if (count++ < MAX_LINES)
 			line = get_next_line(fd);
 		else
 			break ;
 	}
-	return (close(fd), lines_tokens);
+	close(fd);
+	return (map);
 }
 
 //	this function assigns all variable values of the map, which will change, but

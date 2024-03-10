@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   assigning_values.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 07:33:01 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/09 20:55:25 by flo              ###   ########.fr       */
+/*   Updated: 2024/03/10 16:16:34 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 //
 //---------------- functions to assign the data for the structs ---------------
 //
-
 
 //----------------------------- window struct ----------------------------------
 
@@ -58,25 +57,6 @@ int	map_size_default_setting(t_sz *map_sz, t_sz size)
 
 //------------------------------ coord structs --------------------------------
 
-//	polarAngle corresponds to the inclination or zenith angle.
-//	azimuthalAngle corresponds to the angle measured in the x-y plane.
-//	additionalAngle correspond to the third angle representing rotation or tilt.
-int	assign_degree_len_color(t_window *window, t_coord *coord)
-{
-	double	dist_to_map_center;
-
-	dist_to_map_center = ft_sqrt((coord->xm * coord->xm)
-			+ (coord->ym * coord->ym) + (coord->zm * coord->zm));
-	coord->deg_xm = calc_angle(coord->xm, coord->ym, 'X');
-	coord->deg_ym = calc_angle(-coord->ym, coord->xm, 'Y');
-	coord->deg_zm = calc_angle(coord->ym, coord->zm, 'Z');
-	coord->len_cent = dist_to_map_center;
-	coord->color = ft_pixel(0xFF, 0xFF
-			- (coord->zm * (255 / (window->map_sz.zmcent_plus + 1))), 0xFF
-			- (coord->zm * (255 / (window->map_sz.zmcent_minus - 1))), 0xFF);
-	return (0);
-}
-
 // this function set all important variables into struct to each point in a loop
 int32_t	set_coord(t_window *window)
 {
@@ -97,7 +77,7 @@ int32_t	set_coord(t_window *window)
 				return (free(next_coordinate), EXIT_FAILURE);
 			assign_coord_position(window, next_coordinate, x_axis, y_axis);
 			update_mapsize(&window->map_sz, next_coordinate);
-			assign_degree_len_color(window, next_coordinate);
+			assign_degree_len_color(window, next_coordinate, x_axis, y_axis);
 			x_axis++;
 		}
 		y_axis++;
@@ -126,9 +106,53 @@ int	assign_coord_position(t_window *window, t_coord *coord, int x, int y)
 		- ((y + round_y) * window->start_size);
 	coord->xm = default_offset_x;
 	coord->ym = default_offset_y;
-	coord->zm = ft_atoi(window->map[y][x]) + window->map_sz.zm_offset;
+	coord->zm = window->map[y][x][0] + window->map_sz.zm_offset;
 	coord->xw = ft_round(coord->xm) + window->cent_xw;
 	coord->yw = -ft_round(coord->ym) + window->cent_yw;
 	coord->zw = ft_round(coord->zm) + 0;
+	return (0);
+}
+
+//	polarAngle corresponds to the inclination or zenith angle.
+//	azimuthalAngle corresponds to the angle measured in the x-y plane.
+//	additionalAngle correspond to the third angle representing rotation or tilt.
+int	assign_degree_len_color(t_window *window, t_coord *coord, int x, int  y)
+{
+	double	dist_to_map_center;
+	float	z_dif;
+
+	*window = *window;
+	dist_to_map_center = ft_sqrt((coord->xm * coord->xm)
+			+ (coord->ym * coord->ym) + (coord->zm * coord->zm));
+	coord->deg_xm = calc_angle(coord->xm, coord->ym, 'X');
+	coord->deg_ym = calc_angle(-coord->ym, coord->xm, 'Y');
+	coord->deg_zm = calc_angle(coord->ym, coord->zm, 'Z');
+	coord->len_cent = dist_to_map_center;
+	if (window->map[y][x][1] == 0)
+	{
+		if (coord->zm == 0)
+			coord->color = COLOR_DEFAULT_CEN;
+		else if (coord->zm == window->map_sz.zmcent_plus)
+			coord->color = COLOR_DEFAULT_PLUS;
+		else if (coord->zm == window->map_sz.zmcent_minus)
+			coord->color = COLOR_DEFAULT_MIN;
+		else if (coord->zm > 0)
+		{
+			z_dif = (float)(coord->zm - 0) / (window->map_sz.zmcent_plus - 0);
+			coord->color = find_color(COLOR_DEFAULT_CEN, COLOR_DEFAULT_PLUS, z_dif);
+		}
+		else if (coord->zm < 0)
+		{
+			z_dif = (float)(coord->zm - 0) / (window->map_sz.zmcent_minus - 0);
+			coord->color = find_color(COLOR_DEFAULT_CEN, COLOR_DEFAULT_MIN, z_dif);
+
+		}
+	}
+	else if (window->map[y][x] != NULL)
+	{
+		coord->color = window->map[y][x][1];
+		//printf("%x\n", coord->color);
+	}
+	//printf("%x\n", COLOR_DEFAULT_PLUS);
 	return (0);
 }

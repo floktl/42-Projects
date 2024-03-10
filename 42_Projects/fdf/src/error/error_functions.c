@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_functions.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 15:54:00 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/09 19:48:06 by flo              ###   ########.fr       */
+/*   Updated: 2024/03/10 16:39:22 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 //	function to check if the defines are out of the allowed border
 int	check_defines(void)
 {
-	if (ZOOM_DEFAULT != 1.0 || MAX_LINES != 1024 || MARGIN != 15)
+	if (ZOOM_DEFAULT != 1.0 || MAX_LINES != 2024 || MARGIN != 15)
 		return (printf("Dont change the default settings!!\n"), -1);
 	if (WIDTH < 100 || WIDTH > 2500 || HEIGHT < 100 || HEIGHT > 2500)
 		return (printf("Change WIDTH & HEIGHT to between 100 and 2500\n"), -1);

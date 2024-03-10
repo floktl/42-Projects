@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mathmematics.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 16:59:00 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/09 19:49:06 by flo              ###   ########.fr       */
+/*   Updated: 2024/03/10 10:58:33 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,22 +103,22 @@ double	ft_sqrt(double a)
 
 //	this function calculates a missing z variable for a point p(x; y; z)
 //	input must be: A/cur(x; y; z) and B/next(x; y; z)
-float	calc_z(t_coord *cur, t_coord *next, float x_p, float y_p)
+float	calc_z(t_coord *point_a, t_coord *point_b, float x_p, float y_p)
 {
 	float	d_ap;
 	float	d_ab;
 	float	t;
 	float	z_p;
 
-	d_ap = ft_sqrt((x_p - cur->xw) * (x_p - cur->xw)
-			+ (y_p - cur->yw) * (y_p - cur->yw));
-	d_ab = ft_sqrt((next->xw - cur->xw) * (next->xw
-				- cur->xw) + (next->yw - cur->yw)
-			* (next->yw - cur->yw));
+	d_ap = ft_sqrt((x_p - point_a->xw) * (x_p - point_a->xw)
+			+ (y_p - point_a->yw) * (y_p - point_a->yw));
+	d_ab = ft_sqrt((point_b->xw - point_a->xw) * (point_b->xw
+				- point_a->xw) + (point_b->yw - point_a->yw)
+			* (point_b->yw - point_a->yw));
 	if (d_ab == 0)
-		return ((float)cur->zw);
+		return ((float)point_a->zw);
 	t = d_ap / d_ab;
-	z_p = cur->zw + t * ((float)next->zw - (float)cur->zw);
+	z_p = point_a->zw + t * ((float)point_b->zw - (float)point_a->zw);
+	z_p = (float)(z_p - point_a->zm) / (point_b->zw - point_a->zm);
 	return (z_p);
 }
-

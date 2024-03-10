@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   help_functions.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 10:28:26 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/09 19:47:57 by flo              ###   ########.fr       */
+/*   Updated: 2024/03/10 12:06:06 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ void	find_highest_and_lowest(t_window *map)
 	int			y;
 	int			value;
 
-	map->map_sz.zmcent_plus = atoi(map->map[0][0]);
-	map->map_sz.zmcent_minus = atoi(map->map[0][0]);
+	map->map_sz.zmcent_plus = 0;
+	map->map_sz.zmcent_minus = 0;
 	y = 0;
 	temp = map;
 	while (y < temp->map_sz.ym_size)
@@ -40,11 +40,11 @@ void	find_highest_and_lowest(t_window *map)
 		x = 0;
 		while (x < temp->map_sz.xm_size)
 		{
-			value = atoi(map->map[y][x]);
+			value = map->map[y][x][0];
 			if (value > map->map_sz.zmcent_plus)
 				map->map_sz.zmcent_plus = value;
-			if (value < map->map_sz.zcentmw)
-				map->map_sz.zcentmw = value;
+			if (value < map->map_sz.zmcent_minus)
+				map->map_sz.zmcent_minus = value;
 			x++;
 		}
 		y++;

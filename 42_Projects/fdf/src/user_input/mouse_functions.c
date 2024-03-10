@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mouse_functions.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 14:58:34 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/09 21:12:16 by flo              ###   ########.fr       */
+/*   Updated: 2024/03/10 07:50:59 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@
 //	checks if the mouse button clicked and the pointer in the image
 int	check_mouse_clicked(t_window *window, int x, int y)
 {
-
 	if (mlx_is_mouse_down(window->mlx, MLX_MOUSE_BUTTON_LEFT))
 	{
 		if (x > 0 && x < window->width && y > 0 && y < window->height)

@@ -6,7 +6,7 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 07:33:01 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/10 16:16:34 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/03/11 07:50:00 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,8 @@ int32_t	set_coord(t_window *window)
 		y_axis++;
 	}
 	ft_set_after_y(coord, window);
-	return (window->coord = coord, EXIT_SUCCESS);
+	window->coord = coord;
+	return (EXIT_SUCCESS);
 }
 
 //	assign the position of the coordinates on the map and the window

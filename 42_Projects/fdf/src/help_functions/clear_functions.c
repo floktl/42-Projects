@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clear_functions.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/24 12:14:49 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/09 19:44:43 by flo              ###   ########.fr       */
+/*   Updated: 2024/03/11 09:39:55 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,4 +49,33 @@ void	clear_image(t_window *window, uint32_t color)
 		}
 		y++;
 	}
+}
+
+void free_map(int ***map)
+{
+	int i;
+	int j;
+	int k;
+
+	if (map == NULL)
+		return;
+
+	i = 0;
+	j = 0;
+	k = 0;
+
+	while (map[i] != NULL) {
+		j = 0;
+		while (map[i][j] != NULL)
+		{
+			//free((void *)(intptr_t)map[i][j][0]);
+			//free((void *)(intptr_t)map[i][j][1]);
+			//free(map[i][j]);
+			j++;
+		}
+		//free(map[i]);
+		i++;
+	}
+
+    free(map);
 }

@@ -6,7 +6,7 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 10:26:16 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/10 16:43:04 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/03/11 09:26:29 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,12 @@
 
 //	These are default settings that are not adjustable:
 # define ZOOM_DEFAULT 1.0
-# define MAX_LINES 2024
 # define MARGIN 15
-# define MAX_COLUMNS 1000
 
 //
-//-You can change these to adjust different settings, zoom-speed, shift, etc.:--
+//-You can change these to adjust different settings, zoom-speed, shift, etc.: -
 //
+
 // window size between 100-2500
 # define WIDTH 1024
 # define HEIGHT 1024
@@ -235,5 +234,7 @@ double		zoom_map(t_window *window);
 int			debug_mode_map(t_window *window);
 int			check_defines(void);
 int			check_margin_border(t_window *window);
+
+void		free_map(int ***map);
 
 #endif

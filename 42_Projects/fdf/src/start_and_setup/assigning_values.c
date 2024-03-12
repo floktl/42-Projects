@@ -6,7 +6,7 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 07:33:01 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/12 09:05:25 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/03/12 11:14:47 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,21 +114,8 @@ int	assign_coord_position(t_window *window, t_coord *coord, int x, int y)
 	return (0);
 }
 
-//	polarAngle corresponds to the inclination or zenith angle.
-//	azimuthalAngle corresponds to the angle measured in the x-y plane.
-//	additionalAngle correspond to the third angle representing rotation or tilt.
-int	assign_degree_len_color(t_window *window, t_coord *coord, int x, int  y)
+void	assign_color(t_window *window, t_coord *coord, int x, int y)
 {
-	double	dist_to_map_center;
-	float	z_dif;
-
-	*window = *window;
-	dist_to_map_center = ft_sqrt((coord->xm * coord->xm)
-			+ (coord->ym * coord->ym) + (coord->zm * coord->zm));
-	coord->deg_xm = calc_angle(coord->xm, coord->ym, 'X');
-	coord->deg_ym = calc_angle(-coord->ym, coord->xm, 'Y');
-	coord->deg_zm = calc_angle(coord->ym, coord->zm, 'Z');
-	coord->len_cent = dist_to_map_center;
 	if (window->map[y][x][1] == 0)
 	{
 		if (coord->zm == 0)
@@ -139,20 +126,33 @@ int	assign_degree_len_color(t_window *window, t_coord *coord, int x, int  y)
 			coord->color = COLOR_DEFAULT_MIN;
 		else if (coord->zm > 0)
 		{
-			z_dif = (float)(coord->zm - 0) / (window->map_sz.zmcent_plus - 0);
-			coord->color = find_color(COLOR_DEFAULT_CEN, COLOR_DEFAULT_PLUS, z_dif);
+			coord->color = find_color(COLOR_DEFAULT_CEN, COLOR_DEFAULT_PLUS,
+					(float)(coord->zm) / (window->map_sz.zmcent_plus));
 		}
 		else if (coord->zm < 0)
 		{
-			z_dif = (float)(coord->zm - 0) / (window->map_sz.zmcent_minus - 0);
-			coord->color = find_color(COLOR_DEFAULT_CEN, COLOR_DEFAULT_MIN, z_dif);
-
+			coord->color = find_color(COLOR_DEFAULT_CEN, COLOR_DEFAULT_MIN,
+					(float)(coord->zm) / (window->map_sz.zmcent_minus));
 		}
 	}
 	else
-	{
 		coord->color = window->map[y][x][1] << 8;
-	}
 	coord->color += BRIGHTNESS_DEFAULT;
+}
+
+//	polarAngle corresponds to the inclination or zenith angle.
+//	azimuthalAngle corresponds to the angle measured in the x-y plane.
+//	additionalAngle correspond to the third angle representing rotation or tilt.
+int	assign_degree_len_color(t_window *window, t_coord *coord, int x, int  y)
+{
+	double	dist_to_map_center;
+
+	dist_to_map_center = ft_sqrt((coord->xm * coord->xm)
+			+ (coord->ym * coord->ym) + (coord->zm * coord->zm));
+	coord->deg_xm = calc_angle(coord->xm, coord->ym, 'X');
+	coord->deg_ym = calc_angle(-coord->ym, coord->xm, 'Y');
+	coord->deg_zm = calc_angle(coord->ym, coord->zm, 'Z');
+	coord->len_cent = dist_to_map_center;
+	assign_color(window, coord, x, y);
 	return (0);
 }

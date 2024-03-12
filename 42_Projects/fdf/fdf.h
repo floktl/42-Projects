@@ -6,7 +6,7 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 10:26:16 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/12 09:10:19 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/03/12 11:04:26 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,9 @@
 # define MIN_MAP_SIZE 20
 //	color for the z_axis of the map, if not given in the map
 # define COLOR_DEFAULT_CEN 0xCFCFFF00
-# define COLOR_DEFAULT_PLUS 0x00DD0000
+# define COLOR_DEFAULT_PLUS 0xEE550000
 # define COLOR_DEFAULT_MIN 0x00DDBB00
-# define BRIGHTNESS_DEFAULT 255
+# define BRIGHTNESS_DEFAULT 0xFF
 //	rotation degree in x, y, z direction
 # define DEGREE_DEFAULT 0.0
 

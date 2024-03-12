@@ -6,7 +6,7 @@
 #    By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/13 09:46:50 by fkeitel           #+#    #+#              #
-#    Updated: 2024/02/16 15:37:57 by fkeitel          ###   ########.fr        #
+#    Updated: 2024/03/12 10:11:12 by fkeitel          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,7 @@ FUNCTIONS	=	ft_isalnum.c ft_isprint.c ft_memcmp.c  ft_putchar_fd.c\
 OBJECTS	=	$(FUNCTIONS:.c=.o) $(FT_PRINTF:$(FT_PRINTFDIR)/%.c=$(FT_PRINTFDIR)/%.o) \
 				$(GET_NEXT_LINE:$(GET_NEXT_LINEDIR)/%.c=$(GET_NEXT_LINEDIR)/%.o) \
 
-CC				= cc
+CC				= cc -g
 RM				= rm -f
 CFLAGS			= -Wall -Wextra -Werror
 

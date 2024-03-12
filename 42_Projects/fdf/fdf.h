@@ -6,7 +6,7 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 10:26:16 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/11 09:26:29 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/03/12 09:10:19 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,10 @@
 # define MAX_MAP_SIZE 7
 # define MIN_MAP_SIZE 20
 //	color for the z_axis of the map, if not given in the map
-# define COLOR_DEFAULT_CEN 0xFFFFCFFF
-# define COLOR_DEFAULT_PLUS 0xDD0000FF
-# define COLOR_DEFAULT_MIN 0x00DD00FF
+# define COLOR_DEFAULT_CEN 0xCFCFFF00
+# define COLOR_DEFAULT_PLUS 0x00DD0000
+# define COLOR_DEFAULT_MIN 0x00DDBB00
+# define BRIGHTNESS_DEFAULT 255
 //	rotation degree in x, y, z direction
 # define DEGREE_DEFAULT 0.0
 
@@ -139,7 +140,7 @@ typedef struct s_window
 	int			width;
 	int			height;
 	void		*win;
-	int			***map;
+	unsigned int			***map;
 	t_sz		map_sz;
 	t_coord		*coord;
 	int			cent_xw;
@@ -162,11 +163,11 @@ typedef struct s_window
 //
 
 // setup and initialisations:
-void		get_map_size(t_window *map);
-int			***read_and_split_lines(int fd);
-int32_t		set_coord(t_window *window);
-int			initialize_window_from_args(t_window *window, char *argv[]);
-int			initialize_mlx_image(t_window *window);
+void			get_map_size(t_window *map);
+unsigned int	***read_and_split_lines(int fd);
+int32_t			set_coord(t_window *window);
+int				initialize_window_from_args(t_window *window, char *argv[]);
+int				initialize_mlx_image(t_window *window);
 // setup help_functions
 void		ft_set_before_y(t_coord **head, int iterations, t_window *window);
 void		ft_set_after_y(t_coord *head, t_window *window);
@@ -232,9 +233,12 @@ int			check_mouse_clicked(t_window *window, int x, int y);
 int			shift_map(t_window *window, int *x_set, int *y_set);
 double		zoom_map(t_window *window);
 int			debug_mode_map(t_window *window);
+void	print_debug_point_1(t_window *window);
+void	print_debug_point_2(t_window *window);
 int			check_defines(void);
 int			check_margin_border(t_window *window);
+void	connect_points(t_window *window, t_coord *point_a, t_coord *point_b);
 
-void		free_map(int ***map);
+void		free_map(unsigned int ***map);
 
 #endif

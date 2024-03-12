@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   initial_setup.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 10:28:34 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/11 15:01:59 by flo              ###   ########.fr       */
+/*   Updated: 2024/03/12 09:05:18 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,9 @@ int	initialize_window_from_args(t_window *window, char *argv[])
 
 //	the name explain itself, this function reads the map data from the fdf file,
 //	and handles errors, returns the map
-int	***read_and_split_lines(int fd)
+unsigned int	***read_and_split_lines(int fd)
 {
-	int		***map;
+	unsigned int		***map = NULL;
 	char	*line;
 	int		count;
 	char	**collumn;
@@ -72,23 +72,21 @@ int	***read_and_split_lines(int fd)
 	map = malloc((ft_strlen(line)) * sizeof(int **));
 	while (line)
 	{
-		int ***newMap = realloc(map, (count + 1) * sizeof(int **));
+		unsigned int ***newMap = realloc(map, (count + 1) * sizeof(unsigned int **));
 		map = newMap;
-		map[count] = malloc((ft_strlen(line) + 1) * sizeof(int *));
+		map[count] = malloc((ft_strlen(line) + 1) * sizeof(unsigned int *));
 		collumn = ft_split(line, ' ');
 		free(line);
 		j = 0;
 		while (collumn[j])
 		{
-			map[count][j] = malloc(2 * sizeof(int));
+			map[count][j] = malloc(2 * sizeof(unsigned int));
 			comma_pos = strchr(collumn[j], ',');
 			if (comma_pos)
 			{
 				*comma_pos = '\0';
 				map[count][j][0] = atoi(collumn[j]);
 				sscanf(comma_pos + 1, "%x", &map[count][j][1]);
-				printf("%x", map[count][j][0]);
-				printf("test");
 			}
 			else
 			{
@@ -103,6 +101,7 @@ int	***read_and_split_lines(int fd)
 		line = get_next_line(fd);
 		count++;
 	}
+	map = realloc(map, (count + 1) * sizeof(int **));
 	map[count] = NULL;
 	close(fd);
 	return (map);

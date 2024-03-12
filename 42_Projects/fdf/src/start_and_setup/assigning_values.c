@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   assigning_values.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 07:33:01 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/11 15:31:13 by flo              ###   ########.fr       */
+/*   Updated: 2024/03/12 09:05:25 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,11 +149,10 @@ int	assign_degree_len_color(t_window *window, t_coord *coord, int x, int  y)
 
 		}
 	}
-	else if (window->map[y][x] != NULL)
+	else
 	{
-		coord->color = window->map[y][x][1] + 0xFF;
-		//printf("%x\n", coord->color);
+		coord->color = window->map[y][x][1] << 8;
 	}
-	//printf("%x\n", COLOR_DEFAULT_PLUS);
+	coord->color += BRIGHTNESS_DEFAULT;
 	return (0);
 }

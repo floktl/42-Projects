@@ -6,7 +6,7 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 10:28:34 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/12 09:05:18 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/03/12 11:58:30 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,8 @@ unsigned int	***read_and_split_lines(int fd)
 			}
 			j++;
 		}
+		for (int h = 0; collumn[h]; h++)
+			free(collumn[h]);
 		free(collumn);
 		collumn = NULL;
 		map[count][j] = NULL;

@@ -6,7 +6,7 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 13:25:40 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/12 09:18:53 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/03/12 12:03:30 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,8 +95,8 @@ void	print_debug_point_2(t_window *window)
 {
 	if (window->debug_mode == -1)
 		return ;
-	window->debug_point_3.xw = window->map_sz.xposmw;
-	window->debug_point_3.yw = window->map_sz.yposmw;
+	window->debug_point_3.xw = window->mouse_posx;
+	window->debug_point_3.yw = window->mouse_posy;
 	window->debug_point_3.zw = 0;
 	window->debug_point_4.xw = window->mouse_posx;
 	window->debug_point_4.yw = window->mouse_posy;

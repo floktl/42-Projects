@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 11:08:31 by fkeitel           #+#    #+#             */
-/*   Updated: 2023/10/31 10:36:50 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/03/11 15:40:54 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,10 @@ char	**ft_split(char const *s, char c)
 	{
 		word = split_and_copy(s, &j, c);
 		if (word)
+		{
 			arr[i++] = word;
+		}
+		word = NULL;
 	}
 	arr[i] = NULL;
 	return (arr);

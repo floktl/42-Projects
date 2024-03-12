@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   initial_setup.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 10:28:34 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/11 09:52:24 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/03/11 15:01:59 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,24 +16,43 @@
 //----------- functions for the standard view of the map on the image ----------
 //
 
+void printMap(int ***map)
+{
+    for (int i = 0; map[i] != NULL; i++)
+    {
+        printf("Map[%d]:\n", i);
+
+        for (int j = 0; map[i][j] != NULL; j++)
+        {
+            printf("  Line %d: ", j);
+			printf("%d ", map[i][j][0]);
+			printf("%d ", map[i][j][1]);
+            printf("\n");
+        }
+        printf("\n");
+    }
+}
+
 //	This function sets the initial window sizes and map sizes
 int	initialize_window_from_args(t_window *window, char *argv[])
 {
 	char	*file_path;
 	int		fd;
 
+	*window = *window;
 	file_path = ft_strjoin("test_maps/", argv[1]);
 	if (!file_path)
 		return (perror("Error loading maps"), -1);
 	fd = open(file_path, O_RDONLY);
-	//free(file_path);
+	free(file_path);
 	if (fd == -1)
 		return (perror("Error opening file"), -1);
 	window->map = read_and_split_lines(fd);
+	//printMap(window->map);
 	if (!window->map)
 		return (EXIT_FAILURE);
-	//get_map_size(window);
-	//set_default_window_data(window);
+	get_map_size(window);
+	set_default_window_data(window);
 	return (0);
 }
 
@@ -50,9 +69,10 @@ int	***read_and_split_lines(int fd)
 
 	count = 0;
 	line = get_next_line(fd);
+	map = malloc((ft_strlen(line)) * sizeof(int **));
 	while (line)
 	{
-		int ***newMap = realloc(map, (count + 2) * sizeof(int **));
+		int ***newMap = realloc(map, (count + 1) * sizeof(int **));
 		map = newMap;
 		map[count] = malloc((ft_strlen(line) + 1) * sizeof(int *));
 		collumn = ft_split(line, ' ');
@@ -60,30 +80,26 @@ int	***read_and_split_lines(int fd)
 		j = 0;
 		while (collumn[j])
 		{
-			map[count][j] = malloc(3 * sizeof(int *));
+			map[count][j] = malloc(2 * sizeof(int));
 			comma_pos = strchr(collumn[j], ',');
 			if (comma_pos)
 			{
 				*comma_pos = '\0';
 				map[count][j][0] = atoi(collumn[j]);
-				printf("%d\n", map[count][j][0]);
-				if (!map[count][j][0])
-					printf("error");
-				sscanf(comma_pos + 1, "%x", &map[count][j][1] + 0xFF);
+				sscanf(comma_pos + 1, "%x", &map[count][j][1]);
+				printf("%x", map[count][j][0]);
+				printf("test");
 			}
 			else
 			{
 				map[count][j][0] = atoi(collumn[j]);
-					printf("%d\n", map[count][j][0]);
-				if (!map[count][j][0])
-					printf("error2");
 				map[count][j][1] = 0;
 			}
-			map[count][j][2] = INT_MAX;
 			j++;
 		}
-		map[count][j] = NULL;
+		free(collumn);
 		collumn = NULL;
+		map[count][j] = NULL;
 		line = get_next_line(fd);
 		count++;
 	}

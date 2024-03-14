@@ -6,7 +6,7 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 08:24:45 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/14 12:51:48 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/03/14 16:57:54 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 //
 //------- this functions update the map values after changing parameters -------
 //
-void	rotate(double *a, double *b, double angle)
+void	rotate(double *a, double *b, double angle, char axis)
 {
 	double	rad;
 	double	cos_a;
@@ -24,11 +24,25 @@ void	rotate(double *a, double *b, double angle)
 	double	new_a;
 	double	new_b;
 
-	rad = angle * PI / 180.0;
+	rad = angle * (PI / 180.0);
 	cos_a = cos(rad);
 	sin_a = sin(rad);
-	new_a = (*a) * cos_a - (*b) * sin_a;
-	new_b = (*a) * sin_a + (*b) * cos_a;
+	if (axis == 'X')
+	{
+		new_a = (*a) * cos_a - (*b) * sin_a;
+		new_b = (*a) * sin_a + (*b) * cos_a;
+
+	}
+	if (axis == 'Y')
+	{
+		new_a = (*b) * cos_a - (*a) * sin_a;
+		new_b = (*a) * cos_a + (*b) * sin_a;
+	}
+	if (axis == 'Z')
+	{
+		new_a = (*a) * cos_a - (*b) * sin_a;
+		new_b = (*a) * sin_a + (*b) * cos_a;
+	}
 	*a = new_a;
 	*b = new_b;
 }
@@ -42,14 +56,12 @@ int	rotation_calc(t_window *window, t_coord *cur_point)
 	temp_xm = cur_point->xm;
 	temp_ym = cur_point->ym;
 	temp_zm = cur_point->zm;
-	rotate(&temp_xm, &temp_ym, window->map_sz.xm_rot_deg);
-	temp_xm = cur_point->xm;
-	rotate(&temp_ym, &temp_zm, window->map_sz.ym_rot_deg);
-	temp_zm = cur_point->zm;
-	rotate(&temp_zm, &temp_xm, window->map_sz.zm_rot_deg);
+	rotate(&temp_ym, &temp_zm, window->map_sz.xm_rot_deg, 'X');
+	rotate(&temp_zm, &temp_xm, window->map_sz.ym_rot_deg, 'Y');
+	rotate(&temp_xm, &temp_ym, window->map_sz.zm_rot_deg, 'Z');
 	cur_point->xw = ft_round(temp_xm) + window->map_sz.xposmw;
 	cur_point->yw = window->map_sz.yposmw - ft_round(temp_ym);
-	cur_point->zw = ft_round(temp_zm);
+	cur_point->zw = ft_round(temp_zm) + window->map_sz.zm_offset;
 	return (0);
 }
 

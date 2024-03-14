@@ -6,7 +6,7 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 13:25:40 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/14 12:07:32 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/03/14 13:31:31 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ int	print_coordinate_data(t_window *window, t_coord *current, const char *color)
 	printf("Pos map: %f|%f|%f\t", current->xm, current->ym, current->zm);
 	//printf("len cen: %f\t", current->len_cent);
 	//printf("zoom: %f\t", window->zoom);
-	//printf("Pos window: %d|%d|%d\t", current->xw, current->yw,
-	//	current->zw);
+	printf("Pos window: %d|%d|%d\t", current->xw, current->yw,
+		current->zw);
 	//printf("offset map: %f|%f|%f\t", window->map_sz.xm_offset,
 	//	window->map_sz.ym_offset, window->map_sz.zm_offset);
 	//printf("map pos win: %d|%d|%d\t", window->map_sz.xposmw,

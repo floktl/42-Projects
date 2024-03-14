@@ -6,7 +6,7 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 14:58:34 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/14 12:34:32 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/03/14 15:45:23 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int	mouse_rotation(t_window *window)
 	}
 	previous_x = window->mouse_posx;
 	previous_y = window->mouse_posy;
-	window->map_sz.zm_rot_deg += x * 0.3;
-	window->map_sz.ym_rot_deg += y * 0.3;
+	window->map_sz.ym_rot_deg -= x * 0.3;
+	window->map_sz.xm_rot_deg += y * 0.3;
 	return (0);
 }

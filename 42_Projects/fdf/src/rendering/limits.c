@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   limits.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/24 15:50:39 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/09 19:53:54 by flo              ###   ########.fr       */
+/*   Updated: 2024/03/14 15:03:02 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,19 +24,19 @@ int	range_check(t_window *window, int x, int y, int z)
 	*window = *window;
 	if (x != 0)
 	{
-		if (((window->map_sz.maxsz_x_p + x) < MARGIN)
-			|| ((window->map_sz.maxsz_x_m + x) > (window->width - MARGIN)))
-			return (0);
-		else
+		if (((window->map_sz.maxsz_x_p + x) > MARGIN)
+			&& ((window->map_sz.maxsz_x_m + x) < (window->width - MARGIN)))
 			return (x);
+		else
+			return (0);
 	}
 	if (y != 0)
 	{
-		if (((window->map_sz.maxsz_y_m + y) < MARGIN)
-			|| ((window->map_sz.maxsz_y_p + y) > (window->height - MARGIN)))
-			return (0);
-		else
+		if (((window->map_sz.maxsz_y_m + y) >= MARGIN)
+			&& ((window->map_sz.maxsz_y_p + y) <= (window->height - MARGIN)))
 			return (y);
+		else
+			return (0);
 	}
 	else if (z != 0)
 		return (z);

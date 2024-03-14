@@ -6,7 +6,7 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 07:33:01 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/14 08:20:34 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/03/14 15:50:59 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	map_size_default_setting(t_sz *map_sz, t_sz size)
 	map_sz->yposmw = HEIGHT / 2;
 	map_sz->zcentmw = 0;
 	map_sz->xm_rot_deg = DEGREE_DEFAULT;
-	map_sz->ym_rot_deg = DEGREE_DEFAULT;
+	map_sz->ym_rot_deg = 90;
 	map_sz->zm_rot_deg = DEGREE_DEFAULT;
 	map_sz->xm_size = size.xm_size;
 	map_sz->ym_size = size.ym_size;

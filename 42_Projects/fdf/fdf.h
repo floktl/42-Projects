@@ -6,7 +6,7 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 10:26:16 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/14 12:22:52 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/03/14 17:19:18 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@
 //	These are default settings that are not adjustable:
 # define ZOOM_DEFAULT 1.0
 # define MARGIN 15
+
+//	math data values
 # define PI 3.14159265358979323846
 
 //

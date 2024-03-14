@@ -6,7 +6,7 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 15:06:21 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/14 12:22:29 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/03/14 17:19:51 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ int	debug_mode_map(t_window *window)
 	return (0);
 }
 
+//	function to rotate
 double	rotate_map(t_window *window)
 {
 	if (mlx_is_key_down(window->mlx, MLX_KEY_R)

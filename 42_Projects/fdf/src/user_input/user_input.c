@@ -6,7 +6,7 @@
 /*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 17:11:17 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/09 20:51:57 by flo              ###   ########.fr       */
+/*   Updated: 2024/03/13 10:16:05 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ int	ft_hook_key(t_window *window, int *x_set, int *y_set)
 	shift_map(window, x_set, y_set);
 	mouse_shift(window, x_set, y_set);
 	zoom_map(window);
+	rotate_map(window);
 	if (window->zoom == ZOOM_DEFAULT && *x_set == 0 && *y_set == 0)
 		return (0);
 	return (1);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fdf.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 10:26:16 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/12 11:04:26 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/03/13 10:47:47 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,13 @@
 //	offset of the map center from the middle point of the window
 # define OFFSET_DEFAULT 0.0
 // Max zooming faktor end from 1-10(MAX) 11-30(MIN)
-# define MAX_MAP_SIZE 7
-# define MIN_MAP_SIZE 20
+# define MAX_MAP_SIZE 35
+# define MIN_MAP_SIZE 30
 //	color for the z_axis of the map, if not given in the map
 # define COLOR_DEFAULT_CEN 0xCFCFFF00
 # define COLOR_DEFAULT_PLUS 0xEE550000
 # define COLOR_DEFAULT_MIN 0x00DDBB00
-# define BRIGHTNESS_DEFAULT 0xFF
+# define BRIGHTNESS_DEFAULT 0xCC
 //	rotation degree in x, y, z direction
 # define DEGREE_DEFAULT 0.0
 
@@ -163,8 +163,8 @@ typedef struct s_window
 //
 
 // setup and initialisations:
-void			get_map_size(t_window *map);
-unsigned int	***read_and_split_lines(int fd);
+int				get_map_size(t_window *map);
+unsigned int	***read_and_split_lines(int fd, char *line);
 int32_t			set_coord(t_window *window);
 int				initialize_window_from_args(t_window *window, char *argv[]);
 int				initialize_mlx_image(t_window *window);
@@ -172,6 +172,7 @@ int				initialize_mlx_image(t_window *window);
 void		ft_set_before_y(t_coord **head, int iterations, t_window *window);
 void		ft_set_after_y(t_coord *head, t_window *window);
 int			get_index(t_window *window, int pos_xm, int pos_ym);
+void		free_two_dimensional_array(char **param);
 
 //	mathematical functions, as i dont use the math.h library
 
@@ -207,7 +208,7 @@ void		clear_image(t_window *window, uint32_t color);
 
 // additional helper functions
 int32_t		ft_pixel(int32_t r, int32_t g, int32_t b, int32_t a);
-void		find_highest_and_lowest(t_window *map);
+int			find_highest_and_lowest(t_window *map);
 void		ft_add_back(t_coord **lst, t_coord *new);
 int			ft_shutdown_error(mlx_t *mlx);
 double		check_zoom_direction(int map_middle, int zoom_position, double zom);
@@ -223,7 +224,7 @@ t_coord		*link_add_pt(t_coord **coord, t_window *window, int x, int y);
 
 int			map_size_default_setting(t_sz *map_sz, t_sz size);
 void		update_mapsize(t_sz *map_sz, t_coord *temp);
-void		set_default_window_data(t_window *window);
+int			set_default_window_data(t_window *window);
 int			assign_degree_len_color(t_window *window, t_coord *coord, int x, int y);
 int			assign_coord_position(t_window *window, t_coord *new, int x, int y);
 void		ft_scroll(double xoffset, double yoffset, void *param);
@@ -233,12 +234,14 @@ int			check_mouse_clicked(t_window *window, int x, int y);
 int			shift_map(t_window *window, int *x_set, int *y_set);
 double		zoom_map(t_window *window);
 int			debug_mode_map(t_window *window);
-void	print_debug_point_1(t_window *window);
-void	print_debug_point_2(t_window *window);
+void		print_debug_point_1(t_window *window);
+void		print_debug_point_2(t_window *window);
 int			check_defines(void);
 int			check_margin_border(t_window *window);
-void	connect_points(t_window *window, t_coord *point_a, t_coord *point_b);
-
+void		connect_points(t_window *window, t_coord *point_a, t_coord *point_b);
+int			convert_str_to_hex(char *comma_pos);
 void		free_map(unsigned int ***map);
+void		print_map(unsigned int ***map);
 
+double		rotate_map(t_window *window);
 #endif

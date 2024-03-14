@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   assigning_values.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 07:33:01 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/12 11:14:47 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/03/13 10:03:37 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,10 @@
 //----------------------------- window struct ----------------------------------
 
 //	sets the default settings for the window
-void	set_default_window_data(t_window *window)
+int	set_default_window_data(t_window *window)
 {
+	if (!window)
+		return (EXIT_FAILURE);
 	window->start_size = (WIDTH / (window->map_sz.xm_size + 2));
 	window->cent_xw = WIDTH / 2;
 	window->cent_yw = HEIGHT / 2;
@@ -33,6 +35,7 @@ void	set_default_window_data(t_window *window)
 	window->zoom = ZOOM_DEFAULT;
 	window->max_zoom_size = WIDTH * HEIGHT * MAX_MAP_SIZE;
 	window->min_zoom_size = (WIDTH * HEIGHT) / MIN_MAP_SIZE;
+	return (0);
 }
 
 //-------------------------------- map structs ---------------------------------

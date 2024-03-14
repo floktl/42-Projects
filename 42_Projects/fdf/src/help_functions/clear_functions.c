@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clear_functions.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/24 12:14:49 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/12 10:58:16 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/03/12 17:05:47 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,22 @@ void	free_stack(t_coord **stack)
 		free(tmp);
 	}
 	free(stack);
+}
+
+//	function to free an two dimensional array of chars
+void	free_two_dimensional_array(char **param)
+{
+	int	count;
+
+	count = 0;
+	if (!param)
+		return ;
+	while (param[count])
+	{
+		free(param[count]);
+		count++;
+	}
+	free(param);
 }
 
 //	function to reset all pixelsof the window to its default colors

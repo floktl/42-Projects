@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   debugging.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 13:25:40 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/12 12:03:30 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/03/12 12:50:04 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,30 @@ int	print_coordinate_data(t_window *window, t_coord *current, const char *color)
 	else
 		printf("by;  | \t");
 	return (0);
+}
+
+//	prints the map of the 3 dimensional array
+void	print_map(unsigned int ***map)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (map[i] != NULL)
+	{
+		ft_printf("Map[%d]:\n", i);
+		j = 0;
+		while (map[i][j] != NULL)
+		{
+			ft_printf("  Line %d: ", j);
+			ft_printf("%d ", map[i][j][0]);
+			ft_printf("%X ", map[i][j][1]);
+			ft_printf("\n");
+			j++;
+		}
+		ft_printf("\n");
+		i++;
+	}
 }
 
 //	prints the values of all coordinates (distances, color, degree, position...)

@@ -6,7 +6,7 @@
 /*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 15:06:21 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/09 23:03:28 by flo              ###   ########.fr       */
+/*   Updated: 2024/03/13 10:47:20 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,4 +81,20 @@ int	debug_mode_map(t_window *window)
 		return (1);
 	}
 	return (0);
+}
+
+double	rotate_map(t_window *window)
+{
+	if (mlx_is_key_down(window->mlx, MLX_KEY_R))
+	{
+		window->map_sz.xm_rot_deg += 3.0;
+		if (window->map_sz.xm_rot_deg < 360)
+			window->map_sz.xm_rot_deg -= 360;
+	}
+	if (mlx_is_key_down(window->mlx, MLX_KEY_L))
+	{
+		window->map_sz.xm_rot_deg -= 3.0;
+		if (window->map_sz.xm_rot_deg < 0)
+			window->map_sz.xm_rot_deg += 360;
+	}
 }

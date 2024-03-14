@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   help_functions.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 10:28:26 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/10 12:06:06 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/03/13 09:56:13 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int32_t	ft_pixel(int32_t r, int32_t g, int32_t b, int32_t a)
 
 //	assigns  the highest and lowest value of the map (z_direction) as well
 //	as the the distance to the map middlepoint in z direction
-void	find_highest_and_lowest(t_window *map)
+int	find_highest_and_lowest(t_window *map)
 {
 	t_window	*temp;
 	int			x;
@@ -49,6 +49,7 @@ void	find_highest_and_lowest(t_window *map)
 		}
 		y++;
 	}
+	return (EXIT_FAILURE);
 }
 
 //	adds a new coordinate to the existing one
@@ -86,4 +87,29 @@ double	check_zoom_direction(int map_middle, int zoom_position, double zoom)
 			zoom_direction = ZOOM_P;
 	}
 	return (zoom_direction);
+}
+
+//	function to convert a string to a hexadezimal value
+int	convert_str_to_hex(char *comma_pos)
+{
+	char			*hex_str;
+	unsigned int	hex_value;
+	int				digit_value;
+	char			digit;
+
+	hex_str = comma_pos + 1;
+	hex_value = 0;
+	digit = hex_str[0];
+	while (*hex_str != '\0')
+	{
+		if (digit >= '0' && digit <= '9')
+			digit_value = digit - '0';
+		else if (digit >= 'a' && digit <= 'f')
+			digit_value = 10 + (digit - 'a');
+		else if (digit >= 'A' && digit <= 'F')
+			digit_value = 10 + (digit - 'A');
+		hex_value = (hex_value << 4) | digit_value;
+		digit = *hex_str++;
+	}
+	return (hex_value);
 }

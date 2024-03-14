@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mathematics2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 17:00:17 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/09 19:59:11 by flo              ###   ########.fr       */
+/*   Updated: 2024/03/14 12:26:07 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,14 @@ int	ft_abs(int num)
 	if (num < 0)
 		num *= -1;
 	return (num);
+}
+
+void	degree(int *rot)
+{
+	if (*rot >= 360)
+		*rot -= 360;
+	if (*rot < 0)
+		*rot += 360;
 }
 
 //Point rotateY(Point p, double theta)

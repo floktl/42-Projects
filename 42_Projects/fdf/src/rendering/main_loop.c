@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_loop.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 09:45:33 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/12 20:10:38 by flo              ###   ########.fr       */
+/*   Updated: 2024/03/14 07:24:08 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	ft_render(void *param)
 		clear_image(window, 0x00000000);
 		update_coord(window, x_offset, y_offset);
 	}
-	print_debug_point_1(window);
+	//print_debug_point_1(window);
 	current = window->coord;
 	while (current != NULL && current->next != NULL)
 	{

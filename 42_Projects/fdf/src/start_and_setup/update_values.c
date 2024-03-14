@@ -3,31 +3,68 @@
 /*                                                        :::      ::::::::   */
 /*   update_values.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 08:24:45 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/13 10:46:00 by flo              ###   ########.fr       */
+/*   Updated: 2024/03/14 12:51:48 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../fdf.h"
+#include <math.h>
 
 //
 //------- this functions update the map values after changing parameters -------
 //
+void	rotate(double *a, double *b, double angle)
+{
+	double	rad;
+	double	cos_a;
+	double	sin_a;
+	double	new_a;
+	double	new_b;
+
+	rad = angle * PI / 180.0;
+	cos_a = cos(rad);
+	sin_a = sin(rad);
+	new_a = (*a) * cos_a - (*b) * sin_a;
+	new_b = (*a) * sin_a + (*b) * cos_a;
+	*a = new_a;
+	*b = new_b;
+}
+
+int	rotation_calc(t_window *window, t_coord *cur_point)
+{
+	double	temp_xm;
+	double	temp_ym;
+	double	temp_zm;
+
+	temp_xm = cur_point->xm;
+	temp_ym = cur_point->ym;
+	temp_zm = cur_point->zm;
+	rotate(&temp_xm, &temp_ym, window->map_sz.xm_rot_deg);
+	temp_xm = cur_point->xm;
+	rotate(&temp_ym, &temp_zm, window->map_sz.ym_rot_deg);
+	temp_zm = cur_point->zm;
+	rotate(&temp_zm, &temp_xm, window->map_sz.zm_rot_deg);
+	cur_point->xw = ft_round(temp_xm) + window->map_sz.xposmw;
+	cur_point->yw = window->map_sz.yposmw - ft_round(temp_ym);
+	cur_point->zw = ft_round(temp_zm);
+	return (0);
+}
 
 //this function updates all important variables to each point in map
-int32_t	update_coord(t_window *window, int x_set, int y_set)
+int32_t	update_coord(t_window *window, int x_shift, int y_shift)
 {
 	t_coord		*temp;
 	t_sz		*map_sz;
 
 	temp = window->coord;
 	map_sz = &window->map_sz;
-	map_sz->xm_offset += x_set;
-	map_sz->ym_offset += y_set;
-	map_sz->xposmw += x_set;
-	map_sz->yposmw += y_set;
+	map_sz->xm_offset += x_shift;
+	map_sz->ym_offset += y_shift;
+	map_sz->xposmw += x_shift;
+	map_sz->yposmw += y_shift;
 	calculate_zoom_pos(window);
 	map_sz->maxsz_x_p = window->map_sz.xposmw;
 	map_sz->maxsz_x_m = window->map_sz.xposmw;
@@ -35,9 +72,10 @@ int32_t	update_coord(t_window *window, int x_set, int y_set)
 	map_sz->maxsz_y_m = window->map_sz.yposmw;
 	while (temp != NULL)
 	{
-		temp->xw += x_set;
-		temp->yw += y_set;
+		temp->xw += x_shift;
+		temp->yw += y_shift;
 		zoom_calc(window, temp);
+		rotation_calc(window, temp);
 		update_mapsize(&window->map_sz, temp);
 		temp = temp->next;
 	}

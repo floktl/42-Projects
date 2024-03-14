@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   user_input.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 17:11:17 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/13 10:16:05 by flo              ###   ########.fr       */
+/*   Updated: 2024/03/14 11:38:51 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,28 @@
 //	functions, that will handle all keypads and mouse inputs from the user
 //
 
+//	this function checks, if there is a change in the rotation from user input
+int	check_change_in_rotation(t_window *window)
+{
+	static double	prev_rot_x = ZOOM_DEFAULT;
+	static double	prev_rot_y = ZOOM_DEFAULT;
+	static double	prev_rot_z = ZOOM_DEFAULT;
+
+	if (window->map_sz.xm_rot_deg == prev_rot_x
+		&& window->map_sz.ym_rot_deg == prev_rot_y
+		&& window->map_sz.zm_rot_deg == prev_rot_z)
+		return (0);
+	else
+	{
+		prev_rot_x = window->map_sz.xm_rot_deg;
+		prev_rot_y = window->map_sz.ym_rot_deg;
+		prev_rot_z = window->map_sz.zm_rot_deg;
+		return (1);
+	}
+}
+
 //	hook functions for keyboard user input:
-//	arrow keys: moving map in x amd y direction
+//	arrow keys: moving map in x and y direction
 //	P: Zoom in M: Zoom out
 //	R + arrow keys: rotate map in x and y direction
 //	D: Debug mode with terminal value view option and map center visualization
@@ -28,9 +48,11 @@ int	ft_hook_key(t_window *window, int *x_set, int *y_set)
 	debug_mode_map(window);
 	shift_map(window, x_set, y_set);
 	mouse_shift(window, x_set, y_set);
+	mouse_rotation(window);
 	zoom_map(window);
 	rotate_map(window);
-	if (window->zoom == ZOOM_DEFAULT && *x_set == 0 && *y_set == 0)
+	if (window->zoom == ZOOM_DEFAULT && *x_set == 0 && *y_set == 0
+		&& check_change_in_rotation(window) == 0)
 		return (0);
 	return (1);
 }

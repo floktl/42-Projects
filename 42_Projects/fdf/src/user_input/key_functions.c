@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   key_functions.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 15:06:21 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/13 10:47:20 by flo              ###   ########.fr       */
+/*   Updated: 2024/03/14 12:22:29 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,16 +85,26 @@ int	debug_mode_map(t_window *window)
 
 double	rotate_map(t_window *window)
 {
-	if (mlx_is_key_down(window->mlx, MLX_KEY_R))
-	{
-		window->map_sz.xm_rot_deg += 3.0;
-		if (window->map_sz.xm_rot_deg < 360)
-			window->map_sz.xm_rot_deg -= 360;
-	}
-	if (mlx_is_key_down(window->mlx, MLX_KEY_L))
-	{
-		window->map_sz.xm_rot_deg -= 3.0;
-		if (window->map_sz.xm_rot_deg < 0)
-			window->map_sz.xm_rot_deg += 360;
-	}
+	if (mlx_is_key_down(window->mlx, MLX_KEY_R)
+		&& !mlx_is_key_down(window->mlx, MLX_KEY_L))
+		window->map_sz.xm_rot_deg += ROTATION_SPEED;
+	else if (mlx_is_key_down(window->mlx, MLX_KEY_L)
+		&& !mlx_is_key_down(window->mlx, MLX_KEY_R))
+		window->map_sz.xm_rot_deg += -ROTATION_SPEED;
+	if (mlx_is_key_down(window->mlx, MLX_KEY_N)
+		&& !mlx_is_key_down(window->mlx, MLX_KEY_J))
+		window->map_sz.ym_rot_deg += ROTATION_SPEED;
+	else if (mlx_is_key_down(window->mlx, MLX_KEY_J)
+		&& !mlx_is_key_down(window->mlx, MLX_KEY_N))
+		window->map_sz.ym_rot_deg += -ROTATION_SPEED;
+	if (mlx_is_key_down(window->mlx, MLX_KEY_G)
+		&& !mlx_is_key_down(window->mlx, MLX_KEY_H))
+		window->map_sz.zm_rot_deg += ROTATION_SPEED;
+	else if (mlx_is_key_down(window->mlx, MLX_KEY_H)
+		&& !mlx_is_key_down(window->mlx, MLX_KEY_G))
+		window->map_sz.zm_rot_deg += -ROTATION_SPEED;
+	degree(&window->map_sz.xm_rot_deg);
+	degree(&window->map_sz.ym_rot_deg);
+	degree(&window->map_sz.zm_rot_deg);
+	return (0);
 }

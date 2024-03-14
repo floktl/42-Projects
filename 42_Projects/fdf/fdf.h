@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fdf.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 10:26:16 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/13 10:47:47 by flo              ###   ########.fr       */
+/*   Updated: 2024/03/14 12:22:52 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 //	These are default settings that are not adjustable:
 # define ZOOM_DEFAULT 1.0
 # define MARGIN 15
+# define PI 3.14159265358979323846
 
 //
 //-You can change these to adjust different settings, zoom-speed, shift, etc.: -
@@ -45,6 +46,7 @@
 # define BRIGHTNESS_DEFAULT 0xCC
 //	rotation degree in x, y, z direction
 # define DEGREE_DEFAULT 0.0
+# define ROTATION_SPEED 1.0
 
 // libraries
 # include "MLX42/include/MLX42/MLX42.h"
@@ -198,7 +200,7 @@ void		ft_resize(int width, int height, void *param);
 int			range_check(t_window *window, int x, int y, int z);
 double		ft_sqrt(double a);
 float		calc_z(t_coord *cur, t_coord *next, float x_p, float y_p);
-double		calc_angle(double a, double b, char which_side);
+double		calc_angle(double a, double b);
 int			round_to_int(float num);
 int			zoom_calc(t_window *window, t_coord *cur_point);
 
@@ -229,7 +231,8 @@ int			assign_degree_len_color(t_window *window, t_coord *coord, int x, int y);
 int			assign_coord_position(t_window *window, t_coord *new, int x, int y);
 void		ft_scroll(double xoffset, double yoffset, void *param);
 int			mouse_shift(t_window *window, int *x_set, int *y_set);
-int			check_mouse_clicked(t_window *window, int x, int y);
+int	mouse_rotation(t_window *window);
+int	check_mouse_clicked(t_window *window, int x, int y, enum mouse_key key);
 
 int			shift_map(t_window *window, int *x_set, int *y_set);
 double		zoom_map(t_window *window);
@@ -242,6 +245,42 @@ void		connect_points(t_window *window, t_coord *point_a, t_coord *point_b);
 int			convert_str_to_hex(char *comma_pos);
 void		free_map(unsigned int ***map);
 void		print_map(unsigned int ***map);
+void	degree(int *rot);
 
 double		rotate_map(t_window *window);
 #endif
+
+//void	rotate(double *a, double *b, double angle)
+//{
+//	double	rad;
+//	double	cos_a;
+//	double	sin_a;
+//	double	new_a;
+//	double	new_b;
+
+//	rad = angle * PI / 180.0;
+//	cos_a = cos(rad);
+//	sin_a = sin(rad);
+//	new_a = (*a) * cos_a - (*b) * sin_a;
+//	new_b = (*a) * sin_a + (*b) * cos_a;
+//	*a = new_a;
+//	*b = new_b;
+//}
+
+//int	rotation_calc(t_window *window, t_coord *cur_point)
+//{
+//	double	temp_xm;
+//	double	temp_ym;
+//	double	temp_zm;
+
+//	temp_xm =
+//	temp_ym =
+//	temp_zm =
+//	rotate(&temp_xm, &temp_ym, window->map_sz.xm_rot_deg);
+//	rotate(&temp_ym, &temp_zm, window->map_sz.ym_rot_deg);
+//	rotate(&temp_zm, &temp_xm, window->map_sz.zm_rot_deg);
+//	cur_point->xw = ft_round(temp_xm) + window->map_sz.xposmw;
+//	cur_point->yw = -ft_round(temp_ym) + window->map_sz.yposmw;
+//	cur_point->zw = ft_round(temp_zm);
+//	return (0);
+//}

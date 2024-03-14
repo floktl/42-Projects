@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   assigning_values.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 07:33:01 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/13 10:03:37 by flo              ###   ########.fr       */
+/*   Updated: 2024/03/14 08:20:34 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ int32_t	set_coord(t_window *window)
 
 	y_axis = 0;
 	coord = NULL;
+	ft_printf("Assigning coordinate data...\n");
 	while (y_axis < window->map_sz.ym_size)
 	{
 		x_axis = 0;
@@ -152,9 +153,9 @@ int	assign_degree_len_color(t_window *window, t_coord *coord, int x, int  y)
 
 	dist_to_map_center = ft_sqrt((coord->xm * coord->xm)
 			+ (coord->ym * coord->ym) + (coord->zm * coord->zm));
-	coord->deg_xm = calc_angle(coord->xm, coord->ym, 'X');
-	coord->deg_ym = calc_angle(-coord->ym, coord->xm, 'Y');
-	coord->deg_zm = calc_angle(coord->ym, coord->zm, 'Z');
+	coord->deg_xm = calc_angle(coord->xm, coord->ym);
+	coord->deg_ym = calc_angle(coord->ym, coord->xm);
+	coord->deg_zm = calc_angle(coord->ym, coord->zm);
 	coord->len_cent = dist_to_map_center;
 	assign_color(window, coord, x, y);
 	return (0);

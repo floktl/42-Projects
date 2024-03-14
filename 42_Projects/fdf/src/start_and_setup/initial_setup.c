@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   initial_setup.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 10:28:34 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/13 08:08:09 by flo              ###   ########.fr       */
+/*   Updated: 2024/03/14 07:20:53 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ int	initialize_window_from_args(t_window *window, char *argv[])
 	if (get_map_size(window) == EXIT_FAILURE
 		|| set_default_window_data(window) == EXIT_FAILURE)
 		return (perror("Error data"), EXIT_FAILURE);
-	print_map(window->map);
 	return (EXIT_SUCCESS);
 }
 
@@ -81,6 +80,7 @@ unsigned int	***read_and_split_lines(int fd, char *line)
 	map = malloc((count + 1) * sizeof(unsigned int **));
 	if (!map)
 		return (NULL);
+	ft_printf("Reading map...\n");
 	while (line)
 	{
 		map = realloc(map, (count + 1) * sizeof(unsigned int **));

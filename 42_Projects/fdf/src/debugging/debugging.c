@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   debugging.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 13:25:40 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/12 12:50:04 by flo              ###   ########.fr       */
+/*   Updated: 2024/03/14 12:07:32 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,25 +26,28 @@
 //	printing the coordinates and other useful data of each point
 int	print_coordinate_data(t_window *window, t_coord *current, const char *color)
 {
+	*window = *window;
 	printf("%s", color);
 	printf("%d|%d\t", current->pos_xm, current->pos_ym);
 	printf("Pos map: %f|%f|%f\t", current->xm, current->ym, current->zm);
-	printf("len cen: %f\t", current->len_cent);
-	printf("zoom: %f\t", window->zoom);
-	printf("Pos window: %d|%d|%d\t", current->xw, current->yw,
-		current->zw);
-	printf("offset map: %f|%f|%f\t", window->map_sz.xm_offset,
-		window->map_sz.ym_offset, window->map_sz.zm_offset);
-	printf("map pos win: %d|%d|%d\t", window->map_sz.xposmw,
-		window->map_sz.yposmw, window->map_sz.zcentmw);
-	printf("max sz map: x: %d|%d y: %d|%d\t",
-		(window->map_sz.maxsz_x_p), (window->map_sz.maxsz_x_m),
-		(window->map_sz.maxsz_y_p), (window->map_sz.maxsz_y_m));
-	if (current->before_y != NULL)
-		printf("by: %d|%d\t", current->before_y->pos_xm,
-			current->before_y->pos_ym);
-	else
-		printf("by;  | \t");
+	//printf("len cen: %f\t", current->len_cent);
+	//printf("zoom: %f\t", window->zoom);
+	//printf("Pos window: %d|%d|%d\t", current->xw, current->yw,
+	//	current->zw);
+	//printf("offset map: %f|%f|%f\t", window->map_sz.xm_offset,
+	//	window->map_sz.ym_offset, window->map_sz.zm_offset);
+	//printf("map pos win: %d|%d|%d\t", window->map_sz.xposmw,
+	//	window->map_sz.yposmw, window->map_sz.zcentmw);
+	printf("deg to cen map: %d|%d|%d\t", window->map_sz.xm_rot_deg,
+		window->map_sz.ym_rot_deg, window->map_sz.zm_rot_deg);
+	//printf("max sz map: x: %d|%d y: %d|%d\t",
+	//	(window->map_sz.maxsz_x_p), (window->map_sz.maxsz_x_m),
+	//	(window->map_sz.maxsz_y_p), (window->map_sz.maxsz_y_m));
+	//if (current->before_y != NULL)
+	//	printf("by: %d|%d\t", current->before_y->pos_xm,
+	//		current->before_y->pos_ym);
+	//else
+	//	printf("by;  | \t");
 	return (0);
 }
 
@@ -147,5 +150,4 @@ void	print_debug_point_2(t_window *window)
 
 		//printf("color: %d\t", current->color);
 
-		//printf("deg to cen map: %f|%f|%f\t", current->deg_xm,
-		//	current->deg_ym, current->deg_zm);
+

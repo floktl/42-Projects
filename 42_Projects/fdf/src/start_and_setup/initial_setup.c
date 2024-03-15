@@ -6,7 +6,7 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 10:28:34 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/14 07:20:53 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/03/15 13:47:44 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ int	initialize_window_from_args(t_window *window, char *argv[])
 	if (!window->map)
 		return (perror("Error reading map"), EXIT_FAILURE);
 	close(fd);
+	print_map(window->map);
 	if (get_map_size(window) == EXIT_FAILURE
 		|| set_default_window_data(window) == EXIT_FAILURE)
 		return (perror("Error data"), EXIT_FAILURE);
@@ -53,6 +54,8 @@ int	assign_map_values(unsigned int ****map, char **collumn, int count)
 	while (collumn[j])
 	{
 		(*map)[count][j] = malloc(2 * sizeof(unsigned int));
+		if (!(*map)[count][j])
+			return (free_map(*map), EXIT_FAILURE);
 		comma_pos = ft_strchr(collumn[j], ',');
 		(*map)[count][j][0] = ft_atoi(collumn[j]);
 		if (comma_pos)
@@ -80,13 +83,13 @@ unsigned int	***read_and_split_lines(int fd, char *line)
 	map = malloc((count + 1) * sizeof(unsigned int **));
 	if (!map)
 		return (NULL);
-	ft_printf("Reading map...\n");
+	printf("\033[0;35mReading map ...\033[0m\n");
 	while (line)
 	{
 		map = realloc(map, (count + 1) * sizeof(unsigned int **));
 		if (!map)
 			return (free_map(map), NULL);
-		map[count] = malloc((ft_strlen(line) + 1) * sizeof(unsigned int *));
+		map[count] = malloc((ft_strlen(line)) * sizeof(unsigned int *));
 		if (!map[count])
 			return (free_map(map), NULL);
 		collumn = ft_split(line, ' ');
@@ -96,6 +99,7 @@ unsigned int	***read_and_split_lines(int fd, char *line)
 		line = get_next_line(fd);
 		count++;
 	}
+	printf("\033[0;32mMap reading succesful!\033[0m\n");
 	return (map[count] = NULL, map);
 }
 

@@ -6,7 +6,7 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 08:24:45 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/14 17:29:31 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/03/15 13:15:44 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,32 +16,36 @@
 //
 //------- this functions update the map values after changing parameters -------
 //
-void	rotate(double *a, double *b, double angle, char axis)
+void	rotate(double *a, double *b, t_window window, char axis)
 {
 	double	rad;
-	double	cos_a;
-	double	sin_a;
 	double	new_a;
 	double	new_b;
+	//double	z_pos_scale = 1.0;
+	//double	z_len = window.map_sz.maxsz_z_p - window.map_sz.maxsz_z_m;
 
-	rad = angle * (PI / 180.0);
-	cos_a = cos(rad);
-	sin_a = sin(rad);
 	if (axis == 'X')
 	{
-		new_a = (*a) * cos_a - (*b) * sin_a;
-		new_b = (*a) * sin_a + (*b) * cos_a;
+		rad = window.map_sz.xm_rot_deg * (PI / 180.0);
+		//if (*b > 0)
+		//z_pos_scale = z_len / (- window.map_sz.maxsz_z_m + *b);
+		//else if (*b )
+		new_a = (*a) * cos(rad) - (*b) * sin(rad);
+		new_b = (*a) * sin(rad) + (*b) * cos(rad);
+		//new_a *= z_pos_scale;
 
 	}
 	if (axis == 'Y')
 	{
-		new_a = (*b) * cos_a - (*a) * sin_a;
-		new_b = (*a) * cos_a + (*b) * sin_a;
+		rad = window.map_sz.ym_rot_deg * (PI / 180.0);
+		new_a = (*b) * cos(rad) - (*a) * sin(rad);
+		new_b = (*a) * cos(rad) + (*b) * sin(rad);
 	}
 	if (axis == 'Z')
 	{
-		new_a = (*a) * cos_a - (*b) * sin_a;
-		new_b = (*a) * sin_a + (*b) * cos_a;
+		rad = window.map_sz.zm_rot_deg * (PI / 180.0);
+		new_a = (*a) * cos(rad) - (*b) * sin(rad);
+		new_b = (*a) * sin(rad) + (*b) * cos(rad);
 	}
 	*a = new_a;
 	*b = new_b;
@@ -56,12 +60,12 @@ int	rotation_calc(t_window *window, t_coord *cur_point)
 	temp_xm = cur_point->xm;
 	temp_ym = cur_point->ym;
 	temp_zm = cur_point->zm;
-	rotate(&temp_ym, &temp_zm, window->map_sz.xm_rot_deg, 'X');
-	rotate(&temp_zm, &temp_xm, window->map_sz.ym_rot_deg, 'Y');
-	rotate(&temp_xm, &temp_ym, window->map_sz.zm_rot_deg, 'Z');
+	rotate(&temp_ym, &temp_zm, *window, 'X');
+	rotate(&temp_zm, &temp_xm, *window, 'Y');
+	rotate(&temp_xm, &temp_ym, *window, 'Z');
+	cur_point->zw = ft_round(temp_zm) + window->map_sz.zm_offset;
 	cur_point->xw = ft_round(temp_xm) + window->map_sz.xposmw;
 	cur_point->yw = window->map_sz.yposmw - ft_round(temp_ym);
-	cur_point->zw = ft_round(temp_zm) + window->map_sz.zm_offset;
 	return (0);
 }
 
@@ -105,6 +109,7 @@ int	zoom_calc(t_window *window, t_coord *cur_point)
 	cur_point->len_cent *= window->zoom;
 	cur_point->xm *= window->zoom;
 	cur_point->ym *= window->zoom;
+	cur_point->zm *= window->zoom;
 	cur_point->xw = ft_round(cur_point->xm) + window->map_sz.xposmw;
 	cur_point->yw = -ft_round(cur_point->ym) + window->map_sz.yposmw;
 	return (0);
@@ -121,6 +126,10 @@ void	update_mapsize(t_sz *map_sz, t_coord *temp)
 		map_sz->maxsz_y_p = temp->yw;
 	if (map_sz->maxsz_y_m < temp->yw)
 		map_sz->maxsz_y_m = temp->yw;
+	if (map_sz->maxsz_z_p < temp->zw)
+		map_sz->maxsz_z_p = temp->zw;
+	if (map_sz->maxsz_z_m > temp->zw)
+		map_sz->maxsz_z_m = temp->zw;
 	map_sz->map_area = (map_sz->maxsz_x_p - map_sz->maxsz_x_m)
 		* (map_sz->maxsz_y_m - map_sz->maxsz_y_p);
 }

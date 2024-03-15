@@ -6,7 +6,7 @@
 #    By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/12 14:13:59 by fkeitel           #+#    #+#              #
-#    Updated: 2024/03/12 10:32:27 by fkeitel          ###   ########.fr        #
+#    Updated: 2024/03/15 10:09:25 by fkeitel          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -60,3 +60,9 @@ re: fclean all
 
 # Phony targets
 .PHONY: all clean fclean re mlx
+
+#$(OBJ_DIR)/%.o: %.c | $(OBJ_DIR)
+#	$(CC) $(CFLAGS) -c $< -o $@
+
+#$(OBJ_DIR):
+#	mkdir -p $(OBJ_DIR)

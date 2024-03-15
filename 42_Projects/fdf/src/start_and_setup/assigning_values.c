@@ -6,7 +6,7 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 07:33:01 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/14 15:50:59 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/03/15 11:27:07 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,15 +46,17 @@ int	map_size_default_setting(t_sz *map_sz, t_sz size)
 	map_sz->xposmw = WIDTH / 2;
 	map_sz->yposmw = HEIGHT / 2;
 	map_sz->zcentmw = 0;
-	map_sz->xm_rot_deg = DEGREE_DEFAULT;
-	map_sz->ym_rot_deg = 90;
-	map_sz->zm_rot_deg = DEGREE_DEFAULT;
+	map_sz->xm_rot_deg = DEGREE_DEFAULT_X;
+	map_sz->ym_rot_deg = DEGREE_DEFAULT_Y;
+	map_sz->zm_rot_deg = DEGREE_DEFAULT_Z;
 	map_sz->xm_size = size.xm_size;
 	map_sz->ym_size = size.ym_size;
 	map_sz->maxsz_x_p = map_sz->xposmw;
 	map_sz->maxsz_x_m = map_sz->xposmw;
 	map_sz->maxsz_y_p = map_sz->yposmw;
 	map_sz->maxsz_y_m = map_sz->yposmw;
+	map_sz->maxsz_z_p = 0;
+	map_sz->maxsz_z_m = 0;
 	return (0);
 }
 
@@ -70,7 +72,7 @@ int32_t	set_coord(t_window *window)
 
 	y_axis = 0;
 	coord = NULL;
-	ft_printf("Assigning coordinate data...\n");
+	printf("\033[0;35mAssigning coordinate data...\033[0m\n");
 	while (y_axis < window->map_sz.ym_size)
 	{
 		x_axis = 0;

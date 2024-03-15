@@ -6,7 +6,7 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/24 12:14:49 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/14 07:09:03 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/03/15 13:42:46 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,8 @@ void	free_map(unsigned int ***map)
 		free(map[i]);
 		i++;
 	}
-	free(map);
+	if (map != NULL)
+		free(map);
+	map = NULL;
 	i = k;
 }

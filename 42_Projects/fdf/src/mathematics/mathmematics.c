@@ -6,7 +6,7 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 16:59:00 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/14 13:18:16 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/03/15 07:43:37 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,6 @@ float	calc_z(t_coord *point_a, t_coord *point_b, float x_p, float y_p)
 		return ((float)point_a->zw);
 	t = d_ap / d_ab;
 	z_p = point_a->zw + t * ((float)point_b->zw - (float)point_a->zw);
-	z_p = (float)(z_p - point_a->zm) / (point_b->zw - point_a->zm);
+	z_p = (float)(z_p - point_a->zw) / (point_b->zw - point_a->zw);
 	return (z_p);
 }

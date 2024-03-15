@@ -6,7 +6,7 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 10:26:16 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/14 17:19:18 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/03/15 08:45:37 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,9 @@
 # define BRIGHTNESS_DEFAULT 0xCC
 //	rotation degree in x, y, z direction
 # define DEGREE_DEFAULT 0.0
+# define DEGREE_DEFAULT_X 0.0
+# define DEGREE_DEFAULT_Y 90.0
+# define DEGREE_DEFAULT_Z 0.0
 # define ROTATION_SPEED 1.0
 
 // libraries
@@ -121,6 +124,8 @@ typedef struct s_arr_size
 	int		maxsz_x_m;
 	int		maxsz_y_p;
 	int		maxsz_y_m;
+	int		maxsz_z_p;
+	int		maxsz_z_m;
 	int		xposmw;
 	int		yposmw;
 	int		zcentmw;

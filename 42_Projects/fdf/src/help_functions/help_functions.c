@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   help_functions.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 10:28:26 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/18 12:59:28 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/03/18 18:20:39 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,12 @@ int	find_highest_and_lowest(t_window *map)
 		x = 0;
 		while (x < map->map_sz.xm_size)
 		{
-			if (map->map[y][x][0] >= INT_MIN && map->map[y][x][0] <= INT_MAX)
+			if (map->map[y][x][Z] >= INT_MIN && map->map[y][x][Z] <= INT_MAX)
 			{
-				if (map->map[y][x][0] > map->map_sz.zmcent_plus)
-					map->map_sz.zmcent_plus = map->map[y][x][0];
-				if (map->map[y][x][0] < map->map_sz.zmcent_minus)
-					map->map_sz.zmcent_minus = map->map[y][x][0];
+				if (map->map[y][x][Z] > map->map_sz.zmcent_plus)
+					map->map_sz.zmcent_plus = map->map[y][x][Z];
+				if (map->map[y][x][Z] < map->map_sz.zmcent_minus)
+					map->map_sz.zmcent_minus = map->map[y][x][Z];
 			}
 			else
 				return (perror("value out of range"), EXIT_FAILURE);

@@ -3,31 +3,45 @@
 /*                                                        :::      ::::::::   */
 /*   fdf.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 10:26:16 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/18 13:02:23 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/03/18 21:13:02 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-//
-//--------------------------------- initial setup -----------------------------
-//
+/*
+------------------------------- initial setup ----------------------------------
+ */
 
+//	header file
 #ifndef FDF_H
 # define FDF_H
 
-//	These are default settings that are not adjustable:
+/* -------------------- non-adjustable pre-settings ------------------------- */
+
+//	macros for better code structure
 # define ZOOM_DEFAULT 1.0
 # define MARGIN 15
+# define ROTATION_SPEED 1.0
+# define HEIGHT_DEFAULT 1.0
+# define Z 0
+# define COLOR 1
+# define ON 1
+# define OFF -1
+# define ROTATION_FACTOR 0.3
+# define CHANGE 1
+# define NO_CHANGE 0
+# define ERROR -1
 
 //	math data values
 # define PI 3.14159265358979323846
+# define EPSILON  0.00000001
+
+/* ----------------------- adjustable pre-settings -------------------------- */
 
 //
-//-You can change these to adjust different settings, zoom-speed, shift, etc.: -
-//
-
+# define DEFAULT_WINDOW_COLOR 0x000000EE
 // window size between 100-2500
 # define WIDTH 1024
 # define HEIGHT 1024
@@ -47,15 +61,19 @@
 # define COLOR_DEFAULT_MIN 0x00DDBB00
 # define BRIGHTNESS_DEFAULT 0xCC
 //	rotation degree in x, y, z direction
-# define DEGREE_DEFAULT 0.0
 # define DEGREE_DEFAULT_X 0.0
 # define DEGREE_DEFAULT_Y 90.0
 # define DEGREE_DEFAULT_Z 0.0
-# define ROTATION_SPEED 1.0
+//	height_change
+# define HEIGHT_FAKTOR 0.1
 
-// libraries
+/* ------------------------------- libraries -------------------------------- */
+
+//	mlx library
 # include "MLX42/include/MLX42/MLX42.h"
+//	my own libraries
 # include "libft/libft.h"
+//	public libraries, no math.h :D
 # include <fcntl.h>
 # include <stdint.h>
 # include <limits.h>
@@ -64,10 +82,9 @@
 # include <stdlib.h>
 # include <stdbool.h>
 
-//
-//---------------------structs--------------------------------------------------
-//
+/* -------------------------------- structs --------------------------------- */
 
+//	struct to calculate the rgba part of the color in Hexadezimal range
 typedef struct s_rgba_color
 {
 	int32_t		color_a;
@@ -164,97 +181,146 @@ typedef struct s_window
 	float		min_zoom_size;
 }	t_window;
 
-//
-//---------------------functions------------------------------------------------
-//
+/* ------------------------------ functions --------------------------------- */
 
-// setup and initialisations:
-int			get_map_size(t_window *map);
-int			***read_and_split_lines(int fd, char *line);
-int32_t		set_coord(t_window *window);
-int			initialize_window_from_args(t_window *window, char *argv[]);
-int			initialize_mlx_image(t_window *window);
-// setup help_functions
-void		ft_set_before_y(t_coord **head, int iterations, t_window *window);
-void		ft_set_after_y(t_coord *head, t_window *window);
-int			get_index(t_window *window, int pos_xm, int pos_ym);
-void		free_two_dimensional_array(char **param);
+// --------------------------- start and setup ---------------------------------
 
-//	mathematical functions, as i dont use the math.h library
+//	assigning values
 
-// mathematics1
-float		round_float(float num, int range);
-double		ft_sqrt(double a);
-//	mathematics2
-int			ft_atan(int x);
-double		radians(double degrees);
-int			ft_round(double num);
-int			ft_abs(int num);
+int		set_default_window_data(t_window *window);
+int		map_size_default_setting(t_sz *map_sz, t_sz size);
+int32_t	set_coord(t_window *window);
+int		assign_coord_position(t_window *window, t_coord *coord, int x, int y);
+int		assign_color(t_window *window, t_coord *coord, int x, int y);
 
-// 	main calculations for the map
-// algorithm for the calculations:
-void		connect_points(t_window *map, t_coord *cur, t_coord *next);
-int32_t		find_color(int32_t color_a, int32_t color_b, float t);
-int			ft_hook_key(t_window *window, int *x_set, int *y_set);
-void		ft_render(void *param);
-int32_t		update_coord(t_window *map, int x_set, int y_set);
-void		ft_resize(int width, int height, void *param);
-// calculations:
-int			range_check(t_window *window, int x, int y, int z);
-double		ft_sqrt(double a);
-float		calc_z(t_coord *cur, t_coord *next, float x_p, float y_p);
-double		calc_angle(double a, double b);
-int			round_to_int(float num);
-int			zoom_calc(t_window *window, t_coord *cur_point);
+//	initial setup
 
-//clear functions for avoiding memory leaks and trash:
-void		free_stack(t_coord **stack);
-void		clear_image(t_window *window, uint32_t color);
+int		initialize_window_from_args(t_window *window, char *argv[]);
+int		assign_map_values(int ****map, char **collumn, int count);
+int		***read_and_split_lines(int fd, char *line);
+int		get_map_size(t_window *window);
+int		initialize_mlx_image(t_window *window);
 
-// additional helper functions
-int32_t		ft_pixel(int32_t r, int32_t g, int32_t b, int32_t a);
-int			find_highest_and_lowest(t_window *map);
-void		ft_add_back(t_coord *lst, t_coord *new);
-int			ft_shutdown_error(mlx_t *mlx);
-double		check_zoom_direction(int map_middle, int zoom_position, double zom);
+//	main loop
 
-// debugging dunctions:
-void		print_stacks(t_window *head);
-void		print_debug_point_1(t_window *window);
-void		print_debug_point_2(t_window *window);
+void	ft_render(void *param);
+int		ft_hook_key(t_window *window, int *x_offset, int *y_offset);
 
-void		calculate_zoom_pos(t_window *window);
-double		check_if_zoomed(t_window *window, int x_set, int y_set);
-t_coord		*link_add_pt(t_coord **coord, t_window *window, int x, int y);
+//	setup help functions
 
-int			map_size_default_setting(t_sz *map_sz, t_sz size);
-int			update_mapsize(t_sz *map_sz, t_coord *temp);
-int			set_default_window_data(t_window *window);
-int			assign_color(t_window *window, t_coord *coord, int x, int y);
-int			assign_coord_position(t_window *window, t_coord *new, int x, int y);
-void		ft_scroll(double xoffset, double yoffset, void *param);
-int			mouse_shift(t_window *window, int *x_set, int *y_set);
-int			mouse_rotation(t_window *window);
-int			check_mouse_clicked(
-				t_window *window, int x, int y, enum mouse_key key);
+void	ft_set_before_y(t_coord **head, int iterations, t_window *window);
+void	ft_set_after_y(t_coord *head, t_window *window);
+int		get_index(t_window *window, int pos_xm, int pos_ym);
+t_coord	*link_add_pt(t_coord **coord, t_window *window, int x, int y);
 
-int			shift_map(t_window *window, int *x_set, int *y_set);
-double		zoom_map(t_window *window);
-int			debug_mode_map(t_window *window);
-void		print_debug_point_1(t_window *window);
-void		print_debug_point_2(t_window *window);
-int			check_defines(void);
-int			check_margin_border(t_window *window);
-void		connect_points(
-				t_window *window, t_coord *point_a, t_coord *point_b);
+//-------------------------------- user input ----------------------------------
 
-int			convert_str_to_hex(char *comma_pos);
-void		free_map(int ***map);
-void		print_map(int ***map);
-void		degree(int *rot);
-int			height_calc(t_window *window, t_coord *cur_point);
-int			check_change_height(t_window *window);
-int			change_height_map(t_window *window);
-int			calculate_height_change(t_window *window);
-double		rotate_map(t_window *window);
+//	key functions
+
+int		shift_map(t_window *window, int *x_set, int *y_set);
+double	zoom_map(t_window *window);
+int		debug_mode_map(t_window *window);
+double	rotate_map(t_window *window);
+int		change_height_map(t_window *window);
+
+//	mouse functions
+
+int		check_mouse_clicked(t_window *window, int x, int y, enum mouse_key key);
+int		mouse_shift(t_window *window, int *x_set, int *y_set);
+int		mouse_rotation(t_window *window);
+
+//	usser input
+
+int		check_change_height(t_window *window);
+int		check_change_in_rotation(t_window *window);
+
+//--------------------------------- rendering ----------------------------------
+
+//	draw pixel
+
+int		check_error_pixel(t_coord *pt_a, t_coord *pt_b, int *x0, int *y0);
+int32_t	find_color(int32_t color_a, int32_t color_b, float t);
+void	connect_points(t_window *window, t_coord *point_a, t_coord *point_b);
+
+//	update values
+
+int32_t	update_coord(t_window *window, int x_offset, int y_offset);
+int		calculate_height_change(t_window *window);
+void	reset_map_size(t_window *window);
+int		update_mapsize(t_sz *map_sz, t_coord *temp);
+
+//--------------------------------- mathematics --------------------------------
+
+//	mathematics
+
+float	round_float(float num, int range);
+double	ft_sqrt(double a);
+float	calc_z(t_coord *point_a, t_coord *point_b, float x_p, float y_p);
+double	ft_sin(double x);
+double	ft_cos(double x);
+
+//	mathematics 2
+
+int		ft_atan(int x);
+double	radians(double degrees);
+int		ft_round(double num);
+int		ft_abs(int num);
+void	degree(int *rot);
+
+//-------------------------------- help functions ------------------------------
+
+//	clear functions
+
+void	free_stack(t_coord **stack);
+void	free_two_dimensional_array(char **param);
+void	clear_image(t_window *window, uint32_t color);
+void	free_map(int ***map);
+
+//	help functions
+
+int32_t	ft_pixel(int32_t r, int32_t g, int32_t b, int32_t a);
+int		find_highest_and_lowest(t_window *map);
+double	check_zoom_direction(int map_middle, int zoom_position, double zoom);
+int		convert_str_to_hex(char *comma_pos);
+
+//----------------------------------- error ------------------------------------
+
+//	error functions
+
+int		check_defines(void);
+int		ft_shutdown_error(mlx_t *mlx);
+
+//--------------------------------- debugging ----------------------------------
+
+// debugging
+
+int		print_coord_data(t_window *window, t_coord *current, const char *color);
+void	print_map(int ***map);
+void	print_stacks(t_window *window);
+void	print_debug_point_1(t_window *window);
+void	print_debug_point_2(t_window *window);
+
+//------------------------------- calculations ---------------------------------
+
+//	limits
+
+int		range_check(t_window *window, int x, int y, int z);
+int		check_margin_border(t_window *window);
+
+//	rotate functions
+
+void	rotate(double *a, double *b, t_window window, char axis);
+int		rotation_calc(t_window *window, t_coord *cur_point);
+
+//	window resize functions
+
+void	ft_resize(int width, int height, void *param);
+
+//	zoom functions
+
+int		check_mouse_position(t_window *window, double *zoom_x, double *zoom_y);
+void	calculate_zoom_pos(t_window *window);
+void	ft_scroll(double xoffset, double yoffset, void *param);
+int		zoom_calc(t_window *window, t_coord *cur_point);
+
 #endif

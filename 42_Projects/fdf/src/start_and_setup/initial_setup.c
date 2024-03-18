@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   initial_setup.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 10:28:34 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/18 13:12:47 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/03/18 21:38:18 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,14 +56,14 @@ int	assign_map_values(int ****map, char **collumn, int count)
 		if (!(*map)[count][j])
 			return (free_map(*map), EXIT_FAILURE);
 		comma_pos = ft_strchr(collumn[j], ',');
-		(*map)[count][j][0] = ft_atoi(collumn[j]);
+		(*map)[count][j][Z] = ft_atoi(collumn[j]);
 		if (comma_pos)
 		{
 			*comma_pos = '\0';
 			(*map)[count][j][1] = convert_str_to_hex(comma_pos);
 		}
 		else
-			(*map)[count][j][1] = 0;
+			(*map)[count][j][COLOR] = Z;
 		j++;
 	}
 	free_two_dimensional_array(collumn);

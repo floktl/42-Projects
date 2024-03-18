@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 13:51:31 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/18 13:06:00 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/03/18 18:39:01 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	main(int argc, char *argv[])
 	mlx_loop_hook(window.mlx, ft_render, &window);
 	mlx_loop(window.mlx);
 	mlx_terminate(window.mlx);
-	if (window.debug_mode == 1)
+	if (window.debug_mode == ON)
 		system("leaks fdf");
 	return (EXIT_SUCCESS);
 }

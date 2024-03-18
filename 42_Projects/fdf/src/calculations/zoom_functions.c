@@ -6,7 +6,7 @@
 /*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 17:02:49 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/09 20:12:46 by flo              ###   ########.fr       */
+/*   Updated: 2024/03/18 18:45:36 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	check_mouse_position(t_window *window, double *zoom_x, double *zoom_y)
 	double	zoom_direction_y;
 
 	if (!window)
-		return (-1);
+		return (ERROR);
 	zoom_direction_x = check_zoom_direction(window->map_sz.xposmw,
 			window->mouse_posx, window->zoom);
 	zoom_direction_y = check_zoom_direction(window->map_sz.yposmw,
@@ -33,7 +33,7 @@ int	check_mouse_position(t_window *window, double *zoom_x, double *zoom_y)
 		* (ZOOM_DEFAULT - zoom_direction_x);
 	*zoom_y = -ft_abs(window->map_sz.yposmw - window->mouse_posy)
 		* (ZOOM_DEFAULT - zoom_direction_y);
-	return (0);
+	return (NO_CHANGE);
 }
 
 //	calculate the zoom based on the mouse position
@@ -78,4 +78,18 @@ void	ft_scroll(double xoffset, double yoffset, void *param)
 		if (window->map_sz.map_area * ZOOM_M > window->min_zoom_size)
 			window->zoom = ZOOM_M;
 	}
+}
+
+//	this function calculates the zoom in x and y direction of each coordinate,
+//	depending on the mouse and/or map position
+int	zoom_calc(t_window *window, t_coord *cur_point)
+{
+	if (window->zoom == ZOOM_DEFAULT)
+		return (NO_CHANGE);
+	cur_point->xm *= window->zoom;
+	cur_point->ym *= window->zoom;
+	cur_point->zm *= window->zoom;
+	cur_point->xw = ft_round(cur_point->xm) + window->map_sz.xposmw;
+	cur_point->yw = -ft_round(cur_point->ym) + window->map_sz.yposmw;
+	return (CHANGE);
 }

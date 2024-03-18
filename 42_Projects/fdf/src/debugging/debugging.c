@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   debugging.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 13:25:40 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/18 13:21:24 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/03/18 21:41:05 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 #define COLOR_RESET   "\x1b[0m"
 
 //	printing the coordinates and other useful data of each point
-int	print_coordinate_data(t_window *window, t_coord *current, const char *color)
+int	print_coord_data(t_window *window, t_coord *current, const char *color)
 {
 	*window = *window;
 	ft_printf("%s", color);
@@ -33,9 +33,9 @@ int	print_coordinate_data(t_window *window, t_coord *current, const char *color)
 		ft_round(current->ym), ft_round(current->zm));
 	ft_printf("zoom: %d ", ft_round(window->zoom));
 	ft_printf("Pos window: %d|%d|%d ", current->xw, current->yw, current->zw);
-	printf("offset map: %d|%d|%d ", ft_round(window->map_sz.xm_offset),
+	ft_printf("offset map: %d|%d|%d ", ft_round(window->map_sz.xm_offset),
 		ft_round(window->map_sz.ym_offset), ft_round(window->map_sz.zm_offset));
-	printf("map pos win: %d|%d|%d ", window->map_sz.xposmw,
+	ft_printf("map pos win: %d|%d|%d ", window->map_sz.xposmw,
 		window->map_sz.yposmw, window->map_sz.zcentmw);
 	ft_printf("deg to cen map: %d|%d|%d ", window->map_sz.xm_rot_deg,
 		window->map_sz.ym_rot_deg, window->map_sz.zm_rot_deg);
@@ -43,7 +43,7 @@ int	print_coordinate_data(t_window *window, t_coord *current, const char *color)
 		(window->map_sz.maxsz_x_p), (window->map_sz.maxsz_x_m),
 		(window->map_sz.maxsz_y_p), (window->map_sz.maxsz_y_m),
 		(window->map_sz.maxsz_z_p), (window->map_sz.maxsz_z_m));
-	return (0);
+	return (NO_CHANGE);
 }
 
 //	prints the map of the 3 dimensional array
@@ -60,8 +60,8 @@ void	print_map(int ***map)
 		while (map[i][j] != NULL)
 		{
 			ft_printf("  Line %d: ", j);
-			ft_printf("%d ", map[i][j][0]);
-			ft_printf("%X ", map[i][j][1]);
+			ft_printf("%d ", map[i][j][Z]);
+			ft_printf("%X ", map[i][j][COLOR]);
 			ft_printf("\n");
 			j++;
 		}
@@ -77,7 +77,7 @@ void	print_stacks(t_window *window)
 	const char	*color;
 	int			row_number;
 
-	if (window->debug_mode == -1)
+	if (window->debug_mode == OFF)
 		return ;
 	current = window->coord;
 	color = COLOR_RESET;
@@ -91,7 +91,7 @@ void	print_stacks(t_window *window)
 		else
 			color = COLOR_RESET;
 		ft_printf("\n");
-		print_coordinate_data(window, current, color);
+		print_coord_data(window, current, color);
 		ft_printf("\n");
 		current = current->next;
 	}
@@ -101,23 +101,23 @@ void	print_stacks(t_window *window)
 //	printing a line between two points, which can used for debugging
 void	print_debug_point_1(t_window *window)
 {
-	if (window->debug_mode == -1)
+	if (window->debug_mode == OFF)
 		return ;
 	window->debug_point_1.xw = window->map_sz.xposmw;
 	window->debug_point_1.yw = window->map_sz.yposmw;
-	window->debug_point_1.zw = 0;
+	window->debug_point_1.zw = Z;
 	window->debug_point_2.xw = window->map_sz.xposmw;
 	window->debug_point_2.yw = window->map_sz.yposmw;
 	window->debug_point_1.zw = 1000;
-	window->debug_point_1.color = 0xFF0000FF;
-	window->debug_point_2.color = 0xFF0000FF;
+	window->debug_point_1.color = 0xFF000000 + BRIGHTNESS_DEFAULT;
+	window->debug_point_2.color = 0xFF000000 + BRIGHTNESS_DEFAULT;
 	connect_points(window, &window->debug_point_1, &window->debug_point_2);
 }
 
 //	printing a line between two points, which can used for debugging
 void	print_debug_point_2(t_window *window)
 {
-	if (window->debug_mode == -1)
+	if (window->debug_mode == OFF)
 		return ;
 	window->debug_point_3.xw = window->mouse_posx;
 	window->debug_point_3.yw = window->mouse_posy;
@@ -125,8 +125,8 @@ void	print_debug_point_2(t_window *window)
 	window->debug_point_4.xw = window->mouse_posx;
 	window->debug_point_4.yw = window->mouse_posy;
 	window->debug_point_4.zw = 5;
-	window->debug_point_3.color = 0xFF0000FF;
-	window->debug_point_4.color = 0xFF0000FF;
+	window->debug_point_3.color = 0xFF000000 + BRIGHTNESS_DEFAULT;
+	window->debug_point_4.color = 0xFF000000 + BRIGHTNESS_DEFAULT;
 	connect_points(window, &window->debug_point_3, &window->debug_point_4);
 }
 

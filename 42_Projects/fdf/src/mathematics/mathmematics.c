@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mathmematics.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 16:59:00 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/18 13:47:07 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/03/18 20:07:34 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,6 @@
 //
 //	mathematical functions, as i dont use the math.h library
 //
-
-// //	finds a point, when x is known, as well as the length to y and th degree
-// void	find_new_point(double x1, double y1, double len_x_to_y, double deg)
-// {
-// 	double	angle_radians;
-// 	double	x2;
-// 	double	y2;
-
-// 	angle_radians = radians(deg);
-// 	x2 = x1 + len_x_to_y * cos(angle_radians);
-// 	y2 = y1 + len_x_to_y * sin(angle_radians);
-// 	printf("New point is at (%.2f, %.2f)\n", x2, y2);
-// }
 
 //	rounds a float number within a range given as parameter
 float	round_float(float num, int range)
@@ -50,15 +37,13 @@ float	round_float(float num, int range)
 double	ft_sqrt(double a)
 {
 	double	x;
-	double	epsilon;
 	double	next;
 
 	x = a;
-	epsilon = 0.00000001;
 	while (1)
 	{
 		next = 0.5 * (x + a / x);
-		if ((next - x) * (next - x) < epsilon * epsilon)
+		if ((next - x) * (next - x) < EPSILON * EPSILON)
 			break ;
 		x = next;
 	}
@@ -87,6 +72,7 @@ float	calc_z(t_coord *point_a, t_coord *point_b, float x_p, float y_p)
 	return (z_p);
 }
 
+//	function to replace the sin() function from math.h
 double	ft_sin(double x)
 {
 	double	result;
@@ -113,6 +99,7 @@ double	ft_sin(double x)
 	return (result);
 }
 
+//	function to replace the cos() function from math.h
 double	ft_cos(double x)
 {
 	double	result;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clear_functions.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/24 12:14:49 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/17 09:17:12 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/03/18 21:05:58 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ void	clear_image(t_window *window, uint32_t color)
 	}
 }
 
+//	function to free an 3 dimensional array of integers
 void	free_map(int ***map)
 {
 	int	i;

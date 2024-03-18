@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mathematics2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 17:00:17 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/18 10:42:30 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/03/18 18:21:11 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	ft_atan(int x)
 //	returns the radiant
 double	radians(double degrees)
 {
-	return (degrees * 3.14159265358979323846 / 180.0);
+	return (degrees * PI / 180.0);
 }
 
 //	rounds a double or float datatype to an integer

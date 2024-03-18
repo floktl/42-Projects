@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+         #
+#    By: flo <flo@student.42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/12 14:13:59 by fkeitel           #+#    #+#              #
-#    Updated: 2024/03/18 13:05:49 by fkeitel          ###   ########.fr        #
+#    Updated: 2024/03/18 20:01:56 by flo              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,12 +51,11 @@ $(NAME): mlx $(OBJS) $(LIBFTTARGET)
 $(LIBFTTARGET):
 	@$(MAKE) -C $(LIBFT)
 
-# Rule to compile source files into object files
+# Rule to compile source files into object files in a seperate obj folder
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR) $(HEADER)
 	@mkdir -p $(dir $@)
 	@$(info Compiling $<)
 	@$(CC) $(CFLAGS) -c $< -o $@
-
 
 # Create the objects directory
 $(OBJ_DIR):

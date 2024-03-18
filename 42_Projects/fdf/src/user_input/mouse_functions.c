@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mouse_functions.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 14:58:34 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/18 09:25:08 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/03/18 18:49:44 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,10 @@ int	check_mouse_clicked(t_window *window, int x, int y, enum mouse_key key)
 	{
 		if (x > 0 && x < window->width && y > 0 && y < window->height)
 		{
-			return (1);
+			return (CHANGE);
 		}
 	}
-	return (0);
+	return (NO_CHANGE);
 }
 
 //	calculates the shift of the map, with the left button clicked
@@ -42,8 +42,8 @@ int	mouse_shift(t_window *window, int *x_set, int *y_set)
 	{
 		x -= previous_x;
 		y -= previous_y;
-		x = range_check(window, x, 0, 0);
-		y = range_check(window, 0, y, 0);
+		x = range_check(window, x, 0, Z);
+		y = range_check(window, 0, y, Z);
 	}
 	else
 	{
@@ -54,7 +54,7 @@ int	mouse_shift(t_window *window, int *x_set, int *y_set)
 	previous_y = window->mouse_posy;
 	*x_set += x;
 	*y_set += y;
-	return (0);
+	return (NO_CHANGE);
 }
 
 //	calculates the rotation of the map, with the right button clicked
@@ -78,7 +78,7 @@ int	mouse_rotation(t_window *window)
 	}
 	previous_x = window->mouse_posx;
 	previous_y = window->mouse_posy;
-	window->map_sz.ym_rot_deg -= x * 0.3;
-	window->map_sz.xm_rot_deg += y * 0.3;
-	return (0);
+	window->map_sz.ym_rot_deg -= x * ROTATION_FACTOR;
+	window->map_sz.xm_rot_deg += y * ROTATION_FACTOR;
+	return (NO_CHANGE);
 }

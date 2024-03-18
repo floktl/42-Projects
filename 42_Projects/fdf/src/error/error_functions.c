@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_functions.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 15:54:00 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/18 13:12:06 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/03/18 21:43:11 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	check_defines(void)
 	if (MAX_MAP_SIZE < 1 || MAX_MAP_SIZE > 50
 		|| MIN_MAP_SIZE < 11 || MIN_MAP_SIZE > 30)
 		return (ft_printf("mapsizee 1-10(MAX) 11-30(MIN)\n"), EXIT_FAILURE);
-	return (0);
+	return (NO_CHANGE);
 }
 
 //----------------------------- mlx error-cases --------------------------------
@@ -41,5 +41,5 @@ int	check_defines(void)
 int	ft_shutdown_error(mlx_t *mlx)
 {
 	mlx_close_window(mlx);
-	return (puts(mlx_strerror(mlx_errno)), -1);
+	return (perror(mlx_strerror(mlx_errno)), ERROR);
 }

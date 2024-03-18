@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   assigning_values.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 07:33:01 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/18 13:10:35 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/03/18 21:07:43 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ int	set_default_window_data(t_window *window)
 	window->map_sz.xm_offset = OFFSET_DEFAULT;
 	window->map_sz.ym_offset = OFFSET_DEFAULT;
 	window->map_sz.zm_offset = OFFSET_DEFAULT;
-	window->map_sz.height_change = 1.0;
-	window->debug_mode = -1;
+	window->map_sz.height_change = HEIGHT_DEFAULT;
+	window->debug_mode = OFF;
 	window->width = WIDTH;
 	window->height = HEIGHT;
 	window->zoom = ZOOM_DEFAULT;
@@ -46,7 +46,7 @@ int	map_size_default_setting(t_sz *map_sz, t_sz size)
 {
 	map_sz->xposmw = WIDTH / 2;
 	map_sz->yposmw = HEIGHT / 2;
-	map_sz->zcentmw = 0;
+	map_sz->zcentmw = Z;
 	map_sz->xm_rot_deg = DEGREE_DEFAULT_X;
 	map_sz->ym_rot_deg = DEGREE_DEFAULT_Y;
 	map_sz->zm_rot_deg = DEGREE_DEFAULT_Z;
@@ -56,8 +56,8 @@ int	map_size_default_setting(t_sz *map_sz, t_sz size)
 	map_sz->maxsz_x_m = map_sz->xposmw;
 	map_sz->maxsz_y_p = map_sz->yposmw;
 	map_sz->maxsz_y_m = map_sz->yposmw;
-	map_sz->maxsz_z_p = 0;
-	map_sz->maxsz_z_m = 0;
+	map_sz->maxsz_z_p = Z;
+	map_sz->maxsz_z_m = Z;
 	return (EXIT_SUCCESS);
 }
 
@@ -84,7 +84,7 @@ int32_t	set_coord(t_window *window)
 				|| assign_coord_position(window, next_coordinate, x_axis,
 					y_axis) == EXIT_FAILURE || update_mapsize(&window->map_sz,
 					next_coordinate) == EXIT_FAILURE || assign_color
-				(window, next_coordinate, x_axis, y_axis) == EXIT_FAILURE)
+				(window, coord, x_axis, y_axis) == EXIT_FAILURE)
 				return (EXIT_FAILURE);
 			x_axis++;
 		}
@@ -109,9 +109,9 @@ int	assign_coord_position(t_window *window, t_coord *coord, int x, int y)
 		+ ((x + round_x) * window->start_size);
 	coord->ym = ((window->map_sz.ym_size * window->start_size) / 2)
 		- ((y + round_y) * window->start_size);
-	if (window->map[y][x][0] >= INT_MIN && window->map[y][x][0] <= INT_MAX)
+	if (window->map[y][x][Z] >= INT_MIN && window->map[y][x][Z] <= INT_MAX)
 	{
-		coord->zm = window->map[y][x][0] + window->map_sz.zm_offset;
+		coord->zm = window->map[y][x][Z] + window->map_sz.zm_offset;
 		coord->xw = ft_round(coord->xm) + window->cent_xw;
 		coord->yw = -ft_round(coord->ym) + window->cent_yw;
 		coord->zw = ft_round(coord->zm);
@@ -120,11 +120,14 @@ int	assign_coord_position(t_window *window, t_coord *coord, int x, int y)
 	return (perror("map assigning error"), EXIT_FAILURE);
 }
 
+//	assign the color to each coordinate, checks if htere is already a color
+//	in the map given, if not, it sets the default color,depending on the value
+//	of the z-axis
 int	assign_color(t_window *window, t_coord *coord, int x, int y)
 {
-	if (window->map[y][x][1] >= INT_MIN && window->map[y][x][1] <= INT_MAX)
+	if (window->map[y][x][COLOR] >= INT_MIN && window->map[y][x][1] <= INT_MAX)
 	{
-		if (window->map[y][x][1] == 0)
+		if (window->map[y][x][COLOR] == 0)
 		{
 			if (coord->zm == 0)
 				coord->color = COLOR_DEFAULT_CEN;
@@ -132,32 +135,18 @@ int	assign_color(t_window *window, t_coord *coord, int x, int y)
 				coord->color = COLOR_DEFAULT_PLUS;
 			else if (coord->zm == window->map_sz.zmcent_minus)
 				coord->color = COLOR_DEFAULT_MIN;
-			else if (coord->zm > 0)
+			else if (coord->zm > Z)
 				coord->color = find_color(COLOR_DEFAULT_CEN, COLOR_DEFAULT_PLUS,
 						(float)(coord->zm) / (window->map_sz.zmcent_plus));
-			else if (coord->zm < 0)
+			else if (coord->zm < Z)
 				coord->color = find_color(COLOR_DEFAULT_CEN, COLOR_DEFAULT_MIN,
 						(float)(coord->zm) / (window->map_sz.zmcent_minus));
 		}
 		else
-			coord->color = window->map[y][x][1] << 8;
+			coord->color = window->map[y][x][COLOR] << 8;
 		coord->color += BRIGHTNESS_DEFAULT;
 	}
 	else
 		return (perror("color assigning error"), EXIT_FAILURE);
-	return (EXIT_SUCCESS);
-}
-
-//	polarAngle corresponds to the inclination or zenith angle.
-//	azimuthalAngle corresponds to the angle measured in the x-y plane.
-//	additionalAngle correspond to the third angle representing rotation or tilt.
-int	assign_degree_len_color(t_window *window, t_coord *coord, int x, int y)
-{
-	double	dist_to_map_center;
-
-	dist_to_map_center = ft_sqrt((coord->xm * coord->xm)
-			+ (coord->ym * coord->ym) + (coord->zm * coord->zm));
-	if (assign_color(window, coord, x, y) == EXIT_FAILURE)
-		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 08:24:45 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/15 13:15:44 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/03/18 13:40:55 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,24 +16,24 @@
 //
 //------- this functions update the map values after changing parameters -------
 //
+
 void	rotate(double *a, double *b, t_window window, char axis)
 {
 	double	rad;
 	double	new_a;
 	double	new_b;
 	//double	z_pos_scale = 1.0;
-	//double	z_len = window.map_sz.maxsz_z_p - window.map_sz.maxsz_z_m;
+	//double	z_len = window.map_sz.maxsz_z_p;
 
 	if (axis == 'X')
 	{
 		rad = window.map_sz.xm_rot_deg * (PI / 180.0);
 		//if (*b > 0)
-		//z_pos_scale = z_len / (- window.map_sz.maxsz_z_m + *b);
+		//printf("z_scale: %f", z_pos_scale);
 		//else if (*b )
-		new_a = (*a) * cos(rad) - (*b) * sin(rad);
-		new_b = (*a) * sin(rad) + (*b) * cos(rad);
+		new_a = ((*a) * cos(rad) - (*b) * sin(rad));
+		new_b = ((*a) * sin(rad) + (*b) * cos(rad));
 		//new_a *= z_pos_scale;
-
 	}
 	if (axis == 'Y')
 	{
@@ -70,33 +70,35 @@ int	rotation_calc(t_window *window, t_coord *cur_point)
 }
 
 //this function updates all important variables to each point in map
-int32_t	update_coord(t_window *window, int x_shift, int y_shift)
+int32_t	update_coord(t_window *window, int x_offset, int y_offset)
 {
 	t_coord		*temp;
-	t_sz		*map_sz;
 
 	temp = window->coord;
-	map_sz = &window->map_sz;
-	map_sz->xm_offset += x_shift;
-	map_sz->ym_offset += y_shift;
-	map_sz->xposmw += x_shift;
-	map_sz->yposmw += y_shift;
+	window->map_sz.xm_offset += x_offset;
+	window->map_sz.ym_offset += y_offset;
+	window->map_sz.xposmw += x_offset;
+	window->map_sz.yposmw += y_offset;
 	calculate_zoom_pos(window);
-	map_sz->maxsz_x_p = window->map_sz.xposmw;
-	map_sz->maxsz_x_m = window->map_sz.xposmw;
-	map_sz->maxsz_y_p = window->map_sz.yposmw;
-	map_sz->maxsz_y_m = window->map_sz.yposmw;
+	calculate_height_change(window);
+	window->map_sz.maxsz_x_p = window->map_sz.xposmw;
+	window->map_sz.maxsz_x_m = window->map_sz.xposmw;
+	window->map_sz.maxsz_y_p = window->map_sz.yposmw;
+	window->map_sz.maxsz_y_m = window->map_sz.yposmw;
+	window->map_sz.maxsz_z_p = 0;
+	window->map_sz.maxsz_z_m = 0;
 	while (temp != NULL)
 	{
-		temp->xw += x_shift;
-		temp->yw += y_shift;
+		temp->xw += x_offset;
+		temp->yw += y_offset;
+		temp->zm *= window->map_sz.height_change;
 		zoom_calc(window, temp);
 		rotation_calc(window, temp);
 		update_mapsize(&window->map_sz, temp);
 		temp = temp->next;
 	}
+	window->map_sz.height_change = 1.0;
 	window->zoom = ZOOM_DEFAULT;
-	print_stacks(window);
 	return (EXIT_SUCCESS);
 }
 
@@ -106,7 +108,6 @@ int	zoom_calc(t_window *window, t_coord *cur_point)
 {
 	if (window->zoom == ZOOM_DEFAULT)
 		return (0);
-	cur_point->len_cent *= window->zoom;
 	cur_point->xm *= window->zoom;
 	cur_point->ym *= window->zoom;
 	cur_point->zm *= window->zoom;
@@ -115,8 +116,27 @@ int	zoom_calc(t_window *window, t_coord *cur_point)
 	return (0);
 }
 
+// function to calculate the max and min change of the z_axis of the map
+int	calculate_height_change(t_window *window)
+{
+	int	z_size;
+
+	if (window->map_sz.height_change == 1.0)
+		return (0);
+	z_size = (window->map_sz.maxsz_z_p
+			- window->map_sz.maxsz_z_m) * window->map_sz.height_change;
+	if (window->map_sz.height_change > 1.0
+		&& ((z_size > window->height * 2)
+			|| (z_size > window->width * 2)))
+		window->map_sz.height_change = 1.0;
+	if (window->map_sz.height_change < 1.0
+		&& z_size == 0)
+		window->map_sz.height_change = 1.0;
+	return (1);
+}
+
 //	update the furthest points of the map from the map center
-void	update_mapsize(t_sz *map_sz, t_coord *temp)
+int	update_mapsize(t_sz *map_sz, t_coord *temp)
 {
 	if ((map_sz->maxsz_x_p) < temp->xw)
 		map_sz->maxsz_x_p = temp->xw;
@@ -126,10 +146,11 @@ void	update_mapsize(t_sz *map_sz, t_coord *temp)
 		map_sz->maxsz_y_p = temp->yw;
 	if (map_sz->maxsz_y_m < temp->yw)
 		map_sz->maxsz_y_m = temp->yw;
-	if (map_sz->maxsz_z_p < temp->zw)
-		map_sz->maxsz_z_p = temp->zw;
-	if (map_sz->maxsz_z_m > temp->zw)
-		map_sz->maxsz_z_m = temp->zw;
+	if (map_sz->maxsz_z_p < temp->zm)
+		map_sz->maxsz_z_p = temp->zm;
+	if (map_sz->maxsz_z_m > temp->zm)
+		map_sz->maxsz_z_m = temp->zm;
 	map_sz->map_area = (map_sz->maxsz_x_p - map_sz->maxsz_x_m)
 		* (map_sz->maxsz_y_m - map_sz->maxsz_y_p);
+	return (EXIT_SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 17:00:17 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/14 12:26:07 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/03/18 10:42:30 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ int	ft_abs(int num)
 	return (num);
 }
 
+//	function to convert an int to the range of 360 degrees
 void	degree(int *rot)
 {
 	if (*rot >= 360)
@@ -52,13 +53,3 @@ void	degree(int *rot)
 	if (*rot < 0)
 		*rot += 360;
 }
-
-//Point rotateY(Point p, double theta)
-//{
-//	Point pRotated;
-//	double rad = theta * M_PI / 180.0; // Convert degrees to radians
-//	pRotated.x = cos(rad) * p.x + sin(rad) * p.z;
-//	pRotated.y = p.y; // Y-coordinate remains unchanged
-//	pRotated.z = -sin(rad) * p.x + cos(rad) * p.z;
-//	return (pRotated);
-//}

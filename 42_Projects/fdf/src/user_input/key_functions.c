@@ -6,7 +6,7 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 15:06:21 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/15 07:27:53 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/03/18 11:03:06 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,5 +107,16 @@ double	rotate_map(t_window *window)
 	degree(&window->map_sz.xm_rot_deg);
 	degree(&window->map_sz.ym_rot_deg);
 	degree(&window->map_sz.zm_rot_deg);
+	return (0);
+}
+
+// function to change the z axis of the map
+int	change_height_map(t_window *window)
+{
+	if (mlx_is_key_down(window->mlx, MLX_KEY_Z)
+		&&window->map_sz.height_change < 4.0)
+		window->map_sz.height_change += 0.1;
+	else if (mlx_is_key_down(window->mlx, MLX_KEY_A))
+		window->map_sz.height_change -= 0.1;
 	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   help_functions.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 10:28:26 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/13 09:56:13 by flo              ###   ########.fr       */
+/*   Updated: 2024/03/18 12:59:28 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,46 +26,31 @@ int32_t	ft_pixel(int32_t r, int32_t g, int32_t b, int32_t a)
 //	as the the distance to the map middlepoint in z direction
 int	find_highest_and_lowest(t_window *map)
 {
-	t_window	*temp;
 	int			x;
 	int			y;
-	int			value;
 
 	map->map_sz.zmcent_plus = 0;
 	map->map_sz.zmcent_minus = 0;
 	y = 0;
-	temp = map;
-	while (y < temp->map_sz.ym_size)
+	while (y < map->map_sz.ym_size)
 	{
 		x = 0;
-		while (x < temp->map_sz.xm_size)
+		while (x < map->map_sz.xm_size)
 		{
-			value = map->map[y][x][0];
-			if (value > map->map_sz.zmcent_plus)
-				map->map_sz.zmcent_plus = value;
-			if (value < map->map_sz.zmcent_minus)
-				map->map_sz.zmcent_minus = value;
+			if (map->map[y][x][0] >= INT_MIN && map->map[y][x][0] <= INT_MAX)
+			{
+				if (map->map[y][x][0] > map->map_sz.zmcent_plus)
+					map->map_sz.zmcent_plus = map->map[y][x][0];
+				if (map->map[y][x][0] < map->map_sz.zmcent_minus)
+					map->map_sz.zmcent_minus = map->map[y][x][0];
+			}
+			else
+				return (perror("value out of range"), EXIT_FAILURE);
 			x++;
 		}
 		y++;
 	}
-	return (EXIT_FAILURE);
-}
-
-//	adds a new coordinate to the existing one
-void	ft_add_back(t_coord **lst, t_coord *new)
-{
-	t_coord	*current;
-
-	if (*lst == NULL)
-	{
-		*lst = new;
-		return ;
-	}
-	current = *lst;
-	while (current->next != NULL)
-		current = current->next;
-	current->next = new;
+	return (EXIT_SUCCESS);
 }
 
 //	this function returns the zoom direction depending on the mouse position

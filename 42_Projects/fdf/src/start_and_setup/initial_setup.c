@@ -6,7 +6,7 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 10:28:34 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/15 13:47:44 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/03/18 13:12:47 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,23 +29,22 @@ int	initialize_window_from_args(t_window *window, char *argv[])
 	fd = open(file_path, O_RDONLY);
 	free(file_path);
 	if (fd == -1)
-		return (perror("Error opening file"), EXIT_FAILURE);
+		return (close(fd), perror("Error opening file"), EXIT_FAILURE);
 	line = get_next_line(fd);
 	if (!line)
-		return (perror("Error reading fdf"), EXIT_FAILURE);
+		return (close(fd), perror("Error reading fdf"), EXIT_FAILURE);
 	window->map = read_and_split_lines(fd, line);
+	close(fd);
 	if (!window->map)
 		return (perror("Error reading map"), EXIT_FAILURE);
-	close(fd);
-	print_map(window->map);
 	if (get_map_size(window) == EXIT_FAILURE
 		|| set_default_window_data(window) == EXIT_FAILURE)
-		return (perror("Error data"), EXIT_FAILURE);
+		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }
 
 //	assigning all map values to the 3 dimensional array
-int	assign_map_values(unsigned int ****map, char **collumn, int count)
+int	assign_map_values(int ****map, char **collumn, int count)
 {
 	char	*comma_pos;
 	int		j;
@@ -53,7 +52,7 @@ int	assign_map_values(unsigned int ****map, char **collumn, int count)
 	j = 0;
 	while (collumn[j])
 	{
-		(*map)[count][j] = malloc(2 * sizeof(unsigned int));
+		(*map)[count][j] = malloc(2 * sizeof(int));
 		if (!(*map)[count][j])
 			return (free_map(*map), EXIT_FAILURE);
 		comma_pos = ft_strchr(collumn[j], ',');
@@ -73,23 +72,23 @@ int	assign_map_values(unsigned int ****map, char **collumn, int count)
 }
 
 //	read the fdf file, seperate the values and assign them in an array
-unsigned int	***read_and_split_lines(int fd, char *line)
+int	***read_and_split_lines(int fd, char *line)
 {
-	unsigned int	***map;
-	int				count;
-	char			**collumn;
+	int		***map;
+	int		count;
+	char	**collumn;
 
 	count = 0;
-	map = malloc((count + 1) * sizeof(unsigned int **));
+	map = malloc((count + 1) * sizeof(int **));
 	if (!map)
 		return (NULL);
-	printf("\033[0;35mReading map ...\033[0m\n");
+	ft_printf("\033[0;35mReading map ...\033[0m\n");
 	while (line)
 	{
-		map = realloc(map, (count + 1) * sizeof(unsigned int **));
+		map = realloc(map, (count + 1) * sizeof(int **));
 		if (!map)
 			return (free_map(map), NULL);
-		map[count] = malloc((ft_strlen(line)) * sizeof(unsigned int *));
+		map[count] = malloc((ft_strlen(line)) * sizeof(int *) * 3);
 		if (!map[count])
 			return (free_map(map), NULL);
 		collumn = ft_split(line, ' ');
@@ -99,8 +98,7 @@ unsigned int	***read_and_split_lines(int fd, char *line)
 		line = get_next_line(fd);
 		count++;
 	}
-	printf("\033[0;32mMap reading succesful!\033[0m\n");
-	return (map[count] = NULL, map);
+	return (ft_printf("\033[0;32mSuccesful!\033[0m\n"), map[count] = NULL, map);
 }
 
 //	this function assigns all variable values of the map, which will change, but
@@ -120,14 +118,16 @@ int	get_map_size(t_window *window)
 		while (temp->map[0][size.xm_size] != NULL)
 			size.xm_size++;
 	}
-	map_size_default_setting(&window->map_sz, size);
-	find_highest_and_lowest(window);
+	if (map_size_default_setting(&window->map_sz, size) == EXIT_FAILURE
+		|| find_highest_and_lowest(window) == EXIT_FAILURE)
+		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }
 
 //	function to set up the window and image inside the window
 int	initialize_mlx_image(t_window *window)
 {
+	ft_printf("\033[0;35mInitializing Window...\033[0m\n");
 	window->mlx = mlx_init(WIDTH, HEIGHT, "fdf", true);
 	if (!(window->mlx))
 		return (EXIT_FAILURE);
@@ -135,5 +135,6 @@ int	initialize_mlx_image(t_window *window)
 	if (!(window->image)
 		|| mlx_image_to_window(window->mlx, window->image, 0, 0) == -1)
 		return (EXIT_FAILURE);
+	ft_printf("\033[0;34m\nProgramm ready, press I for manual!\033[0m\n");
 	return (EXIT_SUCCESS);
 }

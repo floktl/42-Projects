@@ -6,7 +6,7 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 10:26:16 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/15 08:45:37 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/03/18 13:02:23 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@
 # define MIN_MAP_SIZE 30
 //	color for the z_axis of the map, if not given in the map
 # define COLOR_DEFAULT_CEN 0xCFCFFF00
-# define COLOR_DEFAULT_PLUS 0xEE550000
+# define COLOR_DEFAULT_PLUS 0xEE330000
 # define COLOR_DEFAULT_MIN 0x00DDBB00
 # define BRIGHTNESS_DEFAULT 0xCC
 //	rotation degree in x, y, z direction
@@ -101,10 +101,6 @@ typedef struct s_coordinates
 	double					xm;
 	double					ym;
 	double					zm;
-	double					len_cent;
-	double					deg_xm;
-	double					deg_ym;
-	double					deg_zm;
 	int32_t					color;
 	struct s_coordinates	*next;
 	struct s_coordinates	*before;
@@ -137,6 +133,7 @@ typedef struct s_arr_size
 	int		xm_rot_deg;
 	int		ym_rot_deg;
 	int		zm_rot_deg;
+	double	height_change;
 	int		map_area;
 }	t_sz;
 
@@ -149,7 +146,7 @@ typedef struct s_window
 	int			width;
 	int			height;
 	void		*win;
-	unsigned int			***map;
+	int			***map;
 	t_sz		map_sz;
 	t_coord		*coord;
 	int			cent_xw;
@@ -172,11 +169,11 @@ typedef struct s_window
 //
 
 // setup and initialisations:
-int				get_map_size(t_window *map);
-unsigned int	***read_and_split_lines(int fd, char *line);
-int32_t			set_coord(t_window *window);
-int				initialize_window_from_args(t_window *window, char *argv[]);
-int				initialize_mlx_image(t_window *window);
+int			get_map_size(t_window *map);
+int			***read_and_split_lines(int fd, char *line);
+int32_t		set_coord(t_window *window);
+int			initialize_window_from_args(t_window *window, char *argv[]);
+int			initialize_mlx_image(t_window *window);
 // setup help_functions
 void		ft_set_before_y(t_coord **head, int iterations, t_window *window);
 void		ft_set_after_y(t_coord *head, t_window *window);
@@ -186,7 +183,6 @@ void		free_two_dimensional_array(char **param);
 //	mathematical functions, as i dont use the math.h library
 
 // mathematics1
-void		find_new_point(double x1, double y1, double len_x_to_y, double deg);
 float		round_float(float num, int range);
 double		ft_sqrt(double a);
 //	mathematics2
@@ -218,7 +214,7 @@ void		clear_image(t_window *window, uint32_t color);
 // additional helper functions
 int32_t		ft_pixel(int32_t r, int32_t g, int32_t b, int32_t a);
 int			find_highest_and_lowest(t_window *map);
-void		ft_add_back(t_coord **lst, t_coord *new);
+void		ft_add_back(t_coord *lst, t_coord *new);
 int			ft_shutdown_error(mlx_t *mlx);
 double		check_zoom_direction(int map_middle, int zoom_position, double zom);
 
@@ -232,14 +228,15 @@ double		check_if_zoomed(t_window *window, int x_set, int y_set);
 t_coord		*link_add_pt(t_coord **coord, t_window *window, int x, int y);
 
 int			map_size_default_setting(t_sz *map_sz, t_sz size);
-void		update_mapsize(t_sz *map_sz, t_coord *temp);
+int			update_mapsize(t_sz *map_sz, t_coord *temp);
 int			set_default_window_data(t_window *window);
-int			assign_degree_len_color(t_window *window, t_coord *coord, int x, int y);
+int			assign_color(t_window *window, t_coord *coord, int x, int y);
 int			assign_coord_position(t_window *window, t_coord *new, int x, int y);
 void		ft_scroll(double xoffset, double yoffset, void *param);
 int			mouse_shift(t_window *window, int *x_set, int *y_set);
-int	mouse_rotation(t_window *window);
-int	check_mouse_clicked(t_window *window, int x, int y, enum mouse_key key);
+int			mouse_rotation(t_window *window);
+int			check_mouse_clicked(
+				t_window *window, int x, int y, enum mouse_key key);
 
 int			shift_map(t_window *window, int *x_set, int *y_set);
 double		zoom_map(t_window *window);
@@ -248,46 +245,16 @@ void		print_debug_point_1(t_window *window);
 void		print_debug_point_2(t_window *window);
 int			check_defines(void);
 int			check_margin_border(t_window *window);
-void		connect_points(t_window *window, t_coord *point_a, t_coord *point_b);
-int			convert_str_to_hex(char *comma_pos);
-void		free_map(unsigned int ***map);
-void		print_map(unsigned int ***map);
-void	degree(int *rot);
+void		connect_points(
+				t_window *window, t_coord *point_a, t_coord *point_b);
 
+int			convert_str_to_hex(char *comma_pos);
+void		free_map(int ***map);
+void		print_map(int ***map);
+void		degree(int *rot);
+int			height_calc(t_window *window, t_coord *cur_point);
+int			check_change_height(t_window *window);
+int			change_height_map(t_window *window);
+int			calculate_height_change(t_window *window);
 double		rotate_map(t_window *window);
 #endif
-
-//void	rotate(double *a, double *b, double angle)
-//{
-//	double	rad;
-//	double	cos_a;
-//	double	sin_a;
-//	double	new_a;
-//	double	new_b;
-
-//	rad = angle * PI / 180.0;
-//	cos_a = cos(rad);
-//	sin_a = sin(rad);
-//	new_a = (*a) * cos_a - (*b) * sin_a;
-//	new_b = (*a) * sin_a + (*b) * cos_a;
-//	*a = new_a;
-//	*b = new_b;
-//}
-
-//int	rotation_calc(t_window *window, t_coord *cur_point)
-//{
-//	double	temp_xm;
-//	double	temp_ym;
-//	double	temp_zm;
-
-//	temp_xm =
-//	temp_ym =
-//	temp_zm =
-//	rotate(&temp_xm, &temp_ym, window->map_sz.xm_rot_deg);
-//	rotate(&temp_ym, &temp_zm, window->map_sz.ym_rot_deg);
-//	rotate(&temp_zm, &temp_xm, window->map_sz.zm_rot_deg);
-//	cur_point->xw = ft_round(temp_xm) + window->map_sz.xposmw;
-//	cur_point->yw = -ft_round(temp_ym) + window->map_sz.yposmw;
-//	cur_point->zw = ft_round(temp_zm);
-//	return (0);
-//}

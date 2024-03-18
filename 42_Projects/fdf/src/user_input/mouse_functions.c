@@ -6,7 +6,7 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 14:58:34 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/15 07:28:27 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/03/18 09:25:08 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ int	mouse_shift(t_window *window, int *x_set, int *y_set)
 	*y_set += y;
 	return (0);
 }
+
 //	calculates the rotation of the map, with the right button clicked
 int	mouse_rotation(t_window *window)
 {
@@ -67,8 +68,6 @@ int	mouse_rotation(t_window *window)
 	mlx_get_mouse_pos(window->mlx, &x, &y);
 	if (check_mouse_clicked(window, x, y, MLX_MOUSE_BUTTON_RIGHT) == 1)
 	{
-		//degree(&previous_x);
-		//degree(&previous_y);
 		x -= previous_x;
 		y -= previous_y;
 	}

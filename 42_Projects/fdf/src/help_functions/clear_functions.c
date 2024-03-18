@@ -6,7 +6,7 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/24 12:14:49 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/15 13:42:46 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/03/17 09:17:12 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,30 +69,27 @@ void	clear_image(t_window *window, uint32_t color)
 	}
 }
 
-void	free_map(unsigned int ***map)
+void	free_map(int ***map)
 {
 	int	i;
 	int	j;
-	int	k;
 
-	if (map == NULL)
+	if (!map)
 		return ;
 	i = 0;
-	j = 0;
-	k = 0;
-	while (map[i] != NULL)
+	while (map[i])
 	{
 		j = 0;
-		while (map[i][j] != NULL)
+		while (map[i][j])
 		{
 			free(map[i][j]);
+			map[i][j] = NULL;
 			j++;
 		}
 		free(map[i]);
+		map[i] = NULL;
 		i++;
 	}
-	if (map != NULL)
-		free(map);
-	map = NULL;
-	i = k;
+	free(map);
+	*map = NULL;
 }

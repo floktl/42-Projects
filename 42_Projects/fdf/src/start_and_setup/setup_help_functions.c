@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   setup_help_functions.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 16:36:30 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/09 20:57:02 by flo              ###   ########.fr       */
+/*   Updated: 2024/03/18 13:23:17 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,26 +84,20 @@ int	get_index(t_window *window, int pos_xm, int pos_ym)
 //	coordinates (in x and y direction)
 t_coord	*link_add_pt(t_coord **coord, t_window *window, int x, int y)
 {
-	static t_coord	*last = NULL;
-	t_coord			*new_coord;
+	t_coord	*new_coord;
 
 	new_coord = malloc(sizeof(t_coord));
+	*window = *window;
 	if (!new_coord)
 		return (NULL);
-	new_coord->next = NULL;
+	new_coord->next = *coord;
 	new_coord->next_y = NULL;
 	new_coord->pos_xm = x + 1;
 	new_coord->pos_ym = y + 1;
-	if (new_coord->pos_xm == 1)
+	if (x == 0 && y == 0)
 		new_coord->before = NULL;
 	else
-		new_coord->before = last;
-	ft_add_back(coord, new_coord);
-	if (new_coord->pos_ym < 1)
-		new_coord->before_y = NULL;
-	else
-		ft_set_before_y(coord, get_index(window, new_coord->pos_xm,
-				new_coord->pos_ym - 1), window);
-	last = new_coord;
+		new_coord->before = *coord;
+	*coord = new_coord;
 	return (new_coord);
 }

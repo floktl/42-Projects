@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_functions.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 15:54:00 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/18 21:43:11 by flo              ###   ########.fr       */
+/*   Updated: 2024/03/19 15:56:45 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,36 @@ int	check_defines(void)
 	if (MAX_MAP_SIZE < 1 || MAX_MAP_SIZE > 50
 		|| MIN_MAP_SIZE < 11 || MIN_MAP_SIZE > 30)
 		return (ft_printf("mapsizee 1-10(MAX) 11-30(MIN)\n"), EXIT_FAILURE);
+	if (ZOOM_DEFAULT != 1.0 || MARGIN != 15 || ROTATION_SPEED != 1.0
+		|| HEIGHT_DEFAULT != 1.0 || Z != 0 || COLOR != 1 || ON != 1 || OFF != -1
+		|| ROTATION_FACTOR != 0.3 || CHANGE != 1 || NO_CHANGE != 0
+		|| ERROR != -1)
+		return (ft_printf("dont change the default macros!\n"), EXIT_FAILURE);
+	if (check_more_defines() == EXIT_FAILURE)
+		return (EXIT_FAILURE);
 	return (NO_CHANGE);
+}
+
+//	thank you normintte for having thousand functions i hate you sometimes...
+int	check_more_defines(void)
+{
+	if (RED != 0xEE000000 || GREEN != 0x00EE0000 || BLUE != 0x0000EE00
+		|| WHITE != 0xFFFFFF00 || BLACK != 0x00000000 || YELLOW != 0xEEEE0000
+		|| CYAN != 0x00EEEE00 || MAGENTA != 0xEE00EE00 || ORANGE != 0xEE770000
+		|| PURPLE != 0xEE008800 || GRAY != 0x88888800 || PINK != 0xEE99CC00
+		|| BROWN != 0x8B451300)
+		return (ft_printf("dont change the default colors!\n"), EXIT_FAILURE);
+	if (PI != 3.14159265358979323846 || EPSILON != 0.00000001)
+		return (ft_printf("dont touch the holy math!\n"), EXIT_FAILURE);
+	if (BRIGHTNESS_DEFAULT < 0x00 || BRIGHTNESS_DEFAULT > 0xEE)
+		return (ft_printf("it's a brightmess don't blend me!\n"), EXIT_FAILURE);
+	if (DEGREE_DEFAULT_X < 0 || DEGREE_DEFAULT_X > 359.9
+		|| DEGREE_DEFAULT_Y < 0 || DEGREE_DEFAULT_Y > 359.9
+		|| DEGREE_DEFAULT_Z < 0 || DEGREE_DEFAULT_Z > 359.9)
+		return (ft_printf("you need a degree lesson i guess!\n"), EXIT_FAILURE);
+	if (HEIGHT_FAKTOR < 0.001 || HEIGHT_FAKTOR > 0.5)
+		return (ft_printf("i have the highground Anakin!\n"), EXIT_FAILURE);
+	return (EXIT_SUCCESS);
 }
 
 //----------------------------- mlx error-cases --------------------------------

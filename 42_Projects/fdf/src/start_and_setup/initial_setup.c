@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   initial_setup.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 10:28:34 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/18 21:38:18 by flo              ###   ########.fr       */
+/*   Updated: 2024/03/19 14:33:05 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,30 +44,32 @@ int	initialize_window_from_args(t_window *window, char *argv[])
 }
 
 //	assigning all map values to the 3 dimensional array
-int	assign_map_values(int ****map, char **collumn, int count)
+int	assign_map_values(int ****map, char **collumn, int y)
 {
-	char	*comma_pos;
-	int		j;
+	char	*color;
+	int		x;
+	int		i;
 
-	j = 0;
-	while (collumn[j])
+	x = 0;
+	while (collumn[x])
 	{
-		(*map)[count][j] = malloc(2 * sizeof(int));
-		if (!(*map)[count][j])
+		(*map)[y][x] = malloc(2 * sizeof(int));
+		if (!(*map)[y][x])
 			return (free_map(*map), EXIT_FAILURE);
-		comma_pos = ft_strchr(collumn[j], ',');
-		(*map)[count][j][Z] = ft_atoi(collumn[j]);
-		if (comma_pos)
-		{
-			*comma_pos = '\0';
-			(*map)[count][j][1] = convert_str_to_hex(comma_pos);
-		}
+		color = ft_strchr(collumn[x], ',');
+		i = 0;
+		while (collumn[x][i] && collumn[x][i] != ',')
+			if (ft_isdigit(collumn[x][i++] - '0') == 1)
+				return (perror("non integer in map"), EXIT_FAILURE);
+		(*map)[y][x][Z] = ft_atoi(collumn[x]);
+		if (color)
+			(*map)[y][x][COLOR] = convert_str_to_hex(color);
 		else
-			(*map)[count][j][COLOR] = Z;
-		j++;
+			(*map)[y][x][COLOR] = Z;
+		x++;
 	}
 	free_two_dimensional_array(collumn);
-	(*map)[count][j] = NULL;
+	(*map)[y][x] = NULL;
 	return (EXIT_SUCCESS);
 }
 
@@ -94,7 +96,7 @@ int	***read_and_split_lines(int fd, char *line)
 		collumn = ft_split(line, ' ');
 		free(line);
 		if (!collumn || assign_map_values(&map, collumn, count) == EXIT_FAILURE)
-			return (free_map(map), NULL);
+			return (NULL);
 		line = get_next_line(fd);
 		count++;
 	}
@@ -133,7 +135,7 @@ int	initialize_mlx_image(t_window *window)
 		return (EXIT_FAILURE);
 	window->image = mlx_new_image(window->mlx, WIDTH, HEIGHT);
 	if (!(window->image)
-		|| mlx_image_to_window(window->mlx, window->image, 0, 0) == -1)
+		|| mlx_image_to_window(window->mlx, window->image, 0, 0) == ERROR)
 		return (EXIT_FAILURE);
 	ft_printf("\033[0;34m\nProgramm ready, press I for manual!\033[0m\n");
 	return (EXIT_SUCCESS);

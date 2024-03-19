@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   assigning_values.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 07:33:01 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/18 21:07:43 by flo              ###   ########.fr       */
+/*   Updated: 2024/03/19 07:51:12 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int32_t	set_coord(t_window *window)
 		x_axis = 0;
 		while (x_axis < window->map_sz.xm_size)
 		{
-			next_coordinate = link_add_pt(&coord, window, x_axis, y_axis);
+			next_coordinate = link_add_pt(&coord, x_axis, y_axis);
 			if (!next_coordinate
 				|| assign_coord_position(window, next_coordinate, x_axis,
 					y_axis) == EXIT_FAILURE || update_mapsize(&window->map_sz,
@@ -93,7 +93,7 @@ int32_t	set_coord(t_window *window)
 	return (ft_set_after_y(coord, window), window->coord = coord, EXIT_SUCCESS);
 }
 
-//	assign the position of the coordinates on the map and the window
+//	assign the position of the points on the map and the middle of the window
 int	assign_coord_position(t_window *window, t_coord *coord, int x, int y)
 {
 	double	round_x;
@@ -125,7 +125,8 @@ int	assign_coord_position(t_window *window, t_coord *coord, int x, int y)
 //	of the z-axis
 int	assign_color(t_window *window, t_coord *coord, int x, int y)
 {
-	if (window->map[y][x][COLOR] >= INT_MIN && window->map[y][x][1] <= INT_MAX)
+	if (window->map[y][x][COLOR] >= INT_MIN
+		&& window->map[y][x][COLOR] <= INT_MAX)
 	{
 		if (window->map[y][x][COLOR] == 0)
 		{

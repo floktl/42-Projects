@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 13:51:31 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/18 18:39:01 by flo              ###   ########.fr       */
+/*   Updated: 2024/03/19 15:15:18 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ int	main(int argc, char *argv[])
 		|| initialize_window_from_args(&window, argv) == EXIT_FAILURE
 		|| set_coord(&window) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
+	free_map(window.map);
 	if (initialize_mlx_image(&window) == EXIT_FAILURE)
 		return (ft_shutdown_error(window.mlx));
 	mlx_resize_hook(window.mlx, ft_resize, &window);
@@ -32,6 +33,11 @@ int	main(int argc, char *argv[])
 	mlx_loop_hook(window.mlx, ft_render, &window);
 	mlx_loop(window.mlx);
 	mlx_terminate(window.mlx);
+	while (window.coord)
+	{
+		free(window.coord);
+		window.coord = window.coord->next;
+	}
 	if (window.debug_mode == ON)
 		system("leaks fdf");
 	return (EXIT_SUCCESS);

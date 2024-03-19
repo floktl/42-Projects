@@ -6,7 +6,7 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/24 18:39:28 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/10 11:01:14 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/03/19 07:41:01 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,12 @@ int	check_error_pixel(t_coord *pt_a, t_coord *pt_b, int *x0, int *y0)
 	static int	err = INT_MAX;
 
 	if (err == INT_MAX)
-		err = abs(pt_b->xw - pt_a->xw) - abs(pt_b->yw - pt_a->yw);
+		err = ft_abs(pt_b->xw - pt_a->xw) - ft_abs(pt_b->yw - pt_a->yw);
 	if (*x0 == (pt_b->xw) && *y0 == pt_b->yw)
 		return (err = INT_MAX, err);
-	if ((2 * err) > -abs(pt_b->yw - pt_a->yw))
+	if ((2 * err) > -ft_abs(pt_b->yw - pt_a->yw))
 	{
-		err -= abs(pt_b->yw - pt_a->yw);
+		err -= ft_abs(pt_b->yw - pt_a->yw);
 		if (pt_a->xw < pt_b->xw)
 			*x0 += 1;
 		else
@@ -35,7 +35,7 @@ int	check_error_pixel(t_coord *pt_a, t_coord *pt_b, int *x0, int *y0)
 	}
 	else if ((2 * err) < abs(pt_b->xw - pt_a->xw))
 	{
-		err += abs(pt_b->xw - pt_a->xw);
+		err += ft_abs(pt_b->xw - pt_a->xw);
 		if (pt_a->yw < pt_b->yw)
 			*y0 += 1;
 		else

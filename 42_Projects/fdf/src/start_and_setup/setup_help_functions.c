@@ -6,7 +6,7 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 16:36:30 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/18 13:23:17 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/03/19 07:50:57 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,19 +75,18 @@ int	get_index(t_window *window, int pos_xm, int pos_ym)
 	if (pos_xm < 1 || pos_ym < 1
 		|| pos_xm > window->map_sz.xm_size || pos_ym > window->map_sz.ym_size)
 	{
-		return (-1);
+		return (ERROR);
 	}
 	return (window->map_sz.xm_size * (pos_ym) + (pos_xm - 1));
 }
 
 //	this function returns a new coordinate to the map and links the 4 neighbour
 //	coordinates (in x and y direction)
-t_coord	*link_add_pt(t_coord **coord, t_window *window, int x, int y)
+t_coord	*link_add_pt(t_coord **coord, int x, int y)
 {
 	t_coord	*new_coord;
 
 	new_coord = malloc(sizeof(t_coord));
-	*window = *window;
 	if (!new_coord)
 		return (NULL);
 	new_coord->next = *coord;

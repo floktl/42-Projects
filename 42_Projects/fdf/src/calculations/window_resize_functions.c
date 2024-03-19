@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   window_resize_functions.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 17:45:17 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/18 21:10:51 by flo              ###   ########.fr       */
+/*   Updated: 2024/03/19 07:59:25 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,5 +35,4 @@ void	ft_resize(int width, int height, void *param)
 		* MAX_MAP_SIZE;
 	window->min_zoom_size = (window->mlx->width * window->mlx->height)
 		/ MIN_MAP_SIZE;
-	print_stacks(window);
 }

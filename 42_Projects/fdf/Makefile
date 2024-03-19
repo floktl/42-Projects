@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: flo <flo@student.42.fr>                    +#+  +:+       +#+         #
+#    By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/12 14:13:59 by fkeitel           #+#    #+#              #
-#    Updated: 2024/03/18 20:01:56 by flo              ###   ########.fr        #
+#    Updated: 2024/03/19 11:38:41 by fkeitel          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,7 +37,7 @@ HEADER  := fdf.h
 all: $(OBJ_DIR) $(NAME) $(HEADER)
 	@echo "$(NAME) successfully built!"
 
-# Rule to fetch and build MLX library
+# Rule to fetch and build the MLX library
 mlx:
 	@if [ ! -d "MLX42" ]; then \
         git clone https://github.com/codam-coding-college/MLX42.git MLX42; \

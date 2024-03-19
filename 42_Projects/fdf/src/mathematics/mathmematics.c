@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mathmematics.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 16:59:00 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/18 20:07:34 by flo              ###   ########.fr       */
+/*   Updated: 2024/03/19 13:38:24 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,58 +70,4 @@ float	calc_z(t_coord *point_a, t_coord *point_b, float x_p, float y_p)
 	z_p = point_a->zw + t * ((float)point_b->zw - (float)point_a->zw);
 	z_p = (float)(z_p - point_a->zw) / (point_b->zw - point_a->zw);
 	return (z_p);
-}
-
-//	function to replace the sin() function from math.h
-double	ft_sin(double x)
-{
-	double	result;
-	double	term;
-	double	power;
-	int		sign;
-	int		i;
-
-	if (x == 0)
-		return (0);
-	result = 0;
-	term = x;
-	power = x;
-	sign = -1;
-	i = 1;
-	while (i < 10)
-	{
-		result += sign * term;
-		power *= x * x;
-		term = power / ((i + 1) * (i + 2));
-		sign *= -1;
-		i += 2;
-	}
-	return (result);
-}
-
-//	function to replace the cos() function from math.h
-double	ft_cos(double x)
-{
-	double	result;
-	double	term;
-	double	power;
-	int		sign ;
-	int		i;
-
-	if (x == 0)
-		return (1);
-	result = 1;
-	term = 1;
-	power = x;
-	sign = -1;
-	i = 1;
-	while (i < 10)
-	{
-		result += sign * term;
-		power *= x * x;
-		term = power / (i * (i - 1));
-		sign *= -1;
-		i += 2;
-	}
-	return (result);
 }

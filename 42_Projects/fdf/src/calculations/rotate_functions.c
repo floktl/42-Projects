@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   rotate_functions.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 17:32:30 by flo               #+#    #+#             */
-/*   Updated: 2024/03/18 21:04:50 by flo              ###   ########.fr       */
+/*   Updated: 2024/03/19 11:59:45 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../fdf.h"
-#include <math.h>
 
 //
 //-------------- functions to calculate the changes when rotating -------------
@@ -32,21 +31,21 @@ void	rotate(double *a, double *b, t_window window, char axis)
 		//if (*b > 0)
 		//printf("z_scale: %f", z_pos_scale);
 		//else if (*b )
-		new_a = ((*a) * cos(rad) - (*b) * sin(rad));
-		new_b = ((*a) * sin(rad) + (*b) * cos(rad));
+		new_a = ((*a) * ft_cos(rad) - (*b) * ft_sin(rad));
+		new_b = ((*a) * ft_sin(rad) + (*b) * ft_cos(rad));
 		//new_a *= z_pos_scale;
 	}
 	if (axis == 'Y')
 	{
 		rad = window.map_sz.ym_rot_deg * (PI / 180.0);
-		new_a = (*b) * cos(rad) - (*a) * sin(rad);
-		new_b = (*a) * cos(rad) + (*b) * sin(rad);
+		new_a = (*b) * ft_cos(rad) - (*a) * ft_sin(rad);
+		new_b = (*a) * ft_cos(rad) + (*b) * ft_sin(rad);
 	}
 	if (axis == 'Z')
 	{
 		rad = window.map_sz.zm_rot_deg * (PI / 180.0);
-		new_a = (*a) * cos(rad) - (*b) * sin(rad);
-		new_b = (*a) * sin(rad) + (*b) * cos(rad);
+		new_a = (*a) * ft_cos(rad) - (*b) * ft_sin(rad);
+		new_b = (*a) * ft_sin(rad) + (*b) * ft_cos(rad);
 	}
 	*a = new_a;
 	*b = new_b;

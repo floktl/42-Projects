@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   debugging.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 13:25:40 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/18 21:41:05 by flo              ###   ########.fr       */
+/*   Updated: 2024/03/19 13:41:31 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ int	print_coord_data(t_window *window, t_coord *current, const char *color)
 		(window->map_sz.maxsz_x_p), (window->map_sz.maxsz_x_m),
 		(window->map_sz.maxsz_y_p), (window->map_sz.maxsz_y_m),
 		(window->map_sz.maxsz_z_p), (window->map_sz.maxsz_z_m));
+	ft_printf("wsz: %d|%d ", window->width, window->height);
+	ft_printf("color: 0x%X ", current->color);
 	return (NO_CHANGE);
 }
 
@@ -71,30 +73,24 @@ void	print_map(int ***map)
 }
 
 //	prints the values of all coordinates (distances, color, degree, position...)
-void	print_stacks(t_window *window)
+void	print_stacks(t_window *window, t_coord *current)
 {
-	t_coord		*current;
 	const char	*color;
 	int			row_number;
 
 	if (window->debug_mode == OFF)
 		return ;
-	current = window->coord;
 	color = COLOR_RESET;
 	row_number = 1;
-	while (current != NULL)
-	{
-		if (current->next != NULL && (current->next->pos_xm - 1) == 1)
-			ft_printf("\n");
-		if (row_number++ % 2 == 0)
-			color = COLOR_MAGENTA;
-		else
-			color = COLOR_RESET;
+	if (current->next != NULL && (current->next->pos_xm - 1) == 1)
 		ft_printf("\n");
-		print_coord_data(window, current, color);
-		ft_printf("\n");
-		current = current->next;
-	}
+	if (row_number++ % 2 == 0)
+		color = COLOR_MAGENTA;
+	else
+		color = COLOR_RESET;
+	ft_printf("\n");
+	print_coord_data(window, current, color);
+	ft_printf("\n");
 	ft_printf("%s\n\n", COLOR_RESET);
 }
 
@@ -103,14 +99,14 @@ void	print_debug_point_1(t_window *window)
 {
 	if (window->debug_mode == OFF)
 		return ;
-	window->debug_point_1.xw = window->map_sz.xposmw;
+	window->debug_point_1.xw = window->map_sz.xposmw - 500;
 	window->debug_point_1.yw = window->map_sz.yposmw;
 	window->debug_point_1.zw = Z;
-	window->debug_point_2.xw = window->map_sz.xposmw;
+	window->debug_point_2.xw = window->map_sz.xposmw + 500;
 	window->debug_point_2.yw = window->map_sz.yposmw;
-	window->debug_point_1.zw = 1000;
-	window->debug_point_1.color = 0xFF000000 + BRIGHTNESS_DEFAULT;
-	window->debug_point_2.color = 0xFF000000 + BRIGHTNESS_DEFAULT;
+	window->debug_point_2.zw = Z;
+	window->debug_point_1.color = YELLOW + BRIGHTNESS_DEFAULT;
+	window->debug_point_2.color = YELLOW + BRIGHTNESS_DEFAULT;
 	connect_points(window, &window->debug_point_1, &window->debug_point_2);
 }
 
@@ -119,14 +115,14 @@ void	print_debug_point_2(t_window *window)
 {
 	if (window->debug_mode == OFF)
 		return ;
-	window->debug_point_3.xw = window->mouse_posx;
-	window->debug_point_3.yw = window->mouse_posy;
-	window->debug_point_3.zw = 0;
-	window->debug_point_4.xw = window->mouse_posx;
-	window->debug_point_4.yw = window->mouse_posy;
-	window->debug_point_4.zw = 5;
-	window->debug_point_3.color = 0xFF000000 + BRIGHTNESS_DEFAULT;
-	window->debug_point_4.color = 0xFF000000 + BRIGHTNESS_DEFAULT;
+	window->debug_point_3.xw = window->map_sz.xposmw;
+	window->debug_point_3.yw = window->map_sz.yposmw - 500;
+	window->debug_point_3.zw = Z;
+	window->debug_point_4.xw = window->map_sz.xposmw;
+	window->debug_point_4.yw = window->map_sz.yposmw + 500;
+	window->debug_point_4.zw = Z;
+	window->debug_point_3.color = RED + BRIGHTNESS_DEFAULT;
+	window->debug_point_4.color = RED + BRIGHTNESS_DEFAULT;
 	connect_points(window, &window->debug_point_3, &window->debug_point_4);
 }
 
@@ -145,9 +141,7 @@ void	print_debug_point_2(t_window *window)
 		//		current->next_y->pos_ym);
 		//else
 		//	printf("ny:  | \t");
-		//printf("wsz: %d|%d", window->width, window->height);
 
-		//printf("color: %d\t", current->color);
 
 	//if (current->before_y != NULL)
 	//	printf("by: %d|%d\t", current->before_y->pos_xm,

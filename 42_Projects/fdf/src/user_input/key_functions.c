@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   key_functions.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 15:06:21 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/18 21:10:35 by flo              ###   ########.fr       */
+/*   Updated: 2024/03/19 09:27:38 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,10 +76,27 @@ int	debug_mode_map(t_window *window)
 	}
 	else if (!mlx_is_key_down(window->mlx, MLX_KEY_D))
 		key_pressed = OFF;
+	t_coord	*coord;
+
+
 	if (mlx_is_key_down(window->mlx, MLX_KEY_T))
 	{
+		ft_printf("\033[0;35mReset map...\033[0m\n");
 		clear_image(window, DEFAULT_WINDOW_COLOR);
-		set_coord(window);
+		coord = window->coord;
+		window->map_sz.xposmw = window->width / 2;
+		window->map_sz.yposmw = window->height / 2;
+		window->map_sz.zcentmw = Z;
+		window->map_sz.xm_rot_deg = DEGREE_DEFAULT_X;
+		window->map_sz.ym_rot_deg = DEGREE_DEFAULT_Y;
+		window->map_sz.zm_rot_deg = DEGREE_DEFAULT_Z;
+		reset_map_size(window);
+		while (coord != NULL)
+		{
+			update_mapsize(&window->map_sz, coord);
+			rotation_calc(window, coord);
+			coord = coord->next;
+		}
 		return (CHANGE);
 	}
 	return (NO_CHANGE);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fdf.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 10:26:16 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/18 21:13:02 by flo              ###   ########.fr       */
+/*   Updated: 2024/03/19 15:56:30 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,21 @@
 # define NO_CHANGE 0
 # define ERROR -1
 
+//	colors
+# define RED      0xEE000000
+# define GREEN    0x00EE0000
+# define BLUE     0x0000EE00
+# define WHITE    0xFFFFFF00
+# define BLACK    0x00000000
+# define YELLOW   0xEEEE0000
+# define CYAN     0x00EEEE00
+# define MAGENTA  0xEE00EE00
+# define ORANGE   0xEE770000
+# define PURPLE   0xEE008800
+# define GRAY     0x88888800
+# define PINK     0xEE99CC00
+# define BROWN    0x8B451300
+
 //	math data values
 # define PI 3.14159265358979323846
 # define EPSILON  0.00000001
@@ -55,16 +70,17 @@
 // Max zooming faktor end from 1-10(MAX) 11-30(MIN)
 # define MAX_MAP_SIZE 35
 # define MIN_MAP_SIZE 30
-//	color for the z_axis of the map, if not given in the map
-# define COLOR_DEFAULT_CEN 0xCFCFFF00
-# define COLOR_DEFAULT_PLUS 0xEE330000
+//	color for the z_axis of the map, if not given in the map choose a color
+# define COLOR_DEFAULT_CEN WHITE
+# define COLOR_DEFAULT_PLUS RED
 # define COLOR_DEFAULT_MIN 0x00DDBB00
-# define BRIGHTNESS_DEFAULT 0xCC
-//	rotation degree in x, y, z direction
+//	brightness for the map choose between 0x00 and 0xEE
+# define BRIGHTNESS_DEFAULT 0xEE
+//	rotation degree in x, y, z direction between 0.0 and 359.9 degrees
 # define DEGREE_DEFAULT_X 0.0
 # define DEGREE_DEFAULT_Y 90.0
 # define DEGREE_DEFAULT_Z 0.0
-//	height_change
+//	height_change between 0.001 and 0.5
 # define HEIGHT_FAKTOR 0.1
 
 /* ------------------------------- libraries -------------------------------- */
@@ -181,7 +197,9 @@ typedef struct s_window
 	float		min_zoom_size;
 }	t_window;
 
-/* ------------------------------ functions --------------------------------- */
+/*
+--------------------------------- functions ------------------------------------
+*/
 
 // --------------------------- start and setup ---------------------------------
 
@@ -211,7 +229,7 @@ int		ft_hook_key(t_window *window, int *x_offset, int *y_offset);
 void	ft_set_before_y(t_coord **head, int iterations, t_window *window);
 void	ft_set_after_y(t_coord *head, t_window *window);
 int		get_index(t_window *window, int pos_xm, int pos_ym);
-t_coord	*link_add_pt(t_coord **coord, t_window *window, int x, int y);
+t_coord	*link_add_pt(t_coord **coord, int x, int y);
 
 //-------------------------------- user input ----------------------------------
 
@@ -251,13 +269,18 @@ int		update_mapsize(t_sz *map_sz, t_coord *temp);
 
 //--------------------------------- mathematics --------------------------------
 
+//	angle mathematics
+
+double	factorial(double n);
+double	power(double n, double power);
+double	ft_sin(double x);
+double	ft_cos(double x);
+
 //	mathematics
 
 float	round_float(float num, int range);
 double	ft_sqrt(double a);
 float	calc_z(t_coord *point_a, t_coord *point_b, float x_p, float y_p);
-double	ft_sin(double x);
-double	ft_cos(double x);
 
 //	mathematics 2
 
@@ -288,6 +311,7 @@ int		convert_str_to_hex(char *comma_pos);
 //	error functions
 
 int		check_defines(void);
+int		check_more_defines(void);
 int		ft_shutdown_error(mlx_t *mlx);
 
 //--------------------------------- debugging ----------------------------------
@@ -296,7 +320,7 @@ int		ft_shutdown_error(mlx_t *mlx);
 
 int		print_coord_data(t_window *window, t_coord *current, const char *color);
 void	print_map(int ***map);
-void	print_stacks(t_window *window);
+void	print_stacks(t_window *window, t_coord *current);
 void	print_debug_point_1(t_window *window);
 void	print_debug_point_2(t_window *window);
 

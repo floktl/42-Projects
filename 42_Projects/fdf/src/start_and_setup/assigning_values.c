@@ -6,7 +6,7 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 07:33:01 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/19 07:51:12 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/03/19 16:24:53 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,6 @@ int32_t	set_coord(t_window *window)
 	t_coord	*coord;
 	int		x_axis;
 	int		y_axis;
-	t_coord	*next_coordinate;
 
 	y_axis = 0;
 	coord = NULL;
@@ -79,11 +78,10 @@ int32_t	set_coord(t_window *window)
 		x_axis = 0;
 		while (x_axis < window->map_sz.xm_size)
 		{
-			next_coordinate = link_add_pt(&coord, x_axis, y_axis);
-			if (!next_coordinate
-				|| assign_coord_position(window, next_coordinate, x_axis,
+			if (link_add_pt(&coord, x_axis, y_axis) == EXIT_FAILURE
+				|| assign_coord_position(window, coord, x_axis,
 					y_axis) == EXIT_FAILURE || update_mapsize(&window->map_sz,
-					next_coordinate) == EXIT_FAILURE || assign_color
+					coord) == EXIT_FAILURE || assign_color
 				(window, coord, x_axis, y_axis) == EXIT_FAILURE)
 				return (EXIT_FAILURE);
 			x_axis++;

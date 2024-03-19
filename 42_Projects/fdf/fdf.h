@@ -6,7 +6,7 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 10:26:16 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/19 15:56:30 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/03/19 16:22:27 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -229,7 +229,7 @@ int		ft_hook_key(t_window *window, int *x_offset, int *y_offset);
 void	ft_set_before_y(t_coord **head, int iterations, t_window *window);
 void	ft_set_after_y(t_coord *head, t_window *window);
 int		get_index(t_window *window, int pos_xm, int pos_ym);
-t_coord	*link_add_pt(t_coord **coord, int x, int y);
+int32_t	link_add_pt(t_coord **coord, int x, int y);
 
 //-------------------------------- user input ----------------------------------
 

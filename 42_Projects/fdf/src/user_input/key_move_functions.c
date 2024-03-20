@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   key_functions.c                                    :+:      :+:    :+:   */
+/*   key_move_functions.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 15:06:21 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/19 09:27:38 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/03/20 07:35:55 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,52 +54,6 @@ double	zoom_map(t_window *window)
 		if (window->map_sz.map_area * ZOOM_M > window->min_zoom_size)
 			window->zoom = ZOOM_M;
 	return (CHANGE);
-}
-
-//	this function enables the debug mode and resets the map with the key T
-int	debug_mode_map(t_window *window)
-{
-	static int	key_pressed = OFF;
-
-	if (mlx_is_key_down(window->mlx, MLX_KEY_D) && key_pressed == OFF)
-	{
-		if (window->debug_mode == OFF)
-			window->debug_mode = ON;
-		else if (window->debug_mode == ON)
-			window->debug_mode = OFF;
-		if (window->debug_mode == ON)
-			mlx_set_window_title(window->mlx, "fdf --DEBUG MODE ENABLED--");
-		else
-			mlx_set_window_title(window->mlx, "fdf");
-		key_pressed = ON;
-		return (CHANGE);
-	}
-	else if (!mlx_is_key_down(window->mlx, MLX_KEY_D))
-		key_pressed = OFF;
-	t_coord	*coord;
-
-
-	if (mlx_is_key_down(window->mlx, MLX_KEY_T))
-	{
-		ft_printf("\033[0;35mReset map...\033[0m\n");
-		clear_image(window, DEFAULT_WINDOW_COLOR);
-		coord = window->coord;
-		window->map_sz.xposmw = window->width / 2;
-		window->map_sz.yposmw = window->height / 2;
-		window->map_sz.zcentmw = Z;
-		window->map_sz.xm_rot_deg = DEGREE_DEFAULT_X;
-		window->map_sz.ym_rot_deg = DEGREE_DEFAULT_Y;
-		window->map_sz.zm_rot_deg = DEGREE_DEFAULT_Z;
-		reset_map_size(window);
-		while (coord != NULL)
-		{
-			update_mapsize(&window->map_sz, coord);
-			rotation_calc(window, coord);
-			coord = coord->next;
-		}
-		return (CHANGE);
-	}
-	return (NO_CHANGE);
 }
 
 //	function to rotate

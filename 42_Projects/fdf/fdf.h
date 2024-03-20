@@ -6,7 +6,7 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 10:26:16 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/19 16:22:27 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/03/20 11:22:25 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -237,7 +237,6 @@ int32_t	link_add_pt(t_coord **coord, int x, int y);
 
 int		shift_map(t_window *window, int *x_set, int *y_set);
 double	zoom_map(t_window *window);
-int		debug_mode_map(t_window *window);
 double	rotate_map(t_window *window);
 int		change_height_map(t_window *window);
 
@@ -251,6 +250,12 @@ int		mouse_rotation(t_window *window);
 
 int		check_change_height(t_window *window);
 int		check_change_in_rotation(t_window *window);
+
+//	key additional functions
+
+int		reset_map(t_window *window);
+int		debug_mode_map(t_window *window);
+void	set_map_to_middle(t_window *window);
 
 //--------------------------------- rendering ----------------------------------
 
@@ -339,6 +344,7 @@ int		rotation_calc(t_window *window, t_coord *cur_point);
 //	window resize functions
 
 void	ft_resize(int width, int height, void *param);
+void	check_if_map_is_outside_window(t_window *window);
 
 //	zoom functions
 

@@ -6,7 +6,7 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 13:25:40 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/19 13:41:31 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/03/20 08:08:40 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,7 +141,6 @@ void	print_debug_point_2(t_window *window)
 		//		current->next_y->pos_ym);
 		//else
 		//	printf("ny:  | \t");
-
 
 	//if (current->before_y != NULL)
 	//	printf("by: %d|%d\t", current->before_y->pos_xm,

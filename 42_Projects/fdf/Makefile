@@ -6,7 +6,7 @@
 #    By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/12 14:13:59 by fkeitel           #+#    #+#              #
-#    Updated: 2024/03/19 11:38:41 by fkeitel          ###   ########.fr        #
+#    Updated: 2024/03/20 12:53:09 by fkeitel          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,6 +19,9 @@ NAME    := fdf
 # Flags
 CFLAGS  := -Wunreachable-code -Ofast -Wall -Werror -Wextra -g
 MLX_FLAGS := -L./MLX42/build -lmlx42 -I../MLX42/include -lglfw -framework Cocoa -framework OpenGL -framework IOKit
+
+# Flag for memory leak detection, adjust the path to your own path
+#LEAKFLAG := -L/Users/fkeitel/Documents/LeakSanitizer -llsan
 
 # Directories
 SRC_DIR := src
@@ -46,7 +49,7 @@ mlx:
 
 # Rule to build the project using MLX library
 $(NAME): mlx $(OBJS) $(LIBFTTARGET)
-	@$(CC) $(CFLAGS) $(OBJS) $(MLX_FLAGS) -o $@ $(LIBFTTARGET)
+	@$(CC) $(CFLAGS) $(OBJS) $(MLX_FLAGS) $(LEAKFLAG) -o $@ $(LIBFTTARGET)
 
 $(LIBFTTARGET):
 	@$(MAKE) -C $(LIBFT)

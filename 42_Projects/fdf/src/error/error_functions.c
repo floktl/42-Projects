@@ -6,7 +6,7 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 15:54:00 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/19 15:56:45 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/03/20 07:27:44 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	check_defines(void)
 	return (NO_CHANGE);
 }
 
-//	thank you normintte for having thousand functions i hate you sometimes...
+//	thank you normintte for having thousand functions, i hate you sometimes...
 int	check_more_defines(void)
 {
 	if (RED != 0xEE000000 || GREEN != 0x00EE0000 || BLUE != 0x0000EE00
@@ -66,7 +66,7 @@ int	check_more_defines(void)
 
 //----------------------------- mlx error-cases --------------------------------
 
-//	save shutdown function for the mlx window incase of an error case
+//	save shutdown function for the mlx window in case of an error occuring
 int	ft_shutdown_error(mlx_t *mlx)
 {
 	mlx_close_window(mlx);

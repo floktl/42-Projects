@@ -6,7 +6,7 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 09:45:33 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/19 08:15:35 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/03/20 09:59:07 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,9 @@ void	ft_render(void *param)
 	window = (t_window *)param;
 	mlx_get_mouse_pos(window->mlx, &window->mouse_posx, &window->mouse_posy);
 	check_margin_border(window);
+	clear_image(window, DEFAULT_WINDOW_COLOR);
 	if (ft_hook_key(window, &x_offset, &y_offset) == CHANGE)
 	{
-		clear_image(window, DEFAULT_WINDOW_COLOR);
 		update_coord(window, x_offset, y_offset);
 	}
 	print_debug_point_1(window);
@@ -66,7 +66,8 @@ int	ft_hook_key(t_window *window, int *x_offset, int *y_offset)
 		&& *x_offset == NO_CHANGE
 		&& *y_offset == NO_CHANGE
 		&& check_change_in_rotation(window) == NO_CHANGE
-		&& check_change_height(window) == NO_CHANGE)
+		&& check_change_height(window) == NO_CHANGE
+		&& reset_map(window) == NO_CHANGE)
 		return (NO_CHANGE);
 	return (CHANGE);
 }

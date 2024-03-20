@@ -6,7 +6,7 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 10:28:34 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/19 14:33:05 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/03/20 08:37:47 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,6 +137,7 @@ int	initialize_mlx_image(t_window *window)
 	if (!(window->image)
 		|| mlx_image_to_window(window->mlx, window->image, 0, 0) == ERROR)
 		return (EXIT_FAILURE);
+	mlx_set_window_limit(window->mlx, 300, 300, 5000, 5000);
 	ft_printf("\033[0;34m\nProgramm ready, press I for manual!\033[0m\n");
 	return (EXIT_SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 17:45:17 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/19 07:59:25 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/03/20 11:23:44 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,7 @@ void	ft_resize(int width, int height, void *param)
 	t_window	*window;
 
 	window = (t_window *)param;
-	clear_image(window, DEFAULT_WINDOW_COLOR);
-	if (width > window->width || height > window->height)
+	if (width != window->width || height != window->height)
 		mlx_resize_image(window->image, width, height);
 	window->width = width;
 	window->height = height;
@@ -35,4 +34,23 @@ void	ft_resize(int width, int height, void *param)
 		* MAX_MAP_SIZE;
 	window->min_zoom_size = (window->mlx->width * window->mlx->height)
 		/ MIN_MAP_SIZE;
+	check_if_map_is_outside_window(window);
+}
+
+void	check_if_map_is_outside_window(t_window *window)
+{
+	t_coord		*coord;
+
+	if ((window->map_sz.maxsz_x_m) > (window->width - MARGIN)
+		|| (window->map_sz.maxsz_y_p) > (window->height - MARGIN))
+	{
+		window->map_sz.xposmw = window->width / 2;
+		window->map_sz.yposmw = window->height / 2;
+		coord = window->coord;
+		while (coord != NULL)
+		{
+			rotation_calc(window, coord);
+			coord = coord->next;
+		}
+	}
 }

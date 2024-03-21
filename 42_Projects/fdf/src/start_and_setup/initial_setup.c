@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   initial_setup.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 10:28:34 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/20 17:00:59 by flo              ###   ########.fr       */
+/*   Updated: 2024/03/21 11:41:35 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,17 @@ int	initialize_window_from_args(t_window *window, char *argv[])
 	int		fd;
 	char	*line;
 
-	file_path = ft_strjoin("test_maps/", argv[1]);
-	if (!file_path)
-		return (perror("Error loading maps"), EXIT_FAILURE);
-	fd = open(file_path, O_RDONLY);
-	free(file_path);
+	file_path = NULL;
+	fd = open(argv[1], O_RDONLY);
+	if (fd == -1)
+	{
+		file_path = ft_strjoin("test_maps/", argv[1]);
+		if (!file_path)
+			return (perror("Error loading maps"), EXIT_FAILURE);
+		fd = open(file_path, O_RDONLY);
+		free(file_path);
+		file_path = NULL;
+	}
 	if (fd == -1)
 		return (close(fd), perror("Error opening file"), EXIT_FAILURE);
 	line = get_next_line(fd);
@@ -73,6 +79,23 @@ int	assign_map_values(int ****map, char **collumn, int y)
 	return (EXIT_SUCCESS);
 }
 
+void	*ft_realloc(void *ptr, size_t size)
+{
+	void	*new_ptr;
+
+	if (ptr == NULL)
+		return (malloc(size));
+	if (size == 0)
+		return (free(ptr), ptr = NULL, NULL);
+	new_ptr = malloc(size);
+	if (new_ptr == NULL)
+		return (NULL);
+	ft_memcpy(new_ptr, ptr, size);
+	free(ptr);
+	ptr = NULL;
+	return (new_ptr);
+}
+
 //	read the fdf file, seperate the values and assign them in an array
 int	***read_and_split_lines(int fd, char *line)
 {
@@ -87,16 +110,17 @@ int	***read_and_split_lines(int fd, char *line)
 	ft_printf("\033[0;35mReading map ...\033[0m\n");
 	while (line)
 	{
-		map = realloc(map, (count + 1) * sizeof(int **));
+		map = ft_realloc(map, (count + 1) * sizeof(int **));
 		if (!map)
-			return (free_map(map), NULL);
+			return (free_map(map), map = NULL, NULL);
 		map[count] = malloc((ft_strlen(line)) * sizeof(int *) * 3);
 		if (!map[count])
-			return (free_map(map), NULL);
+			return (free_map(map), map = NULL, NULL);
 		collumn = ft_split(line, ' ');
 		free(line);
+		line = NULL;
 		if (!collumn || assign_map_values(&map, collumn, count) == EXIT_FAILURE)
-			return (NULL);
+			return (free_map(map), map = NULL, NULL);
 		line = get_next_line(fd);
 		count++;
 	}

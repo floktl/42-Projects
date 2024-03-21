@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   initial_setup.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 10:28:34 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/20 08:37:47 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/03/20 17:00:59 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,6 +129,9 @@ int	get_map_size(t_window *window)
 //	function to set up the window and image inside the window
 int	initialize_mlx_image(t_window *window)
 {
+	int32_t	max_size_x;
+	int32_t	max_size_y;
+
 	ft_printf("\033[0;35mInitializing Window...\033[0m\n");
 	window->mlx = mlx_init(WIDTH, HEIGHT, "fdf", true);
 	if (!(window->mlx))
@@ -137,7 +140,8 @@ int	initialize_mlx_image(t_window *window)
 	if (!(window->image)
 		|| mlx_image_to_window(window->mlx, window->image, 0, 0) == ERROR)
 		return (EXIT_FAILURE);
-	mlx_set_window_limit(window->mlx, 300, 300, 5000, 5000);
+	mlx_get_monitor_size(0, &max_size_x, &max_size_y);
+	mlx_set_window_limit(window->mlx, 300, 300, max_size_x, max_size_y);
 	ft_printf("\033[0;34m\nProgramm ready, press I for manual!\033[0m\n");
 	return (EXIT_SUCCESS);
 }

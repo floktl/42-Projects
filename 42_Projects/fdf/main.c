@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 13:51:31 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/20 08:36:41 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/03/20 17:01:26 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,9 @@ int	main(int argc, char *argv[])
 	free_map(window.map);
 	if (initialize_mlx_image(&window) == EXIT_FAILURE)
 		return (ft_shutdown_error(window.mlx));
+	mlx_put_string(window.mlx, "Hello World", 10, 10);
+	// mlx_delete_image(window.mlx, window.image);
+	mlx_new_image(window.mlx, window.width, window.height);
 	mlx_resize_hook(window.mlx, ft_resize, &window);
 	mlx_scroll_hook(window.mlx, ft_scroll, &window);
 	mlx_loop_hook(window.mlx, ft_render, &window);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 16:57:56 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/17 09:04:33 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/03/21 21:05:02 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,13 @@ t_list	*ft_lstnew(int content);
 t_list	*ft_lstlast(t_list *lst);
 t_list	*ft_lstmap(t_list *lst, void *(*f)(int), void (*del)(int));
 
+//	Personal added functions
+
+void	free_two_dimensional_array(char **param);
+void	*ft_realloc(void *ptr, size_t size);
+
 // printf_functions:
+
 //main function for printing
 int		ft_printf(const char *format, ...);
 //checking which datatypes are given

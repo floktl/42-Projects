@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   debugging.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 13:25:40 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/20 08:08:40 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/03/22 17:54:55 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,12 +49,14 @@ int	print_coord_data(t_window *window, t_coord *current, const char *color)
 }
 
 //	prints the map of the 3 dimensional array
-void	print_map(int ***map)
+void	print_map(int32_t ***map)
 {
 	int	i;
 	int	j;
 
 	i = 0;
+	if (map == NULL)
+		return ;
 	while (map[i] != NULL)
 	{
 		ft_printf("Map[%d]:\n", i);
@@ -63,7 +65,7 @@ void	print_map(int ***map)
 		{
 			ft_printf("  Line %d: ", j);
 			ft_printf("%d ", map[i][j][Z]);
-			ft_printf("%X ", map[i][j][COLOR]);
+			ft_printf("%X", map[i][j][COLOR]);
 			ft_printf("\n");
 			j++;
 		}

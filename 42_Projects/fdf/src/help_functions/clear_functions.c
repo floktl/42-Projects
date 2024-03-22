@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clear_functions.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/24 12:14:49 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/21 11:53:29 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/03/22 16:46:24 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,24 +36,6 @@ void	free_stack(t_coord **stack)
 	stack = NULL;
 }
 
-//	function to free an two dimensional array of chars
-void	free_two_dimensional_array(char **param)
-{
-	int	count;
-
-	count = 0;
-	if (!param)
-		return ;
-	while (param[count])
-	{
-		free(param[count]);
-		param[count] = NULL;
-		count++;
-	}
-	free(param);
-	param = NULL;
-}
-
 //	function to reset all pixelsof the window to its default colors
 void	clear_image(t_window *window, uint32_t color)
 {
@@ -74,26 +56,26 @@ void	clear_image(t_window *window, uint32_t color)
 }
 
 //	function to free an 3 dimensional array of integers
-void	free_map(int ***map)
+void	free_map(int32_t ***map)
 {
-	int	i;
-	int	j;
+	int	y;
+	int	x;
 
 	if (!map)
 		return ;
-	i = 0;
-	while (map[i])
+	y = 0;
+	while (map[y] != NULL)
 	{
-		j = 0;
-		while (map[i][j])
+		x = 0;
+		while (map[y][x] != NULL)
 		{
-			free(map[i][j]);
-			map[i][j] = NULL;
-			j++;
+			free(map[y][x]);
+			map[y][x] = NULL;
+			x++;
 		}
-		free(map[i]);
-		map[i] = NULL;
-		i++;
+		free(map[y]);
+		map[y] = NULL;
+		y++;
 	}
 	free(map);
 	map = NULL;

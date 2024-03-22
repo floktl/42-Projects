@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 13:51:31 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/21 11:43:00 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/03/22 12:28:37 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ int	main(int argc, char *argv[])
 		|| initialize_window_from_args(&window, argv) == EXIT_FAILURE
 		|| set_coord(&window) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
+	free_map(window.map);
 	if (initialize_mlx_image(&window) == EXIT_FAILURE)
 		return (ft_shutdown_error(window.mlx));
 	mlx_put_string(window.mlx, "Hello World", 10, 10);
@@ -33,17 +34,17 @@ int	main(int argc, char *argv[])
 	mlx_scroll_hook(window.mlx, ft_scroll, &window);
 	mlx_loop_hook(window.mlx, ft_render, &window);
 	mlx_loop(window.mlx);
-	mlx_terminate(window.mlx);
-	free_map(window.map);
-	while (window.coord)
+	//print_map(window.map);
+	while (window.coord != NULL)
 	{
-		free(window.coord);
-		if (window.coord->next)
-			window.coord = window.coord->next;
-		else
-			window.coord = NULL;
+		t_coord *temp = window.coord;
+		window.coord = window.coord->next;
+		if (temp)
+			free(temp);
+		temp = NULL;
 	}
 	if (window.debug_mode == ON)
 		system("leaks fdf");
+	mlx_terminate(window.mlx);
 	return (EXIT_SUCCESS);
 }

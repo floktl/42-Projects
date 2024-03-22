@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fdf.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 10:26:16 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/20 11:22:25 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/03/22 16:46:01 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,7 +179,7 @@ typedef struct s_window
 	int			width;
 	int			height;
 	void		*win;
-	int			***map;
+	int32_t		***map;
 	t_sz		map_sz;
 	t_coord		*coord;
 	int			cent_xw;
@@ -214,9 +214,12 @@ int		assign_color(t_window *window, t_coord *coord, int x, int y);
 //	initial setup
 
 int		initialize_window_from_args(t_window *window, char *argv[]);
-int		assign_map_values(int ****map, char **collumn, int count);
-int		***read_and_split_lines(int fd, char *line);
+int		assign_map_values(int32_t ***map, char **collumn);
+int32_t	***read_and_split_lines(int fd);
 int		get_map_size(t_window *window);
+
+//	mlx initiate
+
 int		initialize_mlx_image(t_window *window);
 
 //	main loop
@@ -230,6 +233,7 @@ void	ft_set_before_y(t_coord **head, int iterations, t_window *window);
 void	ft_set_after_y(t_coord *head, t_window *window);
 int		get_index(t_window *window, int pos_xm, int pos_ym);
 int32_t	link_add_pt(t_coord **coord, int x, int y);
+void	*ft_realloc(void *ptr, size_t size);
 
 //-------------------------------- user input ----------------------------------
 
@@ -302,14 +306,14 @@ void	degree(int *rot);
 void	free_stack(t_coord **stack);
 void	free_two_dimensional_array(char **param);
 void	clear_image(t_window *window, uint32_t color);
-void	free_map(int ***map);
+void	free_map(int32_t ***map);
 
 //	help functions
 
 int32_t	ft_pixel(int32_t r, int32_t g, int32_t b, int32_t a);
 int		find_highest_and_lowest(t_window *map);
 double	check_zoom_direction(int map_middle, int zoom_position, double zoom);
-int		convert_str_to_hex(char *comma_pos);
+int32_t	convert_str_to_hex(char *comma_pos);
 
 //----------------------------------- error ------------------------------------
 
@@ -324,7 +328,7 @@ int		ft_shutdown_error(mlx_t *mlx);
 // debugging
 
 int		print_coord_data(t_window *window, t_coord *current, const char *color);
-void	print_map(int ***map);
+void	print_map(int32_t ***map);
 void	print_stacks(t_window *window, t_coord *current);
 void	print_debug_point_1(t_window *window);
 void	print_debug_point_2(t_window *window);

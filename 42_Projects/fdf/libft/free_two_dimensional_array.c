@@ -1,36 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_bzero.c                                         :+:      :+:    :+:   */
+/*   free_two_dimensional_array.c                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/06 19:18:51 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/22 08:11:30 by flo              ###   ########.fr       */
+/*   Created: 2024/03/21 20:57:41 by flo               #+#    #+#             */
+/*   Updated: 2024/03/22 16:00:52 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_bzero(void *s, size_t n)
+//	function to free an two dimensional array of chars
+void	free_two_dimensional_array(char **param)
 {
-	size_t	counter;
-	char	*char_s;
+	int	count;
 
-	counter = 0;
-	char_s = (char *)s;
-	while (counter < n)
+	count = 0;
+	if (!param)
+		return ;
+	while (param[count])
 	{
-		char_s[counter] = '\0';
-		counter++;
+		free(param[count]);
+		param[count] = NULL;
+		count++;
 	}
-	s = char_s;
+	free(param);
+	param = NULL;
 }
-
-/* int main(void)
-{
-    char c[] = "asdgs";
-    ft_bzero(c, 3); // Use bzero to set the first 3 bytes to null (0)
-    printf("%s\n", c);
-    return (0);
-}*/

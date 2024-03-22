@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   initial_setup.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 10:28:34 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/21 11:41:35 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/03/22 17:52:45 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ int	initialize_window_from_args(t_window *window, char *argv[])
 {
 	char	*file_path;
 	int		fd;
-	char	*line;
 
 	file_path = NULL;
 	fd = open(argv[1], O_RDONLY);
@@ -36,10 +35,7 @@ int	initialize_window_from_args(t_window *window, char *argv[])
 	}
 	if (fd == -1)
 		return (close(fd), perror("Error opening file"), EXIT_FAILURE);
-	line = get_next_line(fd);
-	if (!line)
-		return (close(fd), perror("Error reading fdf"), EXIT_FAILURE);
-	window->map = read_and_split_lines(fd, line);
+	window->map = read_and_split_lines(fd);
 	close(fd);
 	if (!window->map)
 		return (perror("Error reading map"), EXIT_FAILURE);
@@ -49,86 +45,118 @@ int	initialize_window_from_args(t_window *window, char *argv[])
 	return (EXIT_SUCCESS);
 }
 
+// function to read a line from the file and save the values in an array
+int	read_line_into_collumn(int fd, int *collumn_counter, char ***collumn)
+{
+	char	*line;
+	char	*temp;
+
+	line = get_next_line(fd);
+	if (!line)
+		return (-1);
+	*collumn = ft_split(line, ' ');
+	free(line);
+	line = NULL;
+	if (!(*collumn))
+		return (EXIT_FAILURE);
+	*collumn_counter = 0;
+	while ((*collumn)[*collumn_counter])
+	{
+		temp = ft_strtrim((*collumn)[*collumn_counter], " ");
+		if (temp)
+		{
+			free((*collumn)[*collumn_counter]);
+			(*collumn)[*collumn_counter] = temp;
+			temp = NULL;
+		}
+		(*collumn_counter)++;
+	}
+	return (0);
+}
+
+//	read the fdf file, seperate the values and assign them in an array
+int32_t	***read_and_split_lines(int fd)
+{
+	int32_t	***map;
+	char	**collumn;
+	int		row_counter;
+	int		collumn_counter;
+	int		line;
+
+	row_counter = 0;
+	collumn_counter = 0;
+	collumn = NULL;
+	map = malloc(sizeof(double **));
+	if (!map)
+		return (NULL);
+	ft_printf("\033[0;35mReading map ...\033[0m\n");
+	while (1)
+	{
+		line = read_line_into_collumn(fd, &collumn_counter, &collumn);
+		if (line == -1)
+		{
+			map[row_counter] = NULL;
+			break ;
+		}
+		else if (line == EXIT_FAILURE)
+			return (free_map(map), NULL);
+
+		map[row_counter] = malloc(sizeof(double *) * (collumn_counter + 1));
+		map[row_counter][collumn_counter] = NULL;
+		if (!map[row_counter])
+			return (free_map(map), NULL);
+		if (assign_map_values(&map[row_counter], collumn) == EXIT_FAILURE)
+			return (free_map(map), NULL);
+		free_two_dimensional_array(collumn);
+		row_counter++;
+		map = ft_realloc(map, (row_counter + 1) * sizeof(double **));
+		if (!map)
+			return (free_map(map), NULL);
+	}
+	ft_printf("\033[0;32mSuccesful!\033[0m\n");
+	return (map);
+}
+
 //	assigning all map values to the 3 dimensional array
-int	assign_map_values(int ****map, char **collumn, int y)
+int	assign_map_values(int32_t ***map_collumn, char **collumn)
 {
 	char	*color;
 	int		x;
 	int		i;
 
 	x = 0;
-	while (collumn[x])
+	while (collumn[x] != NULL)
 	{
-		(*map)[y][x] = malloc(2 * sizeof(int));
-		if (!(*map)[y][x])
-			return (free_map(*map), EXIT_FAILURE);
+		(*map_collumn)[x] = malloc(2 * sizeof(int));
+		if (!(*map_collumn)[x])
+			return (EXIT_FAILURE);
 		color = ft_strchr(collumn[x], ',');
+
 		i = 0;
 		while (collumn[x][i] && collumn[x][i] != ',')
-			if (ft_isdigit(collumn[x][i++] - '0') == 1)
-				return (perror("non integer in map"), EXIT_FAILURE);
-		(*map)[y][x][Z] = ft_atoi(collumn[x]);
+		{
+			if (ft_isdigit(collumn[x][i] - '0') == 1)
+			{
+				ft_printf("Non-integer in map_pos: col: %d\n", x + 1);
+				free_two_dimensional_array(collumn);
+				return (EXIT_FAILURE);
+			}
+			i++;
+		}
+		(*map_collumn)[x][Z] = ft_atoi(collumn[x]);
 		if (color)
-			(*map)[y][x][COLOR] = convert_str_to_hex(color);
+		{
+			(*map_collumn)[x][COLOR] = convert_str_to_hex(color);
+		}
 		else
-			(*map)[y][x][COLOR] = Z;
+			(*map_collumn)[x][COLOR] = Z;
 		x++;
 	}
-	free_two_dimensional_array(collumn);
-	(*map)[y][x] = NULL;
 	return (EXIT_SUCCESS);
 }
 
-void	*ft_realloc(void *ptr, size_t size)
-{
-	void	*new_ptr;
-
-	if (ptr == NULL)
-		return (malloc(size));
-	if (size == 0)
-		return (free(ptr), ptr = NULL, NULL);
-	new_ptr = malloc(size);
-	if (new_ptr == NULL)
-		return (NULL);
-	ft_memcpy(new_ptr, ptr, size);
-	free(ptr);
-	ptr = NULL;
-	return (new_ptr);
-}
-
-//	read the fdf file, seperate the values and assign them in an array
-int	***read_and_split_lines(int fd, char *line)
-{
-	int		***map;
-	int		count;
-	char	**collumn;
-
-	count = 0;
-	map = malloc((count + 1) * sizeof(int **));
-	if (!map)
-		return (NULL);
-	ft_printf("\033[0;35mReading map ...\033[0m\n");
-	while (line)
-	{
-		map = ft_realloc(map, (count + 1) * sizeof(int **));
-		if (!map)
-			return (free_map(map), map = NULL, NULL);
-		map[count] = malloc((ft_strlen(line)) * sizeof(int *) * 3);
-		if (!map[count])
-			return (free_map(map), map = NULL, NULL);
-		collumn = ft_split(line, ' ');
-		free(line);
-		line = NULL;
-		if (!collumn || assign_map_values(&map, collumn, count) == EXIT_FAILURE)
-			return (free_map(map), map = NULL, NULL);
-		line = get_next_line(fd);
-		count++;
-	}
-	return (ft_printf("\033[0;32mSuccesful!\033[0m\n"), map[count] = NULL, map);
-}
-
 //	this function assigns all variable values of the map, which will change, but
-//	only for all coordinates at once, not every unique coordinate
+//	only for the whole map at once, not every unique coordinate
 int	get_map_size(t_window *window)
 {
 	t_sz		size;
@@ -147,25 +175,5 @@ int	get_map_size(t_window *window)
 	if (map_size_default_setting(&window->map_sz, size) == EXIT_FAILURE
 		|| find_highest_and_lowest(window) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
-	return (EXIT_SUCCESS);
-}
-
-//	function to set up the window and image inside the window
-int	initialize_mlx_image(t_window *window)
-{
-	int32_t	max_size_x;
-	int32_t	max_size_y;
-
-	ft_printf("\033[0;35mInitializing Window...\033[0m\n");
-	window->mlx = mlx_init(WIDTH, HEIGHT, "fdf", true);
-	if (!(window->mlx))
-		return (EXIT_FAILURE);
-	window->image = mlx_new_image(window->mlx, WIDTH, HEIGHT);
-	if (!(window->image)
-		|| mlx_image_to_window(window->mlx, window->image, 0, 0) == ERROR)
-		return (EXIT_FAILURE);
-	mlx_get_monitor_size(0, &max_size_x, &max_size_y);
-	mlx_set_window_limit(window->mlx, 300, 300, max_size_x, max_size_y);
-	ft_printf("\033[0;34m\nProgramm ready, press I for manual!\033[0m\n");
 	return (EXIT_SUCCESS);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_bzero.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 19:18:51 by fkeitel           #+#    #+#             */
-/*   Updated: 2023/10/18 16:48:13 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/03/22 07:59:51 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	ft_bzero(void *s, size_t n)
 	char_s = (char *)s;
 	while (counter < n)
 	{
-		char_s[counter] = 0;
+		char_s[counter] = '\0';
 		counter++;
 	}
 	s = char_s;

@@ -1,36 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_bzero.c                                         :+:      :+:    :+:   */
+/*   ft_realloc.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/06 19:18:51 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/22 08:11:30 by flo              ###   ########.fr       */
+/*   Created: 2024/03/21 20:50:22 by flo               #+#    #+#             */
+/*   Updated: 2024/03/21 20:50:38 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_bzero(void *s, size_t n)
+//	function to allocate memory to an existing datatype
+void	*ft_realloc(void *ptr, size_t size)
 {
-	size_t	counter;
-	char	*char_s;
+	void	*new_ptr;
 
-	counter = 0;
-	char_s = (char *)s;
-	while (counter < n)
-	{
-		char_s[counter] = '\0';
-		counter++;
-	}
-	s = char_s;
+	if (ptr == NULL)
+		return (malloc(size));
+	if (size == 0)
+		return (free(ptr), ptr = NULL, NULL);
+	new_ptr = malloc(size);
+	if (new_ptr == NULL)
+		return (NULL);
+	ft_memcpy(new_ptr, ptr, size);
+	free(ptr);
+	ptr = NULL;
+	return (new_ptr);
 }
-
-/* int main(void)
-{
-    char c[] = "asdgs";
-    ft_bzero(c, 3); // Use bzero to set the first 3 bytes to null (0)
-    printf("%s\n", c);
-    return (0);
-}*/

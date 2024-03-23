@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   assigning_values.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 07:33:01 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/22 16:42:33 by flo              ###   ########.fr       */
+/*   Updated: 2024/03/23 09:21:31 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,8 +123,8 @@ int	assign_coord_position(t_window *window, t_coord *coord, int x, int y)
 //	of the z-axis
 int	assign_color(t_window *window, t_coord *coord, int x, int y)
 {
-	if (window->map[y][x][COLOR] >= INT_MIN
-		&& window->map[y][x][COLOR] <= INT_MAX)
+	if (window->map[y][x][COLOR] >= INT32_MIN
+		&& window->map[y][x][COLOR] <= INT32_MAX)
 	{
 		if (window->map[y][x][COLOR] == 0)
 		{

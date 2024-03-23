@@ -3,20 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   initial_setup.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 10:28:34 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/23 11:21:27 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/03/23 23:19:12 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../fdf.h"
 
-//
-//----------- functions for the standard view of the map on the image ----------
-//
-
-//	This function sets the initial window sizes and map sizes
 int	initialize_window_from_args(t_window *window, char *argv[])
 {
 	char	*file_path;
@@ -39,22 +34,29 @@ int	initialize_window_from_args(t_window *window, char *argv[])
 	close(fd);
 	if (!window->map)
 		return (perror("Error reading map"), EXIT_FAILURE);
-	ft_printf("\033[0;32mMap Succesful loaded!\033[0m\n");
+	ft_printf("\033[0;32m\nSuccesful!\033[0m\n");
 	if (get_map_size(window) == EXIT_FAILURE
 		|| set_default_window_data(window) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }
 
-// function to read a line from the file and save the values in an array
 int	read_line_into_collumn(int fd, int *collumn_counter, char ***collumn)
 {
-	char	*line;
-	char	*temp;
+	char		*line;
+	char		*temp;
+	static int	x_counter = 0;
+	char		*trimmed_line;
 
 	line = get_next_line(fd);
 	if (!line)
 		return (-1);
+	trimmed_line = ft_strtrim(line, "\n");
+	if (trimmed_line)
+	{
+		free(line);
+		line = trimmed_line;
+	}
 	*collumn = ft_split(line, ' ');
 	free(line);
 	line = NULL;
@@ -64,77 +66,98 @@ int	read_line_into_collumn(int fd, int *collumn_counter, char ***collumn)
 	while ((*collumn)[*collumn_counter])
 	{
 		temp = ft_strtrim((*collumn)[*collumn_counter], " ");
+		free((*collumn)[*collumn_counter]);
+		(*collumn)[*collumn_counter] = NULL;
 		if (temp)
 		{
-			free((*collumn)[*collumn_counter]);
 			(*collumn)[*collumn_counter] = temp;
-			temp = NULL;
 		}
 		(*collumn_counter)++;
 	}
 	(*collumn)[*collumn_counter] = NULL;
+	if (x_counter == 0)
+		x_counter = *collumn_counter;
+	if (x_counter != *collumn_counter)
+		return (INT_MIN);
 	return (0);
 }
 
-//	read the fdf file, seperate the values and assign them in an array
-//	first read a line with get-next-line, abd save the values in an array, and
-//	delete the spaces, then
 int32_t	***read_and_split_lines(int fd)
 {
 	int32_t	***map;
 	char	**collumn;
-	int		y;
-	int		x;
+	int		row;
+	int		collumn_counter;
 	int		line;
 
-	y = 0;
-	x = 0;
+	row = 0;
+	collumn_counter = 0;
 	collumn = NULL;
-	map = malloc(sizeof(double **));
+	map = malloc(sizeof(int32_t **));
 	if (!map)
 		return (NULL);
-	ft_printf("\033[0;35mReading map ...\033[0m\n");
+	ft_printf("\033[0;35m\nReading map ...\033[0m\n");
 	while (1)
 	{
-		line = read_line_into_collumn(fd, &x, &collumn);
-		if (line == -1)
-			break ;
-		else if (line == EXIT_FAILURE)
-		{
-			free_two_dimensional_array(collumn);
-			free_map(map);
-			return (NULL);
-		}
-		map[y] = malloc(sizeof(double *) * (x + 1));
-		if (!map[y])
-		{
-			free_two_dimensional_array(collumn);
-			free_map(map);
-			return (NULL);
-		}
-		map[y][x] = NULL;
-		map = ft_realloc(map, (y + 2) * sizeof(double **));
+		map = ft_realloc(map, (row + 1) * sizeof(int32_t **));
 		if (!map)
 		{
 			free_two_dimensional_array(collumn);
 			free_map(map);
 			return (NULL);
 		}
-		map[y + 1] = NULL;
-		if (assign_map_values(&map[y], collumn) == EXIT_FAILURE)
+		map[row] = NULL;
+		line = read_line_into_collumn(fd, &collumn_counter, &collumn);
+		if (line == EXIT_FAILURE || (row == 0 && line == -1)
+			|| (collumn_counter == 1) || line == INT_MIN || (row == 0 && line == -1))
+		{
+			ft_printf("\nMap ERROR!\n");
+			if (row == 0 && line == -1)
+				ft_printf("map empty\n");
+			if (collumn_counter == 1)
+				ft_printf("only one point on line %d\n", row + 1);
+			if (line == INT_MIN && collumn_counter != 1)
+				ft_printf("map must be squared at line: %d\n", row + 1);
+			if (row == 0 && line == -1)
+				ft_printf("only one row\n");
+			map[row] = NULL;
+			free_two_dimensional_array(collumn);
+			free_map(map);
+			return (NULL);
+		}
+		else if (line == -1)
+		{
+			break ;
+		}
+		else if (line == EXIT_FAILURE)
 		{
 			free_two_dimensional_array(collumn);
 			free_map(map);
 			return (NULL);
 		}
+		map[row] = malloc(sizeof(int32_t *) * (collumn_counter + 1));
+		if (!map[row])
+		{
+			free_two_dimensional_array(collumn);
+			free_map(map);
+			return (NULL);
+		}
+		map[row][collumn_counter] = NULL;
+		if (assign_map_values(&map[row], collumn, row + 1) == EXIT_FAILURE)
+		{
+			free(map[row]);
+			map[row] = NULL;
+			free_two_dimensional_array(collumn);
+			free_map(map);
+			return (NULL);
+		}
 		free_two_dimensional_array(collumn);
-		y++;
+		row++;
 	}
 	return (map);
 }
 
-//	assigning all map values to the 3 dimensional array
-int	assign_map_values(int32_t ***map_collumn, char **collumn)
+int	assign_map_values(int32_t ***map_collumn, char **collumn, int line)
 {
 	char	*color;
 	int		x;
@@ -152,7 +175,14 @@ int	assign_map_values(int32_t ***map_collumn, char **collumn)
 		{
 			if (ft_isdigit(collumn[x][i] - '0') == 1)
 			{
-				ft_printf("Non-integer in map_pos: col: %d\n", x + 1);
+				x = 0;
+				while ((*map_collumn)[x])
+				{
+					free((*map_collumn)[x]);
+					(*map_collumn)[x] = NULL;
+					x++;
+				}
+				ft_printf("Non-integer in line: %d pos: %d\n", line, x);
 				return (EXIT_FAILURE);
 			}
 			i++;
@@ -168,6 +198,7 @@ int	assign_map_values(int32_t ***map_collumn, char **collumn)
 	}
 	return (EXIT_SUCCESS);
 }
+
 
 //	this function assigns all variable values of the map, which will change, but
 //	only for the whole map at once, not every unique coordinate

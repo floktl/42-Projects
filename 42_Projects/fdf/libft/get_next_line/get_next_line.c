@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 12:40:04 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/02/16 15:38:36 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/03/23 22:33:14 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ char	*get_next_line(int fd)
 		return (NULL);
 	}
 	if (!buf)
-		buf = ft_calloc(BUFFER_SIZE + 1, 1);
+		buf = ft_calloc(BUFFER_SIZE, 1);
 	if (!buf)
 		return (NULL);
 	if (read_buf(fd, &buf, &i) == -1 || extract_line(&line, &buf, &i) == NULL)
@@ -109,5 +109,7 @@ char	*get_next_line(int fd)
 		i = 0;
 		return (NULL);
 	}
+	free(buf);
+	buf = NULL;
 	return (line);
 }

@@ -6,7 +6,7 @@
 /*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 10:26:16 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/22 16:46:01 by flo              ###   ########.fr       */
+/*   Updated: 2024/03/23 17:47:32 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -214,7 +214,7 @@ int		assign_color(t_window *window, t_coord *coord, int x, int y);
 //	initial setup
 
 int		initialize_window_from_args(t_window *window, char *argv[]);
-int		assign_map_values(int32_t ***map, char **collumn);
+int		assign_map_values(int32_t ***map, char **collumn, int line);
 int32_t	***read_and_split_lines(int fd);
 int		get_map_size(t_window *window);
 

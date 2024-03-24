@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: flo <flo@student.42.fr>                    +#+  +:+       +#+         #
+#    By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/12 14:13:59 by fkeitel           #+#    #+#              #
-#    Updated: 2024/03/23 23:21:22 by flo              ###   ########.fr        #
+#    Updated: 2024/03/24 15:37:41 by fkeitel          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,14 +21,14 @@ CFLAGS  := -Wunreachable-code -Ofast -Wall -Werror -Wextra -g
 MLX_FLAGS := -L./MLX42/build -lmlx42 -I../MLX42/include -lglfw -framework Cocoa -framework OpenGL -framework IOKit
 
 # Flag for memory leak detection, adjust the path to your own path
-LEAKFLAG := -L/Users/flo/LeakSanitizer  -llsan
+LEAKFLAG := -L/Users/fkeitel/Documents/LeakSanitizer  -llsan
 
 # Directories
 SRC_DIR := src
 OBJ_DIR := obj
 
 # Source files, Libraries targets
-SRCS    :=  main.c $(shell find $(SRC_DIR) -name '*.c')
+SRCS    :=  $(shell find $(SRC_DIR) -name '*.c')
 LIBFT   := libft/
 LIBFTTARGET := $(LIBFT)/libft.a
 OBJS    := $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)

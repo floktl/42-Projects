@@ -6,7 +6,7 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 17:32:30 by flo               #+#    #+#             */
-/*   Updated: 2024/03/19 11:59:45 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/03/24 15:31:30 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,18 +22,12 @@ void	rotate(double *a, double *b, t_window window, char axis)
 	double	rad;
 	double	new_a;
 	double	new_b;
-	//double	z_pos_scale = 1.0;
-	//double	z_len = window.map_sz.maxsz_z_p;
 
 	if (axis == 'X')
 	{
 		rad = window.map_sz.xm_rot_deg * (PI / 180.0);
-		//if (*b > 0)
-		//printf("z_scale: %f", z_pos_scale);
-		//else if (*b )
 		new_a = ((*a) * ft_cos(rad) - (*b) * ft_sin(rad));
 		new_b = ((*a) * ft_sin(rad) + (*b) * ft_cos(rad));
-		//new_a *= z_pos_scale;
 	}
 	if (axis == 'Y')
 	{

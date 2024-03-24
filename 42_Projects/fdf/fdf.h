@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fdf.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 10:26:16 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/23 17:47:32 by flo              ###   ########.fr       */
+/*   Updated: 2024/03/24 15:42:45 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,11 @@
 //	math data values
 # define PI 3.14159265358979323846
 # define EPSILON  0.00000001
+
+//	macros for better code structure for get next line
+# define NO_NEW_LINE 0
+# define NEW_LINE INT_MAX
+# define MAP_NOT_SQUARED INT_MIN
 
 /* ----------------------- adjustable pre-settings -------------------------- */
 
@@ -167,6 +172,8 @@ typedef struct s_arr_size
 	int		ym_rot_deg;
 	int		zm_rot_deg;
 	double	height_change;
+	int32_t color_plus;
+	int32_t color_minus;
 	int		map_area;
 }	t_sz;
 
@@ -175,7 +182,9 @@ typedef struct s_arr_size
 typedef struct s_window
 {
 	mlx_t		*mlx;
+	mlx_t		*mlx_info;
 	mlx_image_t	*image;
+	mlx_image_t	*image2;
 	int			width;
 	int			height;
 	void		*win;
@@ -215,17 +224,22 @@ int		assign_color(t_window *window, t_coord *coord, int x, int y);
 
 int		initialize_window_from_args(t_window *window, char *argv[]);
 int		assign_map_values(int32_t ***map, char **collumn, int line);
-int32_t	***read_and_split_lines(int fd);
 int		get_map_size(t_window *window);
-
-//	mlx initiate
-
-int		initialize_mlx_image(t_window *window);
 
 //	main loop
 
 void	ft_render(void *param);
 int		ft_hook_key(t_window *window, int *x_offset, int *y_offset);
+
+//	mlx initiate
+
+int		initialize_mlx_image(t_window *window);
+
+//	reading_map
+
+int32_t	***read_map_and_assign_data(int fd);
+int		read_line_into_collumn(int fd, int *collumn_counter, char ***collumn);
+void	delete_spaces(int *collumn_counter, char ***collumn);
 
 //	setup help functions
 
@@ -233,7 +247,6 @@ void	ft_set_before_y(t_coord **head, int iterations, t_window *window);
 void	ft_set_after_y(t_coord *head, t_window *window);
 int		get_index(t_window *window, int pos_xm, int pos_ym);
 int32_t	link_add_pt(t_coord **coord, int x, int y);
-void	*ft_realloc(void *ptr, size_t size);
 
 //-------------------------------- user input ----------------------------------
 
@@ -260,6 +273,7 @@ int		check_change_in_rotation(t_window *window);
 int		reset_map(t_window *window);
 int		debug_mode_map(t_window *window);
 void	set_map_to_middle(t_window *window);
+int		information(t_window *window);
 
 //--------------------------------- rendering ----------------------------------
 
@@ -307,6 +321,7 @@ void	free_stack(t_coord **stack);
 void	free_two_dimensional_array(char **param);
 void	clear_image(t_window *window, uint32_t color);
 void	free_map(int32_t ***map);
+int32_t	***free_map_data(int32_t ***map, char **collumn, int row);
 
 //	help functions
 
@@ -322,6 +337,11 @@ int32_t	convert_str_to_hex(char *comma_pos);
 int		check_defines(void);
 int		check_more_defines(void);
 int		ft_shutdown_error(mlx_t *mlx);
+
+//	map errors
+int		check_map_integer(int32_t ***map_collumn, char **collumn,
+			int *x, int line);
+int		check_for_map_errors(int line, int row, int collumn_counter);
 
 //--------------------------------- debugging ----------------------------------
 

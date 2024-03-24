@@ -6,7 +6,7 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 09:45:33 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/20 09:59:07 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/03/24 14:14:55 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ int	ft_hook_key(t_window *window, int *x_offset, int *y_offset)
 	mouse_rotation(window);
 	zoom_map(window);
 	rotate_map(window);
+	information(window);
 	if (window->zoom == ZOOM_DEFAULT
 		&& *x_offset == NO_CHANGE
 		&& *y_offset == NO_CHANGE

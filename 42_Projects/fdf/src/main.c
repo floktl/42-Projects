@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 13:51:31 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/24 15:37:25 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/03/25 15:42:25 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ int	main(int argc, char *argv[])
 	mlx_scroll_hook(window.mlx, ft_scroll, &window);
 	mlx_loop_hook(window.mlx, ft_render, &window);
 	mlx_loop(window.mlx);
-	free_stack(&window.coord);
+	free_map_coordinates(&window.coord);
+	free_manual(&window.manual);
 	mlx_terminate(window.mlx);
 	return (EXIT_SUCCESS);
 }

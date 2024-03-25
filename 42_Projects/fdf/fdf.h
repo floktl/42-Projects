@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fdf.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 10:26:16 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/24 15:42:45 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/03/25 16:25:57 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,9 +82,9 @@
 //	brightness for the map choose between 0x00 and 0xEE
 # define BRIGHTNESS_DEFAULT 0xEE
 //	rotation degree in x, y, z direction between 0.0 and 359.9 degrees
-# define DEGREE_DEFAULT_X 0.0
-# define DEGREE_DEFAULT_Y 90.0
-# define DEGREE_DEFAULT_Z 0.0
+# define DEGREE_DEFAULT_X 320.0
+# define DEGREE_DEFAULT_Y 130.0
+# define DEGREE_DEFAULT_Z 320.0
 //	height_change between 0.001 and 0.5
 # define HEIGHT_FAKTOR 0.1
 
@@ -172,10 +172,18 @@ typedef struct s_arr_size
 	int		ym_rot_deg;
 	int		zm_rot_deg;
 	double	height_change;
-	int32_t color_plus;
-	int32_t color_minus;
+	int32_t	color_plus;
+	int32_t	color_minus;
 	int		map_area;
 }	t_sz;
+
+//	struct for images for the manual, independent from the map
+typedef struct s_manual
+{
+	mlx_image_t		*str;
+	char			*string;
+	struct s_manual	*next;
+}	t_man;
 
 // settings for the window, map is an array woth the map values, in coord
 // are the coordinates for each points, map size with map size values
@@ -184,7 +192,8 @@ typedef struct s_window
 	mlx_t		*mlx;
 	mlx_t		*mlx_info;
 	mlx_image_t	*image;
-	mlx_image_t	*image2;
+	mlx_image_t	*man;
+	t_man		*manual;
 	int			width;
 	int			height;
 	void		*win;
@@ -233,10 +242,13 @@ int		ft_hook_key(t_window *window, int *x_offset, int *y_offset);
 
 //	mlx initiate
 
+int		create_manual(t_window *window);
 int		initialize_mlx_image(t_window *window);
 
 //	reading_map
 
+int32_t	***assign(int32_t ***map, char **collumn,
+			int collumn_counter, int *row);
 int32_t	***read_map_and_assign_data(int fd);
 int		read_line_into_collumn(int fd, int *collumn_counter, char ***collumn);
 void	delete_spaces(int *collumn_counter, char ***collumn);
@@ -247,6 +259,7 @@ void	ft_set_before_y(t_coord **head, int iterations, t_window *window);
 void	ft_set_after_y(t_coord *head, t_window *window);
 int		get_index(t_window *window, int pos_xm, int pos_ym);
 int32_t	link_add_pt(t_coord **coord, int x, int y);
+void	lstadd_back(t_man **lst, t_man *new);
 
 //-------------------------------- user input ----------------------------------
 
@@ -263,7 +276,7 @@ int		check_mouse_clicked(t_window *window, int x, int y, enum mouse_key key);
 int		mouse_shift(t_window *window, int *x_set, int *y_set);
 int		mouse_rotation(t_window *window);
 
-//	usser input
+//	user input
 
 int		check_change_height(t_window *window);
 int		check_change_in_rotation(t_window *window);
@@ -272,8 +285,14 @@ int		check_change_in_rotation(t_window *window);
 
 int		reset_map(t_window *window);
 int		debug_mode_map(t_window *window);
-void	set_map_to_middle(t_window *window);
+
 int		information(t_window *window);
+
+//	user input helpers
+
+void	remove_manual_from_window(t_window *window);
+void	set_map_to_middle(t_window *window);
+void	print_manual(t_window *window);
 
 //--------------------------------- rendering ----------------------------------
 
@@ -317,11 +336,11 @@ void	degree(int *rot);
 
 //	clear functions
 
-void	free_stack(t_coord **stack);
-void	free_two_dimensional_array(char **param);
+void	free_map_coordinates(t_coord **stack);
 void	clear_image(t_window *window, uint32_t color);
 void	free_map(int32_t ***map);
 int32_t	***free_map_data(int32_t ***map, char **collumn, int row);
+void	free_manual(t_man **stack);
 
 //	help functions
 
@@ -340,8 +359,9 @@ int		ft_shutdown_error(mlx_t *mlx);
 
 //	map errors
 int		check_map_integer(int32_t ***map_collumn, char **collumn,
-			int *x, int line);
+			int x, int line);
 int		check_for_map_errors(int line, int row, int collumn_counter);
+int		check_colorcode(char *hex_str, char *digit);
 
 //--------------------------------- debugging ----------------------------------
 

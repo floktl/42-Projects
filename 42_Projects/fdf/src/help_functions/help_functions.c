@@ -6,7 +6,7 @@
 /*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 10:28:26 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/22 17:36:26 by flo              ###   ########.fr       */
+/*   Updated: 2024/03/25 15:48:51 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,18 +75,16 @@ double	check_zoom_direction(int map_middle, int zoom_position, double zoom)
 }
 
 //	function to convert a string to a hexadezimal value
-int32_t	convert_str_to_hex(char *comma_pos)
+int32_t	convert_str_to_hex(char *hex_str)
 {
-	char			*hex_str;
-	int32_t			hex_value;
+	unsigned int	hex_value;
 	unsigned int	digit_value;
 	char			digit;
 	int				i;
 
-	i = 0;
-	hex_str = comma_pos;
-	hex_value = 0;
-	digit = hex_str[0];
+	i = 3;
+	if (check_colorcode(hex_str, &digit) == EXIT_FAILURE)
+		return (EXIT_FAILURE);
 	while (hex_str[i] != '\0')
 	{
 		if (digit >= '0' && digit <= '9')
@@ -95,9 +93,28 @@ int32_t	convert_str_to_hex(char *comma_pos)
 			digit_value = 10 + (digit - 'a');
 		else if (digit >= 'A' && digit <= 'F')
 			digit_value = 10 + (digit - 'A');
+		else
+		{
+			ft_printf("color code not hexadezimal ");
+			return (EXIT_FAILURE);
+		}
 		hex_value = (hex_value << 4) | digit_value;
-		i++;
-		digit = hex_str[i];
+		digit = hex_str[++i];
 	}
 	return (hex_value);
+}
+
+void	lstadd_back(t_man **lst, t_man *new)
+{
+	t_man	*current;
+
+	if (*lst == NULL)
+	{
+		*lst = new;
+		return ;
+	}
+	current = *lst;
+	while (current->next != NULL)
+		current = current->next;
+	current->next = new;
 }

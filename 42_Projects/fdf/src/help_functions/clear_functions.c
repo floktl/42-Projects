@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clear_functions.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/24 12:14:49 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/24 15:37:08 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/03/25 15:16:23 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 //
 
 //	function for freeing all values within a stack
-void	free_stack(t_coord **stack)
+void	free_map_coordinates(t_coord **stack)
 {
 	t_coord	*head;
 	t_coord	*tmp;
@@ -85,4 +85,20 @@ int32_t	***free_map_data(int32_t ***map, char **collumn, int row)
 	free_two_dimensional_array(collumn);
 	free_map(map);
 	return (NULL);
+}
+
+//	function to free the manual
+void	free_manual(t_man **stack)
+{
+	t_man	*tmp;
+
+	while (*stack)
+	{
+		tmp = *stack;
+		*stack = (*stack)->next;
+		free(tmp->string);
+		tmp->string = NULL;
+		free(tmp);
+		tmp = NULL;
+	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   reading_map.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 09:16:53 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/24 13:25:55 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/03/25 10:45:11 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,39 +26,11 @@ int32_t	***assign(int32_t ***map, char **collumn, int collumn_counter, int *row)
 	if (assign_map_values(&map[*row], collumn, *row) == EXIT_FAILURE)
 	{
 		free(map[*row]);
+		map[*row] = NULL;
+		ft_printf("at line %d col %d\n", *row + 1, collumn_counter);
 		return (free_map_data(map, collumn, *row));
 	}
 	(*row)++;
-	return (map);
-}
-
-//	function to build the three dimensional array and save the map values there
-int32_t	***read_map_and_assign_data(int fd)
-{
-	int32_t	***map;
-	char	**collumn;
-	int		row;
-	int		collumn_counter;
-	int		line;
-
-	row = 0;
-	collumn_counter = 0;
-	map = malloc(sizeof(int32_t **));
-	if (!map)
-		return (NULL);
-	while (1)
-	{
-		map = ft_realloc(map, (row + 1) * sizeof(int32_t **));
-		if (!map)
-			return (free_map_data(map, collumn, row));
-		map[row] = NULL;
-		line = read_line_into_collumn(fd, &collumn_counter, &collumn);
-		if (check_for_map_errors(line, row, collumn_counter) == EXIT_FAILURE)
-			return (free_map_data(map, collumn, row));
-		else if (line == NO_NEW_LINE)
-			break ;
-		map = assign(map, collumn, collumn_counter, &row);
-	}
 	return (map);
 }
 

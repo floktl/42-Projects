@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   key_additional_functions.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 07:33:54 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/24 15:30:50 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/03/25 16:22:36 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,53 +66,22 @@ int	debug_mode_map(t_window *window)
 	return (NO_CHANGE);
 }
 
-//	this function sets the map to the middle of the window
-void	set_map_to_middle(t_window *window)
-{
-	window->map_sz.xposmw = window->width / 2;
-	window->map_sz.yposmw = window->height / 2;
-	window->map_sz.zcentmw = Z;
-	window->map_sz.xm_rot_deg = DEGREE_DEFAULT_X;
-	window->map_sz.ym_rot_deg = DEGREE_DEFAULT_Y;
-	window->map_sz.zm_rot_deg = DEGREE_DEFAULT_Z;
-}
-
-void	print_manual(t_window *window)
-{
-	int	y_pos;
-	int	distance;
-
-	y_pos = 8;
-	distance = 16;
-	mlx_delete_image(window->mlx, window->image2);
-	window->image2 = mlx_new_image(window->mlx, window->width, window->height);
-	window->image2 = mlx_put_string(window->mlx, "Manual", 8, y_pos);
-	y_pos += distance;
-	window->image2 = mlx_put_string(window->mlx, "Key functions:", 8, y_pos);
-	y_pos += distance;
-	window->image2 = mlx_put_string(window->mlx, "<P> : ZOOM IN", 8, y_pos);
-	y_pos += distance;
-	window->image2 = mlx_put_string(window->mlx, "<M> : ZOOM OUT", 8, y_pos);
-}
-
 //	function enables the manual
 int	information(t_window *window)
 {
-	static int		key_pressed = OFF;
-	static int		manual = ON;
+	static int	key_pressed = OFF;
+	static int	manual_status = ON;
 
 	if (mlx_is_key_down(window->mlx, MLX_KEY_I) && key_pressed == OFF)
 	{
-		if (manual == OFF)
+		if (manual_status == OFF)
 		{
-			mlx_delete_image(window->mlx, window->image2);
-			window->image2 = mlx_put_string(window->mlx,
-					"Press <I> for manual", 8, 8);
-			manual = ON;
+			remove_manual_from_window(window);
+			manual_status = ON;
 		}
-		else if (manual == ON)
+		else if (manual_status == ON)
 		{
-			manual = OFF;
+			manual_status = OFF;
 			print_manual(window);
 		}
 		key_pressed = ON;

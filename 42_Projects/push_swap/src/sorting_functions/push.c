@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   push.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 10:52:51 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/01/03 15:07:41 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/03/25 21:49:00 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../push_swap.h"
+#include "../../push_swap.h"
 //
 //	move or remove nodes from stack to stack:
 //

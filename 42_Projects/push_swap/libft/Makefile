@@ -3,21 +3,25 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+         #
+#    By: flo <flo@student.42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/13 09:46:50 by fkeitel           #+#    #+#              #
-#    Updated: 2024/01/03 15:20:28 by fkeitel          ###   ########.fr        #
+#    Updated: 2024/03/21 20:59:27 by flo              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = libft.a
-SRCDIR = src
+FT_PRINTFDIR = ft_printf
+GET_NEXT_LINEDIR = get_next_line
 
 # Define source files in the directory
-SRC = 	$(SRCDIR)/ft_printf.c $(SRCDIR)/check_datatypes.c \
-			$(SRCDIR)/printing_functions.c $(SRCDIR)/handle_datatypes.c \
+FT_PRINTF = 	$(FT_PRINTFDIR)/ft_printf.c $(FT_PRINTFDIR)/check_datatypes.c \
+			$(FT_PRINTFDIR)/printing_functions.c $(FT_PRINTFDIR)/handle_datatypes.c \
 
-FUNCTIONS	=	ft_isalnum.c ft_isprint.c ft_memcmp.c  ft_putchar_fd.c\
+GET_NEXT_LINE = $(GET_NEXT_LINEDIR)/get_next_line_utils.c \
+			$(GET_NEXT_LINEDIR)/get_next_line.c \
+
+FUNCTIONS	=	ft_isalnum.c ft_isprint.c ft_memcmp.c  ft_putchar_fd.c ft_realloc.c\
 				ft_strlcat.c ft_strncmp.c ft_substr.c ft_atoi.c ft_isalpha.c\
 				ft_itoa.c ft_memcpy.c  ft_putendl_fd.c ft_strchr.c  ft_strlcpy.c\
 				ft_strnstr.c ft_tolower.c ft_bzero.c   ft_isascii.c ft_striteri.c\
@@ -26,10 +30,12 @@ FUNCTIONS	=	ft_isalnum.c ft_isprint.c ft_memcmp.c  ft_putchar_fd.c\
 				ft_putstr_fd.c  ft_strjoin.c ft_strmapi.c ft_strtrim.c ft_split.c\
 				ft_lstnew.c ft_lstsize.c ft_lstadd_front.c ft_lstadd_back.c\
 				ft_lstlast.c ft_lstdelone.c ft_lstclear.c ft_lstiter.c ft_lstmap.c\
+				free_two_dimensional_array.c\
 
-OBJECTS	=	$(FUNCTIONS:.c=.o) $(SRC:$(SRCDIR)/%.c=$(SRCDIR)/%.o)
+OBJECTS	=	$(FUNCTIONS:.c=.o) $(FT_PRINTF:$(FT_PRINTFDIR)/%.c=$(FT_PRINTFDIR)/%.o) \
+				$(GET_NEXT_LINE:$(GET_NEXT_LINEDIR)/%.c=$(GET_NEXT_LINEDIR)/%.o) \
 
-CC				= cc
+CC				= cc -g
 RM				= rm -f
 CFLAGS			= -Wall -Wextra -Werror
 

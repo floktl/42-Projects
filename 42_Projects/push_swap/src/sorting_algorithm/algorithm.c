@@ -6,16 +6,16 @@
 /*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 15:48:05 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/01/18 01:12:33 by flo              ###   ########.fr       */
+/*   Updated: 2024/03/26 09:53:40 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../push_swap.h"
+#include "../../push_swap.h"
 //
 //	algorithms for sorting the stack_a, the smallest number on the top:
 //
 
-//helper function to return the best number of operations and the number itself
+//	helper function to return best number of operations and the number itself
 int	ret_best(int a, int b, int cur_num, int *lowest_operations)
 {
 	int	best_num;
@@ -28,8 +28,8 @@ int	ret_best(int a, int b, int cur_num, int *lowest_operations)
 	return (best_num);
 }
 
-//function for finding the lowest operations
-//if rot_a and rot_b are positive, the best number is only the highest
+//	function for finding the lowest operations
+//	if rot_a and rot_b are positive, the best number is only the highest
 int	find_low_op(int rot_a, int rot_b, int cur_num, int *best)
 {
 	static int	best_num = INT_MIN;
@@ -49,11 +49,11 @@ int	find_low_op(int rot_a, int rot_b, int cur_num, int *best)
 	return (best_num);
 }
 
-//calculate the minumum operations necessary to push the best num
-//from stack_a to stack_b
-//iterates stack_a, and calculates the lowest number of rotations
-// in both stacks needed for the current number to push to stack_b
-//negative number for reverse rotate, positive for rotate
+//	calculate the minumum operations necessary to push the best num
+//	from stack_a to stack_b
+//	iterates stack_a, and calculates the lowest number of rotations
+//	in both stacks needed for the current number to push to stack_b
+//	negative number for reverse rotate, positive for rotate
 int	op_calc(t_list *a, t_list *b, int *rot_a, int *rot_b)
 {
 	t_list	*tmp;
@@ -82,9 +82,9 @@ int	op_calc(t_list *a, t_list *b, int *rot_a, int *rot_b)
 	return (best_num);
 }
 
-//finding the best possible number in stack a to push to stack b
-//search for the number of operations to put best number from stack_a in stack_b
-//plus number of operations needed to put this best number of stack_a to top
+//	finding the best possible number in stack a to push to stack b
+//	search for number of operations to put best number from stack_a in stack_b
+//	plus number of operations needed to put this best number of stack_a to top
 int	prepare_and_push(t_list **a, t_list **b, int rot_a, int rot_b)
 {
 	while (rot_b < 0)
@@ -111,15 +111,15 @@ int	prepare_and_push(t_list **a, t_list **b, int rot_a, int rot_b)
 	return (0);
 }
 
-// main algorithm for sorting the stack
-//first searching for the best num with the least oparation needed to push to
-// stack_b. Then rotating two stacks at once, if possible to save operations
-//Then preparing the stacks for pushing the best num into stack_b  by rotating
-//Then push best num.... and again the same, until only three nodes in stack_a
-//after that rotating the stack_b until the highest number is on top
-//After that a small algorithm under 3 nodes
-//in the end pushing the sorted stack_b into a-> sorted stack_a
-//boooom-> finally done! easy or?
+//	main algorithm for sorting the stack
+//	first searching for the best num with the least oparation needed to push to
+//	stack_b. Then rotating two stacks at once, if possible to save operations
+//	Then preparing the stacks for pushing the best num into stack_b by rotating
+//	Then push best num.... and again the same, until only three nodes in stack_a
+//	after that rotating the stack_b until the highest number is on top
+//	After that a small algorithm under 3 nodes
+//	in the end pushing the sorted stack_b into a-> sorted stack_a
+//	boooom-> finally done! easy or?
 void	sorting_algorithm(t_list **stack_a, t_list **stack_b)
 {
 	int	rot_a;

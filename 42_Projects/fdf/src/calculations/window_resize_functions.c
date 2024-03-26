@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   window_resize_functions.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 17:45:17 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/24 10:39:45 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/03/25 20:34:27 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ void	ft_resize(int width, int height, void *param)
 	window = (t_window *)param;
 	if (width != window->width || height != window->height)
 		mlx_resize_image(window->image, width, height);
+	else
+		return ;
 	window->width = width;
 	window->height = height;
 	window->cent_xw = width / 2;

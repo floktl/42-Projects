@@ -6,11 +6,11 @@
 /*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/22 18:17:30 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/01/18 02:02:21 by flo              ###   ########.fr       */
+/*   Updated: 2024/03/25 22:25:23 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../push_swap.h"
+#include "../../push_swap.h"
 
 //
 //	helper functions for stack
@@ -22,14 +22,16 @@ void	ft_free(char **str)
 	int	i;
 
 	i = 0;
+	if (!str)
+		return ;
 	while (str[i])
-		i++;
-	while (i >= 0)
 	{
 		free(str[i]);
-		i--;
+		str[i] = NULL;
+		i++;
 	}
 	free(str);
+	str = NULL;
 }
 
 //function for freeing a whole stack

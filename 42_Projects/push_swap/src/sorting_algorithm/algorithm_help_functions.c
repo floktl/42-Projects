@@ -6,11 +6,11 @@
 /*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 16:31:06 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/01/18 01:12:07 by flo              ###   ########.fr       */
+/*   Updated: 2024/03/25 21:48:48 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../push_swap.h"
+#include "../../push_swap.h"
 
 //
 //	functions for the sorting algorithmus

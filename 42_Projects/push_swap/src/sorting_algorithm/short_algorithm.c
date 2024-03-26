@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   short_algorithm.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/07 09:53:26 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/01/03 12:59:10 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/03/25 21:48:55 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../push_swap.h"
+#include "../../push_swap.h"
 
 //algorithm if stack a has 3 nodes
 void	algorithm_three_nodes(t_list **stack_a, int highest, int lowest)

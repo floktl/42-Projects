@@ -3,78 +3,63 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+         #
+#    By: flo <flo@student.42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/31 10:58:51 by fkeitel           #+#    #+#              #
-#    Updated: 2024/01/03 14:56:19 by fkeitel          ###   ########.fr        #
+#    Updated: 2024/03/25 22:16:43 by flo              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-# Define directories
-SORTDIR = sorting_functions
-CREATEDIR = create
-LIBFTDIR = libft
-ERRORDIR = error_handling
-SORTINGDIR = sorting_algorithm
-HELPERDIR = helper_functions
+# Project name
+NAME    := push_swap
+# Flags
+CFLAGS  := -Wunreachable-code -Ofast -Wall -Werror -Wextra -g
 
-# Define source files in each directory
-SORT = 	push.c swap.c rotate.c reverse_rotate.c \
+# Directories
+SRC_DIR := src
+OBJ_DIR := obj
 
-CREATE = main.c print_stack.c \
+# Source files, Libraries targets
+SRCS    :=  $(shell find $(SRC_DIR) -name '*.c')
+LIBFT   := libft/
+LIBFTTARGET := $(LIBFT)/libft.a
+OBJS    := $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
-ERROR = argument_errors.c find_error_type.c stack_errors.c \
+# Header file
+HEADER  := push_swap.h
 
-SORTING = algorithm.c algorithm_help_functions.c short_algorithm.c \
+# Rule to build the project
+all: $(OBJ_DIR) $(NAME) $(HEADER)
+	@echo "$(NAME) successfully built!"
 
-HELPER = help_functions_1.c help_functions_2.c help_functions_3.c \
+# Rule to build the project using MLX library
+$(NAME): $(OBJS) $(LIBFTTARGET)
+	@$(CC) $(CFLAGS) $(OBJS) $(MLX_FLAGS) -o $@ $(LIBFTTARGET)
 
-# Object files, derived from source files
-OBJ = $(SORT:%.c=$(SORTDIR)/%.o) $(CREATE:%.c=$(CREATEDIR)/%.o) \
-		$(ERROR:%.c=$(ERRORDIR)/%.o) $(SORTING:%.c=$(SORTINGDIR)/%.o) \
-		$(HELPER:%.c=$(HELPERDIR)/%.o)
+$(LIBFTTARGET):
+	@$(MAKE) -C $(LIBFT)
 
-# Compiler and flags
-CC = gcc
-CFLAGS = -g -Wall -Wextra -Werror -I $(SORTDIR) -I $(CREATEDIR) -I $(LIBFTDIR)\
-		-I $(ERRORDIR) -I $(SORTINGDIR) -I $(HELPERDIR)
-LDFLAGS = -L $(LIBFTDIR) -lft
+# Rule to compile source files into object files in a seperate obj folder
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR) $(HEADER)
+	@mkdir -p $(dir $@)
+	@$(info Compiling $<)
+	@$(CC) $(CFLAGS) -c $< -o $@
 
-# Target executable name
-NAME = push_swap
+# Create the objects directory
+$(OBJ_DIR):
+	@mkdir -p $(OBJ_DIR)
 
-# Default target
-all: $(NAME)
-
-# Rule to create the final executable
-$(NAME): $(OBJ)
-	$(MAKE) -C $(LIBFTDIR)
-	$(CC) $(OBJ) $(LDFLAGS) -o $(NAME)
-
-# Rules for compiling source files into object files
-$(SORTDIR)/%.o: $(SORTDIR)/%.c
-	$(CC) $(CFLAGS) -c $< -o $@
-
-$(CREATEDIR)/%.o: $(CREATEDIR)/%.c
-	$(CC) $(CFLAGS) -c $< -o $@
-
-$(ERRORDIR)/%.o: $(ERRORDIR)/%.c
-	$(CC) $(CFLAGS) -c $< -o $@
-
-$(HELPERDIR)/%.o: $(HELPERDIR)/%.c
-	$(CC) $(CFLAGS) -c $< -o $@
-
-# Clean the build directory
+# Rule to clean object files
 clean:
-	rm -f $(OBJ)
-	$(MAKE) -C $(LIBFTDIR) clean
+	@$(MAKE) -C $(LIBFT) fclean
+	@rm -rf $(OBJ_DIR)
 
-# Full clean (remove all generated files)
+# Rule to clean project and object files
 fclean: clean
-	rm -f $(NAME)
+	@rm -rf $(NAME)
 
-# Rebuild the project from scratch
+# Rule to clean and rebuild the project
 re: fclean all
 
-# Mark targets as not generating any files
-.PHONY: all clean fclean re
+# Phony targets
+.PHONY: all clean fclean re Makefile

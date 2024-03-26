@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   help_functions_2.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 19:54:49 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/01/03 12:40:40 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/03/25 21:48:39 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../push_swap.h"
+#include "../../push_swap.h"
 
 // function for finding the highest number in a stack
 int	find_highest(t_list *stack)

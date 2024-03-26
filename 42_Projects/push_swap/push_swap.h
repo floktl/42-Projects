@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 16:57:56 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/01/03 14:41:47 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/03/26 08:55:12 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,12 @@ void	print_stacks(t_list *stack_a, t_list *stack_b);
 
 //	error_handling:
 //finding error type:
-int		check_error(int n, char *argv[]);
+int		check_error(char **args);
 //argument_errors:
-int		check_argument_error(int n, char *argv[]);
-int		check_for_duplicates(char *argv[], long cur_number);
+int		check_argument_error(char **argv);
+int		check_for_duplicates(char **args, long cur_number);
 int		check_if_num_is_in_int_range(long current_number);
-int		check_if_num_is_digit(char *argv[], int cur_index);
+int		check_if_num_is_digit(char **args, int cur_index);
 //stack_errors
 int		check_stack_errors(t_list **stack_a, t_list **stack_b);
 

@@ -6,7 +6,7 @@
 /*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 16:57:56 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/01/18 01:26:23 by flo              ###   ########.fr       */
+/*   Updated: 2024/03/21 21:05:02 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,11 @@
 # include <unistd.h>
 # include <stdio.h>
 # include <stdarg.h>
+# include <fcntl.h>
+
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 1
+# endif
 
 typedef struct s_list
 {
@@ -68,20 +73,35 @@ t_list	*ft_lstnew(int content);
 t_list	*ft_lstlast(t_list *lst);
 t_list	*ft_lstmap(t_list *lst, void *(*f)(int), void (*del)(int));
 
+//	Personal added functions
+
+void	free_two_dimensional_array(char **param);
+void	*ft_realloc(void *ptr, size_t size);
+
+// printf_functions:
+
 //main function for printing
 int		ft_printf(const char *format, ...);
-
 //checking which datatypes are given
 int		ft_checkcases(const char format, va_list argument);
-
 //functions for handling special data formats
 int		put_u(unsigned int n);
 int		put_hex(unsigned long *hexadecimal, int upper_lower, int counter);
 int		put_i(int n, int counter);
 int		put_p(va_list argument);
-
 //functions for the actual printing
 int		ft_printstr(char *str, int counter);
 int		ft_putchar(int c, int counter);
+
+//get_next_line functions:
+char	*get_next_line(int fd);
+char	*double_bufsize_fill_with_null(char const *s1);
+void	*extract_line(char **line, char **buf, int *end);
+size_t	ft_strlen(const char *c);
+int		read_buf(int fd, char **buf, int *end);
+char	*ft_check_if_newline(char *s);
+void	*ft_calloc(size_t count, size_t size);
+char	*ft_strncpy(char *dest, const char *src, size_t n);
+int		ft_count_new_line(char **buf);
 
 #endif

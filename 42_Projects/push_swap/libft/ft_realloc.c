@@ -1,28 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   stack_errors.c                                     :+:      :+:    :+:   */
+/*   ft_realloc.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/24 23:49:46 by fkeitel           #+#    #+#             */
-/*   Updated: 2023/12/23 12:57:43 by flo              ###   ########.fr       */
+/*   Created: 2024/03/21 20:50:22 by flo               #+#    #+#             */
+/*   Updated: 2024/03/21 20:50:38 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../push_swap.h"
+#include "libft.h"
 
-//
-//	errors with the two stacks:
-//
-
-/* //check for errors in the stacks
-int	check_stack_errors(t_stack **stack_a, t_stack **stack_b)
+//	function to allocate memory to an existing datatype
+void	*ft_realloc(void *ptr, size_t size)
 {
-	int	i;
+	void	*new_ptr;
 
-	i = 0;
-	if (!(*stack_a) || !(*stack_b))
-		i = 1;
-	return (0);
-} */
+	if (ptr == NULL)
+		return (malloc(size));
+	if (size == 0)
+		return (free(ptr), ptr = NULL, NULL);
+	new_ptr = malloc(size);
+	if (new_ptr == NULL)
+		return (NULL);
+	ft_memcpy(new_ptr, ptr, size);
+	free(ptr);
+	ptr = NULL;
+	return (new_ptr);
+}

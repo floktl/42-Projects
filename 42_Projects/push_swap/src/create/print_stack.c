@@ -6,18 +6,18 @@
 /*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 14:02:40 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/01/16 03:38:04 by flo              ###   ########.fr       */
+/*   Updated: 2024/03/25 21:48:13 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../push_swap.h"
+#include "../../push_swap.h"
 
 //
 //	functions for printing stacks, isnt necessary, but great for visualization
 //	just have a look
 //
 
-//function for ensuring alignment for the stacks displayed in terminal
+//	function for ensuring alignment for the stacks displayed in terminal
 void	print_spaces(t_list *stack, int type, int max_stack)
 {
 	int		count;
@@ -46,7 +46,7 @@ void	print_spaces(t_list *stack, int type, int max_stack)
 	}
 }
 
-//function for printing one node
+//	function for printing one node
 int	print_one_node(t_list **stack, int max_length, int diff)
 {
 	if (*stack != NULL)
@@ -58,7 +58,7 @@ int	print_one_node(t_list **stack, int max_length, int diff)
 	return (diff);
 }
 
-//function for printing spaces between a and b, for perfect allignment
+//	function for printing spaces between a and b, for perfect allignment
 void	print_spaces_in_between(t_list **b, int *diff, int len_a, int len_b)
 {
 	if (*diff <= 0)
@@ -82,7 +82,7 @@ void	print_spaces_in_between(t_list **b, int *diff, int len_a, int len_b)
 	return ;
 }
 
-//function to actually print the nodes alligned
+//	function to actually print the nodes alligned
 int	printing_nodes(t_list *temp_a, t_list *temp_b, int len_a, int len_b)
 {
 	int	diff;
@@ -109,7 +109,7 @@ int	printing_nodes(t_list *temp_a, t_list *temp_b, int len_a, int len_b)
 	return (diff);
 }
 
-//printing stacks starting with top of highest stack, incl diff between stacks
+//	printing stacks starting with top of highest stack, incl diff between stacks
 void	print_stacks(t_list *stack_a, t_list *stack_b)
 {
 	t_list	*temp_a;

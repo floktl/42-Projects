@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mlx_initiate.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 20:53:16 by flo               #+#    #+#             */
-/*   Updated: 2024/03/25 16:30:41 by flo              ###   ########.fr       */
+/*   Updated: 2024/03/26 11:35:50 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ int	create_manual(t_window *window)
 		perror("manual damaged");
 		return (0);
 	}
+	window->manual = NULL;
 	while (manual_line)
 	{
 		new_node = malloc(sizeof(t_man));

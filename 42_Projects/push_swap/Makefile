@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: flo <flo@student.42.fr>                    +#+  +:+       +#+         #
+#    By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/31 10:58:51 by fkeitel           #+#    #+#              #
-#    Updated: 2024/03/25 22:16:43 by flo              ###   ########.fr        #
+#    Updated: 2024/03/26 14:10:24 by fkeitel          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@
 NAME    := push_swap
 # Flags
 CFLAGS  := -Wunreachable-code -Ofast -Wall -Werror -Wextra -g
-
+LEAKFLAG := -L/Users/fkeitel/Documents/LeakSanitizer  -llsan
 # Directories
 SRC_DIR := src
 OBJ_DIR := obj
@@ -34,7 +34,7 @@ all: $(OBJ_DIR) $(NAME) $(HEADER)
 
 # Rule to build the project using MLX library
 $(NAME): $(OBJS) $(LIBFTTARGET)
-	@$(CC) $(CFLAGS) $(OBJS) $(MLX_FLAGS) -o $@ $(LIBFTTARGET)
+	@$(CC) $(CFLAGS) $(OBJS) $(LEAKFLAG) -o $@ $(LIBFTTARGET)
 
 $(LIBFTTARGET):
 	@$(MAKE) -C $(LIBFT)

@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   server.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 08:29:17 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/27 13:59:08 by flo              ###   ########.fr       */
+/*   Updated: 2024/03/27 17:34:16 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
 
+//	function to print the message using the write function for quicker response
 int	print_message(char **message, char *client_pid)
 {
 	int	i;
@@ -40,28 +41,35 @@ int	print_message(char **message, char *client_pid)
 	return (EXIT_SUCCESS);
 }
 
-//function to output the current character or send the PID of the current
-//process to the client, to check if message is received
-void	output_message(char character, int *state, int *message_rest_length)
+//	function to add one character to the message, reallocate memory
+int	add_char(char **message, char character, int *byte, int *rest_len)
+{
+	*message = ft_realloc(*message, *byte + 1);
+	if (!(*message))
+		return (EXIT_FAILURE);
+	(*message)[*byte] = character;
+	(*message)[++(*byte)] = '\0';
+	*rest_len -= 1;
+	return (EXIT_SUCCESS);
+}
+
+//	function to output the current character or send the PID of the current
+//	process to the client, to check if message is received
+void	output_message(char character, int *state, int *rest_len)
 {
 	static int	char_count = 0;
 	static char	client_pid[6] = {0};
 	static char	*message = NULL;
-	static int	bytes = 0;
+	static int	byte = 0;
 
-	if (*message_rest_length > 0)
+	if (*rest_len > 0)
 	{
-		message = ft_realloc(message, bytes + 2);
-		if (!message)
+		if (add_char(&message, character, &byte, rest_len) == EXIT_FAILURE)
 			exit(1);
-		message[bytes] = character;
-		message[bytes + 1] = '\0';
-		bytes++;
-		*message_rest_length -= 1;
 	}
 	else
 	{
-		bytes = 0;
+		byte = 0;
 		if (character != MESSAGE_END)
 			client_pid[char_count++] = character;
 		else if (character == MESSAGE_END)
@@ -75,7 +83,7 @@ void	output_message(char character, int *state, int *message_rest_length)
 	}
 }
 
-//function to handle the SIGUSR signals from the client
+//	function to handle the SIGUSR signals from the client
 void	handle_sigusr(int signum)
 {
 	static int	current_char[8];

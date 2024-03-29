@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   algorithm_help_functions.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 16:31:06 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/25 21:48:48 by flo              ###   ########.fr       */
+/*   Updated: 2024/03/29 14:26:46 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	ins_pos(t_list *stack_b, int num)
 	int		target;
 	int		tmp;
 
-	tmp = INT32_MIN;
+	tmp = INT_MIN;
 	counter_b = stack_b;
 	while (counter_b != NULL)
 	{
@@ -51,7 +51,7 @@ int	ins_pos(t_list *stack_b, int num)
 		}
 		counter_b = counter_b->next;
 	}
-	if (tmp == INT32_MIN)
+	if (tmp == INT_MIN)
 		target = find_position(find_highest(stack_b), stack_b);
 	return (target);
 }

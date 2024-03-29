@@ -6,7 +6,7 @@
 /*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 16:57:56 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/21 21:05:02 by flo              ###   ########.fr       */
+/*   Updated: 2024/03/27 10:41:11 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,8 @@ t_list	*ft_lstmap(t_list *lst, void *(*f)(int), void (*del)(int));
 
 void	free_two_dimensional_array(char **param);
 void	*ft_realloc(void *ptr, size_t size);
+int		append_int(int a, int b);
+char	bits_to_char(const int bits[8]);
 
 // printf_functions:
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 13:58:32 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/26 09:50:13 by flo              ###   ########.fr       */
+/*   Updated: 2024/03/29 14:33:16 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,11 +81,11 @@ int	initstack(t_list **stack, int argc, char **argv)
 		while (argv[i])
 		{
 			args[i - 1] = ft_strdup(argv[i]);
+			args[i] = NULL;
 			if (!args[i - 1])
 				return (ft_free(args), -1);
 			i++;
 		}
-		args[i - 1] = NULL;
 	}
 	if (check_error(args) == -1 || process_args(stack, args) == -1)
 		return (ft_free(args), -1);

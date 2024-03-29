@@ -6,7 +6,7 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 08:32:57 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/27 17:31:40 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/03/29 13:21:47 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,11 @@
 void	handle_sigusr(int signum)
 {
 	if (signum == SIGUSR1)
-		ft_printf("message received\n");
+		ft_printf("\033[0;32mmessage received\033[0m\n");
 }
 
 //function to send a character in single bits per send
-void	send_bits(char cur_char, pid_t server_pid)
+int	send_bits(char cur_char, pid_t server_pid)
 {
 	int	j;
 
@@ -35,21 +35,22 @@ void	send_bits(char cur_char, pid_t server_pid)
 		{
 			if (kill(server_pid, SIGUSR1) == -1)
 			{
-				ft_printf("Error sending signal");
-				exit(1);
+				ft_printf("\033[0;31merror sending signal\033[0m\n");
+				return (EXIT_FAILURE);
 			}
 		}
 		else
 		{
 			if (kill(server_pid, SIGUSR2) == -1)
 			{
-				ft_printf("Error sending signal");
-				exit(1);
+				ft_printf("\033[0;31merror sending signal\033[0m\n");
+				return (EXIT_FAILURE);
 			}
 		}
 		usleep(100);
 		j++;
 	}
+	return (EXIT_SUCCESS);
 }
 
 //function to return the message filled with arguments and placeholder 'a'
@@ -59,6 +60,7 @@ char	*prepare_message(char *args)
 	char	*temp;
 	char	args_len_end;
 
+	temp = NULL;
 	message = ft_itoa((int)ft_strlen(args));
 	args_len_end = MESSAGE_END;
 	temp = ft_strjoin(message, &args_len_end);
@@ -73,11 +75,11 @@ char	*prepare_message(char *args)
 //client_pid is for return signal from server, checks if message received
 int	main(int argc, char *argv[])
 {
-	pid_t		server_pid;
-	char		*message;
-	int			counter;
-	char		*pid_in_char;
-	char		*temp_message;
+	pid_t	server_pid;
+	char	*message;
+	int		counter;
+	char	*pid_in_char;
+	char	*temp_message;
 
 	counter = 0;
 	signal(SIGUSR1, handle_sigusr);
@@ -90,7 +92,11 @@ int	main(int argc, char *argv[])
 	free(temp_message);
 	free(pid_in_char);
 	while (message[counter])
-		send_bits(message[counter++], server_pid);
+	{
+		if (send_bits(message[counter], server_pid) == EXIT_FAILURE)
+			return (free(message), 0);
+		counter++;
+	}
 	free(message);
 	send_bits(MESSAGE_END, server_pid);
 	return (0);

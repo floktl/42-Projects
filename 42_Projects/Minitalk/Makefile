@@ -6,7 +6,7 @@
 #    By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/04 08:41:04 by fkeitel           #+#    #+#              #
-#    Updated: 2024/01/04 09:28:22 by fkeitel          ###   ########.fr        #
+#    Updated: 2024/03/29 13:33:05 by fkeitel          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,6 +17,8 @@ LIBFTDIR = libft
 CC = gcc
 CFLAGS = -g -Wall -Wextra -Werror -I$(LIBFTDIR)
 LDFLAGS = -L$(LIBFTDIR) -lft
+
+LEAKFLAG := -L/Users/fkeitel/Documents//LeakSanitizer  -llsan
 
 # Define source files
 CLIENT_SRC = client.c
@@ -36,12 +38,12 @@ all: $(CLIENT_NAME) $(SERVER_NAME)
 # Rule to create the client executable
 $(CLIENT_NAME): $(CLIENT_OBJ)
 	$(MAKE) -C $(LIBFTDIR)
-	$(CC) $(CLIENT_OBJ) $(LDFLAGS) -o $(CLIENT_NAME)
+	$(CC) $(CLIENT_OBJ) $(LDFLAGS) $(LEAKFLAG) -o  $(CLIENT_NAME)
 
 # Rule to create the server executable
 $(SERVER_NAME): $(SERVER_OBJ)
 	$(MAKE) -C $(LIBFTDIR)
-	$(CC) $(SERVER_OBJ) $(LDFLAGS) -o $(SERVER_NAME)
+	$(CC) $(SERVER_OBJ) $(LDFLAGS) $(LEAKFLAG) -o $(SERVER_NAME)
 
 # Generic rule for compiling source files into object files
 %.o: %.c
@@ -54,7 +56,7 @@ clean:
 
 # Full clean (remove all generated files)
 fclean: clean
-	rm -f $(CLIENT_NAME) $(SERVER_NAME)
+	rm -f $(CLIENT_NAME) $(SERVER_NAME) libft/libft.a
 
 # Rebuild the project from scratch
 re: fclean all

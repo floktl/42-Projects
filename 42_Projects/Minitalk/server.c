@@ -6,7 +6,7 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 08:29:17 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/27 17:34:16 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/03/29 13:41:10 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	print_message(char **message, char *client_pid)
 	i = 0;
 	if (kill((pid_t)ft_atoi(client_pid), SIGUSR1) == -1)
 	{
-		ft_printf("Error sending signal");
+		ft_printf("\033[0;31merror sending signal\033[0m\n");
 		if (*message)
 		{
 			free(*message);
@@ -44,11 +44,12 @@ int	print_message(char **message, char *client_pid)
 //	function to add one character to the message, reallocate memory
 int	add_char(char **message, char character, int *byte, int *rest_len)
 {
-	*message = ft_realloc(*message, *byte + 1);
+	*message = ft_realloc(*message, *byte + 2);
 	if (!(*message))
 		return (EXIT_FAILURE);
 	(*message)[*byte] = character;
-	(*message)[++(*byte)] = '\0';
+	(*byte)++;
+	(*message)[(*byte)] = '\0';
 	*rest_len -= 1;
 	return (EXIT_SUCCESS);
 }
@@ -69,6 +70,7 @@ void	output_message(char character, int *state, int *rest_len)
 	}
 	else
 	{
+		rest_len = 0;
 		byte = 0;
 		if (character != MESSAGE_END)
 			client_pid[char_count++] = character;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 19:00:23 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/01/21 10:36:14 by flo              ###   ########.fr       */
+/*   Updated: 2024/03/29 12:15:05 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,12 @@ int	ft_atoi(const char *str)
 	return (result * sign);
 }
 
-int main(void) {
-    char str[] = "12345"; // Replace this with the string you want to convert
-    //int number = ft_atoi(str);
+//int main(void) {
+//    char str[] = "12345"; // Replace this with the string you want to convert
+//    //int number = ft_atoi(str);
 
-    printf("String: %s\n", str);
-    // printf("Converted to Integer: %d\n", number);
+//    printf("String: %s\n", str);
+//    // printf("Converted to Integer: %d\n", number);
 
-    return 0;
-}
+//    return 0;
+//}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 17:15:31 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/29 13:55:15 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/03/30 08:10:22 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,30 +14,31 @@
 
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
-	char	*sub_str;
-	size_t	i;
+	char	*sub_s;
+	char	*temp_sub_s;
+	size_t	count;
+	size_t	count_sub;
+	size_t	size_s;
 
-	i = 0;
-	if (len == 0 || !s)
+	size_s = ft_strlen(s);
+	if (len > size_s)
+		len = size_s;
+	sub_s = (char *)ft_calloc(len + 1, sizeof(char));
+	if (!sub_s)
 		return (NULL);
-	if (start >= ft_strlen(s))
+	count_sub = 0;
+	count = 0;
+	temp_sub_s = sub_s;
+	while (s[count] && count_sub < len)
 	{
-		sub_str = ft_calloc(1, 1);
-		if (!sub_str)
-			return (NULL);
-		return (sub_str);
+		if (count >= start)
+		{
+			*sub_s++ = s[count];
+			count_sub++;
+		}
+		count++;
 	}
-	if (len > ft_strlen(s) - start)
-		len = ft_strlen(s) - start;
-	sub_str = (char *)malloc(len);
-	if (!sub_str)
-		return (NULL);
-	while (i <= len && s[i + start] != '\0')
-	{
-		sub_str[i] = s[i + start];
-		i++;
-	}
-	return (sub_str[i] = '\0', sub_str);
+	return (temp_sub_s);
 }
 
 /* int main()

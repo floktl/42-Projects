@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+         #
+#    By: flo <flo@student.42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/04 08:41:04 by fkeitel           #+#    #+#              #
-#    Updated: 2024/03/29 14:00:36 by fkeitel          ###   ########.fr        #
+#    Updated: 2024/03/30 10:27:59 by flo              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ CC = gcc
 CFLAGS = -g -Wall -Wextra -Werror -I$(LIBFTDIR)
 LDFLAGS = -L$(LIBFTDIR) -lft
 
-#LEAKFLAG := -L/Users/fkeitel/Documents//LeakSanitizer  -llsan
+LEAKFLAG := -L/Users/flo/LeakSanitizer  -llsan
 
 # Define source files
 CLIENT_SRC = client.c

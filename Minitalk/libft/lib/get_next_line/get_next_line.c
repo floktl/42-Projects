@@ -6,7 +6,7 @@
 /*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 12:40:04 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/27 14:53:39 by flo              ###   ########.fr       */
+/*   Updated: 2024/03/30 20:55:31 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,5 @@ char	*get_next_line(int fd)
 		return (NULL);
 	}
 	free(buf);
-	buf = NULL;
-	return (line);
+	return (buf = NULL, line);
 }

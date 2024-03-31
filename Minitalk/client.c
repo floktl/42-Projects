@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   client.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 08:32:57 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/29 13:21:47 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/03/30 11:32:47 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ char	*prepare_message(char *args)
 //main function, message structure, which will be send to the server:
 // <length of arg[]> 'a' <argument> <client_pid>
 //client_pid is for return signal from server, checks if message received
-int	main(int argc, char *argv[])
+int	main(int argc, char **argv)
 {
 	pid_t	server_pid;
 	char	*message;

@@ -6,7 +6,7 @@
 /*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 15:18:52 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/27 14:19:59 by flo              ###   ########.fr       */
+/*   Updated: 2024/03/30 19:27:25 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ char	*ft_strdup(const char *s1)
 	size_t	counter;
 
 	counter = 0;
-	s2 = (char *) malloc((size_t) ft_strlen(s1) + 1);
+	s2 = (char *) malloc((size_t)(ft_strlen(s1) + 1));
+	s1 = NULL;
 	if (!s2)
 		return (NULL);
 	while (s1[counter] != '\0')

@@ -6,7 +6,7 @@
 /*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 08:36:31 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/27 13:50:47 by flo              ###   ########.fr       */
+/*   Updated: 2024/03/30 20:52:22 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,13 @@
 # include <stdio.h>
 # include <string.h>
 # include <sys/un.h>
-# include "libft.h"
 # include <signal.h>
-# define SERVER_SOCKET_PATH "/tmp/server_socket"
 # include <sys/shm.h>
 # include <stddef.h>
 # include "libft/libft.h"
 # include <stdarg.h>
 # include <limits.h>
+#include <sys/types.h>
+# include <unistd.h>
 
 #endif

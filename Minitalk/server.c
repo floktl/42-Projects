@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   server.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 08:29:17 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/29 14:24:13 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/03/30 20:57:07 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,57 +36,61 @@ int	print_message(char **message, char *client_pid)
 			write(1, &(*message)[i], 1);
 			i++;
 		}
-		free(*message);
-		(*message) = NULL;
 	}
+	free(*message);
+	(*message) = NULL;
 	return (EXIT_SUCCESS);
 }
 
 //	function to add one character to the message, reallocate memory
-int	add_char(char **message, char character, int *byte, int *rest_len)
+int	add_char(char **message, char character, int *rest_len)
 {
-	*message = ft_realloc(*message, *byte + 1);
-	if (!(*message))
+	if (*rest_len > 0)
 	{
-		return (EXIT_FAILURE);
-		*message = NULL;
+		if (!(*message))
+		{
+			*message = malloc(sizeof(char) * 2);
+			if (!(*message))
+				return (EXIT_FAILURE);
+			(*message)[0] = character;
+			(*message)[1] = '\0';
+		}
+		else
+		{
+			add_char_to_string(message, character);
+		}
+		(*rest_len)--;
 	}
-	(*message)[*byte] = character;
-	(*message)[(*byte) + 1] = '\0';
-	(*byte)++;
-	*rest_len -= 1;
 	return (EXIT_SUCCESS);
 }
 
 //	function to output the current character or send the PID of the current
 //	process to the client, to check if message is received
-void	output_message(char character, int *state, int *rest_len)
+int	output_message(char character, int *state, int *rest_len)
 {
-	static int	char_count = 0;
+	static int	pid_count = 0;
 	static char	client_pid[6] = {0};
 	static char	*message = NULL;
-	static int	byte = 0;
 
 	if (*rest_len > 0)
 	{
-		if (add_char(&message, character, &byte, rest_len) == EXIT_FAILURE)
-			exit(1);
+		if (add_char(&message, character, rest_len) == EXIT_FAILURE)
+			return (EXIT_FAILURE);
 	}
 	else
 	{
-		*rest_len = 0;
-		byte = 0;
 		if (character != MESSAGE_END)
-			client_pid[char_count++] = character;
+			client_pid[pid_count++] = character;
 		else if (character == MESSAGE_END)
 		{
 			*state = 0;
-			client_pid[char_count] = '\0';
-			char_count = 0;
+			client_pid[pid_count] = '\0';
+			pid_count = 0;
 			if (print_message(&message, client_pid) == EXIT_FAILURE)
-				exit(1);
+				return (EXIT_FAILURE);
 		}
 	}
+	return (EXIT_SUCCESS);
 }
 
 //	function to handle the SIGUSR signals from the client
@@ -110,19 +114,45 @@ void	handle_sigusr(int signum)
 			rest_len = append_int(rest_len, ft_atoi(&character));
 		else if (character == MESSAGE_END && state == 0)
 			state = 1;
-		else
-			output_message(character, &state, &rest_len);
+		else if (output_message(character, &state, &rest_len) == EXIT_FAILURE)
+		{
+			exit(1);
+		}
 	}
+}
+
+// int	main(void)
+// {
+// 	signal(SIGUSR1, handle_sigusr);
+// 	signal(SIGUSR2, handle_sigusr);
+// 	ft_printf("Server PID: %d\n", getpid());
+// 	while (1)
+// 	{
+// 		pause();
+// 	}
+// 	return (0);
+// }
+
+volatile sig_atomic_t	g_done = 0;
+
+void	handle_timeout(int sig)
+{
+	(void)sig;
+	ft_printf("Timeout reached. Exiting loop...\n");
+	g_done = 1;
 }
 
 int	main(void)
 {
 	signal(SIGUSR1, handle_sigusr);
 	signal(SIGUSR2, handle_sigusr);
+	signal(SIGALRM, handle_timeout);
 	ft_printf("Server PID: %d\n", getpid());
-	while (1)
+	alarm(40);
+	while (!g_done)
 	{
 		pause();
 	}
+	g_done = 0;
 	return (0);
 }

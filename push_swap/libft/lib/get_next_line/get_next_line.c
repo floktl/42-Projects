@@ -6,7 +6,7 @@
 /*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 12:40:04 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/27 14:53:39 by flo              ###   ########.fr       */
+/*   Updated: 2024/03/30 10:04:08 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,8 +95,7 @@ char	*get_next_line(int fd)
 	{
 		free(buf);
 		i = 0;
-		buf = NULL;
-		return (NULL);
+		return (buf = NULL, NULL);
 	}
 	if (!buf)
 		buf = ft_calloc(BUFFER_SIZE, 1);

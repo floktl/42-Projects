@@ -3,27 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   client.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 08:32:57 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/30 11:32:47 by flo              ###   ########.fr       */
+/*   Updated: 2024/03/31 14:33:50 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitalk.h"
+#include "../minitalk.h"
 
 //
-//client, sends a message given as argument to the server
+//	client, sends a message given as argument to the server
 //
 
-//function to print a message, if a message from the server is received
+//	function to print a message, if a message from the server is received
 void	handle_sigusr(int signum)
 {
 	if (signum == SIGUSR1)
 		ft_printf("\033[0;32mmessage received\033[0m\n");
 }
 
-//function to send a character in single bits per send
+//	function to send a character in single bits per send
 int	send_bits(char cur_char, pid_t server_pid)
 {
 	int	j;
@@ -35,7 +35,7 @@ int	send_bits(char cur_char, pid_t server_pid)
 		{
 			if (kill(server_pid, SIGUSR1) == -1)
 			{
-				ft_printf("\033[0;31merror sending signal\033[0m\n");
+				ft_printf("\033[0;31mError sending signal\033[0m\n");
 				return (EXIT_FAILURE);
 			}
 		}
@@ -43,7 +43,7 @@ int	send_bits(char cur_char, pid_t server_pid)
 		{
 			if (kill(server_pid, SIGUSR2) == -1)
 			{
-				ft_printf("\033[0;31merror sending signal\033[0m\n");
+				ft_printf("\033[0;31mError sending signal\033[0m\n");
 				return (EXIT_FAILURE);
 			}
 		}
@@ -53,7 +53,7 @@ int	send_bits(char cur_char, pid_t server_pid)
 	return (EXIT_SUCCESS);
 }
 
-//function to return the message filled with arguments and placeholder 'a'
+//	function to return the message filled with arguments and placeholder 'a'
 char	*prepare_message(char *args)
 {
 	char	*message;
@@ -70,9 +70,9 @@ char	*prepare_message(char *args)
 	return (message);
 }
 
-//main function, message structure, which will be send to the server:
-// <length of arg[]> 'a' <argument> <client_pid>
-//client_pid is for return signal from server, checks if message received
+//	main function, message structure, which will be send to the server:
+//	<length of arg[]> 'a' <argument> 'a' <client_pid>
+//	client_pid is for return signal from server, checks if message received
 int	main(int argc, char **argv)
 {
 	pid_t	server_pid;

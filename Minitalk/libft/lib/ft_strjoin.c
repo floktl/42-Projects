@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 12:13:06 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/27 14:20:05 by flo              ###   ########.fr       */
+/*   Updated: 2024/03/31 09:29:35 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,29 +14,22 @@
 
 char	*ft_strjoin(char const *s1, char const *s2)
 {
-	char	*conc_str;
-	int		counter;
-	int		counter_2;
+	char	*s3;
+	char	*temp_s3;
+	size_t	s1_length;
+	size_t	s2_length;
 
-	counter = 0;
-	counter_2 = 0;
-	conc_str = malloc((int)ft_strlen(s1) + (int)ft_strlen(s2) + 1);
-	if (!s1 || !s2)
+	s1_length = ft_strlen(s1);
+	s2_length = ft_strlen(s2);
+	s3 = (char *)ft_calloc(1, (s1_length + s2_length) + 1);
+	if (!s3)
 		return (NULL);
-	if (conc_str == NULL)
-		return (NULL);
-	while (s1[counter] != '\0')
-	{
-		conc_str[counter] = s1[counter];
-		counter++;
-	}
-	while (s2[counter_2] != '\0')
-	{
-		conc_str[counter_2 + counter] = s2[counter_2];
-		counter_2++;
-	}
-	conc_str[counter + counter_2] = '\0';
-	return (conc_str);
+	temp_s3 = s3;
+	while (*s1)
+		*s3++ = *s1++;
+	while (*s2)
+		*s3++ = *s2++;
+	return (temp_s3);
 }
 
 /* int main()

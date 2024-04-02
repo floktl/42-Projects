@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 12:00:49 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/04/02 16:06:34 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/04/02 21:59:59 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,16 @@ int	main(int argc, char **argv)
 		|| initialize_philosophers(&philo, argv, argc) == EXIT_FAILURE)
 		return (ft_p_error("Error initializing Philosophers\n"));
 	i = 0;
-	printf("1: %d 2: %d 3: %d 4: %d 5: %d", philo.num_philo, philo.time_to_die, philo.time_to_eat, philo.time_to_sleep, philo.num_of_times_eat);
+	printf("%d %d %d %d %d\n", philo.num_philo, philo.time_to_die,
+		philo.time_to_eat, philo.time_to_sleep, philo.num_of_times_eat);
+	i = 0;
 	while (i < philo.num_philo)
 	{
+		if (pthread_mutex_init(&philo.forks[i], NULL) != 0)
+			return (ft_p_error("pthread_mutex_init failed!\n"));
+		if (pthread_create(&philo.philos[i], NULL, philosopher, &philo.ids[i]) != 0)
+			return (ft_p_error("pthread_create failed!\n"));
 		philo.ids[i] = i;
-		if (pthread_create(&philo.philos[i], NULL, philosopher, &philo) == -1)
-			return (ft_p_error("Error creating threads\n"));
 		i++;
 	}
 	i = 0;

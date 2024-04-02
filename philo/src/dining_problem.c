@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dining_problem.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 16:01:21 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/04/02 16:01:34 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/04/02 21:47:00 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,15 @@
 //	actual code for the philosophers dining problem
 void	*philosopher(void *arg)
 {
-	t_philo	*philo = NULL;
-	int		id = *((int *)philo->ids);
-	int		left_fork = id;
-	int		right_fork = (id + 1) % philo->num_philo;
+	t_philo	*philo;
+	int		id;
+	int		left_fork;
+	int		right_fork;
 
 	philo = arg;
+	id = *((int *)arg);
+	left_fork = id;
+	right_fork = (id + 1) % philo->num_philo;
 	while (1)
 	{
 		//eigene usleep()

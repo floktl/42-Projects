@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   setup_functions.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 16:00:27 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/04/02 16:09:41 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/04/02 21:47:20 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,37 +49,29 @@ int	assign_arguments(t_philo *philo, char **args, int arg_count)
 //	initialize the struct with all needed values for this project
 int	initialize_philosophers(t_philo *philo, char **args, int arg_count)
 {
-	int	i;
-
 	if (assign_arguments(philo, args, arg_count) == EXIT_FAILURE)
 	{
 		return (EXIT_FAILURE);
 	}
 	philo->philos = (pthread_t *)malloc(sizeof(pthread_t) * philo->num_philo);
 	if (philo->philos == NULL)
-		return (ft_p_error("Philo memory allocatation failed\n"));
-	philo->forks = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) * philo->num_philo);
+		return (ft_p_error("Philo memory allocation failed\n"));
+
+	philo->forks = (pthread_mutex_t *)malloc(philo->num_philo * sizeof(pthread_mutex_t));
 	if (philo->forks == NULL)
 	{
 		free(philo->philos);
-		return (ft_p_error("Forks memory allocatation failed\n"));
+		philo->philos = NULL;
+		return (ft_p_error("Forks memory allocation failed\n"));
 	}
 	philo->ids = (int *)malloc(sizeof(int) * philo->num_philo);
 	if (philo->ids == NULL)
 	{
 		free(philo->philos);
+		philo->philos = NULL;
 		free(philo->forks);
-		return (ft_p_error("ids memory allocatation failed\n"));
-	}
-	i = 0;
-	while (i < philo->num_philo)
-	{
-		if (pthread_mutex_init(&philo->forks[i], NULL) != 0)
-			return (ft_p_error("pthread_mutex_init failed!\n"));
-		philo->philos[i] = (pthread_t)malloc(sizeof(pthread_t));
-		if (!philo->philos[i])
-			return (ft_p_error("philos memory allocation failed!\n"));
-		i++;
+		philo->forks = NULL;
+		return (ft_p_error("ids memory allocation failed\n"));
 	}
 	return (EXIT_SUCCESS);
 }

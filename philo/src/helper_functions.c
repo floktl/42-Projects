@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   helper_functions.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 12:00:49 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/04/02 16:20:02 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/04/02 21:07:33 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,35 +65,19 @@ void	free_philo_struct(t_philo *philo)
 		return ;
 	if (philo->forks)
 	{
-		while (philo->forks[i])
-		{
-			free(philo->forks[i]);
-			philo->forks[i] = NULL;
-			i++;
-		}
+		pthread_mutex_destroy(&philo->forks[i]);
 		free(philo->forks);
 		philo->forks = NULL;
 	}
 	i = 0;
 	if (philo->philos)
 	{
-		while (philo->philos[i])
-		{
-			free(philo->philos[i]);
-			philo->philos[i] = NULL;
-			i++;
-		}
 		free(philo->philos);
 		philo->philos = NULL;
 	}
 	i = 0;
 	if (philo->ids)
 	{
-		while (philo->ids[i])
-		{
-			free(philo->ids[i]);
-			i++;
-		}
 		free(philo->ids);
 		philo->ids = NULL;
 	}

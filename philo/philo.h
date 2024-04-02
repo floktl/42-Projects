@@ -6,7 +6,7 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 12:07:06 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/04/02 15:22:34 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/04/02 16:25:26 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,20 @@ typedef struct s_philo
 --------------------------------- functions ------------------------------------
 */
 
-//	helper functions
+//	dining problem functions:
+
+void	*philosopher(void *arg);
+
+//	helper functions:
+
 int		ft_atoi(const char *str);
+int		ft_p_error(char *error_string);
 int		ft_isdigit(int c);
+
+//	setup functions:
+
+int		assign_arguments(t_philo *philo, char **args, int arg_count);
+int		initialize_philosophers(t_philo *philo, char **args, int arg_count);
+void	free_philo_struct(t_philo *philo);
 
 #endif

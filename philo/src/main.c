@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 12:00:49 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/04/03 15:25:06 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/04/03 22:58:41 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,30 +21,22 @@ int	main(int argc, char **argv)
 
 	if ((argc != 5 && argc != 6)
 		|| initialize_philosophers(&data, argv, argc) == EXIT_FAILURE)
-		return (ft_p_error("Error initializing Philosophers\n"));
+		return (ft_p_error("COLORGREENError initializing Philosophers\n"));
 	i = 0;
 	while (i < data.num_philo)
 	{
-		if (pthread_create(data.philos[i].thread, NULL, philosopher, &data) != 0)
+		if (pthread_create(&data.philos[i].thread, NULL,
+				philosopher, &data.philos[i]) != 0)
 			return (ft_p_error("pthread_create failed!\n"));
+		i++;
 	}
-	//	i++;
-	//}
-	//i = 0;
-	//while (i < philo.num_philo)
-	//{
-	//	if (pthread_join(philo.philos[i], NULL) == -1)
-	//		return (ft_p_error("Error joining threads\n"));
-	//	i++;
-	//}
-	//i = 0;
-	//while (i < philo.num_philo)
-	//{
-	//	if (pthread_mutex_destroy(&philo.forks[i]) == -1)
-	//		return (ft_p_error("Error destroying Philosophers\n"));
-	//	i++;
-	//}
-	//i = 0;
+	i = 0;
+	while (i < data.num_philo)
+	{
+		if (pthread_join(data.philos[i].thread, NULL) != 0)
+			return (ft_p_error("pthread_join failed!\n"));
+		i++;
+	}
 	free_data_struct(&data);
 	return (EXIT_SUCCESS);
 }

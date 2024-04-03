@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 12:07:06 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/04/03 15:17:02 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/04/03 22:16:43 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 #ifndef PHILO_H
 # define PHILO_H
 
+# define TRUE 1
+# define FALSE 0
 /* ------------------------------- libraries -------------------------------- */
 
 //	public libraries
@@ -43,8 +45,10 @@ typedef struct s_philo
 	int				id;
 	pthread_mutex_t	*left_fork;
 	pthread_mutex_t	*right_fork;
-	pthread_t		*thread;
+	pthread_t		thread;
 	struct s_data	*data;
+	int				num_of_times_eat;
+	struct timeval	last_meal_time;
 }	t_philo;
 
 //	struct for the global data
@@ -56,6 +60,7 @@ typedef struct s_data
 	int				time_to_eat;
 	int				time_to_sleep;
 	int				num_of_times_eat;
+	bool			philo_dead;
 	struct s_philo	*philos;
 }		t_data;
 

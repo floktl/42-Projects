@@ -6,7 +6,7 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 12:07:06 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/04/02 16:25:26 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/04/03 15:17:02 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,21 @@
 
 /* -------------------------------- structs --------------------------------- */
 
-// long
+//	predefinition of the global data struct
+typedef struct s_data	t_data;
+
+//	struct for the data of each philo
 typedef struct s_philo
+{
+	int				id;
+	pthread_mutex_t	*left_fork;
+	pthread_mutex_t	*right_fork;
+	pthread_t		*thread;
+	struct s_data	*data;
+}	t_philo;
+
+//	struct for the global data
+typedef struct s_data
 {
 	struct timeval	time;
 	int				num_philo;
@@ -43,10 +56,8 @@ typedef struct s_philo
 	int				time_to_eat;
 	int				time_to_sleep;
 	int				num_of_times_eat;
-	pthread_mutex_t	*forks;
-	pthread_t		*philos;
-	int				*ids;
-}	t_philo;
+	struct s_philo	*philos;
+}		t_data;
 
 /*
 --------------------------------- functions ------------------------------------
@@ -64,8 +75,8 @@ int		ft_isdigit(int c);
 
 //	setup functions:
 
-int		assign_arguments(t_philo *philo, char **args, int arg_count);
-int		initialize_philosophers(t_philo *philo, char **args, int arg_count);
-void	free_philo_struct(t_philo *philo);
+int		assign_arguments(t_data *data, char **args, int arg_count);
+int		initialize_philosophers(t_data *data, char **args, int arg_count);
+void	free_data_struct(t_data *philo);
 
 #endif

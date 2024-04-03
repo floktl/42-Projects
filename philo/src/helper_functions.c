@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   helper_functions.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 12:00:49 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/04/02 21:07:33 by flo              ###   ########.fr       */
+/*   Updated: 2024/04/03 15:20:38 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,29 +56,31 @@ int	ft_atoi(const char *str)
 }
 
 //	function to free the entire philo struct
-void	free_philo_struct(t_philo *philo)
+void	free_data_struct(t_data *data)
 {
 	int	i;
 
 	i = 0;
-	if (!philo)
+	if (!data)
 		return ;
-	if (philo->forks)
+	while (i < data->num_philo)
 	{
-		pthread_mutex_destroy(&philo->forks[i]);
-		free(philo->forks);
-		philo->forks = NULL;
+		if (data->philos[i].right_fork)
+		{
+			pthread_mutex_destroy(data->philos[i].right_fork);
+			free(data->philos[i].right_fork);
+			data->philos[i].right_fork = NULL;
+		}
+		if (data->philos[i].thread)
+		{
+			free(data->philos[i].thread);
+			data->philos[i].thread = NULL;
+		}
+		i++;
 	}
-	i = 0;
-	if (philo->philos)
+	if (data->philos)
 	{
-		free(philo->philos);
-		philo->philos = NULL;
-	}
-	i = 0;
-	if (philo->ids)
-	{
-		free(philo->ids);
-		philo->ids = NULL;
+		free(data->philos);
+		data->philos = NULL;
 	}
 }

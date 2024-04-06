@@ -6,7 +6,7 @@
 /*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 12:00:49 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/04/03 22:58:41 by flo              ###   ########.fr       */
+/*   Updated: 2024/04/04 16:29:08 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	main(int argc, char **argv)
 
 	if ((argc != 5 && argc != 6)
 		|| initialize_philosophers(&data, argv, argc) == EXIT_FAILURE)
-		return (ft_p_error("COLORGREENError initializing Philosophers\n"));
+		return (ft_p_error("Error initializing Philosophers\n"));
 	i = 0;
 	while (i < data.num_philo)
 	{

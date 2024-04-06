@@ -6,7 +6,7 @@
 /*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 16:00:27 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/04/03 23:00:59 by flo              ###   ########.fr       */
+/*   Updated: 2024/04/04 21:05:35 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,44 @@ int	assign_individual_philosopher_data(t_data *data)
 	return (EXIT_SUCCESS);
 }
 
+//	safety function to check if forks are linked correctly with each neighbour
+int	check_forks_consistency(t_data *data)
+{
+	t_philo			*philo;
+	pthread_mutex_t	*left_nb;
+	pthread_mutex_t	*right_nb;
+	int				i;
+
+	i = 0;
+	if (!data || !data->philos)
+		return (EXIT_FAILURE);
+	while (i < data->num_philo)
+	{
+		philo = &data->philos[i];
+		if (!philo->left_fork || !philo->right_fork || !philo->data)
+			return (EXIT_FAILURE);
+		if (i == 0)
+		{
+			left_nb = data->philos[data->num_philo - 1].right_fork;
+			right_nb = data->philos[i + 1].left_fork;
+		}
+		else if (i == data->num_philo - 1)
+		{
+			left_nb = data->philos[i - 1].right_fork;
+			right_nb = data->philos[0].left_fork;
+		}
+		else
+		{
+			left_nb = data->philos[i - 1].right_fork;
+			right_nb = data->philos[i + 1].left_fork;
+		}
+		if (philo->left_fork != left_nb || philo->right_fork != right_nb)
+			return (ft_p_error("Error in sorting!\n"));
+		i++;
+	}
+	return (EXIT_SUCCESS);
+}
+
 //	initialize the struct with all needed values for this project
 int	initialize_philosophers(t_data *data, char **args, int arg_count)
 {
@@ -115,6 +153,8 @@ int	initialize_philosophers(t_data *data, char **args, int arg_count)
 	if (data->philos == NULL)
 		return (ft_p_error("Philo memory allocation failed\n"));
 	if (assign_individual_philosopher_data(data) == EXIT_FAILURE)
+		return (EXIT_FAILURE);
+	if (check_forks_consistency(data) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }

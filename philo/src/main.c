@@ -6,7 +6,7 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 12:00:49 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/04/06 13:11:58 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/04/06 15:31:22 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ int	main(int argc, char **argv)
 		|| initialize_philosophers(&data, argv, argc) == EXIT_FAILURE)
 		return (ft_p_error("Error initializing Philosophers\n"));
 	i = 0;
+	gettimeofday(&data.start_time, NULL);
+	gettimeofday(&data.time, NULL);
 	while (i < data.num_philo)
 	{
 		if (pthread_create(&data.philos[i].thread, NULL,

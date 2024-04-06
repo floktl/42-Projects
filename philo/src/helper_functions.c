@@ -6,7 +6,7 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 12:00:49 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/04/06 12:10:14 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/04/06 16:04:05 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ void	free_data_struct(t_data *data)
 	if (!data)
 		return ;
 	pthread_mutex_destroy(&data->death_mutex);
+	pthread_mutex_destroy(&data->time_mutex);
 	while (i < data->num_philo)
 	{
 		if (data->philos[i].right_fork)

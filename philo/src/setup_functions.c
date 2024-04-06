@@ -6,7 +6,7 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 16:00:27 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/04/06 12:09:46 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/04/06 16:32:55 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,8 @@ int	check_forks_consistency(t_data *data)
 	i = 0;
 	if (!data || !data->philos)
 		return (EXIT_FAILURE);
+	if (data->num_philo == 1)
+		return (EXIT_SUCCESS);
 	while (i < data->num_philo)
 	{
 		philo = &data->philos[i];
@@ -148,8 +150,11 @@ int	initialize_philosophers(t_data *data, char **args, int arg_count)
 	{
 		return (EXIT_FAILURE);
 	}
+	if (data->num_philo == 1)
+		return (EXIT_FAILURE);
 	data->philos = (t_philo *)malloc(sizeof(t_philo) * data->num_philo);
 	pthread_mutex_init(&data->death_mutex, NULL);
+	pthread_mutex_init(&data->time_mutex, NULL);
     data->philo_dead = FALSE;
 	if (data->philos == NULL)
 		return (ft_p_error("Philo memory allocation failed\n"));

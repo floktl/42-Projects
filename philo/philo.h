@@ -6,7 +6,7 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 12:07:06 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/04/06 12:43:44 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/04/06 16:03:24 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,8 @@ typedef struct s_philo
 typedef struct s_data
 {
 	struct timeval	time;
+	struct timeval	start_time;
+	pthread_mutex_t	time_mutex;
 	int				num_philo;
 	int				time_to_die;
 	int				time_to_eat;

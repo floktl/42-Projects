@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   setup_functions.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 16:00:27 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/04/04 21:05:35 by flo              ###   ########.fr       */
+/*   Updated: 2024/04/06 12:09:46 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,7 +149,8 @@ int	initialize_philosophers(t_data *data, char **args, int arg_count)
 		return (EXIT_FAILURE);
 	}
 	data->philos = (t_philo *)malloc(sizeof(t_philo) * data->num_philo);
-	data->philo_dead = FALSE;
+	pthread_mutex_init(&data->death_mutex, NULL);
+    data->philo_dead = FALSE;
 	if (data->philos == NULL)
 		return (ft_p_error("Philo memory allocation failed\n"));
 	if (assign_individual_philosopher_data(data) == EXIT_FAILURE)

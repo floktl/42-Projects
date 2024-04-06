@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   helper_functions.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 12:00:49 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/04/03 22:49:07 by flo              ###   ########.fr       */
+/*   Updated: 2024/04/06 12:10:14 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ void	free_data_struct(t_data *data)
 	i = 0;
 	if (!data)
 		return ;
+	pthread_mutex_destroy(&data->death_mutex);
 	while (i < data->num_philo)
 	{
 		if (data->philos[i].right_fork)

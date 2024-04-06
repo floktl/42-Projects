@@ -6,7 +6,7 @@
 #    By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/01 12:01:53 by fkeitel           #+#    #+#              #
-#    Updated: 2024/04/01 12:55:04 by fkeitel          ###   ########.fr        #
+#    Updated: 2024/04/06 12:04:51 by fkeitel          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,9 +28,18 @@ OBJS    := $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 # Header file
 HEADER  := philo.h
 
+
+# Define ANSI color codes
+GREEN := \033[0;32m
+NC := \033[0m
+
+# Define your message with a newline
+MESSAGE := "\n$(GREEN)$(NAME) successfully built!$(NC)\n"
+
 # Rule to build the project
 all: $(OBJ_DIR) $(NAME)
-	@echo "$(NAME) successfully built!"
+	@echo $(MESSAGE)
+
 
 # Rule to build the project
 $(NAME): $(OBJS)

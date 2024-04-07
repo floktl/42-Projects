@@ -6,7 +6,7 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 12:07:06 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/04/06 16:03:24 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/04/07 13:08:00 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ typedef struct s_philo
 	struct s_data	*data;
 	int				num_of_times_eat;
 	struct timeval	last_meal_time;
+	long			last_meal;
 }	t_philo;
 
 //	struct for the global data

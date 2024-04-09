@@ -1,29 +1,58 @@
 #include <stdio.h>
+#include <unistd.h>
+#include <string.h>
 
-typedef struct {
-    double xm_offset;
-    double ym_offset;
-} MapSize;
 
-typedef struct {
-    int debug_mode;
-    MapSize map_sz;
-} Window;
+int ft_atoi(char *string)
+{
+	int i = 0;
+	int num = 0;
 
-void set_default_window_data(Window *window) {
-    window->debug_mode = 1;
-    window->map_sz.xm_offset = 5.0;
-    window->map_sz.ym_offset = 10.0;
+	while (string[i])
+	{
+		num = num * 10 + string[i] - '0';
+		i++;
+	}
+	return (num);
 }
 
-int main() {
-    Window *myWindow;
-    set_default_window_data(myWindow);
+void	putnbr(int n)
+{
+	if (n >= 10)
+		putnbr(n / 10);
+	char digit = n % 10 + '0';
+	write(1, &digit, 1);
+}
+int main(int argc, char **argv)
+{
+	int sum;
+	int num;
+	int i = 2;
 
-    // Accessing the modified values outside the function
-    printf("Debug Mode: %d\n", myWindow->debug_mode);
-    printf("xm_offset: %f\n", myWindow->map_sz.xm_offset);
-    printf("ym_offset: %f\n", myWindow->map_sz.ym_offset);
+	sum = 0;
 
-    return 0;
+	if (argc == 2 && argv[1] && argv[1][0] != '-')
+	{
+		num = ft_atoi(argv[1]);
+		if (num <= 1)
+		{
+			num = 0;
+		}
+		else
+		{
+			while (i * i <= num)
+			{
+				if (num % i == 0)
+				{
+					i = 0;
+					break ;
+				}
+				i++;
+			}
+			sum = i;
+		}
+	}
+	putnbr(sum);
+	write(1, "\n", 1);
+	return (0);
 }

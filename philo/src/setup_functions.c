@@ -6,25 +6,11 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 16:00:27 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/04/06 16:32:55 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/04/09 15:29:31 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
-
-//	function to check if the arguemtns are within the limits
-int	check_argument_limits(t_data *data, char **args, int arg_count)
-{
-	data->num_philo = ft_atoi(args[1]);
-	data->time_to_die = ft_atoi(args[2]);
-	data->time_to_eat = ft_atoi(args[3]);
-	data->time_to_sleep = ft_atoi(args[4]);
-	if (arg_count == 6)
-		data->num_of_times_eat = ft_atoi(args[5]);
-	else
-		data->num_of_times_eat = INT_MAX;
-	return (EXIT_SUCCESS);
-}
 
 //	function to assign the arguments from the user input into the philo struct
 int	assign_arguments(t_data *data, char **args, int arg_count)
@@ -96,48 +82,8 @@ int	assign_individual_philosopher_data(t_data *data)
 		}
 		else
 			data->philos[i].left_fork = data->philos[i - 1].right_fork;
-		data->philos[i].num_of_times_eat = 0;
+		data->philos[i].num_of_times_eat = data->num_of_times_eat;
 		data->philos[i].data = data;
-		i++;
-	}
-	return (EXIT_SUCCESS);
-}
-
-//	safety function to check if forks are linked correctly with each neighbour
-int	check_forks_consistency(t_data *data)
-{
-	t_philo			*philo;
-	pthread_mutex_t	*left_nb;
-	pthread_mutex_t	*right_nb;
-	int				i;
-
-	i = 0;
-	if (!data || !data->philos)
-		return (EXIT_FAILURE);
-	if (data->num_philo == 1)
-		return (EXIT_SUCCESS);
-	while (i < data->num_philo)
-	{
-		philo = &data->philos[i];
-		if (!philo->left_fork || !philo->right_fork || !philo->data)
-			return (EXIT_FAILURE);
-		if (i == 0)
-		{
-			left_nb = data->philos[data->num_philo - 1].right_fork;
-			right_nb = data->philos[i + 1].left_fork;
-		}
-		else if (i == data->num_philo - 1)
-		{
-			left_nb = data->philos[i - 1].right_fork;
-			right_nb = data->philos[0].left_fork;
-		}
-		else
-		{
-			left_nb = data->philos[i - 1].right_fork;
-			right_nb = data->philos[i + 1].left_fork;
-		}
-		if (philo->left_fork != left_nb || philo->right_fork != right_nb)
-			return (ft_p_error("Error in sorting!\n"));
 		i++;
 	}
 	return (EXIT_SUCCESS);
@@ -155,7 +101,7 @@ int	initialize_philosophers(t_data *data, char **args, int arg_count)
 	data->philos = (t_philo *)malloc(sizeof(t_philo) * data->num_philo);
 	pthread_mutex_init(&data->death_mutex, NULL);
 	pthread_mutex_init(&data->time_mutex, NULL);
-    data->philo_dead = FALSE;
+	data->philo_dead = ALIVE;
 	if (data->philos == NULL)
 		return (ft_p_error("Philo memory allocation failed\n"));
 	if (assign_individual_philosopher_data(data) == EXIT_FAILURE)

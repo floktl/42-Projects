@@ -6,7 +6,7 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 12:00:49 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/04/06 15:31:22 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/04/09 17:38:47 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,8 @@ int	main(int argc, char **argv)
 	int		i;
 	t_data	data;
 
-	if ((argc != 5 && argc != 6)
-		|| initialize_philosophers(&data, argv, argc) == EXIT_FAILURE)
-		return (ft_p_error("Error initializing Philosophers\n"));
+	if (initialize_philosophers(&data, argv, argc) == EXIT_FAILURE)
+		return (ft_p_error("\033[1;31mError initiliaz. Philosophers\033[0m\n"));
 	i = 0;
 	gettimeofday(&data.start_time, NULL);
 	gettimeofday(&data.time, NULL);
@@ -29,14 +28,14 @@ int	main(int argc, char **argv)
 	{
 		if (pthread_create(&data.philos[i].thread, NULL,
 				philosopher, &data.philos[i]) != 0)
-			return (ft_p_error("pthread_create failed!\n"));
+			return (ft_p_error("\033[1;31mpthread_create failed!\033[0m\n"));
 		i++;
 	}
 	i = 0;
 	while (i < data.num_philo)
 	{
 		if (pthread_join(data.philos[i].thread, NULL) != 0)
-			return (ft_p_error("pthread_join failed!\n"));
+			return (ft_p_error("\033[1;31mpthread_join failed!\033[0m\n"));
 		i++;
 	}
 	free_data_struct(&data);

@@ -6,7 +6,7 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 15:23:22 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/04/09 15:42:47 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/04/09 17:53:57 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,5 +69,12 @@ int	check_argument_limits(t_data *data, char **args, int arg_count)
 		data->num_of_times_eat = ft_atoi(args[5]);
 	else
 		data->num_of_times_eat = -1;
+	if (data->time_to_die < 3
+		|| (data->time_to_eat + data->time_to_sleep) >= data->time_to_die
+		|| data->num_philo > 20 || data->num_philo <= 0
+		|| data->time_to_die > 30000 || data->time_to_die <= 0
+		|| data->time_to_eat > 30000 || data->time_to_eat <= 0
+		|| data->time_to_sleep > 30000 || data->time_to_sleep <= 0)
+		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }

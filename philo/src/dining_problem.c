@@ -6,7 +6,7 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 16:01:21 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/04/09 16:53:31 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/04/09 17:28:05 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	*philosopher(void *arg)
 	gettimeofday(&philo->last_meal_time, NULL);
 	while (1)
 	{
-		if (check_death_time(philo, timestamp) == DEAD)
+		if (check_death_time(philo, &timestamp) == DEAD)
 			break ;
 		else
 			printf("%ld %d is thinking\n", timestamp, philo->id);
@@ -35,7 +35,7 @@ void	*philosopher(void *arg)
 	return (NULL);
 }
 
-//	function to manage the timing of each philosopher
+//	function for the eating part, including taking both forks
 int	prepare_eating(t_philo *philo, long *timestamp)
 {
 	pthread_mutex_lock(philo->left_fork);
@@ -69,6 +69,7 @@ int	prepare_eating(t_philo *philo, long *timestamp)
 	return (ALIVE);
 }
 
+//	function for the sleeping part, including putting down the forks
 int	prepare_sleeping(t_philo *philo, long *timestamp)
 {
 	gettimeofday(&philo->last_meal_time, NULL);

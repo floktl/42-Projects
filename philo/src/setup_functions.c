@@ -6,7 +6,7 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 16:00:27 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/04/09 15:29:31 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/04/09 17:43:18 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	assign_arguments(t_data *data, char **args, int arg_count)
 		i++;
 	}
 	if (check_argument_limits(data, args, arg_count) == EXIT_FAILURE)
-		return (ft_p_error("Error in Argument"));
+		return (ft_p_error("Error in Argument\n"));
 	gettimeofday(&data->time, NULL);
 	printf("arguments correct, proceeding with initializing philosophers...\n");
 	return (EXIT_SUCCESS);
@@ -92,8 +92,14 @@ int	assign_individual_philosopher_data(t_data *data)
 //	initialize the struct with all needed values for this project
 int	initialize_philosophers(t_data *data, char **args, int arg_count)
 {
+	if (arg_count != 5 && arg_count != 6)
+	{
+		printf("\033[1;36musuage: ./philo <num_philo> <time_to_die> <time_to_eat> ");
+		return (ft_p_error("<time_to_sleep> (<num_of_times_eat>)\033[0m\n"));
+	}
 	if (assign_arguments(data, args, arg_count) == EXIT_FAILURE)
 	{
+		free_data_struct(data);
 		return (EXIT_FAILURE);
 	}
 	if (data->num_philo == 1)

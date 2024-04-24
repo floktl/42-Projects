@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 11:03:04 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/04/24 13:34:13 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/04/24 19:34:02 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@ int		g_history_count = 0;
 int	main(void)
 {
 	char	*command;
-	int		i;
+	//int		i;
 	t_tree	*parse_tree;
 
-	i = 0;
+	//i = 0;
 	signal(SIGINT, handle_signal);
 	while (1)
 	{
@@ -44,7 +44,7 @@ int	main(void)
 		free(command);
 		print_parse_tree(parse_tree);
 		free_tree(parse_tree);
-		i++;
+		//i++;
 	}
 	return (0);
 }

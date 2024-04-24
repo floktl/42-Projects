@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 10:41:13 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/04/24 14:35:51 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/04/24 21:50:10 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,8 @@ void	execute_command(char **args);
 //	helper_1.c
 int		word_cmp(const char *s1, const char *s2, size_t n);
 void 	remove_char(char *str, char char_to_remove, int start, int end);
+//	split_pipes.c
+char	**split_pipes(char const *s, char c);
 
 //---------------------------- parsing functions -------------------------------
 

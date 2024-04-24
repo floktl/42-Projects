@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process_arg_str.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 10:47:36 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/04/24 14:47:46 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/04/24 21:58:37 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,10 +190,10 @@ int	det_and_rem_quotes_first_word(char *command_str)
 int	adapt_arguments(t_tree *tree, char *command_str)
 {
 	int	i;
-	int	j;
+	//int	j;
 
 	i = 0;
-	j = 0;
+	// j = 0;
 	while (command_str[i] && command_str[i] == ' ')
 		i++;
 	while (command_str[i])
@@ -202,8 +202,10 @@ int	adapt_arguments(t_tree *tree, char *command_str)
 		{
 			tree->args_num++;
 			if (command_str[i] == '\'')
-				
+				return (EXIT_FAILURE);
+			// while ()
 		}
+		i++;
 	}
 	return (EXIT_SUCCESS);
 }
@@ -211,10 +213,10 @@ int	adapt_arguments(t_tree *tree, char *command_str)
 //	function to split the commands into the components
 int	split_command(t_tree *tree, char *command_str)
 {
-	int	start_args;
+	// int	start_args;
 
-	start_args = 0;
-	if (det_and_rem_quotes_first_word(command_str, &start_args) == EXIT_FAILURE)
+	// start_args = 0;
+	if (det_and_rem_quotes_first_word(command_str) == EXIT_FAILURE)
 	{
 		printf("undisclosed quotes in first word\n");
 		return (EXIT_FAILURE);
@@ -228,11 +230,11 @@ int	split_command(t_tree *tree, char *command_str)
 	{
 		tree->type = EXEC;
 		tree->command = ECHO;
-		//if (check_for_flag(tree, command_str, 4) == EXIT_FAILURE)
-		//{
-		//	free_tree(tree);
-		//	return (EXIT_FAILURE);
-		//}
+		// if (check_for_flag(tree, command_str, 4) == EXIT_FAILURE)
+		// {
+		// 	free_tree(tree);
+		// 	return (EXIT_FAILURE);
+		// }
 	}
 	return (EXIT_SUCCESS);
 }
@@ -245,7 +247,7 @@ int	seperate_pipes(t_tree *tree, char *command_str)
 
 	i = 0;
 	temp = NULL;
-	tree->cmd_brch = ft_split(command_str, '|');
+	tree->cmd_brch = split_pipes(command_str, '|');
 	if (tree->cmd_brch)
 	{
 		while (tree->cmd_brch[i])

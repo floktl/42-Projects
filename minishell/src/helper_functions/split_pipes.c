@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_pipes.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 12:09:19 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/04/24 23:05:38 by flo              ###   ########.fr       */
+/*   Updated: 2024/04/25 12:29:46 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,92 +52,80 @@ static void	ft_free(char **split, size_t words)
 	free(split);
 }
 
-static size_t	count_pipes(char const *s, char c)
+size_t	count_pipes(char const *s, char c)
 {
-	size_t	i;
-	size_t	count;
-	int		undisclosed_quote;
+	size_t i = 0;
+	size_t count = 0;
+	int undisclosed_quote = 0;
 
-	i = 0;
-	count = 0;
-	undisclosed_quote = 0;
 	while (s[i])
 	{
 		while (s[i] && s[i] == c)
+			i++;
+		if (s[i] && s[i] != c)
+		{
+			if (undisclosed_quote == 0)
+				count++;
+			while (s[i] && s[i] != c)
+			{
+				if (s[i] == '\"')
+					undisclosed_quote = !undisclosed_quote;
+				i++;
+			}
+		}
+		else
 		{
 			if (s[i] == '\"')
 				undisclosed_quote = !undisclosed_quote;
 			i++;
 		}
-		if (s[i] && s[i] == '\"')
-				undisclosed_quote = !undisclosed_quote;
-		if (s[i] && s[i] != c && !undisclosed_quote)
-		{
-			count++;
-			while (s[i] && s[i] != c)
-			{
-				i++;
-				if (s[i] && s[i] == '\"')
-					undisclosed_quote = !undisclosed_quote;
-			}
-		}
-		else
-		{
-			i++;
-			if (s[i] && s[i] == '\"')
-					undisclosed_quote = !undisclosed_quote;
-		}
 	}
-	printf("%d\n", undisclosed_quote);
 	return (count);
 }
 
-static void ft_progress(char const *s, char c, char **split, size_t words) {
-    size_t i = 0;
-    size_t word_len;
-    size_t count = 0;
-    int in_quotes = 0; // Flag to track whether inside quotes
+void	ft_progress(char const *s, char c, char **split, size_t words)
+{
+	size_t	i;
+	size_t	pipe_len;
+	size_t	count;
+	int		in_quotes;
 
-    while (s[i] && count < words) {
-        word_len = 0;
-
-        // Skip leading delimiters
-        while (s[i] == c && s[i]) {
-            i++;
-        }
-
-        // Check if inside quotes
-        if (s[i] == '\"') {
-            in_quotes = !in_quotes;
-            i++;
-        }
-
-        // Process word
-        while (s[i] && (s[i] != c || in_quotes)) {
-            // Check for closing quote
-            if (s[i] == '\"' && in_quotes) {
-                in_quotes = 0; // Toggle quotes off
-            }
-            word_len++;
-            i++;
-        }
-
-        // Allocate memory for word
-        if (word_len > 0) {
-            split[count] = ft_substr(s, i - word_len, word_len);
-            if (!split[count]) {
-                ft_free(split, count);
-                return;
-            }
-            count++;
-        }
-    }
-
-    // Terminate split array
-    split[count] = NULL;
+	i = 0;
+	count = 0;
+	in_quotes = 0;
+	while (s[i] && count < words)
+	{
+		pipe_len = 0;
+		while (s[i] == c && s[i])
+		{
+			i++;
+		}
+		if (s[i] == '\"')
+		{
+			in_quotes = !in_quotes;
+		}
+		while (s[i] && (s[i] != c || in_quotes))
+		{
+			if (s[i] == '\"' && in_quotes)
+			{
+				in_quotes = 0;
+			}
+			pipe_len++;
+			i++;
+		}
+		if (pipe_len > 0)
+		{
+			split[count] = ft_substr(s, i - pipe_len, pipe_len);
+			if (!split[count])
+			{
+				ft_free(split, count);
+				return ;
+			}
+			count++;
+		}
+	}
+	split[count] = NULL;
 }
-
-
 
 char	**split_pipes(char const *s, char c)
 {
@@ -157,7 +145,7 @@ char	**split_pipes(char const *s, char c)
 
 int main()
 {
-	char const *input = "this is a test |\" test2 | \"test3  | test5\" | test\"";
+	char const *input = "0 \"| 0\"";
 
 	char **result = split_pipes(input, '|');
 

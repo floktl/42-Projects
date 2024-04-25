@@ -3,22 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   split_pipes.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 12:09:19 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/04/25 12:29:46 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/04/25 16:01:36 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-char	*ft_substr(char const *s, unsigned int start, size_t len)
+char	*ft_sub_str(char const *s, unsigned int start, int len)
 {
 	char	*sub_s;
 	char	*temp_sub_s;
-	size_t	count;
-	size_t	count_sub;
-	size_t	size_s;
+	int		count;
+	int		count_sub;
+	int		size_s;
 
 	size_s = strlen(s);
 	if (len > size_s)
@@ -41,7 +41,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	return (temp_sub_s);
 }
 
-static void	ft_free(char **split, size_t words)
+static void	ft_free(char **split, int words)
 {
 	while (words > 0)
 	{
@@ -52,10 +52,10 @@ static void	ft_free(char **split, size_t words)
 	free(split);
 }
 
-size_t	count_pipes(char const *s, char c)
+int	count_pipes(char const *s, char c)
 {
-	size_t i = 0;
-	size_t count = 0;
+	int i = 0;
+	int count = 0;
 	int undisclosed_quote = 0;
 
 	while (s[i])
@@ -83,39 +83,37 @@ size_t	count_pipes(char const *s, char c)
 	return (count);
 }
 
-void	ft_progress(char const *s, char c, char **split, size_t words)
+void assign_pipes(char const *s, char pipe, char **split, int words)
 {
-	size_t	i;
-	size_t	pipe_len;
-	size_t	count;
-	int		in_quotes;
+	int i = 0;
+	int count = 0;
+	int in_quotes = 0;
+	int pipe_len;
 
-	i = 0;
-	count = 0;
-	in_quotes = 0;
 	while (s[i] && count < words)
 	{
-		pipe_len = 0;
-		while (s[i] == c && s[i])
-		{
+		while (s[i] == pipe && s[i])
 			i++;
-		}
-		if (s[i] == '\"')
+		pipe_len = 0;
+		while (s[i] && s[i] == ' ')
+			i++;
+		while (s[1])
 		{
-			in_quotes = !in_quotes;
-		}
-		while (s[i] && (s[i] != c || in_quotes))
-		{
-			if (s[i] == '\"' && in_quotes)
+			if (s[i] == '\"')
 			{
-				in_quotes = 0;
+				in_quotes = !in_quotes;
+			}
+			if (s[i] == pipe && !in_quotes)
+			{
+				break ;
 			}
 			pipe_len++;
 			i++;
 		}
 		if (pipe_len > 0)
 		{
-			split[count] = ft_substr(s, i - pipe_len, pipe_len);
+			
+			split[count] = ft_sub_str(s, i - pipe_len, pipe_len);
 			if (!split[count])
 			{
 				ft_free(split, count);
@@ -130,33 +128,33 @@ void	ft_progress(char const *s, char c, char **split, size_t words)
 char	**split_pipes(char const *s, char c)
 {
 	char	**split;
-	size_t	pipes;
+	int		pipes;
 
 	if (!s)
 		return (NULL);
 	pipes = count_pipes(s, c);
-	printf("\n%ld\n", pipes);
+	printf("\n%d\n", pipes);
 	split = calloc(pipes + 1, sizeof(char *));
 	if (!split)
 		return (NULL);
-	ft_progress(s, c, split, pipes);
+	assign_pipes(s, c, split, pipes);
 	return (split);
 }
 
 int main()
 {
-	char const *input = "0 \"| 0\"";
+	char const *input = "echo \"test | test\" | echo test";
 
 	char **result = split_pipes(input, '|');
 
 	if (result)
 	{
 		printf("Split result:\n");
-		for (size_t i = 0; result[i] != NULL; i++)
+		for (int i = 0; result[i] != NULL; i++)
 		{
-			printf("[%zu]: \"%s\"\n", i, result[i]);
+			printf("[%d]: \"%s\"\n", i, result[i]);
 		}
-		for (size_t i = 0; result[i] != NULL; i++)
+		for (int i = 0; result[i] != NULL; i++)
 		{
 			free(result[i]);
 		}

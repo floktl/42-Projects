@@ -6,7 +6,7 @@
 /*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 11:03:04 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/04/24 19:34:02 by flo              ###   ########.fr       */
+/*   Updated: 2024/04/25 22:16:17 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ int	main(void)
 		}
 		parse_tree = parse_command(command);
 		free(command);
+		execute_command(parse_tree->cmd_brch);
 		print_parse_tree(parse_tree);
 		free_tree(parse_tree);
 		//i++;

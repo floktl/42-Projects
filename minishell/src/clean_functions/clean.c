@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clean.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 10:49:29 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/04/22 18:40:12 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/04/25 22:00:04 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ void	free_tree(t_tree *parse_tree)
 	{
 		free_two_dimensional_array(parse_tree->flags);
 	}
-	
 	free(parse_tree);
 	parse_tree = NULL;
 }

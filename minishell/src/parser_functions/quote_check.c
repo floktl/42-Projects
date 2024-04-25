@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quote_check.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 20:40:02 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/04/25 21:04:19 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/04/25 22:07:19 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,22 +41,23 @@ int	check_for_quotes(t_tree *tree, char *command_str)
 
 int	check_for_open_quotes(char letter, int *s_quote, int *d_quote)
 {
-	if (letter == '\'' && !s_quote)
+	if (letter == '\'' && !*s_quote)
 	{
-		if (d_quote)
+		if (*d_quote)
 			return (EXIT_FAILURE);
-		s_quote = 1;
+		*s_quote = 1;
 	}
-	else if (letter == '\'' && s_quote)
-		s_quote = 0;
-	if (letter == '\"' && !d_quote)
+	else if (letter == '\'' && *s_quote)
+		*s_quote = 0;
+	if (letter == '\"' && !*d_quote)
 	{
-		if (s_quote)
+		if (*s_quote)
 			return (EXIT_FAILURE);
-		d_quote = 1;
+		*d_quote = 1;
 	}
-	else if (letter == '\"' && d_quote)
-		d_quote = 0;
+	else if (letter == '\"' && *d_quote)
+		*d_quote = 0;
+	return (EXIT_SUCCESS);
 }
 
 //	function to check for undisclosed quotes in the first word of a string

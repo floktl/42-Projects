@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process_arg_str.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 10:47:36 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/04/25 21:05:06 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/04/25 22:08:12 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ char	*ft_fgets(void)
 	c = getchar();
 	while (c != '\n' && c != EOF)
 	{
-		line = realloc(line, sizeof(char) * (len + 2));
+		line = ft_realloc(line, sizeof(char) * (len + 2));
 		if (line == NULL)
 		{
 			free(line);
@@ -80,11 +80,11 @@ int	split_command(t_tree *tree, char *command_str)
 		printf("undisclosed quotes in first word\n");
 		return (EXIT_FAILURE);
 	}
-	if (adapt_arguments(tree, command_str) == EXIT_FAILURE)
-	{
-		printf("Error removing whitespaces\n");
-		return (EXIT_FAILURE);
-	}
+	// if (adapt_arguments(tree, command_str) == EXIT_FAILURE)
+	// {
+	// 	printf("Error removing whitespaces\n");
+	// 	return (EXIT_FAILURE);
+	// }
 	if (is_substr_first_word(command_str, "echo"))
 	{
 		tree->type = EXEC;

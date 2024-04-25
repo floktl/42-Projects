@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_pipes.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 12:09:19 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/04/25 21:06:30 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/04/25 22:05:26 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	count_pipes(char const *s, char pipe, int *pipe_num)
 			d_quote = 0;
 		}
 		else if (s[i] == pipe && s_quote % 2 == 0 && d_quote % 2 == 0)
-			*pipe_num++;
+			*pipe_num += 1;
 		i++;
 	}
 	return (*pipe_num);
@@ -71,7 +71,7 @@ int	quote_check(char c, int *pipe_len, char pipe)
 	{
 		return (1);
 	}
-	*pipe_len++;
+	*pipe_len += 1;
 	return (0);
 }
 

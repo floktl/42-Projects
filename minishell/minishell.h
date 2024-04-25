@@ -6,7 +6,7 @@
 /*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 10:41:13 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/04/24 21:50:10 by flo              ###   ########.fr       */
+/*   Updated: 2024/04/25 22:06:11 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +125,8 @@ t_tree	*parse_command(char *command);
 char	*ft_fgets(void);
 int		seperate_pipes(t_tree *tree, char *command_str);
 int		check_for_quotes(t_tree *tree, char *command_str);
+
+int	det_and_rem_quotes_first_word(char *command_str);
 
 //---------------------------- signal functions -------------------------------
 

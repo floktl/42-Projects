@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   flag_checker.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 20:41:54 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/04/25 21:04:38 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/04/25 22:01:35 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,14 @@ int	check_for_flag(t_tree *tree, char *cmd_str, int start)
 {
 	int		i;
 	char	**flags;
+	int		flag_num;
 	int		fl_l;
 	int		fl_c;
 
 	i = start;
 	fl_c = 0;
 	flags = NULL;
-	int flag_num = count_flags(cmd_str, start, '-');
+	flag_num = count_flags(cmd_str, start, '-');
 	if (flag_num > 0)
 	{
 		flags = (char **)malloc(sizeof(char *) * (flag_num + 1));

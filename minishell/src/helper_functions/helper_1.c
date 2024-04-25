@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   helper_1.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 12:09:19 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/04/24 14:23:14 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/04/25 22:10:46 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
 //	function to remove one character in the whole string from start until end
-void remove_char(char *str, char char_to_remove, int start, int end)
+void	remove_char(char *str, char char_to_remove, int start, int end)
 {
 	char	*temp;
 	int		old_len;
@@ -34,7 +34,6 @@ void remove_char(char *str, char char_to_remove, int start, int end)
 		temp = malloc(sizeof(char) * new_len);
 		if (!temp)
 		{
-			printf("malloc");
 			exit (1);
 		}
 		ft_strlcpy(temp, str, new_len);

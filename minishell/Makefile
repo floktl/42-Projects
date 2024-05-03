@@ -6,7 +6,7 @@
 #    By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/19 10:25:10 by fkeitel           #+#    #+#              #
-#    Updated: 2024/04/24 11:47:33 by fkeitel          ###   ########.fr        #
+#    Updated: 2024/04/26 19:24:27 by fkeitel          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ SRC_DIR := src
 OBJ_DIR := obj
 
 # Source files, Libraries targets
-SRCS    :=  $(shell find $(SRC_DIR) -name '*.c')
+SRCS    :=  $(shell find $(SRC_DIR) -name '*.c') # muss am ende durch c files ersetzt werden-> verboten
 LIBFT   := libft/
 LIBFTTARGET := libft/libft.a
 OBJS    := $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)

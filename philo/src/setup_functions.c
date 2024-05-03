@@ -6,7 +6,7 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 16:00:27 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/04/09 17:43:18 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/05/03 09:00:38 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,10 @@ int	assign_individual_philosopher_data(t_data *data)
 	while (i < data->num_philo)
 	{
 		data->philos[i].id = i + 1;
+		if (data->philos[i].id % 2 == 0)
+			data->philos[i].status = 1;
+		else
+			data->philos[i].status = -1;
 		if (i < data->num_philo - 1)
 			if (allocate_fork(data, i, 'r') == EXIT_FAILURE)
 				return (EXIT_FAILURE);

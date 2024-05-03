@@ -3,31 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 11:03:04 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/04/25 22:16:17 by flo              ###   ########.fr       */
+/*   Updated: 2024/05/01 14:18:05 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-char	*g_history[MAX_HISTORY];
-int		g_history_count = 0;
-
+//	main loop start with  make and ./minishell
 int	main(void)
 {
 	char	*command;
-	//int		i;
 	t_tree	*parse_tree;
 
-	//i = 0;
-	signal(SIGINT, handle_signal);
+	signal(SIGINT, handle_signal);	// function to catch the signals
 	while (1)
 	{
 		printf("$ ");
-		fflush(stdout);
-		command = ft_fgets();
+		fflush(stdout); //	verboten, muss nachher entfernt/ersetzt werden!
+		command = ft_fgets();	// custum fgets function
 		if (command == NULL)
 		{
 			printf("\n");
@@ -40,13 +36,16 @@ int	main(void)
 			free(command);
 			break ;
 		}
-		parse_tree = parse_command(command);
+		parse_tree = parse_command(command); //	parsing function
 		free(command);
-		execute_command(parse_tree->cmd_brch);
-		print_parse_tree(parse_tree);
+		if (parse_tree == NULL)
+			continue ;
+		command = NULL;
+		print_parse_tree(parse_tree);	// function to print tree struct values
+		execute_command(parse_tree);	//	execution function
 		free_tree(parse_tree);
-		//i++;
 	}
+	delete_history();
 	return (0);
 }
 

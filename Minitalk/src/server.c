@@ -6,7 +6,7 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 08:29:17 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/31 14:51:40 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/04/29 18:05:55 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,34 +132,34 @@ int	main(void)
 	return (0);
 }
 
-//volatile sig_atomic_t	g_done = 0;
+volatile sig_atomic_t	g_done = 0;
 
-//void	handle_timeout(int sig)
-//{
-//	(void)sig;
-//	ft_printf("Timeout reached. Exiting loop...\n");
-//	g_done = 1;
-//}
+void	handle_timeout(int sig)
+{
+	(void)sig;
+	ft_printf("Timeout reached. Exiting loop...\n");
+	g_done = 1;
+}
 
-//int	main(void)
-//{
-//	int	i;
+int	main(void)
+{
+	int	i;
 
-//	i = 0;
-//	signal(SIGUSR1, handle_sigusr);
-//	signal(SIGUSR2, handle_sigusr);
-//	signal(SIGALRM, handle_timeout);
-//	ft_printf("\033[0;33mServer PID: %d\033[0m\n\n", getpid());
-//	ft_printf("\033[0;33mwaiting for signals \033[0m");
-//	while (i++ < 5)
-//	{
-//		ft_printf("\033[0;33m.\033[0m");
-//		sleep(1);
-//	}
-//	while (!g_done)
-//	{
-//		pause();
-//	}
-//	g_done = 0;
-//	return (0);
-//}
+	i = 0;
+	signal(SIGUSR1, handle_sigusr);
+	signal(SIGUSR2, handle_sigusr);
+	signal(SIGALRM, handle_timeout);
+	ft_printf("\033[0;33mServer PID: %d\033[0m\n\n", getpid());
+	ft_printf("\033[0;33mwaiting for signals \033[0m");
+	while (i++ < 5)
+	{
+		ft_printf("\033[0;33m.\033[0m");
+		sleep(1);
+	}
+	while (!g_done)
+	{
+		pause();
+	}
+	g_done = 0;
+	return (0);
+}

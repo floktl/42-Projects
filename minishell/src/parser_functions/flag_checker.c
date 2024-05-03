@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   flag_checker.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 20:41:54 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/04/25 22:01:35 by flo              ###   ########.fr       */
+/*   Updated: 2024/04/26 19:43:41 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	count_flags(const char *str, int start, char c)
 	return (count);
 }
 
-//	check if there are any flags in the command string
+//	check if there are any flags in the command string save them in the struct
 int	check_for_flag(t_tree *tree, char *cmd_str, int start)
 {
 	int		i;

@@ -3,42 +3,45 @@
 /*                                                        :::      ::::::::   */
 /*   quote_check.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 20:40:02 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/04/25 22:07:19 by flo              ###   ########.fr       */
+/*   Updated: 2024/04/28 11:33:18 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-//	check if there are undisclosed quotes int he command string
-int	check_for_quotes(t_tree *tree, char *command_str)
+//	check if there are undisclosed quotes in the command string
+int	check_for_quotes(char *command_str)
 {
 	int	i;
 	int	single_quote_counter;
 	int	double_quote_counter;
 
-	(void)tree;
 	i = 0;
 	single_quote_counter = 0;
 	double_quote_counter = 0;
 	while (command_str[i])
 	{
-		if (command_str[i] == '\'')
-			single_quote_counter++;
-		if (command_str[i] == '\"')
+		if (command_str[i] == '\"' && single_quote_counter % 2 == 0)
+		{
 			double_quote_counter++;
+			single_quote_counter = 0;
+		}
+		else if (command_str[i] == '\'' && double_quote_counter % 2 == 0)
+		{
+			single_quote_counter++;
+			double_quote_counter = 0;
+		}
 		i++;
 	}
 	if (single_quote_counter % 2 != 0 || double_quote_counter % 2 != 0)
-	{
-		printf("undisclosed quote in command\n");
-		return (EXIT_FAILURE);
-	}
+		return (printf("undisclosed quote in command\n"), EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }
 
+//	check if there are open quotes
 int	check_for_open_quotes(char letter, int *s_quote, int *d_quote)
 {
 	if (letter == '\'' && !*s_quote)
@@ -81,7 +84,7 @@ int	det_and_rem_quotes_first_word(char *command_str)
 	}
 	if (s_quote || d_quote)
 		return (EXIT_FAILURE);
-	remove_char(command_str, '\'', 0, i);
-	remove_char(command_str, '\"', 0, i);
+	remove_char(command_str, '\'', 0, &i);
+	remove_char(command_str, '\"', 0, &i);
 	return (EXIT_SUCCESS);
 }

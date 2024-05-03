@@ -6,7 +6,7 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 13:32:18 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/04/22 14:43:00 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/04/28 11:39:42 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ char	*ft_strtrim(char const *s1, char const *set)
 
 	if (!s1 || !set)
 		return (NULL);
-	str_trim = NULL;
 	start = 0;
 	while (s1[start] && ft_strchr(set, s1[start]))
 		start++;
@@ -41,8 +40,6 @@ char	*ft_strtrim(char const *s1, char const *set)
 	}
 	return (str_trim);
 }
-
-
 
 /* int main()
 {

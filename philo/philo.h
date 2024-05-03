@@ -6,7 +6,7 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 12:07:06 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/04/09 16:52:23 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/05/03 09:14:43 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ typedef struct s_data	t_data;
 typedef struct s_philo
 {
 	int				id;
+	int				status;
 	pthread_mutex_t	*left_fork;
 	pthread_mutex_t	*right_fork;
 	pthread_t		thread;
@@ -50,6 +51,7 @@ typedef struct s_philo
 	int				num_of_times_eat;
 	struct timeval	last_meal_time;
 	long			last_meal;
+	struct timeval	time;
 }	t_philo;
 
 //	struct for the global data

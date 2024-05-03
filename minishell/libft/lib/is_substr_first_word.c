@@ -6,7 +6,7 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 12:09:44 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/04/24 14:23:18 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/04/28 11:43:26 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,11 @@ int	word_cmp(const char *s1, const char *s2, size_t n)
 int	is_substr_first_word(const char *str, const char *sub_str)
 {
 	size_t	sub_str_len;
-	int i;
+	int		i;
 
 	i = 0;
 	while (str[i] == ' ')
-        i++;
+		i++;
 	sub_str_len = ft_strlen(sub_str);
 	if (sub_str_len == 0 || sub_str_len > ft_strlen(str + i))
 	{

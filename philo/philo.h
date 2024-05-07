@@ -6,7 +6,7 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 12:07:06 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/05/03 09:14:43 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/05/07 13:19:48 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@
 
 # define ALIVE 1
 # define DEAD 0
+# define EATING 1
+# define HUNGRY 0
 /* ------------------------------- libraries -------------------------------- */
 
 //	public libraries
@@ -49,24 +51,27 @@ typedef struct s_philo
 	pthread_t		thread;
 	struct s_data	*data;
 	int				num_of_times_eat;
-	struct timeval	last_meal_time;
+	pthread_mutex_t	eat_mutex;
+	int				is_hungry;
+	pthread_mutex_t	meal_mutex;
 	long			last_meal;
-	struct timeval	time;
+	pthread_mutex_t	round_mutex;
+	long			time;
+	long			round;
+	int				dead;
+	pthread_mutex_t	death_mutex;
 }	t_philo;
 
 //	struct for the global data
 typedef struct s_data
 {
-	struct timeval	time;
-	struct timeval	start_time;
-	pthread_mutex_t	time_mutex;
+	long			start_time;
 	int				num_philo;
-	int				time_to_die;
-	int				time_to_eat;
-	int				time_to_sleep;
+	int				die_time;
+	int				eat_time;
+	int				sleep_time;
 	int				num_of_times_eat;
-	bool			philo_dead;
-	pthread_mutex_t	death_mutex;
+	pthread_t		death_thread;
 	struct s_philo	*philos;
 }		t_data;
 
@@ -76,20 +81,22 @@ typedef struct s_data
 
 //	death check function:
 
-int		check_death(t_data *data);
-int		check_death_time(t_philo *philo, long *timestamp);
-int		check_num_of_timeseat(t_philo *philo);
+int		check_death(t_philo *philo);
+void	*death_checker(void *arg);
 
 //	time function:
 
-void	update_timestamp(t_data *data, long *timestamp, t_philo *philo);
-int		ft_usleep(t_philo *philo, long max_time, long *timestamp);
+void	update_round_time(t_philo *philo, struct timeval start_round);
+void	update_timestamp(t_philo *philo);
+int		ft_usleep(t_philo *philo, long max_time);
+void	update_last_meal_time(t_philo *philo);
 
 //	dining problem functions:
 
 void	*philosopher(void *arg);
-int		prepare_eating(t_philo *philo, long *timestamp);
-int		prepare_sleeping(t_philo *philo, long *timestamp);
+int		thinking(t_philo *philo, struct timeval start_round);
+int		eating(t_philo *philo, struct timeval start_round);
+int		sleeping(t_philo *philo, struct timeval start_round);
 
 //	helper functions:
 
@@ -97,11 +104,12 @@ int		ft_atoi(const char *str);
 int		ft_p_error(char *error_string);
 int		ft_isdigit(int c);
 void	free_data_struct(t_data *philo);
+void	print_fork_addresses(t_data *data);
 
 //	setup functions:
 
 int		assign_arguments(t_data *data, char **args, int arg_count);
-int		allocate_fork(t_data *data, int i, char which_fork);
+int		allocate_mutexes(t_data *data, int i, char which_fork);
 int		assign_individual_philosopher_data(t_data *data);
 int		initialize_philosophers(t_data *data, char **args, int arg_count);
 

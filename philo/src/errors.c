@@ -6,7 +6,7 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 15:23:22 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/04/09 17:53:57 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/05/07 12:15:17 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,19 +62,19 @@ int	check_forks_consistency(t_data *data)
 int	check_argument_limits(t_data *data, char **args, int arg_count)
 {
 	data->num_philo = ft_atoi(args[1]);
-	data->time_to_die = ft_atoi(args[2]);
-	data->time_to_eat = ft_atoi(args[3]);
-	data->time_to_sleep = ft_atoi(args[4]);
+	data->die_time = ft_atoi(args[2]);
+	data->eat_time = ft_atoi(args[3]);
+	data->sleep_time = ft_atoi(args[4]);
 	if (arg_count == 6)
 		data->num_of_times_eat = ft_atoi(args[5]);
 	else
 		data->num_of_times_eat = -1;
-	if (data->time_to_die < 3
-		|| (data->time_to_eat + data->time_to_sleep) >= data->time_to_die
-		|| data->num_philo > 20 || data->num_philo <= 0
-		|| data->time_to_die > 30000 || data->time_to_die <= 0
-		|| data->time_to_eat > 30000 || data->time_to_eat <= 0
-		|| data->time_to_sleep > 30000 || data->time_to_sleep <= 0)
+	if (data->die_time < 3
+		|| (data->eat_time + data->sleep_time) >= data->die_time
+		|| data->num_philo > 200 || data->num_philo <= 0
+		|| data->die_time > 30000 || data->die_time <= 0
+		|| data->eat_time > 30000 || data->eat_time <= 0
+		|| data->sleep_time > 30000 || data->sleep_time <= 0)
 		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }

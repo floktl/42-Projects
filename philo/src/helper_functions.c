@@ -6,7 +6,7 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 12:00:49 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/04/06 16:04:05 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/05/07 13:08:34 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,6 @@ void	free_data_struct(t_data *data)
 	i = 0;
 	if (!data)
 		return ;
-	pthread_mutex_destroy(&data->death_mutex);
-	pthread_mutex_destroy(&data->time_mutex);
 	while (i < data->num_philo)
 	{
 		if (data->philos[i].right_fork)
@@ -72,6 +70,10 @@ void	free_data_struct(t_data *data)
 			pthread_mutex_destroy(data->philos[i].right_fork);
 			free(data->philos[i].right_fork);
 			data->philos[i].right_fork = NULL;
+			pthread_mutex_destroy(&data->philos[i].meal_mutex);
+			pthread_mutex_destroy(&data->philos[i].round_mutex);
+			pthread_mutex_destroy(&data->philos[i].death_mutex);
+			pthread_mutex_destroy(&data->philos[i].eat_mutex);
 		}
 		i++;
 	}
@@ -79,5 +81,20 @@ void	free_data_struct(t_data *data)
 	{
 		free(data->philos);
 		data->philos = NULL;
+	}
+}
+
+void	print_fork_addresses(t_data *data)
+{
+	int	i;
+
+	i = 0;
+	while (i < data->num_philo)
+	{
+		printf("Philosopher %d:\n", data->philos[i].id);
+		printf("Left Fork Address: %p\n", (void *)data->philos[i].left_fork);
+		printf("Right Fork Address: %p\n", (void *)data->philos[i].right_fork);
+		printf("\n");
+		i++;
 	}
 }

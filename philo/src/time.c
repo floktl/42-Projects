@@ -6,22 +6,11 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 15:12:39 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/05/06 13:28:52 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/05/09 11:55:50 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
-
-void	update_round_time(t_philo *philo, struct timeval start)
-{
-	struct timeval	cur;
-
-	gettimeofday(&cur, NULL);
-	pthread_mutex_lock(&philo->round_mutex);
-	philo->round = (cur.tv_sec - start.tv_sec) * 1000LL
-		+ (cur.tv_usec - start.tv_usec) / 1000;
-	pthread_mutex_unlock(&philo->round_mutex);
-}
 
 //	function to update the timestamp using a seperate mutex
 void	update_timestamp(t_philo *philo)
@@ -58,6 +47,7 @@ int	ft_usleep(t_philo *philo, long max_time)
 	return (ALIVE);
 }
 
+//	function to update the last_time when a philo ate to the current time
 void	update_last_meal_time(t_philo *philo)
 {
 	struct timeval	cur_time;

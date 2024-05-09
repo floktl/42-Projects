@@ -6,7 +6,7 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 16:00:27 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/05/07 12:18:30 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/05/09 15:33:53 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,6 @@ int	allocate_mutexes(t_data *data, int i, char which_fork)
 		data->philos[i].left_fork = malloc(sizeof(pthread_mutex_t));
 		if (data->philos[i].left_fork == NULL)
 			return (ft_p_error("Memory allocation failed!\n"));
-		if (pthread_mutex_init(data->philos[i].left_fork, NULL) != 0)
-			return (ft_p_error("pthread_mutex_init failed!\n"));
 		data->philos[data->num_philo -1].right_fork = data->philos[i].left_fork;
 	}
 	else if (which_fork == 'r')
@@ -56,9 +54,54 @@ int	allocate_mutexes(t_data *data, int i, char which_fork)
 		data->philos[i].right_fork = malloc(sizeof(pthread_mutex_t));
 		if (data->philos[i].right_fork == NULL)
 			return (ft_p_error("Memory allocation failed!\n"));
-		if (pthread_mutex_init(data->philos[i].right_fork, NULL) != 0)
-			return (ft_p_error("pthread_mutex_init failed!\n"));
 	}
+	return (EXIT_SUCCESS);
+}
+
+//	function to assign the forks and the eating order for one philo
+int	assign_forks(t_data *data, int i)
+{
+	if (data->philos[i].id % 2 == 0)
+		data->philos[i].status = 1;
+	else
+		data->philos[i].status = -1;
+	if (data->num_philo == 1)
+	{
+		data->philos[i].right_fork = malloc(sizeof(pthread_mutex_t));
+		if (data->philos[0].right_fork == NULL)
+			return (ft_p_error("Memory allocation failed!\n"));
+		data->philos[i].left_fork = data->philos[i].right_fork;
+		data->philos[i].right_fork = data->philos[i].left_fork;
+		return (EXIT_SUCCESS);
+	}
+	if (i < data->num_philo - 1)
+		if (allocate_mutexes(data, i, 'r') == EXIT_FAILURE)
+			return (EXIT_FAILURE);
+	if (i == 0)
+	{
+		if (allocate_mutexes(data, i, 'l') == EXIT_FAILURE)
+			return (EXIT_FAILURE);
+	}
+	else
+		data->philos[i].left_fork = data->philos[i - 1].right_fork;
+	return (EXIT_SUCCESS);
+}
+
+//	init all values from one philo
+int	initiliaze_values(t_data *data, int i)
+{
+	data->philos[i].num_of_times_eat = data->num_of_times_eat;
+	data->philos[i].data = data;
+	if (pthread_mutex_init(data->philos[i].right_fork, NULL) != 0
+		|| pthread_mutex_init(&data->philos[i].death_mutex, NULL)
+		|| pthread_mutex_init(&data->philos[i].meal_mutex, NULL)
+		|| pthread_mutex_init(&data->philos[i].round_mutex, NULL)
+		|| pthread_mutex_init(&data->philos[i].eat_mutex, NULL))
+		return (ft_p_error("pthread_mutex_init failed!\n"));
+	data->philos[i].last_meal = 0;
+	data->philos[i].time = 0;
+	data->philos[i].dead = ALIVE;
+	data->philos[i].is_hungry = HUNGRY;
 	return (EXIT_SUCCESS);
 }
 
@@ -70,56 +113,19 @@ int	assign_individual_philosopher_data(t_data *data)
 	i = 0;
 	while (i < data->num_philo)
 	{
-		data->philos[i].id = i + 1;
-		if (data->philos[i].id % 2 == 0)
-			data->philos[i].status = 1;
-		else
-			data->philos[i].status = -1;
-		if (i < data->num_philo - 1)
-			if (allocate_mutexes(data, i, 'r') == EXIT_FAILURE)
-				return (EXIT_FAILURE);
-		if (i == 0)
-		{
-			if (allocate_mutexes(data, i, 'l') == EXIT_FAILURE)
-				return (EXIT_FAILURE);
-		}
-		else
-			data->philos[i].left_fork = data->philos[i - 1].right_fork;
-		data->philos[i].num_of_times_eat = data->num_of_times_eat;
-		data->philos[i].data = data;
-		pthread_mutex_init(&data->philos[i].death_mutex, NULL);
-		pthread_mutex_init(&data->philos[i].meal_mutex, NULL);
-		pthread_mutex_init(&data->philos[i].round_mutex, NULL);
-		pthread_mutex_init(&data->philos[i].eat_mutex, NULL);
-		data->philos[i].last_meal = 0;
-		data->philos[i].time = 0;
-		data->philos[i].dead = ALIVE;
-		data->philos[i].is_hungry = HUNGRY;
+		data->philos[i].left_fork = NULL;
+		data->philos[i].right_fork = NULL;
 		i++;
 	}
-	return (EXIT_SUCCESS);
-}
-
-//	initialize the struct with all needed values for this project
-int	initialize_philosophers(t_data *data, char **args, int arg_count)
-{
-	if (arg_count != 5 && arg_count != 6)
+	i = 0;
+	while (i < data->num_philo)
 	{
-		printf("\033[1;36musuage: ./philo num_philo time_to_die time_to_eat");
-		return (ft_p_error(" time_to_sleep (num_of_times_eat)\033[0m\n"));
+		data->philos[i].id = i + 1;
+		if (assign_forks(data, i) == EXIT_FAILURE)
+			return (EXIT_FAILURE);
+		if (initiliaze_values(data, i) == EXIT_FAILURE)
+			return (EXIT_FAILURE);
+		i++;
 	}
-	if (assign_arguments(data, args, arg_count) == EXIT_FAILURE)
-	{
-		return (EXIT_FAILURE);
-	}
-	if (data->num_philo == 1)
-		return (EXIT_FAILURE);
-	data->philos = (t_philo *)malloc(sizeof(t_philo) * data->num_philo);
-	if (data->philos == NULL)
-		return (ft_p_error("Philo memory allocation failed\n"));
-	if (assign_individual_philosopher_data(data) == EXIT_FAILURE)
-		return (EXIT_FAILURE);
-	if (check_forks_consistency(data) == EXIT_FAILURE)
-		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }

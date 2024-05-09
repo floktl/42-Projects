@@ -6,7 +6,7 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 12:07:06 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/05/07 13:19:48 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/05/09 13:36:24 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # define DEAD 0
 # define EATING 1
 # define HUNGRY 0
+# define FULL 0
 /* ------------------------------- libraries -------------------------------- */
 
 //	public libraries
@@ -50,12 +51,12 @@ typedef struct s_philo
 	pthread_mutex_t	*right_fork;
 	pthread_t		thread;
 	struct s_data	*data;
-	int				num_of_times_eat;
 	pthread_mutex_t	eat_mutex;
 	int				is_hungry;
 	pthread_mutex_t	meal_mutex;
 	long			last_meal;
 	pthread_mutex_t	round_mutex;
+	int				num_of_times_eat;
 	long			time;
 	long			round;
 	int				dead;
@@ -94,9 +95,9 @@ void	update_last_meal_time(t_philo *philo);
 //	dining problem functions:
 
 void	*philosopher(void *arg);
-int		thinking(t_philo *philo, struct timeval start_round);
-int		eating(t_philo *philo, struct timeval start_round);
-int		sleeping(t_philo *philo, struct timeval start_round);
+int		thinking(t_philo *philo);
+int		eating(t_philo *philo);
+int		sleeping(t_philo *philo);
 
 //	helper functions:
 

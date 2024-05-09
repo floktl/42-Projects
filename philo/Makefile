@@ -6,7 +6,7 @@
 #    By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/01 12:01:53 by fkeitel           #+#    #+#              #
-#    Updated: 2024/04/06 12:04:51 by fkeitel          ###   ########.fr        #
+#    Updated: 2024/05/09 15:25:50 by fkeitel          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,14 +15,16 @@ NAME    := philo
 
 # Compiler and flags
 CC      := gcc
-CFLAGS  := -Wall -Werror -Wextra -g -pthread
+CFLAGS  := -Wall -Werror -Wextra -g -pthread #-fsanitize=thread
 
 # Directories
 SRC_DIR := src
 OBJ_DIR := obj
 
 # Source files
-SRCS    :=  $(shell find $(SRC_DIR) -name '*.c')
+SRCS    :=  src/death_check.c src/dining_problem.c src/errors.c src/main.c\
+			src/helper_functions.c src/setup_functions.c src/time.c
+
 OBJS    := $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
 # Header file

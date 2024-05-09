@@ -6,12 +6,13 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 15:23:22 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/05/07 12:15:17 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/05/09 14:12:18 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
 
+//	function to assign the fork adresses to each philo (left and right fork)
 int	assign_fork_adresses(t_philo *philo, int i)
 {
 	pthread_mutex_t	*left_nb;
@@ -66,15 +67,18 @@ int	check_argument_limits(t_data *data, char **args, int arg_count)
 	data->eat_time = ft_atoi(args[3]);
 	data->sleep_time = ft_atoi(args[4]);
 	if (arg_count == 6)
+	{
 		data->num_of_times_eat = ft_atoi(args[5]);
+		if (data->num_of_times_eat < 0)
+			return (EXIT_FAILURE);
+	}
 	else
 		data->num_of_times_eat = -1;
-	if (data->die_time < 3
-		|| (data->eat_time + data->sleep_time) >= data->die_time
-		|| data->num_philo > 200 || data->num_philo <= 0
-		|| data->die_time > 30000 || data->die_time <= 0
-		|| data->eat_time > 30000 || data->eat_time <= 0
-		|| data->sleep_time > 30000 || data->sleep_time <= 0)
+	if (data->die_time < 60
+		|| data->num_philo > 200 || data->num_philo < 0
+		|| data->die_time > 30000 || data->die_time < 120
+		|| data->eat_time > 30000 || data->eat_time < 60
+		|| data->sleep_time > 30000 || data->sleep_time < 60)
 		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }

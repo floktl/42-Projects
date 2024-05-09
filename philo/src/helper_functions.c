@@ -6,7 +6,7 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 12:00:49 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/05/07 13:08:34 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/05/09 15:38:05 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ int	ft_atoi(const char *str)
 	{
 		while (ft_isdigit(str[count]))
 		{
+			if (count >= 10)
+				return (-1);
 			result *= 10;
 			result += str[count] - '0';
 			count++;
@@ -84,6 +86,7 @@ void	free_data_struct(t_data *data)
 	}
 }
 
+//	function to print out all fork adresses to check right order
 void	print_fork_addresses(t_data *data)
 {
 	int	i;

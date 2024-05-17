@@ -6,74 +6,69 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 11:03:04 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/05/01 14:18:05 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/05/17 14:49:26 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-//	main loop start with  make and ./minishell
-int	main(void)
+int	prompt_loop(t_env **env_lst, t_tree	**parse_tree)
 {
+	int		debug_mode;
 	char	*command;
-	t_tree	*parse_tree;
 
-	signal(SIGINT, handle_signal);	// function to catch the signals
+	debug_mode = 0;
+	command = NULL;
 	while (1)
 	{
-		printf("$ ");
-		fflush(stdout); //	verboten, muss nachher entfernt/ersetzt werden!
-		command = ft_fgets();	// custum fgets function
-		if (command == NULL)
+		command = readline("\033[32mminishell> \033[0m");
+		if (command == NULL || !ft_strncmp(command, "exit", 4))
 		{
-			printf("\n");
-			break ;
+			if (command)
+				free(command);
+			return (EXIT_SUCCESS);
 		}
-		if (command[0] && command[0] == '\n')
-			continue ;
-		if (strcmp(command, "exit") == 0)
+		if (command[0] == '\0')
 		{
 			free(command);
-			break ;
-		}
-		parse_tree = parse_command(command); //	parsing function
-		free(command);
-		if (parse_tree == NULL)
 			continue ;
-		command = NULL;
-		print_parse_tree(parse_tree);	// function to print tree struct values
-		execute_command(parse_tree);	//	execution function
-		free_tree(parse_tree);
+		}
+		if (strcmp(command, "deb") == 0)
+		{
+			debug_mode = !debug_mode;
+			free(command);
+			continue ;
+		}
+		if (parse_command(&command, env_lst, parse_tree) == EXIT_FAILURE)
+			return (EXIT_FAILURE);
+		if (debug_mode)
+			print_parse_tree(*parse_tree);
+		execute_command(*parse_tree);
+		//free_tree(*parse_tree, 0);
 	}
-	delete_history();
-	return (0);
 }
 
-//char	*args[MAX_ARGS];
+int	main(int argc, char **argv, char **envp)
+{
+	t_tree	*parse_tree;
+	t_env	**env_lst;
+	int		shell_status;
 
-	//command[strcspn(command, "\n")] = '\0';
-	//g_history[g_history_count++] = strdup(command);
-	//if (args[0] == NULL)
-	//{
-	//	continue ;
-	//}
-	//if (strcmp(args[0], "exit") == 0)
-	//{
-	//	break ;
-	//}
-	//if (strcmp(args[0], "history") == 0)
-	//{
-	//	while (i < g_history_count)
-	//	{
-	//		printf("%d: %s\n", i + 1, g_history[i]);
-	//		i++;
-	//	}
-	//	continue ;
-	//}
-	//execute_command(args);
-
-//while (i < g_history_count)
-//{
-//	free(g_history[i]);
-//	i++;
-//}
+	(void)argc;
+	(void)argv;
+	env_lst = NULL;
+	parse_tree = (t_tree *)malloc(sizeof(t_tree));
+	if (!parse_tree)
+		return (1);
+	signal(SIGINT, signal_handler);
+	signal(SIGQUIT, SIG_IGN);
+	env_lst = init_env_list(envp);
+	if (!env_lst)
+		return (1);
+	shell_status = prompt_loop(env_lst, &parse_tree);
+	free_env_list(env_lst);
+	clear_history();
+	if (shell_status == EXIT_FAILURE)
+		return (1);
+	return (0);
+}

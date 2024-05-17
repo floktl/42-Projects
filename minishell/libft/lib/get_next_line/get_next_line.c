@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 12:40:04 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/30 10:04:08 by flo              ###   ########.fr       */
+/*   Updated: 2024/04/29 11:53:38 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,25 +35,6 @@ char	*ft_strncpy(char *dest, const char *src, size_t n)
 	while (i < n)
 		dest[i++] = '\0';
 	return (dest);
-}
-
-void	*ft_calloc(size_t count, size_t size)
-{
-	void	*str;
-	size_t	counter;
-	char	*char_s;
-
-	counter = 0;
-	str = malloc(count * size);
-	if (str == NULL)
-		return (NULL);
-	char_s = (char *)str;
-	while (counter < (count * size))
-	{
-		char_s[counter] = 0;
-		counter++;
-	}
-	return (str);
 }
 
 int	read_buf(int fd, char **buf, int *end)

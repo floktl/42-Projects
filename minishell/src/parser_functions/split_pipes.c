@@ -6,7 +6,7 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 12:09:19 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/04/28 12:00:36 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/05/12 08:07:16 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,30 +40,33 @@ void	count_pipes(char const *s, char pipe, int *pipe_num)
 	}
 }
 
-int	quote_check(char c, int *pipe_len, char pipe, int *i)
+int	quote_check(const char *s, int *pipe_len, char pipe, int *i)
 {
 	static int	doub_quo = 0;
 	static int	sing_quo = 0;
 
-	if (c == '\"' && sing_quo % 2 == 0)
+	if (s[*i] == '\"' && sing_quo % 2 == 0)
 	{
 		doub_quo++;
 		sing_quo = 0;
 	}
-	else if (c == '\'' && doub_quo % 2 == 0)
+	else if (s[*i] == '\'' && doub_quo % 2 == 0)
 	{
 		sing_quo++;
 		doub_quo = 0;
 	}
-	else if (c == pipe && sing_quo % 2 == 0 && doub_quo % 2 == 0)
+	else if (s[*i] == pipe && sing_quo % 2 == 0 && doub_quo % 2 == 0)
+	{
+		sing_quo = 0;
+		return (doub_quo = 0, 1);
+	}
+	if (!s[(*i) + 1])
 	{
 		sing_quo = 0;
 		doub_quo = 0;
-		return (1);
 	}
 	*pipe_len += 1;
-	*i += 1;
-	return (0);
+	return (*i += 1, 0);
 }
 
 //	function to assign the pipes into two dimensional array accordance of quotes
@@ -82,7 +85,7 @@ int	assign_pipes(char const *s, char pipe, char **split, int pipes)
 		pipe_len = 0;
 		while (s[i] && s[i] == ' ')
 			i++;
-		while (s[i] && quote_check(s[i], &pipe_len, pipe, &i) == 0)
+		while (s[i] && quote_check(s, &pipe_len, pipe, &i) == 0)
 			continue ;
 		if (pipe_len > 0)
 		{

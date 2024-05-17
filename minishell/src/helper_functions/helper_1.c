@@ -6,7 +6,7 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 12:09:19 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/04/28 11:37:39 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/05/15 17:03:53 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,4 +58,49 @@ void	ft_treeadd_back(t_tree **lst, t_tree *new, t_tree **parent)
 	while (current->child_pipe != NULL)
 		current = current->child_pipe;
 	current->child_pipe = new;
+}
+
+//	this function allocates the new substring for the string replace in a string
+int	alloc_string(char **s, int result_len)
+{
+	char	*temp;
+	int		str_len;
+
+	temp = NULL;
+	str_len = (int)ft_strlen(*s);
+	if (result_len != str_len)
+	{
+		temp = (char *)malloc(sizeof(char) * (result_len + 1));
+		if (!temp)
+			return (EXIT_FAILURE);
+		ft_memcpy(temp, *s, str_len);
+		temp[str_len] = '\0';
+		free(*s);
+		*s = temp;
+	}
+	return (EXIT_SUCCESS);
+}
+
+//	function to check if string is in single or double quotes
+int	quote_checker(char *arg, int j)
+{
+	static int	single_quote = 0;
+	static int	double_quote = 0;
+
+	if (j == 0)
+	{
+		single_quote = 0;
+		double_quote = 0;
+	}
+	if (arg[j] && arg[j] == '\'' && !(double_quote))
+	{
+		single_quote = !(single_quote);
+	}
+	else if (arg[j] && arg[j] == '\"' && !(single_quote))
+	{
+		double_quote = !(double_quote);
+	}
+	if (single_quote)
+		return (0);
+	return (1);
 }

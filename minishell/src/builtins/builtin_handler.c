@@ -1,22 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.c                                            :+:      :+:    :+:   */
+/*   builtin_handler.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/19 10:47:36 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/05/15 10:55:17 by fkeitel          ###   ########.fr       */
+/*   Created: 2024/04/30 15:15:21 by stopp             #+#    #+#             */
+/*   Updated: 2024/05/15 18:07:52 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-//	function to return an error string and free the tree and the array
-int	pipes_error(char *errorstr, t_tree *tree, char **array)
+void	handle_builtins(t_tree *tree, t_env **env_lst)
 {
-	printf("%s\n", errorstr);
-	free_two_dimensional_array(array);
-	free_tree(tree, 1);
-	return (EXIT_FAILURE);
+	int		fd[2];
+	int		booli;
+
+	booli = 0;
+	if (tree->child_pipe)
+	{
+		if (pipe(fd) == -1)
+			return ;
+		dup2(fd[1], STDOUT_FILENO);
+		close(fd[1]);
+		booli = 1;
+	}
+	if (tree->command == ECHO)
+		ft_echo(tree);
+	if (tree->command == PWD)
+		ft_pwd();
+	if (tree->command == CD)
+		ft_chdir(tree, env_lst);
+	if (booli)
+	{
+		dup2(fd[0], STDIN_FILENO);
+		close (fd[0]);
+	}
 }

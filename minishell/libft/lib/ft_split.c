@@ -3,105 +3,104 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: stopp <stopp@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/17 11:08:31 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/27 14:19:44 by flo              ###   ########.fr       */
+/*   Created: 2023/10/10 14:32:54 by stopp             #+#    #+#             */
+/*   Updated: 2024/05/14 18:58:47 by stopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft.h"
 
-static void	ft_free(char **split, size_t words)
+static int	str_count(char const *s, char c, int len)
 {
-	while (words > 0)
-	{
-		if (split[words - 1])
-			free(split[words - 1]);
-		words--;
-	}
-	free(split);
-}
-
-static size_t	get_words(char const *s, char c)
-{
-	size_t	i;
-	size_t	count;
+	int	i;
+	int	count;
 
 	i = 0;
 	count = 0;
-	while (s[i])
+	while (i < len)
 	{
-		while (s[i] == c)
+		while (i < len && s[i] == c)
 			i++;
-		if (s[i] && s[i] != c)
-		{
+		if (s[i] != '\0')
 			count++;
-			while (s[i] && s[i] != c)
-				i++;
-		}
+		while (i < len && s[i] != c)
+			i++;
 	}
 	return (count);
 }
 
-static void	ft_progress(char const *s, char c, char **split, size_t words)
+static char	**free_all(char **strings)
 {
-	size_t	word_len;
-	size_t	i;
-	int		count;
+	int	i;
 
-	count = 0;
 	i = 0;
-	while (s[count] && i < words)
+	while (strings[i] != NULL)
 	{
-		word_len = 0;
-		while (s[count] == c && s[count])
-			count++;
-		while (s[count] != c && s[count])
-		{
-			count++;
-			word_len++;
-		}
-		if (word_len > 0)
-			split[i] = ft_substr(s, count - word_len, word_len);
-		if (split[i] == NULL)
-			ft_free(split, words);
+		free (strings[i]);
 		i++;
 	}
-	split[i] = NULL;
+	free (strings);
+	return (NULL);
+}
+
+static char	**cutncpy(char const *s, char c, char **strings)
+{
+	int	i;
+	int	j;
+	int	str_i;
+
+	i = 0;
+	str_i = 0;
+	while (s[i] != '\0')
+	{
+		while (s[i] == c && s[i])
+			i++;
+		j = i;
+		while (s[i] != c && s[i])
+			i++;
+		if (i > j)
+		{
+			strings[str_i] = malloc(sizeof(char) * (i - j + 1));
+			if (strings[str_i] == NULL)
+				return (NULL);
+			ft_strlcpy(strings[str_i], s + j, i - j + 1);
+			str_i++;
+		}
+	}
+	return (strings);
 }
 
 char	**ft_split(char const *s, char c)
 {
-	char	**split;
-	size_t	words;
+	int		len;
+	int		words;
+	char	**strings;
 
-	if (!s)
+	len = ft_strlen(s);
+	words = str_count(s, c, len);
+	strings = malloc(sizeof(char *) * (words + 1));
+	if (strings == NULL)
 		return (NULL);
-	words = get_words(s, c);
-	split = ft_calloc(words + 1, sizeof(char *));
-	if (!split)
-		return (NULL);
-	ft_progress(s, c, split, words);
-	return (split);
+	strings[words] = NULL;
+	if (cutncpy(s, c, strings) == NULL)
+		return (free_all(strings));
+	return (strings);
 }
 
-//#include <stdio.h>
-//int main()
-//{
-//    const char *input_string = "hello!";
-//    char delimiter = ' ';
-//    char **result = ft_split(input_string, delimiter);
-//    //if (result == NULL) {
-//    //    printf("Memory allocation error\n");
-//    //    return 1;
-//    //}
-//    //for (int i = 0; result[i] != NULL; i++) {
-//    //    printf("Word %d: %s\n", i, result[i]);
-//    //}
-//    //for (int i = 0; result[i] != NULL; i++) {
-//    //    free(result[i]);
-//    //}
-//    //free(result);
-//    return 0;
-//}
+// int	main(void)
+// {
+// 	char	str[] = "hallo ich bins, was geht?";
+// 	char	c = ' ';
+// 	char	**strs;
+
+// 	strs = ft_split(str, c);
+// 	printf("Word1: %s\n", strs[0]);
+// 	printf("Word2: %s\n", strs[1]);
+// 	printf("Word3: %s\n", strs[2]);
+// 	printf("Word4: %s\n", strs[3]);
+// 	printf("Word5: %s\n", strs[4]);
+// 	printf("Word6: %s\n", strs[5]);
+// 	return (0);
+// }

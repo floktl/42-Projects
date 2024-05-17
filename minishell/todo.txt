@@ -1,0 +1,4 @@
+implement linked list for env
+
+stuff for later:
+quotes here_doc

@@ -6,7 +6,7 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 14:36:56 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/04/28 11:59:26 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/05/15 16:31:57 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,46 +15,27 @@
 //	function to print the tree struct, only for debugging
 void	print_parse_tree(const t_tree *tree)
 {
-	printf("\n");
 	if (tree == NULL)
 	{
-		printf("t_parse_tree struct is NULL\n");
+		printf("\nt_parse_tree struct is Empty!\n");
 		return ;
 	}
-	printf("pipes_num: %d\n", tree->pipes_num);
-	printf("Adress: %p\n", tree);
+	printf("\npipes_num: %d\nAdress: %p\n", tree->pipes_num, tree);
 	if (tree->child_pipe)
 		printf("childadress: %p\n", tree->child_pipe);
 	if (tree->parent_pipe)
 		printf("parentadress: %p\n", tree->parent_pipe);
 	if (tree->type && tree->command)
-	{
-		printf("type: %d\n", tree->type);
-		printf("command: %d\n", tree->command);
-	}
-	if (tree->flags != NULL)
-	{
-		printf("flags: ");
-		print_2d_array(tree->flags);
-	}
+		printf("type: %d\ncommand: %d\n", tree->type, tree->command);
 	printf("arguments: ");
 	if (tree->arguments != NULL)
-	{
 		print_2d_array(tree->arguments);
-	}
-	printf("\nargc: %d", tree->args_num);
-	printf("\ncmd_brch: ");
+	printf("\nargc: %d\ncmd_brch: ", tree->args_num);
 	if (tree->cmd_brch)
-	{
 		printf(":%s:", tree->cmd_brch);
-	}
-	printf("\n");
-	printf("output: %d\n", tree->output);
-	printf("\n");
+	printf("\noutput: %d\n", tree->output);
 	if (tree->child_pipe != NULL)
-	{
 		print_parse_tree(tree->child_pipe);
-	}
 }
 
 //	print two-dimensional array

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 10:41:13 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/05/17 14:07:25 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/05/17 20:13:17 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ void	ft_chdir(t_tree *tree, t_env **env_lst);
 //----------------------------- clean functions --------------------------------
 
 //	clean.c
-void	free_tree(t_tree *parse_tree, int env);
+void	free_tree(t_tree *parse_tree);
 void	ft_free(char **split, int words);
 void	free_env_list(t_env **env_list);
 
@@ -142,20 +142,20 @@ int		alloc_string(char **s, int result_len);
 //int		count_flags(const char *str, int start, char c);
 //int		check_for_flag(t_tree *tree, char *cmd_str, int start);
 //	parsing.c
-void	initiliaze_command_tree(t_tree *tree, int i, t_env **env_lst);
-int		parse_command(char **command, t_env **env_lst, t_tree **tree);
+void	initiliaze_command_tree(t_tree *tree, int i);
+int		parse_command(char **command, t_tree **tree);
 //	process_arg_str.c
 char	*ft_fgets(void);
 int		adapt_and_count_arguments(t_tree *tree, char *command_str);
-int		split_command(t_tree *tree, char *command_str, t_env **env_lst);
-int		build_command_tree(t_tree **tree, char *command_str, t_env **env_lst);
+int		split_command(t_tree *tree, char *command_str);
+int		build_command_tree(t_tree **tree, char *command_str);
 //	quote_check.c
 int		check_for_quotes_and_slash(char *command_str);
 int		check_for_open_quotes(char letter, int *s_quote, int *d_quote);
 int		det_and_rem_quotes_first_word(char *command_str);
 int		quote_checker(char *arg, int j);
 //	replace_variable.c
-int		export_dollar_sign(char **args, t_env **env_lst);
+int		export_dollar_sign(char **args, t_env **env_lst, int exit_status);
 //	split_pipes.c
 void	count_pipes(char const *s, char pipe, int *pipe_num);
 int		quote_check(const char *s, int *pipe_len, char pipe, int *i);

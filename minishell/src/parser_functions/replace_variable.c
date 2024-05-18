@@ -3,72 +3,73 @@
 /*                                                        :::      ::::::::   */
 /*   replace_variable.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 10:38:16 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/05/17 12:56:12 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/05/18 13:55:17 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
 //	function to check for quotes in the env and fills the strings
-int	check_for_quotes(char **s, char *envp, char **var, int *j)
+int	check_for_quotes(char **replace, t_env *envp, char **var, char *arg)
 {
-	char	*new_str;
-	size_t	len;
+	int		j;
 
-	*j = 0;
-	while (envp[*j] && (*s)[*j + 1] && envp[*j] == (*s)[*j + 1])
-		(*j)++;
-	if (envp[*j] && envp[*j] == '=' && (!(*s)[*j + 1] || ((*s)[*j + 1]
-		&& ((*s)[*j + 1] == ' ' || (*s)[*j + 1] == '\''
-		|| (*s)[*j + 1] == '\"' || (*s)[*j + 1] == '$'))))
+	j = 0;
+	while (envp->name[j] && *arg && arg[j] && envp->name[j] == arg[j])
+		(j)++;
+	if (!envp->name[j] && (!arg[j] || (arg[j]
+		&& (arg[j] == ' ' || arg[j] == '\''
+		|| arg[j] == '\"' || arg[j] == '$'))))
 	{
-		free(*var);
-		*var = malloc(sizeof(char) * (*j + 2));
-		ft_strlcpy(*var, *s, *j + 2);
-		len = strlen(envp + ++(*j));
-		new_str = ft_substr(envp, *j, len);
-		if (new_str != NULL)
-		{
-			free(*s);
-			*s = ft_strdup(new_str);
-			return (free(new_str), 1);
-		}
-		free(*var);
-		return (0);
+		*var = malloc(sizeof(char) * (ft_strlen(envp->name) + 1));
+		if (!(*var))
+			return (-1);
+		*replace = ft_strdup(envp->value);
+		if (!(*replace))
+			return (free(*var), -1);
+		return (1);
 	}
-	return (-1);
+	return (0);
 }
 
 //	this function searches for a variable in the environment and saves in var
-int	search_for_var_in_env(char **s, char **envp, char *arg, char **var)
+int	search_for_var_in_env(char **replace, t_env *envp, char *arg, char **var)
 {
-	int		i;
-	int		j;
+	t_env	*temp;
 	int		quote_check;
+	int		j;
 
-	*s = strdup(arg);
-	*var = strdup(*s);
-	i = -1;
-	while (envp[++i])
+	*var = NULL;
+	j = 1;
+	if (arg && arg[0] != '$')
+		return (0);
+	temp = envp;
+	while (temp)
 	{
-		quote_check = check_for_quotes(s, envp[i], var, &j);
-		if (quote_check == 1)
-			return (1);
-		else if (quote_check == 0)
-			return (0);
+		quote_check = check_for_quotes(replace, temp, var, arg + 1);
+		if (quote_check != 0)
+			return (quote_check);
+		temp = temp->next;
 	}
-	if ((*s)[j + 1])
+	while (arg[j] && (arg[j] && (arg[j] != ' ' && arg[j] != '$')))
+		j++;
+	if (j > 0)
 	{
-		free(*s);
-		*s = malloc(sizeof(char));
-		*s[0] = '\0';
+		printf("hello123 %d\n", j);
+		*var = malloc(sizeof(char) * (j + 2));
+		if (!var)
+			return (-1);
+		ft_strncpy(*var, arg - 1, j + 2);
+		*replace = malloc(sizeof(char));
+		if (!(*replace))
+			return (free(*var), -1);
+		(*replace)[0] = '\0';
 		return (1);
 	}
-	free(*var);
-	return (0);
+	return (1);
 }
 
 //	this function replaces in the str s the str_replace with the new_str
@@ -79,13 +80,15 @@ int	replace_var(char **s, char **str_replace, char *new_str, int *start)
 	int		rep_len;
 	int		len_new_st;
 
+	if (!(*str_replace))
+		return (0);
 	rep_len = ft_strlen(*str_replace);
 	free(*str_replace);
 	len_new_st = ft_strlen(new_str);
 	if (alloc_string(s, ft_strlen(*s) - rep_len + len_new_st) == EXIT_FAILURE)
 	{
 		free(new_str);
-		return (0);
+		return (-1);
 	}
 	substr_pos = *s + *start;
 	if (substr_pos == NULL)
@@ -116,20 +119,27 @@ void	remove_quotes(char **args, int i, int j)
 		remove_char(args[i], '\"', 0, &j);
 }
 
-int	handle_exit_status(char *arg, int *j)
+int	handle_exit_status(char **arg, int *j, int exit_status)
 {
-	if (arg[(*j) + 1] && arg[*j] == '$' && arg[(*j) + 1] == '?')
+	char *exit_string;
+	char *dollar;
+
+	if ((*arg)[(*j) + 1] && (*arg)[*j] == '$' && (*arg)[(*j) + 1] == '?')
 	{
-		(*j)++;
-		return (0);
+		exit_string = ft_itoa(exit_status);
+		if (!exit_string)
+			return (EXIT_FAILURE);
+		dollar = ft_strdup("$?");
+		if (!dollar)
+			return (free(exit_string), EXIT_FAILURE);
+		if (replace_var(&(*arg), &dollar, exit_string, j) == -1)
+			return (EXIT_FAILURE);
 	}
-	else
-		return (1);
+	return (EXIT_SUCCESS);
 }
 //	function to convert the argument into the string
-int	export_dollar_sign(char **args, t_env **env_lst)
+int	export_dollar_sign(char **args, t_env **env_lst, int exit_status)
 {
-	char	**env;
 	char	*var;
 	char	*replace;
 	int		i;
@@ -137,21 +147,20 @@ int	export_dollar_sign(char **args, t_env **env_lst)
 
 	i = 0;
 	j = 0;
-	env = create_env_array(*env_lst);
 	while (args[i])
 	{
 		j = 0;
 		while (args[i][j] != '\0')
 		{
 			if (quote_checker(args[i], j) && args[i][j] == '$'
-				&& handle_exit_status(args[i], &j)
-				&& search_for_var_in_env(&replace, env, args[i] + j, &var)
-				&& !replace_var(&args[i], &var, replace, &j))
-				return (free_two_dimensional_array(env), EXIT_FAILURE);
+				&& (handle_exit_status(&args[i], &j, exit_status) == EXIT_FAILURE
+				|| search_for_var_in_env(&replace, *env_lst, args[i] + j, &var) == -1
+				|| replace_var(&args[i], &var, replace, &j) == -1))
+				return (EXIT_FAILURE);
 			j++;
 		}
 		remove_quotes(args, i, j);
 		i++;
 	}
-	return (free_two_dimensional_array(env), EXIT_SUCCESS);
+	return (EXIT_SUCCESS);
 }

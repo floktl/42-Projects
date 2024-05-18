@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 10:47:36 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/05/17 14:07:11 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/05/18 19:34:17 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
 //	initialize the command_tree struct
-void	initiliaze_command_tree(t_tree *tree, int i, t_env **env_lst)
+void	initiliaze_command_tree(t_tree *tree, int i)
 {
 	tree->type = 0;
 	tree->command = 0;
@@ -25,12 +25,15 @@ void	initiliaze_command_tree(t_tree *tree, int i, t_env **env_lst)
 	tree->output = 0;
 	tree->args_num = 0;
 	tree->pipes_num = i + 1;
-	tree->env = env_lst;
-	tree->exit_status = 0;
+	if (tree->parent_pipe)
+	{
+		tree->exit_status = tree->parent_pipe->exit_status;
+		tree->env = tree->parent_pipe->env;
+	}
 }
 
 //	function to parse the argument into parsing struct for cmd_exec funciton
-int	parse_command(char **command_str, t_env **env_lst, t_tree **tree)
+int	parse_command(char **command_str, t_tree **tree)
 {
 
 	add_history(*command_str);
@@ -41,7 +44,7 @@ int	parse_command(char **command_str, t_env **env_lst, t_tree **tree)
 			free(*command_str);
 			return (EXIT_FAILURE);
 		}
-		if (build_command_tree(tree, *command_str, env_lst) == EXIT_FAILURE)
+		if (build_command_tree(tree, *command_str) == EXIT_FAILURE)
 		{
 			free(*command_str);
 			return (EXIT_FAILURE);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process_arg_str.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 10:47:36 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/05/17 14:44:12 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/05/18 19:57:17 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -227,12 +227,13 @@ int	handle_here_doc(t_tree *tree)
 }
 
 //	function to split the commands into the components
-int	split_command(t_tree *tree, char *command_str, t_env **env_lst)
+int	split_command(t_tree *tree, char *command_str)
 {
 	if (det_and_rem_quotes_first_word(command_str) == EXIT_FAILURE
 		|| adapt_and_count_arguments(tree, command_str) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
-	if (export_dollar_sign(tree->arguments, env_lst) == EXIT_FAILURE)
+	if (export_dollar_sign(tree->arguments, tree->env, tree->exit_status)
+		== EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	if (is_substr_first_word(command_str, "echo"))
 	{
@@ -259,34 +260,41 @@ int	split_command(t_tree *tree, char *command_str, t_env **env_lst)
 }
 
 //	function to seperate the pipes into the arguments and assign everything
-int	build_command_tree(t_tree **tree, char *command_str, t_env **env_lst)
+int build_command_tree(t_tree **tree, char *command_str)
 {
-	int		pipe_num;
-	char	**pipes;
-	t_tree	*temp;
-	t_tree	*parent;
+	int pipe_num;
+	char **pipes;
+	t_tree *temp;
+	t_tree *parent;
 
 	parent = NULL;
 	pipes = split_pipes(command_str, '|', &pipe_num);
+	if (!pipes)
+		return (pipes_error("error split", NULL, pipes));
 	pipe_num = 0;
-	if (pipes)
+	while (pipes[pipe_num])
 	{
-		while (pipes[pipe_num])
+		if (pipe_num == 0)
 		{
-			if (pipe_num > 0)
-			{
-				temp = (t_tree *)malloc(sizeof(t_tree));
-				if (!temp)
-					return (pipes_error("error malloc", temp, pipes));
-			}
-			initiliaze_command_tree(temp, pipe_num, env_lst);
-			if (split_command(temp, pipes[pipe_num++], env_lst) == EXIT_FAILURE)
+			initiliaze_command_tree(*tree, pipe_num);
+			if (split_command(*tree, pipes[pipe_num]) == EXIT_FAILURE)
+				return (pipes_error("error split_command", *tree, pipes));
+			parent = *tree;
+		}
+		else
+		{
+			temp = (t_tree *)malloc(sizeof(t_tree));
+			if (!temp)
+				return (pipes_error("error malloc", temp, pipes));
+			temp->parent_pipe = parent;
+			initiliaze_command_tree(temp, pipe_num);
+			if (split_command(temp, pipes[pipe_num]) == EXIT_FAILURE)
 				return (pipes_error("error split_command", temp, pipes));
 			ft_treeadd_back(tree, temp, &parent);
 		}
-		free_two_dimensional_array(pipes);
+		pipe_num++;
 	}
-	else
-		return (pipes_error("error split", NULL, pipes));
+	free_two_dimensional_array(pipes);
 	return (EXIT_SUCCESS);
 }
+

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clean.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 10:49:29 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/05/17 14:48:14 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/05/17 19:37:31 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	free_env_list(t_env **env_list)
 }
 
 //	function to free the entire parsing tree
-void	free_tree(t_tree *parse_tree, int env)
+void	free_tree(t_tree *parse_tree)
 {
 	if (!parse_tree)
 		return ;
@@ -49,15 +49,8 @@ void	free_tree(t_tree *parse_tree, int env)
 	{
 		free_two_dimensional_array(parse_tree->arguments);
 	}
-	if (env == 1 && parse_tree->env)
-	{
-		free_env_list(parse_tree->env);
-		parse_tree->env = NULL;
-	}
 	if (parse_tree->child_pipe)
-		free_tree(parse_tree->child_pipe, 0);
-	free(parse_tree);
-	parse_tree = NULL;
+		free_tree(parse_tree->child_pipe);
 }
 
 //	function to free an two dimensional array

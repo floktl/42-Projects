@@ -6,7 +6,7 @@
 /*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 10:47:36 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/05/18 19:57:17 by flo              ###   ########.fr       */
+/*   Updated: 2024/05/18 22:15:17 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -267,7 +267,7 @@ int build_command_tree(t_tree **tree, char *command_str)
 	t_tree *temp;
 	t_tree *parent;
 
-	parent = NULL;
+	parent = *tree;
 	pipes = split_pipes(command_str, '|', &pipe_num);
 	if (!pipes)
 		return (pipes_error("error split", NULL, pipes));
@@ -279,7 +279,6 @@ int build_command_tree(t_tree **tree, char *command_str)
 			initiliaze_command_tree(*tree, pipe_num);
 			if (split_command(*tree, pipes[pipe_num]) == EXIT_FAILURE)
 				return (pipes_error("error split_command", *tree, pipes));
-			parent = *tree;
 		}
 		else
 		{

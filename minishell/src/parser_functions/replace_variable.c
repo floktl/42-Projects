@@ -6,7 +6,7 @@
 /*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 10:38:16 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/05/18 13:55:17 by flo              ###   ########.fr       */
+/*   Updated: 2024/05/18 22:56:36 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,11 @@ int	check_for_quotes(char **replace, t_env *envp, char **var, char *arg)
 		&& (arg[j] == ' ' || arg[j] == '\''
 		|| arg[j] == '\"' || arg[j] == '$'))))
 	{
-		*var = malloc(sizeof(char) * (ft_strlen(envp->name) + 1));
+		*var = malloc(sizeof(char) * (ft_strlen(envp->name) + 2));
 		if (!(*var))
 			return (-1);
+		(*var)[0] = '$';
+		ft_strlcpy(*var + 1, envp->name, ft_strlen(envp->name) + 1);
 		*replace = ft_strdup(envp->value);
 		if (!(*replace))
 			return (free(*var), -1);
@@ -54,16 +56,16 @@ int	search_for_var_in_env(char **replace, t_env *envp, char *arg, char **var)
 			return (quote_check);
 		temp = temp->next;
 	}
-	while (arg[j] && (arg[j] && (arg[j] != ' ' && arg[j] != '$')))
+	while (arg[j] && arg[j] && arg[j] != ' ' && arg[j] != '$' && arg[j] != '\"' && arg[j] != '\'')
 		j++;
 	if (j > 0)
 	{
-		printf("hello123 %d\n", j);
-		*var = malloc(sizeof(char) * (j + 2));
+		*var = malloc(sizeof(char) * (j + 1));
 		if (!var)
 			return (-1);
-		ft_strncpy(*var, arg - 1, j + 2);
-		*replace = malloc(sizeof(char));
+		(*var)[0] = '$';
+		ft_strlcpy(*var + 1, arg, j);
+		*(replace) = malloc(sizeof(char));
 		if (!(*replace))
 			return (free(*var), -1);
 		(*replace)[0] = '\0';

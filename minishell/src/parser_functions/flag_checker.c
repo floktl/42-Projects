@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   flag_checker.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 20:41:54 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/04/28 16:43:20 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/05/19 00:02:07 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,4 +87,72 @@
 //	}
 //	tree->flags = flags;
 //	return (EXIT_SUCCESS);
+//}
+
+//int	search_for_variable_in_env(char *variable, char **envp)
+//{
+//	char	*replace;
+//	int		i;
+//	int		j;
+//	int		temp;
+
+//	i = 0;
+//	while (envp[i])
+//	{
+//		j = 1;
+//		while (envp[i][j] && variable[i] && envp[i][j + 1] == variable[1])
+//		{
+//			j++;
+//		}
+//		if (envp[i][j] && envp[i][j + 1] &&  envp[i][j] == '=')
+//		{
+//			j++;
+//			j = temp;
+//			while (envp[i][temp])
+//			{
+//				temp++;
+//			}
+//			free(variable);
+//			variable = ft_substr(envp[i], j, temp - 1);
+//			return (0);
+//		}
+//	}
+//	return (1);
+//}
+
+//int main() {
+//    // Allocate memory for the environment variables array
+//    char **envp = (char **)malloc(7 * sizeof(char *));
+//    if (envp == NULL) {
+//        perror("Memory allocation failed");
+//        return 1;
+//    }
+
+//    // Set environment variables
+//    envp[0] = strdup("HOSTNAME=e3d678c4e42d");
+//    envp[1] = strdup("PWD=/dorker_workspace/miniiii/minishell");
+//    envp[2] = strdup("HOME=/root");
+//    envp[3] = strdup("TERM=xterm");
+//    envp[4] = strdup("SHLVL=1");
+//    envp[5] = strdup("PATH=/usr/local/sbin:/usr/l=");
+//    envp[6] = strdup("OLDPWD=/dorker_workspace/miniiii");
+
+//    // Test the search_for_variable_in_env function
+//    char *variable = strdup("PWD");
+//    int result = search_for_variable_in_env(variable, envp);
+//    if (result == 0) {
+//        printf("Variable found: %s\n", variable);
+//    } else {
+//        printf("Variable not found\n");
+//    }
+
+//    // Free allocated memory
+//    for (int i = 0; i < 7; i++) {
+//        free(envp[i]);
+//    }
+//    free(envp);
+
+//    free(variable); // Don't forget to free the variable allocated by strdup
+
+//    return 0;
 //}

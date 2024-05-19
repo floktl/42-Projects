@@ -6,7 +6,7 @@
 /*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 10:41:13 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/05/17 20:13:17 by flo              ###   ########.fr       */
+/*   Updated: 2024/05/18 23:53:53 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,7 +155,7 @@ int		check_for_open_quotes(char letter, int *s_quote, int *d_quote);
 int		det_and_rem_quotes_first_word(char *command_str);
 int		quote_checker(char *arg, int j);
 //	replace_variable.c
-int		export_dollar_sign(char **args, t_env **env_lst, int exit_status);
+int		expander(char **args, t_env **env_lst, int exit_status);
 //	split_pipes.c
 void	count_pipes(char const *s, char pipe, int *pipe_num);
 int		quote_check(const char *s, int *pipe_len, char pipe, int *i);

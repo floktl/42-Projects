@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   replace_variable.c                                 :+:      :+:    :+:   */
+/*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 10:38:16 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/05/18 22:56:36 by flo              ###   ########.fr       */
+/*   Updated: 2024/05/19 00:05:10 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,32 +75,30 @@ int	search_for_var_in_env(char **replace, t_env *envp, char *arg, char **var)
 }
 
 //	this function replaces in the str s the str_replace with the new_str
-int	replace_var(char **s, char **str_replace, char *new_str, int *start)
+int	replace_substr(char **s, char **sub_str, char *new_str, int *position)
 {
-	char	*suffix_pos;
 	char	*substr_pos;
 	int		rep_len;
 	int		len_new_st;
 
-	if (!(*str_replace))
+	if (!(*sub_str) || !(*s))
 		return (0);
-	rep_len = ft_strlen(*str_replace);
-	free(*str_replace);
+	rep_len = ft_strlen(*sub_str);
+	free(*sub_str);
 	len_new_st = ft_strlen(new_str);
 	if (alloc_string(s, ft_strlen(*s) - rep_len + len_new_st) == EXIT_FAILURE)
 	{
 		free(new_str);
 		return (-1);
 	}
-	substr_pos = *s + *start;
+	substr_pos = *s + *position;
 	if (substr_pos == NULL)
 		return (0);
-	suffix_pos = substr_pos + rep_len;
 	ft_memmove(substr_pos + len_new_st, substr_pos + rep_len,
-		ft_strlen(suffix_pos) + 1);
+		ft_strlen(substr_pos + rep_len) + 1);
 	ft_memcpy(substr_pos, new_str, len_new_st);
 	free(new_str);
-	*start += len_new_st - rep_len;
+	*position += len_new_st - rep_len;
 	return (1);
 }
 
@@ -134,13 +132,14 @@ int	handle_exit_status(char **arg, int *j, int exit_status)
 		dollar = ft_strdup("$?");
 		if (!dollar)
 			return (free(exit_string), EXIT_FAILURE);
-		if (replace_var(&(*arg), &dollar, exit_string, j) == -1)
+		if (replace_substr(&(*arg), &dollar, exit_string, j) == -1)
 			return (EXIT_FAILURE);
 	}
 	return (EXIT_SUCCESS);
 }
+
 //	function to convert the argument into the string
-int	export_dollar_sign(char **args, t_env **env_lst, int exit_status)
+int	expander(char **args, t_env **env_lst, int exit_status)
 {
 	char	*var;
 	char	*replace;
@@ -157,7 +156,7 @@ int	export_dollar_sign(char **args, t_env **env_lst, int exit_status)
 			if (quote_checker(args[i], j) && args[i][j] == '$'
 				&& (handle_exit_status(&args[i], &j, exit_status) == EXIT_FAILURE
 				|| search_for_var_in_env(&replace, *env_lst, args[i] + j, &var) == -1
-				|| replace_var(&args[i], &var, replace, &j) == -1))
+				|| replace_substr(&args[i], &var, replace, &j) == -1))
 				return (EXIT_FAILURE);
 			j++;
 		}

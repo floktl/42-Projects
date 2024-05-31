@@ -6,7 +6,7 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 16:57:56 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/04/21 12:19:26 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/05/29 17:04:28 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <stdio.h>
 # include <stdarg.h>
 # include <fcntl.h>
+# include <stdint.h>
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 1
@@ -80,6 +81,13 @@ void	*ft_realloc(void *ptr, size_t size);
 int		append_int(int a, int b);
 char	bits_to_char(const int bits[8]);
 int		is_substr_first_word(const char *str, const char *sub_str);
+void	remove_char(char *str, char char_to_remove, int old_len, int *end);
+int		replace_substr(char **s, char **sub_str, char *new_str, int position);
+int		alloc_string(char **s, int result_len);
+char	*insert_char_at_position(char *s, char c, size_t len, size_t pos);
+int		null_term_string(char **command_str);
+char	*strjoin_free(char *s1, char *s2, int num);
+void	rem_char(char *str, int pos);
 
 // printf_functions:
 
@@ -98,13 +106,5 @@ int		ft_putchar(int c, int counter);
 
 //get_next_line functions:
 char	*get_next_line(int fd);
-char	*double_bufsize_fill_with_null(char const *s1);
-void	*extract_line(char **line, char **buf, int *end);
-size_t	ft_strlen(const char *c);
-int		read_buf(int fd, char **buf, int *end);
-char	*ft_check_if_newline(char *s);
-void	*ft_calloc(size_t count, size_t size);
-char	*ft_strncpy(char *dest, const char *src, size_t n);
-int		ft_count_new_line(char **buf);
 
 #endif

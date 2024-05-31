@@ -3,93 +3,152 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: stopp <stopp@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/24 12:40:04 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/04/29 11:53:38 by fkeitel          ###   ########.fr       */
+/*   Created: 2023/11/03 15:01:46 by stopp             #+#    #+#             */
+/*   Updated: 2024/05/31 18:02:06 by stopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../libft.h"
+#include "../../../minishell.h"
 
-int	ft_count_new_line(char **buf)
+char	*ft_strjoin_gnl(char *s1, char *s2)
 {
-	int	i;
+	int		i;
+	int		j;
+	char	*nstr;
 
-	i = 1;
-	while ((*buf)[i - 1] != '\n' && (*buf)[i - 1] != '\0' && **buf)
-		i++;
-	return (i);
+	if (!s1)
+	{
+		s1 = malloc(sizeof(char));
+		if (s1 == NULL)
+			return (NULL);
+		s1[0] = '\0';
+	}
+	if (!s1 && !s2)
+		return (NULL);
+	nstr = malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
+	if (nstr == NULL)
+		return (NULL);
+	i = -1;
+	while (s1[++i])
+		nstr[i] = s1[i];
+	j = 0;
+	while (s2[j])
+		nstr[i++] = s2[j++];
+	free (s1);
+	nstr[i] = '\0';
+	return (nstr);
 }
 
-char	*ft_strncpy(char *dest, const char *src, size_t n)
+char	*rd_to_str(int fd, char *str)
 {
-	size_t	i;
+	char	*buf;
+	int		bytes;
+
+	if (read(fd, 0, 0) < 0)
+		return (free(str), NULL);
+	buf = malloc((BUFFER_SIZE + 1));
+	if (buf == NULL)
+		return (NULL);
+	bytes = 1;
+	while (ft_strchr(str, '\n') == NULL && bytes != 0)
+	{
+		bytes = read(fd, buf, BUFFER_SIZE);
+		if (bytes == -1)
+		{
+			free (buf);
+			free (str);
+			return (NULL);
+		}
+		buf[bytes] = '\0';
+		str = ft_strjoin_gnl(str, buf);
+		if (str == NULL)
+			return (NULL);
+	}
+	free (buf);
+	return (str);
+}
+
+char	*get_line1(char *str)
+{
+	int		i;
+	char	*new_line;
 
 	i = 0;
-	while (i < n && src[i] != '\0')
-	{
-		dest[i] = src[i];
+	if (str == NULL)
+		return (NULL);
+	while (str[i] != '\n' && str[i])
 		i++;
-	}
-	while (i < n)
-		dest[i++] = '\0';
-	return (dest);
+	if (str[i] == '\n')
+		i++;
+	new_line = malloc(sizeof(char) * (i + 1));
+	if (new_line == NULL)
+		return (NULL);
+	new_line[i] = '\0';
+	while (--i >= 0)
+		new_line[i] = str[i];
+	return (new_line);
 }
 
-int	read_buf(int fd, char **buf, int *end)
+char	*update_str(char *str)
 {
-	int		read_bytes;
-	char	*new_buf;
+	int		i;
+	int		j;
+	char	*updated;
 
-	new_buf = NULL;
-	read_bytes = 1;
-	while (read_bytes > 0 || *buf == NULL)
+	i = 0;
+	while (str[i] && str[i] != '\n')
+		i++;
+	if (!str[i])
 	{
-		if (*end != 0)
-		{
-			new_buf = double_bufsize_fill_with_null(*buf);
-			free(*buf);
-			if (new_buf == NULL)
-				return (-1);
-			*buf = new_buf;
-		}
-		read_bytes = read(fd, *buf + *end, BUFFER_SIZE);
-		if (read_bytes < 0)
-			return (-1);
-		*end += read_bytes;
-		(*buf)[*end] = '\0';
-		if (ft_check_if_newline(*buf))
-			break ;
+		free (str);
+		return (NULL);
 	}
-	return (0);
+	if (str[i] == '\n')
+		i++;
+	updated = malloc(sizeof(char) * (ft_strlen(str) - i + 1));
+	if (updated == NULL)
+		return (free(str), NULL);
+	j = 0;
+	while (str[i])
+		updated[j++] = str[i++];
+	updated[j] = '\0';
+	free (str);
+	return (updated);
 }
 
 char	*get_next_line(int fd)
 {
-	static char	*buf;
-	char		*line;
-	static int	i = 0;
+	static char	*str;
+	char		*next_line;
 
-	line = NULL;
-	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
-	{
-		free(buf);
-		i = 0;
-		return (buf = NULL, NULL);
-	}
-	if (!buf)
-		buf = ft_calloc(BUFFER_SIZE, 1);
-	if (!buf)
+	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	if (read_buf(fd, &buf, &i) == -1 || extract_line(&line, &buf, &i) == NULL)
+	str = rd_to_str(fd, str);
+	if (str == NULL)
+		return (NULL);
+	if (*str == '\0')
 	{
-		free(buf);
-		buf = NULL;
-		i = 0;
+		free (str);
+		str = NULL;
 		return (NULL);
 	}
-	free(buf);
-	buf = NULL;
-	return (line);
+	next_line = get_line1(str);
+	str = update_str(str);
+	if (str == NULL)
+		return (next_line);
+	return (next_line);
 }
+
+// int main(int argc, char *argv[])
+// {
+// 	int fd = open(argv[1], O_RDONLY);
+// 	printf("next line: %s", get_next_line(fd));
+// 	printf("next line: %s", get_next_line(fd));
+// 	printf("next line: %s", get_next_line(fd));
+// 	printf("next line: %s", get_next_line(fd));
+// 	close (fd);
+// 	return (0);
+// }

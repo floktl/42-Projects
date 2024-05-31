@@ -6,22 +6,67 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 11:42:50 by fkeitel           #+#    #+#             */
-/*   Updated: 2023/11/18 19:50:28 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/05/25 11:27:38 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-size_t	ft_strlen(const char *c)
+void	*ft_memset(void *b, int c, size_t len)
 {
 	size_t	counter;
+	char	*char_b;
 
 	counter = 0;
-	if (!*c)
-		return (0);
-	while (c[counter] != '\0')
-		counter++;
-	return (counter);
+	char_b = (char *)b;
+	if (len == 0)
+		return (b);
+	while (counter <= len - 1)
+	{
+		char_b[counter++] = c;
+	}
+	b = char_b;
+	return (b);
+}
+
+void	*ft_calloc(size_t count, size_t size)
+{
+	void	*str;
+
+	if (count != 0 && size > SIZE_MAX / count)
+		return (NULL);
+	str = malloc(count * size);
+	if (str == NULL)
+		return (NULL);
+	ft_memset(str, 0, count * size);
+	return (str);
+}
+
+void	*ft_memmove(void *dst, const void *src, size_t len)
+{
+	int	i;
+
+	if (dst == NULL && src == NULL)
+		return (NULL);
+	if (dst > src)
+	{
+		i = (int)len - 1;
+		while (i >= 0)
+		{
+			*(char *)(dst + i) = *(char *)(src + i);
+			i--;
+		}
+	}
+	else
+	{
+		i = 0;
+		while (i < (int)len)
+		{
+			*((char *)(dst + i)) = *((char *)(src + i));
+			i++;
+		}
+	}
+	return (dst);
 }
 
 char	*ft_check_if_newline(char *s)
@@ -52,33 +97,6 @@ char	*double_bufsize_fill_with_null(const char *s1)
 		return (NULL);
 	ft_strncpy(conc_str, s1, old_size);
 	return (conc_str);
-}
-
-void	*ft_memmove(void *dst, const void *src, int len)
-{
-	int	i;
-
-	if (dst == NULL || src == NULL)
-		return (NULL);
-	if (dst > src)
-	{
-		i = len - 1;
-		while (i >= 0)
-		{
-			*(char *)(dst + i) = *(char *)(src + i);
-			i--;
-		}
-	}
-	else
-	{
-		i = 0;
-		while (i < len)
-		{
-			*((char *)(dst + i)) = *((char *)(src + i));
-			i++;
-		}
-	}
-	return (dst);
 }
 
 void	*extract_line(char **line, char **buf, int *end)

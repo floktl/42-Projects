@@ -6,7 +6,7 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 12:30:42 by fkeitel           #+#    #+#             */
-/*   Updated: 2023/11/18 19:50:40 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/05/25 11:25:45 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 # endif
 
 char	*get_next_line(int fd);
-void	*ft_memmove(void *dst, const void *src, int len);
+void	*ft_memmove(void *dst, const void *src, size_t len);
 char	*double_bufsize_fill_with_null(char const *s1);
 void	*extract_line(char **line, char **buf, int *end);
 size_t	ft_strlen(const char *c);

@@ -6,86 +6,11 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 10:47:36 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/05/15 17:49:45 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/05/31 21:24:54 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
-
-char	*ft_getenv(t_env **env_lst, char *name)
-{
-	t_env	*tmp;
-
-	tmp = *env_lst;
-	while (tmp)
-	{
-		if (ft_strncmp(tmp->name, name, ft_strlen(name)) == 0)
-			return (tmp->value);
-		tmp = tmp->next;
-	}
-	return (NULL);
-}
-
-char	**get_paths(t_env **env_lst)
-{
-	int		i;
-	char	*path;
-	char	**paths;
-
-	i = 0;
-	path = ft_getenv(env_lst, "PATH");
-	if (path)
-	{
-		paths = ft_split(path, ':');
-		if (!paths)
-			return (0);
-		while (paths[i])
-		{
-			path = paths[i];
-			paths[i] = ft_strjoin(path, "/");
-			free(path);
-			if (!paths[i])
-				return (NULL);
-			i++;
-		}
-		return (paths);
-	}
-	else
-		return (NULL);
-}
-
-char	*get_cmdpath(char *cmd, t_env **env_lst)
-{
-	int		i;
-	char	*cmd_path;
-	char	**paths;
-
-	i = 0;
-	paths = get_paths(env_lst);
-	while (paths[i])
-	{
-		cmd_path = ft_strjoin(paths[i], cmd);
-		if (access(cmd_path, F_OK | X_OK) == 0)
-			return (cmd_path);
-		free(cmd_path);
-		i++;
-	}
-	return (NULL);
-}
-
-int	join_name_value(t_env *env_node, char **env_array, int i)
-{
-	char	*tmp;
-
-	tmp = ft_strjoin(env_node->name, "=");
-	if (!tmp)
-		return (0);
-	env_array[i] = ft_strjoin(tmp, env_node->value);
-	if (!env_array[i])
-		return (free(tmp), 0);
-	free (tmp);
-	return (1);
-}
 
 char	**create_env_array(t_env *env_lst)
 {
@@ -115,24 +40,49 @@ char	**create_env_array(t_env *env_lst)
 	return (env_array);
 }
 
+void	open_close_fds(t_tree *tree)
+{
+	if (tree->out_fd != 0)
+	{
+		dup2(tree->out_fd, STDOUT_FILENO);
+		close (tree->out_fd);
+	}
+	if (tree->in_fd != 0)
+	{
+		dup2(tree->in_fd, STDIN_FILENO);
+		close (tree->in_fd);
+	}
+}
+
 void	exec_cmd(t_tree *tmp, t_env **env_lst)
 {
 	char	*cmdpath;
 	char	**env_array;
 
-	cmdpath = get_cmdpath(tmp->arguments[0], env_lst);
 	env_array = create_env_array(*env_lst);
+	signal(SIGINT, signal_handle);
+	signal(SIGQUIT, signal_handle);
 	if (!env_array)
 		exit (1);
-	if (tmp->arguments[0] == ft_strchr(tmp->arguments[0], '/'))
-		execve(tmp->arguments[0], tmp->arguments, env_array);
+	if (tmp->args[0] == ft_strchr(tmp->args[0], '/')
+		|| ft_strncmp(tmp->args[0], "./", 2) == 0)
+		absolute_path(tmp, env_array);
 	else
-		execve(cmdpath, tmp->arguments, env_array);
-	perror("execution failed");
-	exit (1);
+	{
+		cmdpath = get_cmdpath(tmp->args[0], env_lst, tmp);
+		if (!cmdpath)
+		{
+			dup2(2, 1);
+			ft_printf("%s: command not found\n", tmp->args[0]);
+			exit (127);
+		}
+		open_close_fds(tmp);
+		execve(cmdpath, tmp->args, env_array);
+		exit(1);
+	}
 }
 
-int	pipe_cmds(t_tree *tmp, t_env **env_lst)
+pid_t	pipe_cmds(t_tree *tmp, t_env **env_lst, int *exec_exit)
 {
 	int		fd[2];
 	pid_t	pid;
@@ -148,6 +98,7 @@ int	pipe_cmds(t_tree *tmp, t_env **env_lst)
 		if (tmp->child_pipe)
 			dup2(fd[1], STDOUT_FILENO);
 		close(fd[1]);
+		*exec_exit = 1;
 		exec_cmd(tmp, env_lst);
 	}
 	else
@@ -156,29 +107,35 @@ int	pipe_cmds(t_tree *tmp, t_env **env_lst)
 		dup2(fd[0], STDIN_FILENO);
 		close(fd[0]);
 	}
-	return (1);
+	return (pid);
 }
 
+//	execution function
 void	execute_command(t_tree *tree)
 {
 	t_tree	*tmp;
-	int		stdin2;
-	int		stdout2;
+	pid_t	pid;
+	int		exec_exit;
 
 	tmp = tree;
-	stdin2 = dup(STDIN_FILENO);
-	stdout2 = dup(STDOUT_FILENO);
+	pid = 0;
+	exec_exit = 0;
 	while (tmp)
 	{
-		if (tmp->command)
-			handle_builtins(tmp, tmp->env);
-		else
-			pipe_cmds(tmp, tmp->env);
-		if (tmp->child_pipe)
-			dup2(stdout2, STDOUT_FILENO);
+		if (tmp->args[0] && tree->out_fd >= 0)
+		{
+			if (tmp->command > 0)
+				pid = handle_builtins(tmp, tmp->env, &exec_exit);
+			else
+				pid = pipe_cmds(tmp, tmp->env, &exec_exit);
+			if (tmp->child_pipe)
+				dup2(tree->stdoutput, STDOUT_FILENO);
+		}
 		tmp = tmp->child_pipe;
 	}
-	dup2(stdin2, STDIN_FILENO);
-	wait(NULL);
-	return ;
+	waitpid(pid, &tree->exit_status, 0);
+	dup2(tree->stdinput, STDIN_FILENO);
+	dup2(tree->stdoutput, STDOUT_FILENO);
+	update_exit(tree, exec_exit);
+	signal(SIGINT, signal_handler);
 }

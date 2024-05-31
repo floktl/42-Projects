@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: stopp <stopp@student.42.fr>                +#+  +:+       +#+        */
+/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 14:45:53 by stopp             #+#    #+#             */
-/*   Updated: 2024/05/15 16:57:36 by stopp            ###   ########.fr       */
+/*   Updated: 2024/05/31 21:24:15 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,23 +19,24 @@ void	ft_echo(t_tree *tree)
 
 	i = 1;
 	n_chk = 0;
-	if (!tree->arguments[i])
+	if (!tree->args[i])
 	{
-		printf("\n");
+		ft_printf("\n");
 		return ;
 	}
-	while (ft_strncmp(tree->arguments[i], "-n", 2) == 0)
+	while (ft_strncmp(tree->args[i], "-n", 2) == 0)
 	{
 		n_chk = 1;
 		i++;
 	}
-	while (tree->arguments[i])
+	while (tree->args[i])
 	{
-		printf("%s", tree->arguments[i]);
-		if (tree->arguments[++i])
-			printf(" ");
+		ft_printf("%s", tree->args[i]);
+		if (tree->args[++i])
+			ft_printf(" ");
 	}
 	if (!n_chk)
-		printf("\n");
+		ft_printf("\n");
+	tree->exit_status = 0;
 	return ;
 }

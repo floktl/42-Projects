@@ -1,36 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signal.c                                           :+:      :+:    :+:   */
+/*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/19 10:47:36 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/05/29 10:25:28 by fkeitel          ###   ########.fr       */
+/*   Created: 2024/05/20 17:44:52 by stopp             #+#    #+#             */
+/*   Updated: 2024/05/31 21:37:59 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-void	signal_handle(int signo)
+void	print_env(t_tree *tree)
 {
-	(void)signo;
-	if (signo == SIGQUIT)
-	{
-		ft_printf("QUIT: 3\n");
-		exit(131);
-	}
-	if (signo == SIGINT)
-		exit(130);
-}
+	char	*path;
 
-//	^C clears current input line, redraws prompt, and moves cursor to a new line
-void	signal_handler(int sig)
-{
-	(void)sig;
-	write(1, "\n", 1);
-	rl_replace_line("", 1);
-	rl_on_new_line();
-	rl_redisplay();
-	return ;
+	path = ft_getenv(*(tree->env), "PATH");
+	if (!path)
+	{
+		dup2(2, 1);
+		ft_printf("env: No such file or directory\n");
+		dup2(tree->stdoutput, 1);
+		tree->exit_status = 127;
+	}
+	else
+	{
+		print_list(*tree->env);
+		free(path);
+		tree->exit_status = 0;
+	}
 }

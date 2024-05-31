@@ -6,7 +6,7 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 12:09:19 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/05/12 08:07:16 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/05/31 18:57:59 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,20 +99,23 @@ int	assign_pipes(char const *s, char pipe, char **split, int pipes)
 	return (EXIT_SUCCESS);
 }
 
-char	**split_pipes(char const *s, char c, int *pipe_num)
+//	function to split the pipes in the command string including quotes
+char	**split_with_quotes(char **s, char c, int *pipe_num)
 {
 	char	**split;
 
-	if (!s)
+	if (!(*s))
 		return (NULL);
 	*pipe_num = 1;
-	count_pipes(s, c, pipe_num);
+	count_pipes(*s, c, pipe_num);
 	split = ft_calloc(*pipe_num + 1, sizeof(char *));
 	if (!split)
 		return (NULL);
-	if (assign_pipes(s, c, split, *pipe_num) == EXIT_FAILURE)
+	if (assign_pipes(*s, c, split, *pipe_num) == EXIT_FAILURE)
 	{
 		return (NULL);
 	}
+	if (c == '|')
+		*pipe_num = 0;
 	return (split);
 }

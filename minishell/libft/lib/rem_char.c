@@ -1,36 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signal.c                                           :+:      :+:    :+:   */
+/*   rem_char.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/19 10:47:36 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/05/29 10:25:28 by fkeitel          ###   ########.fr       */
+/*   Created: 2024/05/29 10:12:42 by fkeitel           #+#    #+#             */
+/*   Updated: 2024/05/29 10:19:33 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../minishell.h"
+#include "../libft.h"
 
-void	signal_handle(int signo)
+//	function to remove one charcter from a string at a position
+void	rem_char(char *str, int pos)
 {
-	(void)signo;
-	if (signo == SIGQUIT)
+	int	len;
+	int	i;
+
+	len = ft_strlen(str);
+	i = pos;
+	while (i < len)
 	{
-		ft_printf("QUIT: 3\n");
-		exit(131);
+		str[i] = str[i + 1];
+		i++;
 	}
-	if (signo == SIGINT)
-		exit(130);
-}
-
-//	^C clears current input line, redraws prompt, and moves cursor to a new line
-void	signal_handler(int sig)
-{
-	(void)sig;
-	write(1, "\n", 1);
-	rl_replace_line("", 1);
-	rl_on_new_line();
-	rl_redisplay();
-	return ;
 }

@@ -6,11 +6,24 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 12:40:04 by fkeitel           #+#    #+#             */
-/*   Updated: 2023/11/18 19:50:32 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/05/25 11:28:09 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+
+size_t	ft_strlen(const char *c)
+{
+	size_t	counter;
+
+	counter = 0;
+	while (*c != '\0')
+	{
+		counter++;
+		c++;
+	}
+	return (counter);
+}
 
 int	ft_count_new_line(char **buf)
 {
@@ -35,25 +48,6 @@ char	*ft_strncpy(char *dest, const char *src, size_t n)
 	while (i < n)
 		dest[i++] = '\0';
 	return (dest);
-}
-
-void	*ft_calloc(size_t count, size_t size)
-{
-	void	*str;
-	size_t	counter;
-	char	*char_s;
-
-	counter = 0;
-	str = malloc(count * size);
-	if (str == NULL)
-		return (NULL);
-	char_s = (char *)str;
-	while (counter < (count * size))
-	{
-		char_s[counter] = 0;
-		counter++;
-	}
-	return (str);
 }
 
 int	read_buf(int fd, char **buf, int *end)
@@ -99,7 +93,7 @@ char	*get_next_line(int fd)
 		return (NULL);
 	}
 	if (!buf)
-		buf = ft_calloc(BUFFER_SIZE + 1, 1);
+		buf = ft_calloc(BUFFER_SIZE, 1);
 	if (!buf)
 		return (NULL);
 	if (read_buf(fd, &buf, &i) == -1 || extract_line(&line, &buf, &i) == NULL)
@@ -109,5 +103,7 @@ char	*get_next_line(int fd)
 		i = 0;
 		return (NULL);
 	}
+	free(buf);
+	buf = NULL;
 	return (line);
 }

@@ -5,11 +5,10 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/05/15 18:06:29 by fkeitel          ###   ########.fr       */
+/*   Created: 2024/05/29 10:26:23 by fkeitel           #+#    #+#             */
+/*   Updated: 2024/05/30 17:07:09 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "../../minishell.h"
 
@@ -25,6 +24,8 @@ t_env	*init_node(char *envp)
 		return (NULL);
 	while (envp[i] != '=' && envp[i])
 		i++;
+	if (envp[i] != '=')
+		return (NULL);
 	env->name = malloc(i + 1);
 	if (!env->name)
 		return (NULL);
@@ -82,11 +83,11 @@ t_env	**init_env_list(char **envp)
 	return (env_lst);
 }
 
-// void	print_list(t_env *env_list)
-// {
-// 	while (env_list)
-// 	{
-// 		printf("%s=%s\n", env_list->name, env_list->value);
-// 		env_list = env_list->next;
-// 	}
-// }
+void	print_list(t_env *env_list)
+{
+	while (env_list)
+	{
+		ft_printf("%s=%s\n", env_list->name, env_list->value);
+		env_list = env_list->next;
+	}
+}

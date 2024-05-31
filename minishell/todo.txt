@@ -1,4 +1,17 @@
-implement linked list for env
+Flo:
 
-stuff for later:
-quotes here_doc
+~/ muss expanden - erledigt, passt das?
+
+norminette -passt, nur deine heredoc
+
+<< a | cat -> mache ich naechste Woche
+
+-----------------------------------------
+
+exit codes bei builtins resetten
+
+get_next_line
+
+verbotene funktionen checken
+
+segfault checken

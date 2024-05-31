@@ -1,42 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   insert_char_at_pos.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: stopp <stopp@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/09 15:18:52 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/05/21 17:34:24 by stopp            ###   ########.fr       */
+/*   Created: 2024/05/19 10:53:27 by fkeitel           #+#    #+#             */
+/*   Updated: 2024/05/25 14:02:05 by stopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft.h"
+#include <string.h>
 
-char	*ft_strdup(const char *s1)
+//	function to insert a character at a defined position in a string
+//	returns the new string with the added character
+char	*insert_char_at_position(char *s, char c, size_t len, size_t pos)
 {
-	char	*s2;
-	size_t	counter;
+	char	*new_s;
 
-	counter = 0;
-	s2 = malloc(ft_strlen(s1) + 1);
-	if (!s2)
-		return (NULL);
-	while (s1[counter] != '\0')
+	new_s = malloc((len + 2) * sizeof(char));
+	if (new_s == NULL)
 	{
-		s2[counter] = s1[counter];
-		counter++;
+		perror("malloc");
+		return (NULL);
 	}
-	s2[counter] = '\0';
-	return (s2);
+	ft_strlcpy(new_s, s, pos);
+	new_s[pos] = c;
+	strcpy(new_s + pos + 1, s + pos);
+	return (new_s);
 }
-
-/*
-int main()
-{
-	char source[] = "lorem ipsum dolor sit amet";
-	char* target = ft_strdup(source);
-	printf("%s", target);
-	free(target);
-	return 0;
-}
-*/

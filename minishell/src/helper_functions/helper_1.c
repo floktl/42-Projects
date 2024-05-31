@@ -3,44 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   helper_1.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 12:09:19 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/05/17 21:50:01 by flo              ###   ########.fr       */
+/*   Updated: 2024/05/31 21:50:30 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
-
-//	function to remove one character in the whole string from start until end
-void	remove_char(char *str, char char_to_remove, int old_len, int *end)
-{
-	char	*temp;
-	int		new_len;
-
-	new_len = old_len;
-	if (!str)
-		return ;
-	while (str[old_len] != '\0' && old_len < *end)
-	{
-		if (str[old_len] != char_to_remove)
-			str[new_len++] = str[old_len];
-		old_len++;
-	}
-	while (str[old_len] != '\0')
-		str[new_len++] = str[old_len++];
-	str[new_len] = '\0';
-	if (new_len != old_len)
-	{
-		temp = malloc(sizeof(char) * new_len);
-		if (!temp)
-			exit (1);
-		*end = new_len;
-		ft_strlcpy(temp, str, new_len);
-		str = temp;
-		free(temp);
-	}
-}
 
 //	lst add back function modified for the tree struct
 void	ft_treeadd_back(t_tree **lst, t_tree *new, t_tree **parent)
@@ -58,27 +28,6 @@ void	ft_treeadd_back(t_tree **lst, t_tree *new, t_tree **parent)
 	while (current->child_pipe != NULL)
 		current = current->child_pipe;
 	current->child_pipe = new;
-}
-
-//	this function allocates the new substring for the string replace in a string
-int	alloc_string(char **s, int result_len)
-{
-	char	*temp;
-	int		str_len;
-
-	temp = NULL;
-	str_len = (int)ft_strlen(*s);
-	if (result_len != str_len)
-	{
-		temp = (char *)malloc(sizeof(char) * (result_len + 1));
-		if (!temp)
-			return (EXIT_FAILURE);
-		ft_memcpy(temp, *s, str_len);
-		temp[str_len] = '\0';
-		free(*s);
-		*s = temp;
-	}
-	return (EXIT_SUCCESS);
 }
 
 //	function to check if string is in single or double quotes
@@ -103,4 +52,62 @@ int	quote_checker(char *arg, int j)
 	if (single_quote)
 		return (0);
 	return (1);
+}
+
+//	function to create the variable and the replace string for the env search
+int	create_var_and_rep_str(char **var, char	**replace, char *arg, int j)
+{
+	*var = malloc(sizeof(char) * (j + 1));
+	if (!var)
+		return (-1);
+	(*var)[0] = '$';
+	ft_strlcpy(*var + 1, arg, j);
+	*(replace) = malloc(sizeof(char));
+	if (!(*replace))
+		return (free(*var), -1);
+	(*replace)[0] = '\0';
+	return (1);
+}
+
+int	join_name_value(t_env *env_node, char **env_array, int i)
+{
+	char	*tmp;
+
+	tmp = ft_strjoin(env_node->name, "=");
+	if (!tmp)
+		return (0);
+	env_array[i] = ft_strjoin(tmp, env_node->value);
+	if (!env_array[i])
+		return (free(tmp), 0);
+	free (tmp);
+	return (1);
+}
+
+char	*create_str(char *str, char *here_doc)
+{
+	int		i;
+	int		j;
+	char	*new_str;
+
+	i = 0;
+	j = 0;
+	while (str[i])
+	{
+		if (skip_here(&i, str, here_doc) == 0)
+		{
+			j++;
+			i++;
+		}
+	}
+	new_str = malloc(j + 1);
+	new_str[j] = '\0';
+	i = 0;
+	j = 0;
+	while (str[i])
+	{
+		if (skip_here(&i, str, here_doc) == 0)
+			new_str[j++] = str[i++];
+	}
+	free(str);
+	return (new_str);
 }

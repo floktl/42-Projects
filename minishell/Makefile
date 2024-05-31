@@ -6,12 +6,16 @@
 #    By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/19 10:25:10 by fkeitel           #+#    #+#              #
-#    Updated: 2024/04/30 10:22:00 by fkeitel          ###   ########.fr        #
+#    Updated: 2024/05/25 10:43:59 by fkeitel          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # Project name
 NAME    := minishell
+
+# Define ANSI color codes
+GREEN := \033[0;32m
+NC := \033[0m
 
 # Flags
 CFLAGS  := -Wall -Werror -Wextra -g
@@ -30,9 +34,11 @@ OBJS    := $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 # Header file
 HEADER  := minishell.h
 
+MESSAGE := "\n$(GREEN)$(NAME) successfully built!$(NC)\n"
+
 # Rule to build the project
 all: $(OBJ_DIR) $(NAME) $(HEADER)
-	@echo "$(NAME) successfully built!"
+	@echo $(MESSAGE)
 
 # Rule to build the project using MLX library
 $(NAME): $(OBJS) $(LIBFTTARGET)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lst_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: stopp <stopp@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 10:26:23 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/05/30 17:07:09 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/06/09 18:03:06 by stopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ t_env	*init_node(char *envp)
 	while (envp[i] != '=' && envp[i])
 		i++;
 	if (envp[i] != '=')
-		return (NULL);
+		return (free(env), NULL);
 	env->name = malloc(i + 1);
 	if (!env->name)
 		return (NULL);
@@ -34,7 +34,7 @@ t_env	*init_node(char *envp)
 	while (envp[i])
 		i++;
 	env->value = malloc(i - j + 1);
-	if (!env->name)
+	if (!env->value)
 		return (NULL);
 	ft_strlcpy(env->value, &envp[j], i - j + 1);
 	env->next = NULL;
@@ -56,6 +56,25 @@ void	lstadd_back_env(t_env **lst, t_env *new)
 	current->next = new;
 }
 
+void	inc_shlvl(t_env **env_lst)
+{
+	t_env	*env;
+	int		num;
+
+	env = *env_lst;
+	num = 0;
+	while (env)
+	{
+		if (ft_strncmp(env->name, "SHLVL", 5) == 0)
+		{
+			num = ft_atoi(env->value) + 1;
+			free(env->value);
+			env->value = ft_itoa(num);
+		}
+		env = env->next;
+	}
+}
+
 t_env	**init_env_list(char **envp)
 {
 	int		i;
@@ -67,8 +86,8 @@ t_env	**init_env_list(char **envp)
 	env_lst = malloc(sizeof(t_env *));
 	if (!env_lst)
 		return (NULL);
-	i++;
 	*env_lst = NULL;
+	i = 0;
 	while (envp[i])
 	{
 		if (ft_strncmp(envp[i], "OLDPWD=", 7) != 0)
@@ -80,6 +99,7 @@ t_env	**init_env_list(char **envp)
 		}
 		i++;
 	}
+	inc_shlvl(env_lst);
 	return (env_lst);
 }
 

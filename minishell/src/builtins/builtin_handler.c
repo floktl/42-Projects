@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_handler.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: stopp <stopp@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 15:15:21 by stopp             #+#    #+#             */
-/*   Updated: 2024/05/31 21:36:43 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/06/10 18:55:21 by stopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,33 +20,25 @@ void	update_exit(t_tree *tree, int exec_exit)
 		tree->exit_status += 128;
 }
 
-int	exit_handler(t_tree *tree)
+void	chk_exarg(t_tree *tree, char **args)
 {
-	int	i;
+	int		i;
 
 	i = 0;
-	if (tree->pipes_num == 1)
-		ft_printf("exit\n");
-	if (tree->args[1])
+	if (args[1][i] == '-' || args[1][i] == '+')
+		i++;
+	while (args[1][i])
 	{
-		while (tree->args[1][i])
-		{
-			if (*tree->args[1] != 45 && (!ft_isdigit(tree->args[1][i])
-				&& tree->args[1][i] != '+'))
-			{
-				return (print_str_return_exit
-					("numeric argument required\n", 255, tree));
-			}
-			i++;
-		}
-		if (tree->args[2])
-		{
-			tree->command = 0;
-			return (print_str_return_exit("too many arguments\n", 1, tree));
-		}
-		tree->exit_status = ft_atoi(tree->args[1]) % 256;
+		if (ft_isdigit(args[1][i++]) == 0)
+			return (print_str_return_exit
+				("numeric argument required\n", 255, tree));
 	}
-	return (tree->exit_status);
+	if (tree->args[2])
+	{
+		tree->command = 0;
+		return (print_str_return_exit("too many arguments\n", 1, tree));
+	}
+	tree->exit_status = ft_atoi(args[1]) % 256;
 }
 
 void	execute_builtin(t_tree *tree, t_env **env_lst)
@@ -61,19 +53,9 @@ void	execute_builtin(t_tree *tree, t_env **env_lst)
 	else if (tree->command == ENV)
 		print_env(tree);
 	else if (tree->command == UNSET)
-	{
-		if (!tree->args[1])
-			ft_unset(tree, NULL);
-		else
-			ft_unset(tree, ft_strdup(tree->args[1]));
-	}
+		unset_loop(tree);
 	else if (tree->command == EXPORT)
-	{
-		if (!tree->args[1])
-			export_env(tree);
-		else
-			export(tree, ft_strdup(tree->args[1]));
-	}
+		export_loop(tree);
 }
 
 pid_t	exec_pipe(t_tree *tree, t_env **env_lst, int *exec_exit)
@@ -94,7 +76,7 @@ pid_t	exec_pipe(t_tree *tree, t_env **env_lst, int *exec_exit)
 		close(fd[1]);
 		*exec_exit = 1;
 		execute_builtin(tree, env_lst);
-		exit (0);
+		exit (tree->exit_status);
 	}
 	else
 	{

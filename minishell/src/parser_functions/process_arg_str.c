@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process_arg_str.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: stopp <stopp@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 10:47:36 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/05/31 22:33:00 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/06/10 18:53:56 by stopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,19 +44,19 @@ int	split_command(t_tree *tree, char **command_str, int ex_st)
 		|| adapt_and_count_arguments(tree, command_str, &ex_st) == EXIT_FAILURE
 		|| expander(tree->args, tree->env, ex_st) == EXIT_FAILURE)
 		return (ft_printf("error in parsing!\n"), EXIT_FAILURE);
-	if (is_substr_first_word(*command_str, "echo"))
+	if (is_substr_first_word(*command_str, "echo", 1))
 		tree->command = ECHO;
-	else if (is_substr_first_word(*command_str, "pwd"))
+	else if (is_substr_first_word(*command_str, "pwd", 1))
 		tree->command = PWD;
-	else if (is_substr_first_word(*command_str, "cd"))
+	else if (is_substr_first_word(*command_str, "cd", 0))
 		tree->command = CD;
-	else if (is_substr_first_word(*command_str, "env"))
+	else if (is_substr_first_word(*command_str, "env", 1))
 		tree->command = ENV;
-	else if (is_substr_first_word(*command_str, "unset"))
+	else if (is_substr_first_word(*command_str, "unset", 0))
 		tree->command = UNSET;
-	else if (is_substr_first_word(*command_str, "export"))
+	else if (is_substr_first_word(*command_str, "export", 0))
 		tree->command = EXPORT;
-	else if (is_substr_first_word(*command_str, "exit"))
+	else if (is_substr_first_word(*command_str, "exit", 0))
 		tree->command = EXIT;
 	tree->cmd_brch = ft_strdup(*command_str);
 	if (!tree->cmd_brch)
@@ -77,9 +77,10 @@ int	add_node(t_tree **tree, t_tree **parent, char ***args, int *i)
 	if (temp->out_fd < 0)
 	{
 		(*tree)->out_fd = -1;
+		(*tree)->exit_status = 1;
+		free_tree(&temp);
 		if (!(*args)[*i])
 		{
-			(*tree)->exit_status = 1;
 			free_parent_tree(tree);
 			return (1);
 		}
@@ -91,27 +92,26 @@ int	add_node(t_tree **tree, t_tree **parent, char ***args, int *i)
 
 int	add_node_red_err(t_tree **tree, t_tree **parent, char ***args, int *i)
 {
-	free_parent_tree(tree);
+	free_tree(tree);
 	if (init_tree(*tree, *args, (*tree)->exit_status, (*i)++) == -1)
 		return (EXIT_FAILURE);
-	parent = NULL;
-	(void)parent;
+	*parent = *tree;
 	if ((*tree)->out_fd < 0)
 	{
+		free_tree(tree);
 		if (!(*args)[*i])
-		{
-			free_tree(*tree);
 			return (1);
-		}
-		if ((!(*tree)->args[1] || !(*tree)->args[1][0])
-			&& ft_strncmp((*tree)->args[0], "cat", 3) == 0)
-		{
-			(*tree)->out_fd = -1;
-			(*tree)->exit_status = 0;
-			free_tree(*tree);
-			if (!(*args)[*i] && !(*tree)->args[1])
-				return (1);
-		}
+	}
+	else if ((((*tree)->args[0]
+				&& (ft_strncmp((*tree)->args[0], "cat", 3) == 0))
+			|| ((*tree)->args[0]
+				&& (ft_strncmp((*tree)->args[0], "grep", 4) == 0)))
+		&& !(*tree)->args[1] && check_cat((*tree)->cmd_brch) == 0)
+	{
+		(*tree)->exit_status = 0;
+		(*tree)->out_fd = -1;
+		free_tree(tree);
+		return (1);
 	}
 	return (0);
 }
@@ -120,11 +120,10 @@ int	add_node_red_err(t_tree **tree, t_tree **parent, char ***args, int *i)
 int	build_command_tree(t_tree **tree, char *command_str, char **pipes, int i)
 {
 	t_tree	*parent;
+	int		node_status;
 
 	parent = *tree;
-	if (!pipes || init_tree(*tree, pipes, (*tree)->exit_status, i++) == -1)
-		return (pipes_error("error split", NULL, pipes));
-	if ((*tree)->out_fd < 0 && !pipes[i])
+	if ((*tree)->out_fd < 0 && pipes && !pipes[1])
 	{
 		free_parent_tree(tree);
 		return (EXIT_SUCCESS);
@@ -132,13 +131,14 @@ int	build_command_tree(t_tree **tree, char *command_str, char **pipes, int i)
 	while (pipes[i])
 	{
 		if ((*tree)->out_fd >= 0)
-		{
-			if (add_node(tree, &parent, &pipes, &i) == 1)
-				return (EXIT_SUCCESS);
-		}
+			node_status = add_node(tree, &parent, &pipes, &i);
 		else
-			if (add_node_red_err(tree, &parent, &pipes, &i) == 1)
-				return (EXIT_SUCCESS);
+			node_status = add_node_red_err(tree, &parent, &pipes, &i);
+		if (node_status == 1)
+			return (EXIT_SUCCESS);
+		else if (node_status == -1)
+			return (EXIT_FAILURE);
 	}
-	return (free(command_str), EXIT_SUCCESS);
+	free(command_str);
+	return (EXIT_SUCCESS);
 }

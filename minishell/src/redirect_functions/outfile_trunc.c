@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   outfile_trunc.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: stopp <stopp@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 14:56:51 by stopp             #+#    #+#             */
-/*   Updated: 2024/05/31 18:49:33 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/06/06 15:17:16 by stopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ char	*update_cmdstr_trunc(char *cmdstr, int skip_len)
 		if (ft_strncmp(&cmdstr[j], ">", 1) == 0 && del == 0)
 		{
 			j += skip_len;
-			new_cmdstr[i++] = cmdstr[j++];
+			new_cmdstr[i] = cmdstr[j];
 			del = 1;
 		}
 		else
@@ -85,7 +85,7 @@ char	*handle_trunc(char *cmdstr, t_tree *tree)
 			i += 1;
 			while (cmdstr[i] && cmdstr[i] == ' ')
 				i++;
-			while (cmdstr[i + j] && cmdstr[i + j] != ' '
+			while (cmdstr[i + j]
 				&& cmdstr[i + j] != '<' && cmdstr[i + j] != '>')
 				j++;
 			outfile = malloc(sizeof(char) * (j + 1));

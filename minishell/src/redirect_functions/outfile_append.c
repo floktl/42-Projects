@@ -6,7 +6,7 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 16:43:57 by stopp             #+#    #+#             */
-/*   Updated: 2024/05/31 18:39:33 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/06/11 10:57:33 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,11 @@ int	validate_outfile(char *outfile, t_tree *tree)
 {
 	struct stat	*buf;
 
+	if (check_dir_out(outfile) == 1)
+		return (file_error(outfile, "is a directory", tree), 0);
+	if (ft_strncmp(outfile, "./", 2) == 0 || *outfile == '/')
+		if (if_path(outfile, tree) == 0)
+			return (0);
 	buf = malloc(sizeof(struct stat));
 	if (!buf)
 		return (0);
@@ -52,11 +57,7 @@ int	validate_outfile(char *outfile, t_tree *tree)
 		return (free(buf), 1);
 	else if (access(outfile, W_OK) != 0)
 	{
-		dup2(2, 1);
-		ft_printf("%s: Permission denied\n", outfile);
-		dup2(tree->stdoutput, 1);
-		tree->out_fd = -1;
-		tree->exit_status = 1;
+		file_error(outfile, "Permission denied", tree);
 		return (free(buf), 0);
 	}
 	free(buf);
@@ -107,7 +108,7 @@ char	*handle_append(char *cmdstr, t_tree *tree)
 			i += 2;
 			while (cmdstr[i] && cmdstr[i] == ' ')
 				i++;
-			while (cmdstr[i + j] && cmdstr[i + j] != ' '
+			while (cmdstr[i + j]
 				&& cmdstr[i + j] != '<' && cmdstr[i + j] != '>')
 				j++;
 			outfile = malloc(sizeof(char) * (j + 1));

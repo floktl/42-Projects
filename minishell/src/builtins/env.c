@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: stopp <stopp@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 17:44:52 by stopp             #+#    #+#             */
-/*   Updated: 2024/05/31 21:37:59 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/06/06 12:14:31 by stopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ void	print_env(t_tree *tree)
 	else
 	{
 		print_list(*tree->env);
-		free(path);
 		tree->exit_status = 0;
 	}
 }

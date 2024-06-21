@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   is_substr_first_word.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: stopp <stopp@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 12:09:44 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/04/28 11:43:26 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/06/10 17:29:59 by stopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 //#include <stdio.h>
 //#include <string.h>
 
-//	function to compare if two strings are the same, independent upper/lower
-int	word_cmp(const char *s1, const char *s2, size_t n)
+//  function to compare if two strings are the same, independent upper/lower
+int	word_cmp(const char *s1, const char *s2, size_t n, int st)
 {
 	size_t	counter;
 	char	c1;
@@ -29,10 +29,13 @@ int	word_cmp(const char *s1, const char *s2, size_t n)
 	{
 		c1 = *s1;
 		c2 = *s2;
-		if (c1 >= 'A' && c1 <= 'Z')
-			c1 += ('a' - 'A');
-		if (c2 >= 'A' && c2 <= 'Z')
-			c2 += ('a' - 'A');
+		if (st == 1)
+		{
+			if (c1 >= 'A' && c1 <= 'Z')
+				c1 += ('a' - 'A');
+			if (c2 >= 'A' && c2 <= 'Z')
+				c2 += ('a' - 'A');
+		}
 		if (c1 != c2)
 			return ((int)((unsigned char)*s1 - (unsigned char)*s2));
 		s1++;
@@ -42,8 +45,8 @@ int	word_cmp(const char *s1, const char *s2, size_t n)
 	return (0);
 }
 
-//	function to check if the substring is the first word in a string
-int	is_substr_first_word(const char *str, const char *sub_str)
+//  function to check if the substring is the first word in a string
+int	is_substr_first_word(const char *str, const char *sub_str, int st)
 {
 	size_t	sub_str_len;
 	int		i;
@@ -56,7 +59,7 @@ int	is_substr_first_word(const char *str, const char *sub_str)
 	{
 		return (0);
 	}
-	if (word_cmp(str + i, sub_str, sub_str_len) == 0)
+	if (word_cmp(str + i, sub_str, sub_str_len, st) == 0)
 	{
 		if (str[sub_str_len + i] == ' ' || str[sub_str_len + i] == '\0')
 		{

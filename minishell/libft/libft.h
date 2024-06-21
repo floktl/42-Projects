@@ -3,16 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: stopp <stopp@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 16:57:56 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/05/29 17:04:28 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/06/10 19:00:27 by stopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
-# include <stddef.h>
 # include <stdlib.h>
 # include <unistd.h>
 # include <stdio.h>
@@ -80,7 +79,7 @@ void	free_two_dimensional_array(char **param);
 void	*ft_realloc(void *ptr, size_t size);
 int		append_int(int a, int b);
 char	bits_to_char(const int bits[8]);
-int		is_substr_first_word(const char *str, const char *sub_str);
+int		is_substr_first_word(const char *str, const char *sub_str, int st);
 void	remove_char(char *str, char char_to_remove, int old_len, int *end);
 int		replace_substr(char **s, char **sub_str, char *new_str, int position);
 int		alloc_string(char **s, int result_len);

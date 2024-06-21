@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: stopp <stopp@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 10:47:36 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/05/31 21:24:54 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/06/09 20:28:58 by stopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ void	exec_cmd(t_tree *tmp, t_env **env_lst)
 	signal(SIGQUIT, signal_handle);
 	if (!env_array)
 		exit (1);
+	open_close_fds(tmp);
 	if (tmp->args[0] == ft_strchr(tmp->args[0], '/')
 		|| ft_strncmp(tmp->args[0], "./", 2) == 0)
 		absolute_path(tmp, env_array);
@@ -76,7 +77,6 @@ void	exec_cmd(t_tree *tmp, t_env **env_lst)
 			ft_printf("%s: command not found\n", tmp->args[0]);
 			exit (127);
 		}
-		open_close_fds(tmp);
 		execve(cmdpath, tmp->args, env_array);
 		exit(1);
 	}

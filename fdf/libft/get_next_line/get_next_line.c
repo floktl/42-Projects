@@ -6,7 +6,7 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 12:40:04 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/05/24 20:53:11 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/03/26 13:16:20 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,7 @@ int	ft_count_new_line(char **buf)
 	int	i;
 
 	i = 1;
-	while ((*buf)[i - 1] && (*buf)[i - 1] != '\n'
-		&& (*buf)[i - 1] != '\0' && **buf)
+	while ((*buf)[i - 1] != '\n' && (*buf)[i - 1] != '\0' && **buf)
 		i++;
 	return (i);
 }
@@ -96,8 +95,7 @@ char	*get_next_line(int fd)
 	{
 		free(buf);
 		i = 0;
-		buf = NULL;
-		return (NULL);
+		return (buf = NULL, NULL);
 	}
 	if (!buf)
 		buf = ft_calloc(BUFFER_SIZE, 1);

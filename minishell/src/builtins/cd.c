@@ -6,7 +6,7 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 16:34:22 by stopp             #+#    #+#             */
-/*   Updated: 2024/05/31 21:37:22 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/06/06 13:30:27 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,6 @@ void	ft_chdir(t_tree *tree, t_env **env_lst)
 		if (change_dir(tree) == 0)
 			tree->exit_status = 1;
 		else
-			tree->exit_status = 1;
+			tree->exit_status = 0;
 	}
 }

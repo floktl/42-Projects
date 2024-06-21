@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+         #
+#    By: stopp <stopp@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/19 10:25:10 by fkeitel           #+#    #+#              #
-#    Updated: 2024/05/25 10:43:59 by fkeitel          ###   ########.fr        #
+#    Updated: 2024/06/10 17:35:51 by stopp            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,20 @@ SRC_DIR := src
 OBJ_DIR := obj
 
 # Source files, Libraries targets
-SRCS    := $(shell find $(SRC_DIR) -name '*.c')
+SRCS    := src/builtins/builtin_handler.c  src/builtins/cd.c  src/builtins/echo.c \
+		src/builtins/env.c  src/builtins/export.c src/builtins/pwd.c \
+		src/builtins/unset.c src/clean_functions/clean.c \
+		src/error_functions/error.c src/execution_functions/execution.c \
+		src/execution_functions/get_path_functions.c src/helper_functions/helper_1.c \
+		src/parser_functions/expander.c src/parser_functions/parse_redirects.c \
+		src/parser_functions/parsing.c src/parser_functions/process_arg_str.c \
+		src/parser_functions/quote_check.c src/parser_functions/redirec_helper.c \
+		src/parser_functions/split_pipes.c src/redirect_functions/heredoc.c \
+		src/redirect_functions/infile.c src/redirect_functions/outfile_append.c \
+		src/redirect_functions/outfile_trunc.c src/signal_functions/signal.c \
+		src/utils/lst_utils.c src/utils/debugging.c src/main.c\
+		src/utils/util.c\
+
 LIBFT   := libft/
 LIBFTTARGET := libft/libft.a
 OBJS    := $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
@@ -50,7 +63,7 @@ $(LIBFTTARGET):
 # Rule to compile source files into object files in a separate obj folder
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR) $(HEADER)
 	@mkdir -p $(dir $@)
-	@$(info Compiling $<)
+	@echo Compiling:  $<
 	@$(CC) $(CFLAGS) -c $< -o $@
 
 # Create the objects directory

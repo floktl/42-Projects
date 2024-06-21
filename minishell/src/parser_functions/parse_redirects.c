@@ -6,7 +6,7 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 21:46:57 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/05/31 21:55:58 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/06/02 20:19:09 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,6 @@ void	red_counter(t_tree *tree, int z, int counter)
 	}
 }
 
-typedef char	*(*t_cmd_func)(char *cmd_str, t_tree *tree);
-
 char	*exec_cmd_funct(char **cmd_str, t_tree *tree, int *i, t_cmd_func func)
 {
 	*cmd_str = func(*cmd_str, tree);
@@ -49,9 +47,7 @@ char	*exec_cmd_funct(char **cmd_str, t_tree *tree, int *i, t_cmd_func func)
 	return (*cmd_str);
 }
 
-typedef char	*(*t_cmd_func)(char *cmd_str, t_tree *tree);
-
-int	prep_heredoc(char **args, int j, t_tree *tree, t_cmd_func func)
+int	prep_redec(char **args, int j, t_tree *tree, t_cmd_func func)
 {
 	char	*to_free;
 
@@ -66,6 +62,8 @@ int	prep_heredoc(char **args, int j, t_tree *tree, t_cmd_func func)
 	{
 		to_free = args[0];
 		args[0] = ft_strjoin(args[0], args[1]);
+		if (!args[0])
+			return (-1);
 		args[1][0] = '\0';
 		free(to_free);
 		args[0] = func(args[0], tree);
@@ -83,16 +81,16 @@ int	check_for_redirections(t_tree *tree, char ***args, int i, int j)
 		&& tree->arrow_quote[z++] == 1
 		&& ((ft_strncmp(&(*args)[i][j], "<<", 2) == 0
 		&& (*args)[i][j + 2] != '<' && ((*args)[i][j + 2] || (*args)[i + 1])
-		&& prep_heredoc(&(*args)[i--], j, tree, handle_heredoc))
+		&& prep_redec(&(*args)[i--], j, tree, handle_heredoc))
 		|| (ft_strncmp(&(*args)[i][j], ">>", 2) == 0
 		&& (*args)[i][j + 2] != '>' && (((*args)[i][j + 2] || (*args)[i + 1]))
-		&& prep_heredoc(&(*args)[i--], j, tree, handle_append))
+		&& prep_redec(&(*args)[i--], j, tree, handle_append))
 		|| (ft_strncmp(&(*args)[i][j], ">", 1) == 0
 		&& (*args)[i][j + 1] != '>' && ((*args)[i][j + 1] || (*args)[i + 1])
-		&& prep_heredoc(&(*args)[i--], j, tree, handle_trunc))
+		&& prep_redec(&(*args)[i--], j, tree, handle_trunc))
 		|| (ft_strncmp(&(*args)[i][j], "<", 1) == 0
 		&& (*args)[i][j + 1] != '<' && ((*args)[i][j + 1] || (*args)[i + 1])
-		&& prep_heredoc(&(*args)[i--], j, tree, handle_infile))))
+		&& prep_redec(&(*args)[i--], j, tree, handle_infile))))
 		return (1);
 	else
 		return (0);
@@ -112,12 +110,17 @@ char	**handle_redirects(char **args, t_tree *tree)
 		while (args[i][++j])
 		{
 			if (check_for_redirections(tree, &args, i, j) == 1)
+			{
 				i = update_args(&args);
+				break ;
+			}
 			if (tree->out_fd < 0)
 				return (free_two_dimensional_array(args), NULL);
 		}
-		if (args[i])
+		if (i >= 0)
 			i++;
+		else
+			i = 0;
 	}
 	return (update_args(&args), args);
 }

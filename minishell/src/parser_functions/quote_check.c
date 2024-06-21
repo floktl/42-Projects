@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quote_check.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: stopp <stopp@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 20:40:02 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/05/30 17:07:02 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/06/09 18:49:23 by stopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,20 +100,14 @@ int	det_and_rem_quotes_first_word(char *command_str)
 	d_quote = 0;
 	while (command_str[i] && command_str[i] == ' ')
 		i++;
-	while (command_str[i] && command_str[i] != ' ')
+	while (command_str[i] && (command_str[i] != ' '
+			|| (command_str[i] == ' ' && (s_quote || d_quote))))
 	{
-		if (check_for_open_quotes(command_str[i], &d_quote, &s_quote)
-			== EXIT_FAILURE)
-			return (EXIT_FAILURE);
+		check_for_open_quotes(command_str[i], &d_quote, &s_quote);
 		i++;
 	}
-	if (s_quote || d_quote)
+	if (s_quote == 1 || d_quote == 1)
 		return (EXIT_FAILURE);
-	if (is_substr_first_word(command_str, "<<") == 0)
-	{
-		remove_char(command_str, '\'', 0, &i);
-		remove_char(command_str, '\"', 0, &i);
-	}
 	return (EXIT_SUCCESS);
 }
 

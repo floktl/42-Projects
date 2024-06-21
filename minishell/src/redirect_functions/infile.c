@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   infile.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: stopp <stopp@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 15:43:16 by stopp             #+#    #+#             */
-/*   Updated: 2024/05/31 18:49:09 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/06/06 15:17:00 by stopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,12 @@ char	*update_cmdstr_in(char *cmdstr, int skip_len)
 	if (!new_cmdstr)
 		return (NULL);
 	new_cmdstr[ft_strlen(cmdstr) - j] = '\0';
-	while (cmdstr[j])
+	while (cmdstr && cmdstr[j])
 	{
 		if (ft_strncmp(&cmdstr[j], "<", 1) == 0 && del == 0)
 		{
 			j += skip_len;
-			new_cmdstr[i++] = cmdstr[j++];
+			new_cmdstr[i] = cmdstr[j];
 			del = 1;
 		}
 		else
@@ -124,7 +124,7 @@ char	*handle_infile(char *cmd_str, t_tree *tree)
 			i += 1;
 			while (cmd_str[i] && cmd_str[i] == ' ')
 				i++;
-			while (cmd_str[i + j] && cmd_str[i + j] != ' '
+			while (cmd_str[i + j]
 				&& cmd_str[i + j] != '<' && cmd_str[i + j] != '>')
 				j++;
 			infile = malloc(sizeof(char) * (j + 1));

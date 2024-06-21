@@ -3,14 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: stopp <stopp@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 14:45:53 by stopp             #+#    #+#             */
-/*   Updated: 2024/05/31 21:24:15 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/06/10 18:53:36 by stopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
+
+int	n_checker(char *str)
+{
+	int	i;
+
+	i = 2;
+	if (ft_strncmp(str, "-n", 2) == 0)
+	{
+		i = 2;
+		while (str[i])
+		{
+			if (str[i] != 'n')
+				return (1);
+			i++;
+		}
+		return (0);
+	}
+	return (1);
+}
 
 void	ft_echo(t_tree *tree)
 {
@@ -24,7 +43,7 @@ void	ft_echo(t_tree *tree)
 		ft_printf("\n");
 		return ;
 	}
-	while (ft_strncmp(tree->args[i], "-n", 2) == 0)
+	while (tree->args[i] && n_checker(tree->args[i]) == 0)
 	{
 		n_chk = 1;
 		i++;

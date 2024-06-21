@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   debugging.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: stopp <stopp@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 14:36:56 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/05/31 21:24:36 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/06/06 16:53:08 by stopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../../minishell.h"
 
 //	function to print the tree struct, only for debugging
 void	print_parse_tree(const t_tree *tree)

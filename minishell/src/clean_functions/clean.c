@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clean.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: stopp <stopp@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 10:49:29 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/05/31 21:50:22 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/06/10 12:55:27 by stopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,31 +36,31 @@ void	free_env_list(t_env **env_list)
 }
 
 //	function to free the entire parsing tree
-void	free_tree(t_tree *parse_tree)
+void	free_tree(t_tree **parse_tree)
 {
-	if (!parse_tree)
+	if (!(*parse_tree))
 		return ;
-	if (parse_tree->cmd_brch)
+	if ((*parse_tree)->cmd_brch)
 	{
-		free(parse_tree->cmd_brch);
-		parse_tree->cmd_brch = NULL;
+		free((*parse_tree)->cmd_brch);
+		(*parse_tree)->cmd_brch = NULL;
 	}
-	if (parse_tree->args_num)
+	if ((*parse_tree)->args_num)
 	{
-		free_two_dimensional_array(parse_tree->args);
+		free_two_dimensional_array((*parse_tree)->args);
 	}
-	if (parse_tree->arrow_quote)
+	if ((*parse_tree)->arrow_quote)
 	{
-		free(parse_tree->arrow_quote);
-		parse_tree->arrow_quote = NULL;
+		free((*parse_tree)->arrow_quote);
+		(*parse_tree)->arrow_quote = NULL;
 	}
-	if (parse_tree->child_pipe)
+	if ((*parse_tree)->child_pipe)
 	{
-		free_tree(parse_tree->child_pipe);
+		free_tree(&(*parse_tree)->child_pipe);
 	}
-	if (parse_tree->parent_pipe)
+	if ((*parse_tree)->parent_pipe)
 	{
-		free(parse_tree);
+		free((*parse_tree));
 	}
 }
 
@@ -79,29 +79,38 @@ void	ft_free(char **split, int words)
 //	function to free the entire parsing tree
 void	free_parent_tree(t_tree **parse_tree)
 {
-	if (!(*parse_tree))
-		return ;
-	if ((*parse_tree)->parent_pipe)
-	{
-		free_parent_tree(&(*parse_tree)->parent_pipe);
-		free((*parse_tree)->parent_pipe);
-		(*parse_tree)->parent_pipe = NULL;
-	}
-	if ((*parse_tree)->cmd_brch)
-	{
-		free((*parse_tree)->cmd_brch);
-		(*parse_tree)->cmd_brch = NULL;
-	}
-	if ((*parse_tree)->args)
-	{
-		free_two_dimensional_array((*parse_tree)->args);
-		(*parse_tree)->args = NULL;
-	}
-	if ((*parse_tree)->arrow_quote)
-	{
-		free((*parse_tree)->arrow_quote);
-		(*parse_tree)->arrow_quote = NULL;
-	}
-	while ((*parse_tree)->child_pipe)
-		(*parse_tree) = (*parse_tree)->child_pipe;
+	t_tree	*tmp;
+
+	tmp = *parse_tree;
+	while (tmp->parent_pipe)
+		tmp = tmp->parent_pipe;
+	free_tree(&tmp);
 }
+// void	free_parent_tree(t_tree **parse_tree)
+// {
+// 	if (!(*parse_tree))
+// 		return ;
+// 	if ((*parse_tree)->cmd_brch)
+// 	{
+// 		free((*parse_tree)->cmd_brch);
+// 		(*parse_tree)->cmd_brch = NULL;
+// 	}
+// 	if ((*parse_tree)->args)
+// 	{
+// 		free_two_dimensional_array((*parse_tree)->args);
+// 		(*parse_tree)->args = NULL;
+// 	}
+// 	if ((*parse_tree)->arrow_quote)
+// 	{
+// 		free((*parse_tree)->arrow_quote);
+// 		(*parse_tree)->arrow_quote = NULL;
+// 	}
+// 	if ((*parse_tree)->parent_pipe)
+// 	{
+// 		free_parent_tree(&(*parse_tree)->parent_pipe);
+// 		(*parse_tree)->parent_pipe = NULL;
+// 	}
+// 	free((*parse_tree));
+// 	while ((*parse_tree)->child_pipe)
+// 		(*parse_tree) = (*parse_tree)->child_pipe;
+//  }

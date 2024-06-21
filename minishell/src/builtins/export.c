@@ -6,7 +6,7 @@
 /*   By: stopp <stopp@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 17:06:36 by stopp             #+#    #+#             */
-/*   Updated: 2024/05/31 18:24:28 by stopp            ###   ########.fr       */
+/*   Updated: 2024/06/09 18:03:45 by stopp            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,6 @@ int	name_check(char *tmp, t_tree *tree)
 	char	*name;
 
 	name = tmp;
-	if (tree->child_pipe)
-	{
-		write(1, "\0", 1);
-		return (0);
-	}
 	if (ft_isalpha(*name) == 1 || *name == '_')
 		name++;
 	else
@@ -60,11 +55,11 @@ void	export(t_tree *tree, char *new_env)
 		return ;
 	new = init_node(new_env);
 	if (!new)
-		return ;
+		return (free(new_env));
 	free(new_env);
 	while (tmp)
 	{
-		if (ft_strncmp(tmp->name, new->name, ft_strlen(new->name)) == 0)
+		if (ft_strncmp(tmp->name, new->name, ft_strlen(tmp->name)) == 0)
 		{
 			free(tmp->value);
 			tmp->value = new->value;
@@ -86,5 +81,19 @@ void	export_env(t_tree *tree)
 	{
 		ft_printf("declare -x %s=\"%s\"\n", env->name, env->value);
 		env = env->next;
+	}
+}
+
+void	export_loop(t_tree *tree)
+{
+	int	i;
+
+	i = 1;
+	if (!tree->args[i])
+		export_env(tree);
+	else
+	{
+		while (tree->args[i])
+			export(tree, ft_strdup(tree->args[i++]));
 	}
 }

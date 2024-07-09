@@ -1,52 +1,39 @@
 #include <iostream>
-#include <algorithm>
-#include <string>
-#include <vector>
 
 // Function to convert a string to uppercase
 std::string to_uppercase(const std::string &input)
 {
 	std::string result = input;
-	std::transform(result.begin(), result.end(), result.begin(), ::toupper);
+	for (std::string::iterator it = result.begin(); it != result.end(); ++it)
+	{
+		if (std::islower(*it))
+		{
+			*it = std::toupper(*it);
+		}
+	}
 	return result;
 }
 
 // Function to mimic megaphone behavior
-void megaphone(const std::vector<std::string> &args)
+void megaphone(int argc, char *argv[])
 {
-	if (args.empty())
+	if (argc == 1)
 	{
-		std::cout << "* LOUD AND UNBEARABLE FEEDBACK NOISE *" << std::endl;
+		std::cout << "* LOUD AND UNBEARABLE FEEDBACK NOISE *";
 	}
 	else
 	{
-		for (const auto &arg : args)
+		for (int i = 1; i < argc; ++i)
 		{
-			if (arg == "Damnit")
-			{
-				std::cout << "DAMNIT";
-			}
-			else if (arg == "!")
-			{
-				std::cout << " ! ";
-			}
-			else
-			{
-				std::cout << to_uppercase(arg);
-			}
-			std::cout << " ";
+			std::string arg = argv[i];
+			std::cout << to_uppercase(arg);
 		}
-		std::cout << std::endl;
 	}
+	std::cout << std::endl;
 }
 
 int main(int argc, char *argv[])
 {
-	std::vector<std::string> args;
-	for (int i = 1; i < argc; ++i)
-	{
-		args.push_back(argv[i]);
-	}
-	megaphone(args);
+	megaphone(argc, argv);
 	return 0;
 }

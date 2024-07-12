@@ -1,7 +1,4 @@
 
-
-<div align="center">
-
   <h1>Wireframe Visualizer- a 42 Project</h1>
 
   <p>

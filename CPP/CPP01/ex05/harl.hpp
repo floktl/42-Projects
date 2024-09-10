@@ -1,34 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   zombieHorde.cpp                                    :+:      :+:    :+:   */
+/*   harl.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/09 14:15:05 by flo               #+#    #+#             */
-/*   Updated: 2024/07/15 10:35:35 by flo              ###   ########.fr       */
+/*   Created: 2024/07/25 12:22:30 by flo               #+#    #+#             */
+/*   Updated: 2024/07/25 12:56:31 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Zombie.Class.hpp"
+#ifndef HARL_HPP
+#define HARL_HPP
 
-// Function to set the name
-void Zombie::setName(std::string name)
+#include "string"
+#include "iostream"
+
+class Harl
 {
-	this->name = name;
-	std::cout << name << " named" << std::endl;
-}
+	private:
+		void debug( void );
+		void info( void );
+		void warning( void );
+		void error( void );
+	public:
+		Harl() {};
+		~Harl() {};
+		void complain( std::string level );
+};
 
-Zombie* zombieHorde( int N, std::string name )
-{
-	Zombie *zombies;
-
-	zombies = new Zombie[N];
-	if (N <= 0)
-		return NULL;
-	for (int i = 0; i < N; i++)
-	{
-		zombies[i].setName(name);
-	}
-	return (zombies);
-}
+#endif

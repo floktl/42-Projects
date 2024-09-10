@@ -6,7 +6,7 @@
 #    By: flo <flo@student.42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/03 13:50:09 by flo               #+#    #+#              #
-#    Updated: 2024/07/15 10:48:53 by flo              ###   ########.fr        #
+#    Updated: 2024/07/26 12:31:36 by flo              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,13 +17,13 @@ CXX = g++
 CXXFLAGS = -Wall -Wextra -Werror -std=c++98
 
 # Target executable name
-TARGET = zombieHorde
+TARGET = fixed
 
 # Source files
-SRC = zombieHorde.cpp zombie.cpp
+SRC = main.cpp Fixed.cpp
 
 # Header files (if you have multiple header files, list them here)
-HEADERS = Zombie.Class.hpp # Add any other headers you have, separated by spaces
+HEADERS = Fixed.hpp
 
 # Default rule
 all: $(TARGET)
@@ -31,14 +31,6 @@ all: $(TARGET)
 # Rule to compile the target
 $(TARGET): $(SRC) $(HEADERS)
 	$(CXX) $(CXXFLAGS) -o $(TARGET) $(SRC)
-
-# Clean the build directory
-clean:
-	rm -f $(OBJ) all
-
-# Full clean (remove all generated files)
-fclean: clean
-	rm -f $(NAME)
 
 # Clean the build directory
 clean:

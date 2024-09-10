@@ -6,7 +6,7 @@
 /*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 13:56:52 by flo               #+#    #+#             */
-/*   Updated: 2024/07/09 15:28:21 by flo              ###   ########.fr       */
+/*   Updated: 2024/07/15 10:49:22 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,17 +33,15 @@ public:
 	{
 		std::cout << name << " initialized" << std::endl;
 	}
-	Zombie(std::string name) :name(name) {};
 	// Destructor
 	~Zombie()
 	{
 		std::cout << name << " deconstructed" << std::endl;
 	}
-
-	// void announce( void )
-	// {
-	// 	std::cout << name << ": BraiiiiiiinnnzzzZ..." << std::endl;
-	// }
+	void announce( void )
+	{
+		std::cout << name << ": BraiiiiiiinnnzzzZ..." << std::endl;
+	}
 	// Function to set the name
 	void setName(std::string name);
 };

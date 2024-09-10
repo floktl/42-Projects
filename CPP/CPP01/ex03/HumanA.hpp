@@ -1,34 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   zombieHorde.cpp                                    :+:      :+:    :+:   */
+/*   HumanA.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/09 14:15:05 by flo               #+#    #+#             */
-/*   Updated: 2024/07/15 10:35:35 by flo              ###   ########.fr       */
+/*   Created: 2024/07/15 13:19:58 by flo               #+#    #+#             */
+/*   Updated: 2024/07/15 14:31:28 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Zombie.Class.hpp"
+#ifndef HUMANA
+	#define HUMANA
 
-// Function to set the name
-void Zombie::setName(std::string name)
+#include "Weapon.hpp"
+#include "string"
+#include "iostream"
+
+class HumanA
 {
-	this->name = name;
-	std::cout << name << " named" << std::endl;
-}
+private:
+	std::string name;
+	Weapon &weapon;
+public:
+	HumanA(std::string name, Weapon &weapon) :name(name), weapon(weapon) {};
+	void attack();
+};
 
-Zombie* zombieHorde( int N, std::string name )
-{
-	Zombie *zombies;
-
-	zombies = new Zombie[N];
-	if (N <= 0)
-		return NULL;
-	for (int i = 0; i < N; i++)
-	{
-		zombies[i].setName(name);
-	}
-	return (zombies);
-}
+#endif

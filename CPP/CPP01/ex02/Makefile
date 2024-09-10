@@ -5,8 +5,8 @@
 #                                                     +:+ +:+         +:+      #
 #    By: flo <flo@student.42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2024/07/03 13:50:09 by flo               #+#    #+#              #
-#    Updated: 2024/07/15 10:48:53 by flo              ###   ########.fr        #
+#    Created: 2024/07/15 10:56:10 by flo               #+#    #+#              #
+#    Updated: 2024/07/15 10:57:11 by flo              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,19 +17,16 @@ CXX = g++
 CXXFLAGS = -Wall -Wextra -Werror -std=c++98
 
 # Target executable name
-TARGET = zombieHorde
+TARGET = brain
 
 # Source files
-SRC = zombieHorde.cpp zombie.cpp
-
-# Header files (if you have multiple header files, list them here)
-HEADERS = Zombie.Class.hpp # Add any other headers you have, separated by spaces
+SRC = main.cpp
 
 # Default rule
 all: $(TARGET)
 
 # Rule to compile the target
-$(TARGET): $(SRC) $(HEADERS)
+$(TARGET): $(SRC)
 	$(CXX) $(CXXFLAGS) -o $(TARGET) $(SRC)
 
 # Clean the build directory

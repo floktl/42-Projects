@@ -6,7 +6,7 @@
 /*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 14:31:32 by flo               #+#    #+#             */
-/*   Updated: 2024/07/09 15:28:28 by flo              ###   ########.fr       */
+/*   Updated: 2024/07/15 10:53:41 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,14 @@ int main(void)
 	int N = 5;
 
 	zombies = zombieHorde(N, "Hello");
-	if (zombies)
+	if (zombies != NULL)
 	{
-		//zombies[0].announce();
+		for (int i = 0; i < N; ++i)
+		{
+			zombies[i].announce();
+		}
 		delete[] zombies;
 	}
+	else
+		std::cout << "No zombies allocated!";
 }

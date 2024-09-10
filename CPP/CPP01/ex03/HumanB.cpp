@@ -1,34 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   zombieHorde.cpp                                    :+:      :+:    :+:   */
+/*   HumanB.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/09 14:15:05 by flo               #+#    #+#             */
-/*   Updated: 2024/07/15 10:35:35 by flo              ###   ########.fr       */
+/*   Created: 2024/07/15 14:43:50 by flo               #+#    #+#             */
+/*   Updated: 2024/07/16 10:37:30 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Zombie.Class.hpp"
+#include "HumanB.hpp"
+#include "Weapon.hpp"
 
-// Function to set the name
-void Zombie::setName(std::string name)
+void HumanB::attack()
 {
-	this->name = name;
-	std::cout << name << " named" << std::endl;
+	if (weapon)
+		std::cout << name << " attacks with their " << HumanB::weapon->getType() << std::endl;
+	else
+		std::cout << name << " attacks with bare hands! " << std::endl;
 }
 
-Zombie* zombieHorde( int N, std::string name )
+void HumanB::setWeapon(Weapon &type)
 {
-	Zombie *zombies;
-
-	zombies = new Zombie[N];
-	if (N <= 0)
-		return NULL;
-	for (int i = 0; i < N; i++)
-	{
-		zombies[i].setName(name);
-	}
-	return (zombies);
+	HumanB::weapon = &type;
 }

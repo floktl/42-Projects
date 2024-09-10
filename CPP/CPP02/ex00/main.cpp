@@ -1,34 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   zombieHorde.cpp                                    :+:      :+:    :+:   */
+/*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/09 14:15:05 by flo               #+#    #+#             */
-/*   Updated: 2024/07/15 10:35:35 by flo              ###   ########.fr       */
+/*   Created: 2024/07/26 10:03:37 by flo               #+#    #+#             */
+/*   Updated: 2024/07/26 11:21:46 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Zombie.Class.hpp"
+#include "Fixed.hpp"
 
-// Function to set the name
-void Zombie::setName(std::string name)
+int main( void )
 {
-	this->name = name;
-	std::cout << name << " named" << std::endl;
-}
-
-Zombie* zombieHorde( int N, std::string name )
-{
-	Zombie *zombies;
-
-	zombies = new Zombie[N];
-	if (N <= 0)
-		return NULL;
-	for (int i = 0; i < N; i++)
-	{
-		zombies[i].setName(name);
-	}
-	return (zombies);
+	Fixed a;
+	Fixed b( a );
+	Fixed c;
+	c = b;
+	std::cout << a.getRawBits() << std::endl;
+	std::cout << b.getRawBits() << std::endl;
+	std::cout << c.getRawBits() << std::endl;
+	return 0;
 }

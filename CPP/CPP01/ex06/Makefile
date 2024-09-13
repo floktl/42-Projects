@@ -6,7 +6,7 @@
 #    By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/03 13:50:09 by flo               #+#    #+#              #
-#    Updated: 2024/09/12 09:19:21 by fkeitel          ###   ########.fr        #
+#    Updated: 2024/09/12 09:25:53 by fkeitel          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ CXX = g++
 CXXFLAGS = -Wall -Wextra -Werror -std=c++98
 
 # Target executable name
-TARGET = harl
+TARGET = harlFilter
 
 # Source files
 SRC = main.cpp harl.cpp
@@ -34,7 +34,7 @@ $(TARGET): $(SRC) $(HEADERS)
 
 # Clean the build directory
 clean:
-	rm -f $(OBJ) all
+	rm -f $(OBJ)
 
 # Full clean (remove all generated files)
 fclean: clean

@@ -3,28 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 10:03:37 by flo               #+#    #+#             */
-/*   Updated: 2024/08/12 12:42:23 by flo              ###   ########.fr       */
+/*   Updated: 2024/09/13 13:55:21 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Fixed.hpp"
-#include <iostream>
 
-int main( void )
+int
+main( void )
 {
 	Fixed a;
-	Fixed const b( Fixed( -5.05f ) * Fixed( 5.0f ) );
+	Fixed const b( Fixed( 5.05f ) * Fixed( 2 ) );
+	std::cout << a << std::endl;
+	std::cout << ++a << std::endl;
+	std::cout << a << std::endl;
+	std::cout << a++ << std::endl;
+	std::cout << a << std::endl;
 	std::cout << b << std::endl;
-	if (a > b)
-		std::cout << "a is bigger" << std::endl;
-	// std::cout << ++a << std::endl;
-	// std::cout << a << std::endl;
-	// std::cout << a++ << std::endl;
-	// std::cout << a << std::endl;
-	// std::cout << b << std::endl;
-	// std::cout << Fixed::max( a, b ) << std::endl;
-	return (0);
+	std::cout << Fixed::max( a, b ) << std::endl;
+return 0;
 }

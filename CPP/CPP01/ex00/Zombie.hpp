@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Zombie.Class.hpp                                   :+:      :+:    :+:   */
+/*   Zombie.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 17:07:23 by flo               #+#    #+#             */
-/*   Updated: 2024/07/09 13:50:30 by flo              ###   ########.fr       */
+/*   Updated: 2024/09/12 07:40:26 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,8 @@ class Zombie
 	public:
 
 	Zombie(std::string name) :name(name) {};
-	void announce( void )
-	{
-		std::cout << name << ": BraiiiiiiinnnzzzZ..." << std::endl;
-	}
-	~Zombie()
-	{
-		std::cout << name << " deconstructed!" << std::endl;
-	};
+	void announce( void );
+	~Zombie() { std::cout << name << " deconstructed!" << std::endl; };
 };
 
 Zombie	*newZombie( std::string name );

@@ -3,29 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/15 10:57:26 by flo               #+#    #+#             */
-/*   Updated: 2024/09/12 08:24:12 by fkeitel          ###   ########.fr       */
+/*   Created: 2024/07/25 12:21:41 by flo               #+#    #+#             */
+/*   Updated: 2024/07/25 13:22:40 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "string"
-#include "iostream"
+#include "harl.hpp"
 
 int main(void)
 {
-	std::string greeting = "HI THIS IS BRAIN";
-	std::string *stringPTR = &greeting;
-	std::string &stringREF = greeting;
+	Harl harl;
 
-	// memory adresses
-	std::cout << &greeting << std::endl;
-	std::cout << stringPTR << std::endl;
-	std::cout << &stringREF << std::endl;
-	// values
-	std::cout << greeting << std::endl;
-	std::cout << *stringPTR << std::endl;
-	std::cout << stringREF << std::endl;
+	harl.complain("WARNING");
+	harl.complain("INFO");
+	harl.complain("ERROR");
+	harl.complain("DEBUG");
+	harl.complain("TEST");
+	harl.complain("");
 	return (0);
 }

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: flo <flo@student.42.fr>                    +#+  +:+       +#+         #
+#    By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/03 13:50:09 by flo               #+#    #+#              #
-#    Updated: 2024/07/15 10:48:53 by flo              ###   ########.fr        #
+#    Updated: 2024/09/12 08:16:02 by fkeitel          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ TARGET = zombieHorde
 SRC = zombieHorde.cpp zombie.cpp
 
 # Header files (if you have multiple header files, list them here)
-HEADERS = Zombie.Class.hpp # Add any other headers you have, separated by spaces
+HEADERS = Zombie.hpp
 
 # Default rule
 all: $(TARGET)

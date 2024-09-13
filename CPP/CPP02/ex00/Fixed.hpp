@@ -1,56 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fixed.hpp                                          :+:      :+:    :+:   */
+/*   Fixed.hpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 10:04:02 by flo               #+#    #+#             */
-/*   Updated: 2024/07/26 12:37:03 by flo              ###   ########.fr       */
+/*   Updated: 2024/09/13 07:41:42 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+
+#ifndef FIXED_HPP
+#define FIXED_HPP
 
 #include <iostream>
 
 class Fixed
 {
-	private:
-		int value;
-		static const int fractionalBits = 8;
+    private:
+        int value;
+        static const int fractionalBits;
 
-	public:
-		// Default constructor
-		Fixed() : value(0)
-		{
-			std::cout << "Default constructor called" << std::endl;
-		}
-		// Copy constructor
-		Fixed(const Fixed& other)
-		{
-			std::cout << "Copy constructor called" << std::endl;
-			value = other.getRawBits();
-		}
-		// Copy assignment operator
-		Fixed& operator=(const Fixed& other)
-		{
-			std::cout << "Copy assignment operator called" << std::endl;
-			value = other.getRawBits();
-			return *this;
-		}
-		// Destructor
-		~Fixed()
-		{
-			std::cout << "Destructor called" << std::endl;
-		}
-		// Get raw bits
-		int getRawBits(void) const
-		{
-			std::cout << "getRawBits member function called" << std::endl;
-			return value;
-		}
-		// Set raw bits
-		void setRawBits(int const raw)
-		{
-			value = raw;
-		}
+    public:
+        // Constructors and destructor
+        Fixed();
+        Fixed(const Fixed& other);
+        Fixed& operator=(const Fixed& other);
+        ~Fixed();
+
+        // Get and set functions
+        int getRawBits(void) const;
+        void setRawBits(int const raw);
 };
+
+#endif

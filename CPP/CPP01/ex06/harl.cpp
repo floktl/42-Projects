@@ -6,7 +6,7 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 12:22:21 by flo               #+#    #+#             */
-/*   Updated: 2024/09/12 09:19:04 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/09/12 09:39:51 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,24 +36,47 @@ void	Harl::error( void )
 	std::cout << "This is unacceptable! I want to speak to the manager now." << std::endl;
 }
 
-void	Harl::complain( std::string level )
+void Harl::complain(std::string level)
 {
-	const std::string levels[] = {"DEBUG", "INFO", "WARNING", "ERROR"};
-	void (Harl::*functions[])(void) =
-	{
-		&Harl::debug,
-		&Harl::info,
-		&Harl::warning,
-		&Harl::error
-	};
+    const std::string levels[] = {"DEBUG", "INFO", "WARNING", "ERROR"};
+    void (Harl::*functions[])(void) = {
+        &Harl::debug,
+        &Harl::info,
+        &Harl::warning,
+        &Harl::error
+    };
 
-	for (int i = 0; (i < 4); ++i)
-	{
-		if (levels[i] == level)
-		{
-			(this->*functions[i])();
-			return;
+    int level_index = -1;
+
+    // Find the index of the level string
+    for (int i = 0; i < 4; ++i) {
+        if (levels[i] == level) {
+            level_index = i;
+            break;
+        }
+    }
+
+    // Implement the switch-case logic using the index
+	switch (level_index) {
+			case 0:
+				std::cout << "[ " << levels[0] << " ]" << std::endl;
+				(this->*functions[0])();
+				// Fall through
+			case 1:
+				std::cout << "[ " << levels[1] << " ]" << std::endl;
+				(this->*functions[1])();
+				// Fall through
+			case 2:
+				std::cout << "[ " << levels[2] << " ]" << std::endl;
+				(this->*functions[2])();
+				// Fall through
+			case 3:
+				std::cout << "[ " << levels[3] << " ]" << std::endl;
+				(this->*functions[3])();
+				break;
+			default:
+				std::cout << "[ Probably complaining about insignificant problems ]" << std::endl;
+				break;
 		}
-	}
-	std::cerr << "Invalid level: " << level << std::endl;
 }
+

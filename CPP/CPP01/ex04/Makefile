@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: flo <flo@student.42.fr>                    +#+  +:+       +#+         #
+#    By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/03 13:50:09 by flo               #+#    #+#              #
-#    Updated: 2024/07/16 10:42:55 by flo              ###   ########.fr        #
+#    Updated: 2024/09/12 08:38:03 by fkeitel          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ TARGET = replace
 # Source files
 SRC = main.cpp
 
-# Header files (if you have multiple header files, list them here)
+# Header files
 HEADERS = header.hpp
 
 # Default rule
@@ -39,14 +39,6 @@ clean:
 # Full clean (remove all generated files)
 fclean: clean
 	rm -f $(NAME)
-
-# Clean the build directory
-clean:
-	rm -f $(TARGET)
-
-# Full clean (remove all generated files)
-fclean: clean
-	rm -f $(TARGET)
 
 # Rule to clean and recompile
 re: fclean all

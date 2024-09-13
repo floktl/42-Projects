@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Zombie.Class.hpp                                   :+:      :+:    :+:   */
+/*   Zombie.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 13:56:52 by flo               #+#    #+#             */
-/*   Updated: 2024/07/15 10:49:22 by flo              ###   ########.fr       */
+/*   Updated: 2024/09/12 08:17:03 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +34,8 @@ public:
 		std::cout << name << " initialized" << std::endl;
 	}
 	// Destructor
-	~Zombie()
-	{
-		std::cout << name << " deconstructed" << std::endl;
-	}
-	void announce( void )
-	{
-		std::cout << name << ": BraiiiiiiinnnzzzZ..." << std::endl;
-	}
+	~Zombie() { std::cout << name << " deconstructed" << std::endl; }
+	void announce( void );
 	// Function to set the name
 	void setName(std::string name);
 };

@@ -6,7 +6,7 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 14:58:50 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/09/11 14:58:54 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/09/14 08:29:25 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ Contact::Contact() {
 
 Contact::Contact(const std::string& first_name, const std::string& last_name,
                 const std::string& nick_name, const std::string& phoneNumber,
-                const std::string& darkest_secret) {
+                const std::string& darkest_secret)
+{
 	this->first_name = first_name;
 	this->last_name = last_name;
 	this->nick_name = nick_name;

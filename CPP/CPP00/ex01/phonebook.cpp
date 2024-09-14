@@ -6,7 +6,7 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 15:15:21 by flo               #+#    #+#             */
-/*   Updated: 2024/09/11 16:12:22 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/09/14 08:39:37 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,60 +17,64 @@
 
 PhoneBook::PhoneBook() : currentSize(0), size(0) {}
 
-bool PhoneBook::isEmpty(const std::string &str) const {
-	return str.empty();
+bool PhoneBook::isEmpty(const std::string &str) const
+{
+	return (str.empty());
 }
 
 // Function to check if the phone number is valid (outside the class)
 bool isValidPhoneNumber(const std::string &number)
 {
     // Allow only digits or a single '+' at the beginning
-    if (number.empty()) return false;
-
+    if (number.empty())
+		return (false);
     size_t start = 0;
-    if (number[0] == '+') {
+    if (number[0] == '+')
         start = 1;
+    for (size_t i = start; i < number.size(); ++i)
+	{
+        if (!std::isdigit(number[i]))
+            return (false);
     }
-
-    for (size_t i = start; i < number.size(); ++i) {
-        if (!std::isdigit(number[i])) {
-            return false;
-        }
-    }
-
-    return true;
+    return (true);
 }
 
-void PhoneBook::promptForInput(const std::string& prompt, std::string &field) const {
+void PhoneBook::promptForInput(const std::string& prompt, std::string &field) const
+{
     std::cout << prompt;
-    std::getline(std::cin >> std::ws, field); // std::ws ensures leading whitespaces are removed
+    std::getline(std::cin >> std::ws, field); // std::ws removes leading whitesp.
 
 	// Check for EOF after input
-    if (std::cin.eof()) {
+    if (std::cin.eof())
+	{
         std::cout << "\nEOF detected. Exiting program.\n";
-        exit(0);  // Exit the program if EOF is detected
+        exit(0);
     }
-    while (isEmpty(field) || (prompt == "Phonenumber: " && !isValidPhoneNumber(field))) {
+    while (isEmpty(field) || (prompt == "Phonenumber: "
+		&& !isValidPhoneNumber(field)))
+	{
         if (isEmpty(prompt))
 		{
             std::cout << "No empty fields allowed. Please enter again: ";
         }
 		else if (prompt == "Phonenumber: " && !isValidPhoneNumber(field))
 		{
-            std::cout << "Invalid phone number. Please enter a valid phone number (digits or +): ";
+            std::cout << "Invalid phone number. Please enter a valid number: ";
         }
-        std::getline(std::cin >> std::ws, field); // read input again, stripping whitespaces
+        std::getline(std::cin >> std::ws, field); // read input again, cut whitesp.
     }
 }
 
-std::string PhoneBook::truncateString(const std::string& str, size_t length) const {
+std::string PhoneBook::truncateString(const std::string& str, size_t length) const
+{
 	if (str.length() > length)
-		return str.substr(0, length - 1) + ".";
+		return (str.substr(0, length - 1) + ".");
 	else
-		return str;
+		return (str);
 }
 
-void PhoneBook::addContact() {
+void PhoneBook::addContact()
+{
 	Contact new_contact;
 	std::string first_name, last_name, nick_name, phone_number, darkest_secret;
 
@@ -92,14 +96,17 @@ void PhoneBook::addContact() {
 		size++;
 }
 
-void PhoneBook::displayContacts() const {
+void PhoneBook::displayContacts() const
+{
 	std::cout << std::right << std::setw(10) << "Index" << "|"
 		<< std::setw(10) << "First Name" << "|"
 		<< std::setw(10) << "Last Name" << "|"
 		<< std::setw(10) << "Nickname" << std::endl;
-std::cout << std::right << "----------------------------------------" << std::endl;
+	std::cout << std::right << "----------------------------------------"
+		<< std::endl;
 
-	for (int i = 0; i < currentSize && i < 8; ++i) {
+	for (int i = 0; i < currentSize && i < 8; ++i)
+	{
 		std::string first = truncateString(contacts[i].getFirstName(), 10);
 		std::string last = truncateString(contacts[i].getLastName(), 10);
 		std::string nick = truncateString(contacts[i].getNickName(), 10);
@@ -111,29 +118,41 @@ std::cout << std::right << "----------------------------------------" << std::en
 	}
 }
 
-int PhoneBook::printContactByName(const std::string& name) const {
+int PhoneBook::printContactByName(const std::string& name) const
+{
 	int index;
 
-	for (size_t i = 0; i < name.size(); ++i) {
-		if (!std::isdigit(name[i])) {
+	for (size_t i = 0; i < name.size(); ++i)
+	{
+		if (!std::isdigit(name[i]))
+		{
 			std::cout << "Please choose a valid number, try again\n";
-			return 0;
+			return (0);
 		}
 	}
 	index = std::stoi(name);
-	if (index > size || index < 1) {
+	if (index > size || index < 1)
+	{
 		std::cout << "Index out of Range, try again\n";
-		return 0;
-	} else {
-		std::cout << "First name: " << contacts[index - 1].getFirstName() << std::endl
-			<< "Last name: " << contacts[index - 1].getLastName() << std::endl
-			<< "Nickname: " << contacts[index - 1].getNickName() << std::endl
-			<< "Phonenumber: " << contacts[index - 1].getPhoneNumber() << std::endl
-			<< "Darkest secret: " << contacts[index - 1].getDarkestSecret() << "\n\n";
-		return 1;
+		return (0);
+	}
+	else
+	{
+		std::cout << "First name: " << contacts[index - 1].getFirstName()
+			<< std::endl
+			<< "Last name: " << contacts[index - 1].getLastName()
+			<< std::endl
+			<< "Nickname: " << contacts[index - 1].getNickName()
+			<< std::endl
+			<< "Phonenumber: " << contacts[index - 1].getPhoneNumber()
+			<< std::endl
+			<< "Darkest secret: " << contacts[index - 1].getDarkestSecret()
+			<< "\n\n";
+		return (1);
 	}
 }
 
-int PhoneBook::get_size() const {
-	return size;
+int PhoneBook::get_size() const
+{
+	return (size);
 }

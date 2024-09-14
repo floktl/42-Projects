@@ -3,34 +3,34 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: flo <flo@student.42.fr>                    +#+  +:+       +#+         #
+#    By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/03 13:50:09 by flo               #+#    #+#              #
-#    Updated: 2024/07/03 14:43:19 by flo              ###   ########.fr        #
+#    Updated: 2024/09/14 09:05:31 by fkeitel          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-# Compiler
-CXX = g++
+NAME = megaphone
 
-# Compiler flags
-CXXFLAGS = -Wall -Wextra -Werror -std=c++98
+SRC = megaphone.cpp\
 
-# Target executable name
-TARGET = megaphone
+CFLAGS = -Wall -Wextra -Werror -std=c++98
 
-# Source files
-SRC = megaphone.cpp
+OBJ = $(SRC:.cpp=.o)
 
-# Default rule
-all: $(TARGET)
+CC = c++
 
-# Rule to compile the target
-$(TARGET): $(SRC)
-	$(CXX) $(CXXFLAGS) -o $(TARGET) $(SRC)
+all: $(NAME)
 
-# Rule to clean up generated files
+$(NAME): $(OBJ)
+	@$(CC) $(CFLAGS) $(OBJ) -o $(NAME)
+
 clean:
-	rm -f $(TARGET)
+	@rm -rf $(OBJ)
 
-re: clean all
+fclean: clean
+	@rm -rf $(NAME)
+
+re: fclean all
+
+.PHONY: all clean fclean re

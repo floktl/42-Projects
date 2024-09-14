@@ -6,34 +6,31 @@
 #    By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/03 15:14:34 by flo               #+#    #+#              #
-#    Updated: 2024/09/11 15:39:55 by fkeitel          ###   ########.fr        #
+#    Updated: 2024/09/14 09:03:25 by fkeitel          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-# Compiler
-CXX = g++
+NAME = phonebook
 
-# Compiler flags
-CXXFLAGS = -Wall -Wextra -Werror -std=c++98
+SRC = phonebook.cpp Contact.cpp main.cpp\
 
-# Target executable name
-TARGET = phonebook
+CFLAGS = -Wall -Wextra -Werror -std=c++98
 
-# Source files
-SRC = phonebook.cpp main.cpp Contact.cpp
-# Header files (if you have multiple header files, list them here)
-HEADERS = Phonebook.hpp Contact.hpp
+OBJ = $(SRC:.cpp=.o)
 
-# Default rule
-all: $(TARGET)
+CC = c++
 
-# Rule to compile the target
-$(TARGET): $(SRC) $(HEADERS)
-	$(CXX) $(CXXFLAGS) -o $(TARGET) $(SRC)
+all: $(NAME)
 
-# Rule to clean up generated files
+$(NAME): $(OBJ)
+	@$(CC) $(CFLAGS) $(OBJ) -o $(NAME)
+
 clean:
-	rm -f $(TARGET)
+	@rm -rf $(OBJ)
 
-# Rule to clean and recompile
-re: clean all
+fclean: clean
+	@rm -rf $(NAME)
+
+re: fclean all
+
+.PHONY: all clean fclean re

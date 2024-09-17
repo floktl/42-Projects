@@ -6,35 +6,31 @@
 #    By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/03 13:50:09 by flo               #+#    #+#              #
-#    Updated: 2024/09/12 07:38:00 by fkeitel          ###   ########.fr        #
+#    Updated: 2024/09/15 07:51:12 by fkeitel          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-# Compiler
-CXX = g++
+NAME = zombie
 
-# Compiler flags
-CXXFLAGS = -Wall -Wextra -Werror -std=c++98
+SRC = zombie.cpp newZombie.cpp randomChump.cpp\
 
-# Target executable name
-TARGET = zombie
+CFLAGS = -Wall -Wextra -Werror -std=c++98
 
-# Source files
-SRC = zombie.cpp newZombie.cpp randomChump.cpp
+OBJ = $(SRC:.cpp=.o)
 
-# Header files (if you have multiple header files, list them here)
-HEADERS = Zombie.hpp # Add any other headers you have, separated by spaces
+CC = c++
 
-# Default rule
-all: $(TARGET)
+all: $(NAME)
 
-# Rule to compile the target
-$(TARGET): $(SRC) $(HEADERS)
-	$(CXX) $(CXXFLAGS) -o $(TARGET) $(SRC)
+$(NAME): $(OBJ)
+	@$(CC) $(CFLAGS) $(OBJ) -o $(NAME)
 
-# Rule to clean up generated files
 clean:
-	rm -f $(TARGET)
+	@rm -rf $(OBJ)
 
-# Rule to clean and recompile
-re: clean all
+fclean: clean
+	@rm -rf $(NAME)
+
+re: fclean all
+
+.PHONY: all clean fclean re

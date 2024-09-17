@@ -3,42 +3,34 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: flo <flo@student.42.fr>                    +#+  +:+       +#+         #
+#    By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/03 13:50:09 by flo               #+#    #+#              #
-#    Updated: 2024/07/26 12:31:36 by flo              ###   ########.fr        #
+#    Updated: 2024/09/15 12:46:05 by fkeitel          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-# Compiler
-CXX = g++
+NAME = Fixed
 
-# Compiler flags
-CXXFLAGS = -Wall -Wextra -Werror -std=c++98
+SRC = Fixed.cpp main.cpp\
 
-# Target executable name
-TARGET = fixed
+CFLAGS = -Wall -Wextra -Werror -std=c++98
 
-# Source files
-SRC = main.cpp Fixed.cpp
+OBJ = $(SRC:.cpp=.o)
 
-# Header files (if you have multiple header files, list them here)
-HEADERS = Fixed.hpp
+CC = c++
 
-# Default rule
-all: $(TARGET)
+all: $(NAME)
 
-# Rule to compile the target
-$(TARGET): $(SRC) $(HEADERS)
-	$(CXX) $(CXXFLAGS) -o $(TARGET) $(SRC)
+$(NAME): $(OBJ)
+	@$(CC) $(CFLAGS) $(OBJ) -o $(NAME)
 
-# Clean the build directory
 clean:
-	rm -f $(TARGET)
+	@rm -rf $(OBJ)
 
-# Full clean (remove all generated files)
 fclean: clean
-	rm -f $(TARGET)
+	@rm -rf $(NAME)
 
-# Rule to clean and recompile
 re: fclean all
+
+.PHONY: all clean fclean re

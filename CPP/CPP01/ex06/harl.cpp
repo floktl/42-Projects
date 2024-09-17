@@ -6,12 +6,11 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/25 12:22:21 by flo               #+#    #+#             */
-/*   Updated: 2024/09/12 09:39:51 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/09/15 08:50:16 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "harl.hpp"
-#include <map>
+#include "Harl.hpp"
 
 void	Harl::debug( void )
 {
@@ -55,7 +54,6 @@ void Harl::complain(std::string level)
             break;
         }
     }
-
     // Implement the switch-case logic using the index
 	switch (level_index) {
 			case 0:

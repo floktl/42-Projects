@@ -6,47 +6,31 @@
 #    By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/03 13:50:09 by flo               #+#    #+#              #
-#    Updated: 2024/09/12 08:16:02 by fkeitel          ###   ########.fr        #
+#    Updated: 2024/09/15 07:59:26 by fkeitel          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-# Compiler
-CXX = g++
+NAME = Zombie
 
-# Compiler flags
-CXXFLAGS = -Wall -Wextra -Werror -std=c++98
+SRC = Zombie.cpp zombieHorde.cpp\
 
-# Target executable name
-TARGET = zombieHorde
+CFLAGS = -Wall -Wextra -Werror -std=c++98
 
-# Source files
-SRC = zombieHorde.cpp zombie.cpp
+OBJ = $(SRC:.cpp=.o)
 
-# Header files (if you have multiple header files, list them here)
-HEADERS = Zombie.hpp
+CC = c++
 
-# Default rule
-all: $(TARGET)
+all: $(NAME)
 
-# Rule to compile the target
-$(TARGET): $(SRC) $(HEADERS)
-	$(CXX) $(CXXFLAGS) -o $(TARGET) $(SRC)
+$(NAME): $(OBJ)
+	@$(CC) $(CFLAGS) $(OBJ) -o $(NAME)
 
-# Clean the build directory
 clean:
-	rm -f $(OBJ) all
+	@rm -rf $(OBJ)
 
-# Full clean (remove all generated files)
 fclean: clean
-	rm -f $(NAME)
+	@rm -rf $(NAME)
 
-# Clean the build directory
-clean:
-	rm -f $(TARGET)
-
-# Full clean (remove all generated files)
-fclean: clean
-	rm -f $(TARGET)
-
-# Rule to clean and recompile
 re: fclean all
+
+.PHONY: all clean fclean re

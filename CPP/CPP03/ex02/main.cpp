@@ -6,12 +6,12 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 13:30:48 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/09/19 11:01:20 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/09/19 11:21:22 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ClapTrap.hpp"
-
+#include "FragTrap.hpp"
 #include "ScavTrap.hpp"
 
 int main()
@@ -22,14 +22,13 @@ int main()
     std::cout << "ep: " << claptrap.getEng() << std::endl;
     std::cout << "attDmg: " << claptrap.getAtt() << std::endl;
     ScavTrap claptrap2(claptrap);
-    ScavTrap claptrap3;
+    FragTrap claptrap3;
     std::cout << "default name: " << claptrap3.getName() << std::endl;
     std::cout << "default hp: " << claptrap.getHit() << std::endl;
     std::cout << "default ep: " << claptrap.getEng() << std::endl;
     std::cout << "default attDmg: " << claptrap.getAtt() << std::endl;
-    ScavTrap claptrap4("Springtrap");
+    FragTrap claptrap4("Springtrap");
     claptrap3 = claptrap4;
-
 
     std::cout << std::endl << "--------------------------------"
 		<< std::endl << std::endl;
@@ -64,12 +63,12 @@ int main()
     std::cout << std::endl << "--------------------------------"
 		<< std::endl << std::endl;
 
-    claptrap2.guardGate();
-    claptrap2.setHit(0);
-    claptrap2.guardGate();
+    claptrap3.highFivesGuys();
+    claptrap3.setHit(0);
+    claptrap3.highFivesGuys();
 
     std::cout << std::endl << "--------------------------------"
 		<< std::endl << std::endl;
 
-    return 0;
+    return (0);
 }

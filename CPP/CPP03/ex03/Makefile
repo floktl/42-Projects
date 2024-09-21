@@ -6,13 +6,13 @@
 #    By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/03 13:50:09 by flo               #+#    #+#              #
-#    Updated: 2024/09/21 08:36:38 by fkeitel          ###   ########.fr        #
+#    Updated: 2024/09/19 11:40:49 by fkeitel          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = ClapTrap
+NAME = DiamondTrap
 
-SRC = ClapTrap.cpp main.cpp
+SRC = ClapTrap.cpp main.cpp ScavTrap.cpp FragTrap.cpp DiamondTrap.cpp
 
 CFLAGS = -Wall -Wextra -Werror -std=c++17
 
@@ -21,7 +21,6 @@ OBJ = $(SRC:.cpp=.o)
 CC = c++
 
 all: $(NAME)
-	@echo "Programm Name: $(NAME)"
 
 $(NAME): $(OBJ)
 	@$(CC) $(CFLAGS) $(OBJ) -o $(NAME)

@@ -1,46 +1,52 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ScavTrap.cpp                                       :+:      :+:    :+:   */
+/*   FragTrap.cpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 10:12:29 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/09/19 11:00:49 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/09/20 10:53:37 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ScavTrap.hpp"
+#include "FragTrap.hpp"
 
 //	default constructor
-ScavTrap::ScavTrap()
+FragTrap::FragTrap()
 {
-	std::cout << "ScavTrap uninitialized has been created!" << std::endl;
+	this->setHit(default_hitPoints);
+	this->setEng(default_energypoints);
+	this->setAtt(default_attackDamage);
+	this->guarded = false;
+	std::cout << "FragTrap uninitialized has been created!" << std::endl;
 }
 
 // constuctor
-ScavTrap::ScavTrap(const std::string& name) : ClapTrap(name)
+FragTrap::FragTrap(const std::string& name) : ClapTrap(name)
 {
-	this->setHit(100);
-	this->setEng(50);
-	this->setAtt(20);
+	this->setHit(default_hitPoints);
+	this->setEng(default_energypoints);
+	this->setAtt(default_attackDamage);
 	this->guarded = false;
-	std::cout << "ScavTrap " << name << " has been created!" << std::endl;
+	std::cout << "FragTrap " << name << " has been created!" << std::endl;
 }
 
 // Copy constructor
-ScavTrap::ScavTrap(const ScavTrap& other)
+FragTrap::FragTrap(const FragTrap& other)
 {
 	ClapTrap::name = other.name;
 	this->setHit(other.hitPoints);
 	this->setEng(other.energyPoints);
 	this->setAtt(other.attackDamage);
 	this->guarded = false;
+	std::cout << "FragTrap " << name << " has been created!" << std::endl;
 }
 
 //	copy assignment conctructor
-ScavTrap& ScavTrap::operator=(const ScavTrap& other) {
-if (this != &other)
+FragTrap& FragTrap::operator=(const FragTrap& other)
+{
+	if (this != &other)
 	{
 		name = other.name;
 		hitPoints = other.hitPoints;
@@ -51,24 +57,24 @@ if (this != &other)
 }
 
 // destructor
-ScavTrap::~ScavTrap()
+FragTrap::~FragTrap()
 {
-	std::cout << "ScavTrap " << this->name << " has been destroyed!"
-	<< std::endl;
+	std::cout << "FragTrap " << this->name << " has been destroyed!"
+		<< std::endl;
 }
 
 //	guard funciton
-void ScavTrap::guardGate()
+void FragTrap::highFivesGuys(void)
 {
 	if (this->getHit() == 0)
 	{
-		std::cout << "Can't guard: " << this->getName()
+		std::cout << "Can't highFive: " << this->getName()
 			<< " has no healthpoints left!" << std::endl;
 	}
 	if (guarded != true)
 	{
-	guarded = true;
-	std::cout << "Activating Gate-Keeper Modus for "
-		<< this->getName() << "!" << std::endl;
+		guarded = true;
+		std::cout << "high Five guys from "
+			<< this->getName() << " !!!" << std::endl;
 	}
 }

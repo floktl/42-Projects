@@ -1,40 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ScavTrap.hpp                                       :+:      :+:    :+:   */
+/*   FragTrap.hpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 10:13:54 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/09/19 10:50:42 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/09/19 11:15:09 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SCAVTRAP_HPP
-#define SCAVTRAP_HPP
+#ifndef FRAGTRAP_HPP
+#define FRAGTRAP_HPP
 
 #include <iostream>
 #include <string>
 #include "ClapTrap.hpp"
 
-class ScavTrap : public ClapTrap
+class FragTrap : public ClapTrap
 {
 private:
 	bool guarded;
 public:
 	// Default constructor
-	ScavTrap();
+	FragTrap();
 	//	constructor
-	ScavTrap(const std::string& name);
+	FragTrap(const std::string& name);
 	// Copy constructor
-	ScavTrap(const ScavTrap& other);
+	FragTrap(const FragTrap& other);
 	// Copy assignment operator
-	ScavTrap& operator=(const ScavTrap& other);
+	FragTrap& operator=(const FragTrap& other);
 	// Destructor
-    ~ScavTrap();
+    ~FragTrap();
 
 	// member functions
-	void guardGate();
+	void highFivesGuys(void);
 };
 
 #endif

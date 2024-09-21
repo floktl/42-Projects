@@ -6,7 +6,7 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 10:35:22 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/09/19 10:59:04 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/09/20 09:03:04 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ ClapTrap::ClapTrap(const std::string& name)
 ClapTrap::ClapTrap()
 	: name("uninitialized"), hitPoints(0), energyPoints(0), attackDamage(0)
 {
-	std::cout << "default Constructor called" << std::endl;
 	std::cout << "ClapTrap " << name << " has been created!" << std::endl;
 }
 
@@ -32,7 +31,7 @@ ClapTrap::ClapTrap(const ClapTrap& other) : name(other.name),
 	hitPoints(other.hitPoints), energyPoints(other.energyPoints),
 	attackDamage(other.attackDamage)
 {
-	std::cout << "Copy constructor called" << std::endl;
+	std::cout << "ClapTrap " << name << " has been created!" << std::endl;
 }
 
 // Copy assignment operator
@@ -84,22 +83,22 @@ int ClapTrap::getAtt()
 
 void ClapTrap::setHit(int value)
 {
-	std::cout << "setting hp from " << this->getName() << " to "
-		<< value << std::endl;
+	//std::cout << "setting hp from " << this->getName() << " to "
+	//	<< value << std::endl;
 	hitPoints = value;
 }
 
 void ClapTrap::setEng(int value)
 {
-	std::cout << "setting ep from " << this->getName() << " to "
-		<< energyPoints << std::endl;
+	//std::cout << "setting ep from " << this->getName() << " to "
+	//	<< energyPoints << std::endl;
 	energyPoints = value;
 }
 
 void ClapTrap::setAtt(int value)
 {
-	std::cout << "setting att from " << this->getName() << " to "
-		<< value << std::endl;
+	//std::cout << "setting att from " << this->getName() << " to "
+	//	<< value << std::endl;
 	attackDamage = value;
 }
 

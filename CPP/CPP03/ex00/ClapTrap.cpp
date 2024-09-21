@@ -6,7 +6,7 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 10:35:22 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/09/16 16:55:17 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/09/20 08:54:11 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ ClapTrap::ClapTrap(const std::string& name)
 	std::cout << "ClapTrap " << name << " has been created!" << std::endl;
 }
 
-// Constructor
+// default Constructor
 ClapTrap::ClapTrap()
 	: name("uninitialized"), hitPoints(0), energyPoints(0), attackDamage(0)
 {

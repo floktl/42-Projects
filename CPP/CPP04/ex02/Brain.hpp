@@ -1,32 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   Brain.hpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/26 10:03:37 by flo               #+#    #+#             */
-/*   Updated: 2024/09/21 08:57:42 by fkeitel          ###   ########.fr       */
+/*   Created: 2024/09/21 09:17:30 by fkeitel           #+#    #+#             */
+/*   Updated: 2024/09/21 12:46:16 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Dog.hpp"
-#include "Cat.hpp"
-#include "WrongCat.hpp"
+#ifndef BRAIN_HPP
+#define BRAIN_HPP
 
-int main()
+#include <iostream>
+
+class Brain
 {
-	const WrongAnimal* meta = new WrongAnimal();
-	const Animal* j = new Dog();
-	const WrongAnimal* i = new WrongCat();
+private:
+	std::string ideas[100];
+public:
+	Brain();
+	Brain(const Brain &other);
+	Brain& operator=(const Brain& other);
+	~Brain();
 
-	std::cout << j->getType() << " " << std::endl;
-	std::cout << i->getType() << " " << std::endl;
-	i->makeSound();
-	j->makeSound();
-	meta->makeSound();
-	delete(meta);
-	delete(j);
-	delete(i);
-	return 0;
-}
+	std::string getIdeas(int i);
+	void setIdeas(int i, std::string idea);
+};
+
+#endif

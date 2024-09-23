@@ -1,32 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   Cat.hpp                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/26 10:03:37 by flo               #+#    #+#             */
-/*   Updated: 2024/09/21 08:57:42 by fkeitel          ###   ########.fr       */
+/*   Created: 2024/09/20 12:21:49 by fkeitel           #+#    #+#             */
+/*   Updated: 2024/09/21 19:43:33 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Dog.hpp"
-#include "Cat.hpp"
-#include "WrongCat.hpp"
+#include "Animal.hpp"
+#include "Brain.hpp"
 
-int main()
+class Cat : protected Animal
 {
-	const WrongAnimal* meta = new WrongAnimal();
-	const Animal* j = new Dog();
-	const WrongAnimal* i = new WrongCat();
+public:
+	// constructors
+	Cat();
+	~Cat();
+	Cat(const Cat &other);
+	Cat &operator=(const Cat &other);
 
-	std::cout << j->getType() << " " << std::endl;
-	std::cout << i->getType() << " " << std::endl;
-	i->makeSound();
-	j->makeSound();
-	meta->makeSound();
-	delete(meta);
-	delete(j);
-	delete(i);
-	return 0;
-}
+	// member functions
+	void makeSound() const override;
+	Brain* getBrain() const;
+private:
+	Brain *brain;
+};

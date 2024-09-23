@@ -1,32 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   WrongCat.hpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/26 10:03:37 by flo               #+#    #+#             */
-/*   Updated: 2024/09/21 08:57:42 by fkeitel          ###   ########.fr       */
+/*   Created: 2024/09/20 12:21:49 by fkeitel           #+#    #+#             */
+/*   Updated: 2024/09/21 08:54:53 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Dog.hpp"
-#include "Cat.hpp"
-#include "WrongCat.hpp"
+#include "WrongAnimal.hpp"
 
-int main()
+class WrongCat : public WrongAnimal
 {
-	const WrongAnimal* meta = new WrongAnimal();
-	const Animal* j = new Dog();
-	const WrongAnimal* i = new WrongCat();
-
-	std::cout << j->getType() << " " << std::endl;
-	std::cout << i->getType() << " " << std::endl;
-	i->makeSound();
-	j->makeSound();
-	meta->makeSound();
-	delete(meta);
-	delete(j);
-	delete(i);
-	return 0;
-}
+public:
+	WrongCat();
+	~WrongCat();
+	WrongCat(const WrongCat &other);
+	void makeSound() const override;
+};

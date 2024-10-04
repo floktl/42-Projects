@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   MateriaSource.cpp                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 07:10:10 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/10/03 13:51:09 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/10/04 08:02:45 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,13 +93,13 @@ void MateriaSource::learnMateria(AMateria* m)
 
 AMateria* MateriaSource::createMateria(std::string const & type)
 {
-    for (int i = 0; i < 3; i++)
+    for (int i = 0; i < 4; i++)
 	{
 		if (slots[i] && type == this->slots[i]->getType())
 		{
 			return (this->slots[i]->clone());
 		}
 	}
-	std::cout << "Materia couldnt be created" << std::endl;
+	std::cout << "Materia " << type << " couldnt be created" << std::endl;
     return nullptr;
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Character.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 07:10:10 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/10/03 13:37:15 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/10/04 08:09:06 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@ Character::Character() : dropped_materials(nullptr)
 {
 	name = "undefined";
 	for (int i = 0; i < 4; ++i)
-    {
-        slots[i] = nullptr;
-    }
+	{
+		slots[i] = nullptr;
+	}
 	std::cout << "A nameless Character named " << name << " was created!"
 		<< std::endl;
 }
@@ -27,9 +27,9 @@ Character::Character(std::string const & name) : dropped_materials(nullptr)
 {
 	Character::name = name;
 	for (int i = 0; i < 4; ++i)
-    {
-        slots[i] = nullptr;
-    }
+	{
+		slots[i] = nullptr;
+	}
 	std::cout << "A Character named " << Character::name
 		<< " was created!" << std::endl;
 }
@@ -55,21 +55,21 @@ Character::~Character()
 {
 	//delete dropped_materials;
 	for (int i = 0; i < 4; i++)
-    {
-        delete slots[i];
+	{
+		delete slots[i];
 		slots[i] = nullptr;
-    }
+	}
 	if (dropped_materials)
-    {
-        int i = 0;
-        while (dropped_materials[i])
-        {
-            delete dropped_materials[i];
+	{
+		int i = 0;
+		while (dropped_materials[i])
+		{
+			delete dropped_materials[i];
 			dropped_materials[i] = nullptr;
-            i++;
-        }
-        delete[] dropped_materials;
-    }
+			i++;
+		}
+		delete[] dropped_materials;
+	}
 	std::cout << "Character named " << Character::name
 		<< " destroyed" << std::endl;
 }
@@ -89,16 +89,16 @@ void Character::equip(AMateria* m)
 			<< std::endl;
 		return;
 	}
-    for (int i = 0; i < 4; i++)
-    {
-        if (slots[i] == nullptr)
-        {
+	for (int i = 0; i < 4; i++)
+	{
+		if (slots[i] == nullptr)
+		{
 			delete slots[i];
-            slots[i] = m;
+			slots[i] = m;
 			std::cout << "equipped slot " << i << " from "
 				<< this->getName() << " with " << m->getType() << std::endl;
-            return;
-        }
+			return;
+		}
 		if (i == 3)
 		{
 			delete m;
@@ -107,33 +107,33 @@ void Character::equip(AMateria* m)
 				<< " are full, unequip one before!" << std::endl;
 			return;
 		}
-    }
+	}
 }
 
 void Character::unequip(int idx)
 {
-    if (idx < 0 || idx >= 4 || slots[idx] == nullptr)
-    {
-        std::cout << "Invalid slot index or slot is empty!" << std::endl;
-        return;
-    }
-    int new_size = 0;
-    while (dropped_materials && dropped_materials[new_size] != nullptr)
-    {
-        new_size++;
-    }
-    AMateria** newDroppedMaterials = new AMateria*[new_size + 2];
+	if (idx < 0 || idx >= 4 || slots[idx] == nullptr)
+	{
+		std::cout << "Invalid slot index or slot is empty!" << std::endl;
+		return;
+	}
+	int new_size = 0;
+	while (dropped_materials && dropped_materials[new_size] != nullptr)
+	{
+		new_size++;
+	}
+	AMateria** newDroppedMaterials = new AMateria*[new_size + 2];
 	newDroppedMaterials[0] = nullptr;
-    for (int i = 0; i < new_size; ++i)
-    {
-        newDroppedMaterials[i] = dropped_materials[i];
-    }
-    newDroppedMaterials[new_size] = slots[idx];
-    newDroppedMaterials[new_size + 1] = nullptr;
+	for (int i = 0; i < new_size; ++i)
+	{
+		newDroppedMaterials[i] = dropped_materials[i];
+	}
+	newDroppedMaterials[new_size] = slots[idx];
+	newDroppedMaterials[new_size + 1] = nullptr;
 
-    delete[] dropped_materials;
-    dropped_materials = newDroppedMaterials;
-    slots[idx] = nullptr;
+	delete[] dropped_materials;
+	dropped_materials = newDroppedMaterials;
+	slots[idx] = nullptr;
 	std::cout << "unequipped slot " << idx << " from "
 		<< this->getName() << std::endl;
 }
@@ -148,12 +148,13 @@ void Character::use(int idx, ICharacter& target)
 		return;
 	}
 	if (this->slots[idx] != nullptr)
-    {
-        this->slots[idx]->use(target);
-    }
-    else
-    {
-        std::cout << "Slot is empty" << std::endl;
-    }
+	{
+		this->slots[idx]->use(target);
+	}
+	else
+	{
+		std::cout << "Slot " << idx << " from " << this->getName()
+			<< " is empty" << std::endl;
+	}
 	return;
 }

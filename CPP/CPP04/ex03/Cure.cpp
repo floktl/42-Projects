@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   Cure.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 07:10:10 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/10/03 08:09:13 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/10/04 08:00:53 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Cure.hpp"
 
-Cure::Cure() : AMateria("Cure")
+Cure::Cure() : AMateria("cure")
 {
-	type = "Cure";
+	type = "cure";
 	std::cout << type << " was created!" << std::endl;
 }
 

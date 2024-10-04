@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
+/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 07:51:30 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/10/03 13:52:31 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/10/04 08:11:10 by flo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,12 @@ int main()
 
 	me->use(0, *bob);
 	me->use(1, *bob);
+	me->use(2, *bob);
+	me->use(3, *bob);
+	me->use(4, *bob);
+	me->unequip(0);
+	me->unequip(0);
+	me->use(0, *bob);
 
 	delete bob;
 	delete me;

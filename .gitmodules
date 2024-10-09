@@ -1,3 +1,24 @@
 [submodule "CPP"]
 	path = CPP
 	url = https://github.com/floktl/CPP
+[submodule "Libft"]
+	path = Libft
+	url = https://github.com/floktl/Libft
+[submodule "sorting_algorithm"]
+	path = sorting_algorithm
+	url = https://github.com/floktl/sorting_algorithm
+[submodule "WireframeVisualizer"]
+	path = WireframeVisualizer
+	url = https://github.com/floktl/WireframeVisualizer
+[submodule "Minitalk"]
+	path = Minitalk
+	url = https://github.com/floktl/Minitalk
+[submodule "philosophers"]
+	path = philosophers
+	url = https://github.com/floktl/philosophers
+[submodule "minishell"]
+	path = minishell
+	url = https://github.com/floktl/minishell
+[submodule "3d_raycasting_game"]
+	path = 3d_raycasting_game
+	url = https://github.com/floktl/3d_raycasting_game

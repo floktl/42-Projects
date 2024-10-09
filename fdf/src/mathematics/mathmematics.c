@@ -6,7 +6,7 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 16:59:00 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/19 13:38:24 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/10/09 07:02:54 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ float	round_float(float num, int range)
 
 //	replace function for square root, why not, Math is fun!
 //	Newton-Raphson Method
+//	Check if the difference between `next` and `x` is small enough
+//	to consider that value has converged (is very close to true value).
 double	ft_sqrt(double a)
 {
 	double	x;

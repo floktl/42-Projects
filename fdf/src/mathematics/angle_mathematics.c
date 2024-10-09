@@ -6,7 +6,7 @@
 /*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 11:36:46 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/19 13:35:37 by fkeitel          ###   ########.fr       */
+/*   Updated: 2024/10/09 06:57:58 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 
 //	This function calculates the factorial of a given number.
 //	Factorial of a non-negative integer n, denoted by n!, is the product
-//	of all positive integers less than or equal to n.
+//	of all positive integers less than or equal to n. (4! = 4 x 3 x 2 x 1 = 24)
 double	factorial(double n)
 {
 	if (n == 0)
@@ -41,7 +41,8 @@ double	power(double n, double power)
 	return (result);
 }
 
-//	function to replace the sin() function of math.h
+//	function to replace the sin() function of math.h Taylor Series for Sine
+//	cos(x)=x - x^3/3! + x^5/5! - x^7/7! + ...
 double	ft_sin(double x)
 {
 	double	result;
@@ -67,7 +68,8 @@ double	ft_sin(double x)
 	return (result);
 }
 
-//	function to replace the cos() function from math.h
+//	function to replace the cos() function from math.h Taylor Series for Cosine
+//	cos(x)=1− x^2/2! + x^4/4! - x^6/6! + ...
 double	ft_cos(double x)
 {
 	double	result;

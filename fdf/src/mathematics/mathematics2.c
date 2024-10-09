@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mathematics2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: flo <flo@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: fkeitel <fkeitel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 17:00:17 by fkeitel           #+#    #+#             */
-/*   Updated: 2024/03/18 18:21:11 by flo              ###   ########.fr       */
+/*   Updated: 2024/10/09 07:00:09 by fkeitel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 //--------------------- using math.h would be way easier ----------------------
 //
 
-//	Approximation of arctangent function
+//	Approximation of arctangent function using simplefied Taylor series exp.
 int	ft_atan(int x)
 {
 	return (x - x * x * x / 3 + x * x * x * x * x / 5);

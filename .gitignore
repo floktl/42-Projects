@@ -60,6 +60,7 @@ lib/glfw/
 mlx_*_shader.c
 build/
 test
-
+3d_raycasting_game/MLX42/
 # Automatic downloaded deps
 _deps/
+3d_raycasting_game/MLX42/

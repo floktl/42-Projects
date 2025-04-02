@@ -1,0 +1,133 @@
+:root {
+	--bg-color: #f0f8ff;
+	--text-color: #2c3e50;
+	--button-bg: #3498db;
+	--button-hover: #2980b9;
+}
+
+body {
+	background-color: var(--bg-color);
+	color: var(--text-color);
+	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+	padding: 30px;
+	transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.dark-mode {
+	--bg-color: #1c1c1c;
+	--text-color: #f1f1f1;
+	--button-bg: #444;
+	--button-hover: #666;
+}
+
+h1 {
+	font-size: 60px;
+	text-align: center;
+	color: var(--text-color);
+	margin-bottom: 30px;
+	text-shadow: 2px 2px 4px #ccc;
+}
+
+h2, h3, h4, h5, h6 {
+	color: #34495e;
+	margin-left: 10px;
+	margin-top: 10px;
+}
+
+.pre-box {
+	display: inline-block;
+	background-color: #e8f4fa;
+	padding: 10px 20px;
+	font-family: 'Courier New', monospace;
+	border-left: 4px solid #3498db;
+	white-space: pre-wrap;
+	border-radius: 6px;
+	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.tooltip {
+	color: green;
+	text-align: center;
+	background-color: #eafaf1;
+	padding: 10px;
+	border-radius: 8px;
+	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+button {
+	background-color: var(--button-bg);
+	color: white;
+	padding: 12px 24px;
+	font-size: 18px;
+	border: none;
+	border-radius: 8px;
+	cursor: pointer;
+	display: block;
+	margin: 20px auto;
+	transition: all 0.3s ease;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+button:hover {
+	background-color: var(--button-hover);
+	transform: scale(1.05);
+}
+
+a {
+	font-size: 24px;
+	color: #e74c3c;
+	text-decoration: none;
+	font-weight: bold;
+}
+
+a:hover {
+	text-decoration: underline;
+	color: #c0392b;
+}
+
+blockquote {
+	background-color: #ecf0f1;
+	padding: 15px;
+	border-left: 5px solid #2ecc71;
+	margin: 20px 0;
+	border-radius: 6px;
+	font-style: italic;
+	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+img {
+	display: block;
+	margin-top: 30px;
+	max-width: 220px;
+	border-radius: 10px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+mark {
+	background-color: rgb(239, 239, 247);
+	padding: 2px 5px;
+	border-radius: 4px;
+}
+
+del {
+	color: red;
+}
+
+ins {
+	color: green;
+	text-decoration: none;
+	font-weight: bold;
+}
+
+small {
+	color: gray;
+	font-size: 14px;
+}
+
+.settings-form {
+	max-width: 400px;
+	margin: 0 auto;
+	background: #ffffff44;
+	padding: 20px;
+	border-radius: 10px;
+}

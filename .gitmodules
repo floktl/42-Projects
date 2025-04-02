@@ -22,3 +22,7 @@
 [submodule "3d_raycasting_game"]
 	path = 3d_raycasting_game
 	url = https://github.com/floktl/3d_raycasting_game
+
+[submodule "webserv"]
+	path = webserv
+	url = https://github.com/floktl/webserv
